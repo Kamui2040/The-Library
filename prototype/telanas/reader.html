@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark light">
+  <meta name="description" content="Prototype Telanas reader inside The Library.">
+  <title>The Library — Telanas Reader</title>
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="site.js"></script>
+  <script defer src="reader.js"></script>
+</head>
+<body class="reader-page">
+  <header class="reader-header">
+    <div class="reader-header-inner">
+      <a class="reader-home" href="index.html">← <span data-reader-back>Telanas</span></a>
+      <div class="reader-title" aria-live="polite" data-reader-title>The Dragon Knight · Volume 1 — Home</div>
+      <div class="reader-tools" aria-label="Reader controls">
+        <button class="reader-tool" type="button" data-layout-button="spread" aria-pressed="true">Spread</button>
+        <button class="reader-tool" type="button" data-layout-button="single" aria-pressed="false">Single</button>
+        <button class="reader-tool" type="button" data-layout-button="continuous" aria-pressed="false">Continuous</button>
+        <label class="select-control reader-language">
+          <span class="visually-hidden" data-i18n="nav.language">Language</span>
+          <select data-language-select aria-label="Language">
+            <option value="en">English</option>
+            <option value="de">Deutsch</option>
+          </select>
+        </label>
+        <button class="reader-tool" type="button" data-theme-toggle aria-pressed="false">
+          <span aria-hidden="true" data-theme-icon>☾</span>
+          <span data-theme-label data-i18n="theme.light">Light</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="reader-shell" data-reader-shell>
+    <div class="toc-dock" data-toc-dock>
+      <button class="toc-toggle" type="button" aria-expanded="false" aria-controls="reader-toc" aria-label="Table of contents" data-toc-toggle>☰</button>
+      <aside class="toc-panel" id="reader-toc" aria-label="Table of contents" data-toc-panel>
+        <p class="toc-heading">Contents</p>
+        <nav class="toc-list">
+          <button type="button" data-reader-target="contents">Contents</button>
+          <button type="button" data-reader-target="prologue">Prologue</button>
+          <button type="button" data-reader-target="chapter-1">Chapter 1</button>
+          <button type="button" data-reader-target="chapter-2">Chapter 2</button>
+          <button type="button" data-reader-target="chapter-3">Chapter 3</button>
+        </nav>
+      </aside>
+    </div>
+
+    <section class="book-stage" aria-live="polite">
+      <div class="book-spread" data-book-spread>
+        <article class="book-page" data-book-page="left"></article>
+        <article class="book-page" data-book-page="right"></article>
+      </div>
+      <div class="reader-status">
+        <span data-reader-position>Contents</span>
+        <span data-reader-mode>Book spread</span>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
