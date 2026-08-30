@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "id": "the-library",
+  "state": "development",
+  "defaultWorld": "telanas",
+  "locales": {
+    "en": {
+      "label": "English",
+      "enabled": true
+    },
+    "de": {
+      "label": "Deutsch",
+      "enabled": true
+    }
+  },
+  "worlds": [
+    {
+      "id": "telanas",
+      "manifest": "worlds/telanas/world.json",
+      "enabled": true
+    }
+  ]
+}

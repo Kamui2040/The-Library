@@ -4,6 +4,8 @@
   const dock = document.querySelector("[data-toc-dock]");
   const toggle = document.querySelector("[data-toc-toggle]");
   const panel = document.querySelector("[data-toc-panel]");
+  const tocList = document.querySelector("[data-reader-toc-list]");
+  const tocHeading = document.querySelector("[data-toc-heading]");
   const spread = document.querySelector("[data-book-spread]");
   const leftPage = document.querySelector("[data-book-page='left']");
   const rightPage = document.querySelector("[data-book-page='right']");
@@ -11,21 +13,17 @@
   const modeLabel = document.querySelector("[data-reader-mode]");
   const titleLabel = document.querySelector("[data-reader-title]");
 
-  if (!dock || !toggle || !panel || !spread || !leftPage || !rightPage) return;
+  if (!dock || !toggle || !panel || !tocList || !tocHeading || !spread || !leftPage || !rightPage) return;
 
+  const manifestUrl = "../../content/worlds/telanas/books/dragon-knight/volume-01/book.json";
   const pointerHover = window.matchMedia("(hover: hover) and (pointer: fine)");
   let pinned = false;
   let closeTimer = null;
   let currentTarget = "contents";
+  let book = null;
 
   const copy = {
     en: {
-      title: "The Dragon Knight · Volume 1 — Home",
-      contents: "Contents",
-      prologue: "Prologue",
-      chapter1: "Chapter 1",
-      chapter2: "Chapter 2",
-      chapter3: "Chapter 3",
       spread: "Book spread",
       single: "Single page",
       continuous: "Continuous",
@@ -33,16 +31,12 @@
       sample1: "This page intentionally uses neutral placeholder copy. The production reader will receive released text through the publication pipeline rather than storing unreleased manuscript material in the site repository.",
       sample2: "Rendered page boundaries are temporary. Navigation, bookmarks, Lexicon references, and reading progress resolve to semantic story anchors instead of fixed page numbers.",
       sample3: "Changing type size, page width, language, or layout may repaginate this same content without changing its canonical location.",
-      integrated: "This integrated Contents page and the left reader navigation are generated from the same ordered book structure.",
-      choose: "Select any entry to jump to its semantic chapter anchor."
+      integrated: "This integrated Contents page and the left reader navigation are generated from the same ordered book manifest.",
+      choose: "Select any entry to jump to its semantic chapter anchor.",
+      loadError: "The prototype book manifest could not be loaded.",
+      loadHint: "Serve the repository through a local web server or normal website host so the reader can load its public content manifest."
     },
     de: {
-      title: "Der Drachenritter · Band 1 — Zuhause",
-      contents: "Inhalt",
-      prologue: "Prolog",
-      chapter1: "Kapitel 1",
-      chapter2: "Kapitel 2",
-      chapter3: "Kapitel 3",
       spread: "Buchansicht",
       single: "Einzelseite",
       continuous: "Fortlaufend",
@@ -50,63 +44,42 @@
       sample1: "Diese Seite verwendet absichtlich neutralen Platzhaltertext. Der fertige Reader erhält veröffentlichte Texte über den Publikationsprozess, statt unveröffentlichtes Manuskriptmaterial im Website-Repository zu speichern.",
       sample2: "Gerenderte Seitengrenzen sind vorübergehend. Navigation, Lesezeichen, Lexikon-Verweise und Lesefortschritt verwenden semantische Anker statt feste Seitenzahlen.",
       sample3: "Schriftgröße, Seitenbreite, Sprache oder Layout können denselben Inhalt neu umbrechen, ohne seine kanonische Position zu verändern.",
-      integrated: "Diese integrierte Inhaltsseite und die linke Reader-Navigation werden aus derselben geordneten Buchstruktur erzeugt.",
-      choose: "Wähle einen Eintrag, um zu seinem semantischen Kapitelanker zu springen."
+      integrated: "Diese integrierte Inhaltsseite und die linke Reader-Navigation werden aus demselben geordneten Buchmanifest erzeugt.",
+      choose: "Wähle einen Eintrag, um zu seinem semantischen Kapitelanker zu springen.",
+      loadError: "Das Prototyp-Buchmanifest konnte nicht geladen werden.",
+      loadHint: "Stelle das Repository über einen lokalen Webserver oder einen normalen Website-Host bereit, damit der Reader sein öffentliches Inhaltsmanifest laden kann."
     }
   };
 
   const language = () => document.documentElement.lang === "de" ? "de" : "en";
 
-  const chapterLabel = (target, table) => {
-    if (target === "contents") return table.contents;
-    if (target === "prologue") return table.prologue;
-    if (target === "chapter-1") return table.chapter1;
-    if (target === "chapter-2") return table.chapter2;
-    if (target === "chapter-3") return table.chapter3;
-    return table.contents;
+  const table = () => copy[language()];
+
+  const bookLabels = () => {
+    if (!book) return null;
+    return book.labels?.[language()] || book.labels?.en || null;
   };
 
-  const contentsButtons = (table) => `
-    <h1>${table.contents}</h1>
-    <h2>TELANAS · ${table.title.split("·")[0].trim()}</h2>
-    <p>${table.integrated}</p>
-    <div class="contents-list">
-      <button type="button" data-inline-target="prologue"><span>${table.prologue}</span><span>→</span></button>
-      <button type="button" data-inline-target="chapter-1"><span>${table.chapter1}</span><span>→</span></button>
-      <button type="button" data-inline-target="chapter-2"><span>${table.chapter2}</span><span>→</span></button>
-      <button type="button" data-inline-target="chapter-3"><span>${table.chapter3}</span><span>→</span></button>
-    </div>
-  `;
+  const currentTitle = () => {
+    const labels = bookLabels();
+    return labels ? `${labels.series} · ${labels.volume}` : "The Library";
+  };
 
-  const render = (target, updateHash = true) => {
-    const table = copy[language()];
-    currentTarget = target;
-    titleLabel.textContent = table.title;
+  const chapterFor = (target) => {
+    if (!book || target === "contents") return null;
+    return book.chapters.find((chapter) => chapter.id === target || chapter.slug === target) || null;
+  };
 
-    if (target === "contents") {
-      leftPage.classList.add("contents-page");
-      rightPage.classList.remove("contents-page");
-      leftPage.innerHTML = contentsButtons(table);
-      rightPage.innerHTML = `<h1>${table.opening}</h1><h2>${table.title}</h2><p>${table.choose}</p><p>${table.sample2}</p>`;
-    } else {
-      leftPage.classList.remove("contents-page");
-      rightPage.classList.remove("contents-page");
-      const label = chapterLabel(target, table);
-      leftPage.innerHTML = `<p class="eyebrow">TELANAS</p><h1>${label}</h1><h2>${table.title}</h2><p>${table.sample1}</p><p>${table.sample2}</p>`;
-      rightPage.innerHTML = `<p class="eyebrow">${label}</p><h1>${table.opening}</h1><p>${table.sample3}</p><p>${table.sample2}</p>`;
-    }
+  const canonicalTarget = (target) => {
+    if (target === "contents") return "contents";
+    return chapterFor(target)?.id || "contents";
+  };
 
-    panel.querySelectorAll("[data-reader-target]").forEach((button) => {
-      button.classList.toggle("is-active", button.dataset.readerTarget === target);
-    });
-
-    positionLabel.textContent = chapterLabel(target, table);
-
-    leftPage.querySelectorAll("[data-inline-target]").forEach((button) => {
-      button.addEventListener("click", () => selectTarget(button.dataset.inlineTarget));
-    });
-
-    if (updateHash) history.replaceState(null, "", `#${target}`);
+  const chapterLabel = (target) => {
+    const labels = bookLabels();
+    if (target === "contents") return labels?.contents || "Contents";
+    const chapter = chapterFor(target);
+    return chapter?.labels?.[language()] || chapter?.labels?.en || labels?.contents || "Contents";
   };
 
   const setOpen = (open) => {
@@ -134,6 +107,110 @@
     closeTimer = window.setTimeout(() => setOpen(false), 180);
   };
 
+  const renderToc = () => {
+    if (!book) return;
+    const labels = bookLabels();
+    tocHeading.textContent = labels?.contents || "Contents";
+    tocList.replaceChildren();
+
+    const entries = [
+      { id: "contents", label: labels?.contents || "Contents" },
+      ...book.chapters.map((chapter) => ({
+        id: chapter.id,
+        label: chapter.labels?.[language()] || chapter.labels?.en || chapter.id
+      }))
+    ];
+
+    for (const entry of entries) {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.dataset.readerTarget = entry.id;
+      button.textContent = entry.label;
+      button.classList.toggle("is-active", entry.id === currentTarget);
+      tocList.append(button);
+    }
+  };
+
+  const contentsMarkup = () => {
+    const labels = bookLabels();
+    const localCopy = table();
+    const buttons = book.chapters.map((chapter) => {
+      const label = chapter.labels?.[language()] || chapter.labels?.en || chapter.id;
+      return `<button type="button" data-inline-target="${chapter.id}"><span>${label}</span><span>→</span></button>`;
+    }).join("");
+
+    return `
+      <h1>${labels?.contents || "Contents"}</h1>
+      <h2>${labels?.world || "Telanas"} · ${labels?.series || ""}</h2>
+      <p>${localCopy.integrated}</p>
+      <div class="contents-list">${buttons}</div>
+    `;
+  };
+
+  const render = (target, updateHash = true) => {
+    if (!book) return;
+    const localCopy = table();
+    const resolved = canonicalTarget(target);
+    currentTarget = resolved;
+    titleLabel.textContent = currentTitle();
+
+    if (resolved === "contents") {
+      leftPage.classList.add("contents-page");
+      rightPage.classList.remove("contents-page");
+      leftPage.innerHTML = contentsMarkup();
+      rightPage.innerHTML = `<h1>${localCopy.opening}</h1><h2>${currentTitle()}</h2><p>${localCopy.choose}</p><p>${localCopy.sample2}</p>`;
+    } else {
+      leftPage.classList.remove("contents-page");
+      rightPage.classList.remove("contents-page");
+      const label = chapterLabel(resolved);
+      const labels = bookLabels();
+      leftPage.innerHTML = `<p class="eyebrow">${labels?.world || "Telanas"}</p><h1>${label}</h1><h2>${currentTitle()}</h2><p>${localCopy.sample1}</p><p>${localCopy.sample2}</p>`;
+      rightPage.innerHTML = `<p class="eyebrow">${label}</p><h1>${localCopy.opening}</h1><p>${localCopy.sample3}</p><p>${localCopy.sample2}</p>`;
+    }
+
+    positionLabel.textContent = chapterLabel(resolved);
+    renderToc();
+
+    leftPage.querySelectorAll("[data-inline-target]").forEach((button) => {
+      button.addEventListener("click", () => selectTarget(button.dataset.inlineTarget));
+    });
+
+    if (updateHash) history.replaceState(null, "", `#${resolved}`);
+  };
+
+  const selectTarget = (target) => {
+    if (!book) return;
+    render(target);
+    if (!pointerHover.matches && !pinned) setOpen(false);
+  };
+
+  const setLayout = (layout) => {
+    const resolved = ["spread", "single", "continuous"].includes(layout) ? layout : "spread";
+    spread.classList.toggle("single", resolved === "single");
+    spread.classList.toggle("continuous", resolved === "continuous");
+
+    document.querySelectorAll("[data-layout-button]").forEach((button) => {
+      button.setAttribute("aria-pressed", String(button.dataset.layoutButton === resolved));
+    });
+
+    const localCopy = table();
+    modeLabel.textContent = resolved === "single" ? localCopy.single : resolved === "continuous" ? localCopy.continuous : localCopy.spread;
+
+    try {
+      localStorage.setItem("library-reader-layout", resolved);
+    } catch {
+      // Persistence is optional.
+    }
+  };
+
+  const savedLayout = () => {
+    try {
+      return localStorage.getItem("library-reader-layout") || "spread";
+    } catch {
+      return "spread";
+    }
+  };
+
   dock.addEventListener("pointerenter", () => {
     if (!pointerHover.matches) return;
     clearCloseTimer();
@@ -157,15 +234,9 @@
     }
   });
 
-  const selectTarget = (target) => {
-    const allowed = new Set(["contents", "prologue", "chapter-1", "chapter-2", "chapter-3"]);
-    const resolved = allowed.has(target) ? target : "contents";
-    render(resolved);
-    if (!pointerHover.matches && !pinned) setOpen(false);
-  };
-
-  panel.querySelectorAll("[data-reader-target]").forEach((button) => {
-    button.addEventListener("click", () => selectTarget(button.dataset.readerTarget));
+  tocList.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-reader-target]");
+    if (button) selectTarget(button.dataset.readerTarget);
   });
 
   document.addEventListener("keydown", (event) => {
@@ -176,49 +247,42 @@
     toggle.focus();
   });
 
-  const layoutButtons = [...document.querySelectorAll("[data-layout-button]")];
-  const setLayout = (layout) => {
-    const resolved = ["spread", "single", "continuous"].includes(layout) ? layout : "spread";
-    spread.classList.toggle("single", resolved === "single");
-    spread.classList.toggle("continuous", resolved === "continuous");
-
-    layoutButtons.forEach((button) => {
-      button.setAttribute("aria-pressed", String(button.dataset.layoutButton === resolved));
-    });
-
-    const table = copy[language()];
-    modeLabel.textContent = resolved === "single" ? table.single : resolved === "continuous" ? table.continuous : table.spread;
-
-    try {
-      localStorage.setItem("library-reader-layout", resolved);
-    } catch {
-      // Persistence is optional.
-    }
-  };
-
-  layoutButtons.forEach((button) => {
+  document.querySelectorAll("[data-layout-button]").forEach((button) => {
     button.addEventListener("click", () => setLayout(button.dataset.layoutButton));
   });
 
   window.addEventListener("library-language-change", () => {
-    render(currentTarget, false);
-    let savedLayout = "spread";
-    try {
-      savedLayout = localStorage.getItem("library-reader-layout") || "spread";
-    } catch {
-      // Use default.
-    }
-    setLayout(savedLayout);
+    if (book) render(currentTarget, false);
+    setLayout(savedLayout());
   });
 
-  let savedLayout = "spread";
-  try {
-    savedLayout = localStorage.getItem("library-reader-layout") || "spread";
-  } catch {
-    // Use default.
-  }
+  const showLoadError = () => {
+    const localCopy = table();
+    titleLabel.textContent = "The Library";
+    tocList.replaceChildren();
+    leftPage.innerHTML = `<h1>${localCopy.loadError}</h1><p>${localCopy.loadHint}</p>`;
+    rightPage.innerHTML = "";
+    positionLabel.textContent = localCopy.loadError;
+  };
 
-  const initial = location.hash.replace(/^#/, "");
-  selectTarget(initial || "contents");
-  setLayout(savedLayout);
+  const initialize = async () => {
+    setLayout(savedLayout());
+
+    try {
+      const response = await fetch(manifestUrl, { cache: "no-store" });
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      book = await response.json();
+    } catch (error) {
+      console.error("Reader manifest load failed", error);
+      showLoadError();
+      return;
+    }
+
+    const initial = location.hash.replace(/^#/, "") || "contents";
+    render(initial, false);
+    history.replaceState(null, "", `#${currentTarget}`);
+    setLayout(savedLayout());
+  };
+
+  initialize();
 })();

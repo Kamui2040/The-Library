@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "id": "telanas",
+  "state": "development",
+  "theme": "telanas",
+  "locales": ["en", "de"],
+  "stories": [
+    {
+      "id": "dragon-knight",
+      "books": [
+        {
+          "id": "volume-01",
+          "manifest": "books/dragon-knight/volume-01/book.json",
+          "state": "prototype"
+        }
+      ]
+    }
+  ]
+}

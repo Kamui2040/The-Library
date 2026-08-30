@@ -1,0 +1,11 @@
+{
+  "name": "the-library",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "validate": "node scripts/validate-content.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
