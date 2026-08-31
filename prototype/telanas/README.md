@@ -2,12 +2,12 @@
 
 This is the first publication-safe visual prototype for the Telanas world area inside **The Library**.
 
-It intentionally contains no unreleased manuscript text or private lore. The landscape, cover, update text, book-page copy, and Lexicon examples are neutral placeholders used only to test layout and interaction.
+It intentionally contains no unreleased manuscript text or private lore. The landscape, cover, update text, reader editions, and Lexicon examples are neutral placeholders used only to test layout and interaction.
 
 ## Pages
 
 - `index.html` — Telanas landing-page prototype
-- `reader.html` — reader-shell prototype
+- `reader.html` — semantic reader prototype
 - `lexicon.html` — spoiler-aware Lexicon prototype
 
 ## Implemented interactions
@@ -26,8 +26,20 @@ It intentionally contains no unreleased manuscript text or private lore. The lan
   - hidden entries do not appear as redacted results, counts, or suggestions
   - category controls do not expose hidden-entry counts
   - prototype-only entries prove Volume 1 and Full Spoilers reveal gates without storing story lore
+- semantic reader content:
+  - separate English and German prototype editions
+  - identical chapter/block semantic IDs across both locales
+  - paragraph and scene-break anchors
+  - dedicated chapter-title pages
+  - dynamic block-based pagination from the current page dimensions
+  - automatic repagination after layout, language, or viewport changes
+  - spread mode with narrow-screen single-page fallback
+  - explicit single-page and continuous modes
+  - previous/next page controls plus left/right arrow-key paging
+  - persistent reading position stored as a semantic anchor, never a rendered page number
+  - language and layout changes restore the nearest stable semantic location
 - reader table of contents:
-  - generated from the public Volume 1 prototype manifest
+  - generated from the public Volume 1 book manifest
   - the integrated Contents page uses that same ordered chapter data
   - hover `☰` to open on pointer devices
   - move normally inside the open panel
@@ -36,18 +48,19 @@ It intentionally contains no unreleased manuscript text or private lore. The lan
   - tap `☰` to open/close on touch devices
   - `Escape` closes the panel
   - chapter selection resolves to stable semantic chapter IDs
-- reader layout choice: spread / single / continuous
 
 ## Running the prototype
 
 The reader and Lexicon load public manifests with `fetch()`, so open them through a local static web server or normal website host rather than directly from a `file://` URL.
 
-Current public prototype manifests include:
+Current public prototype data includes:
 
 - `content/worlds/telanas/books/dragon-knight/volume-01/book.json`
+- `content/worlds/telanas/books/dragon-knight/volume-01/editions/en.json`
+- `content/worlds/telanas/books/dragon-knight/volume-01/editions/de.json`
 - `content/worlds/telanas/lexicon/lexicon.json`
 
-Run `npm run validate` from the repository root to validate the Library/world/book/Lexicon manifests.
+Run `npm run validate` from the repository root to validate the Library/world/book/reader-edition/Lexicon data and the neutral release-bundle fixture.
 
 ## Deliberately not implemented yet
 
@@ -56,7 +69,8 @@ Run `npm run validate` from the repository root to validate the Library/world/bo
 - released manuscript text
 - real released Lexicon content
 - private-source exporter/parser
-- dynamic book pagination
+- finer line-level paragraph pagination
+- final reader font/spacing/page-width controls
 - true page-turn rendering
 - downloads
 - deployment
