@@ -48,7 +48,9 @@ Library
 └── world
     ├── story
     │   └── book/volume
-    │       └── chapter
+    │       ├── chapter
+    │       │   └── semantic reader block
+    │       └── localized edition
     └── Lexicon
         └── entry
             └── reveal-gated fragment
@@ -63,6 +65,7 @@ world: telanas
 story: dragon-knight
 book: volume-01
 chapter: dk-v01-ch01
+anchor: dk-v01-ch01-p001
 ```
 
 ## 4. Locale registry
@@ -80,14 +83,39 @@ A public book manifest owns reader-visible structure such as:
 - localized series and volume labels;
 - ordered chapter IDs/slugs;
 - localized chapter labels;
-- public illustration references when applicable;
-- later, approved public semantic anchors and text references.
+- one public edition-file reference per released locale;
+- public illustration references when applicable.
 
-The reader-side table of contents and the integrated book Contents page must both be generated from this same ordered chapter list.
+The reader-side table of contents and the integrated book Contents page both derive from this same ordered chapter list.
 
 Prototype manifests contain no real manuscript prose. They exist only to exercise the publication/reader structure safely.
 
-## 6. Lexicon manifest
+## 6. Reader editions and semantic anchors
+
+Each locale has a separate public reader-edition file. English and German are not combined into one bilingual payload.
+
+A reader edition records:
+
+- world/story/book identity;
+- exactly one locale;
+- content state and content mode;
+- the same ordered chapter IDs as the book manifest;
+- ordered semantic blocks inside each chapter.
+
+The initial public block types are:
+
+- `paragraph` — localized prose attached to a stable block ID;
+- `scene-break` — a structural anchor/separator containing no prose.
+
+Chapter IDs and block IDs are canonical semantic positions. Localized editions must use the same chapter IDs, block IDs, block types, and order. Only the localized text differs.
+
+The current prototype editions are explicitly `prototypeOnly` and contain neutral implementation text rather than Telanas manuscript material.
+
+Rendered pages are created dynamically by the browser. The prototype measures whole semantic blocks against the current page surface, keeps chapter-title pages separate, and repaginates when layout, language, or viewport width changes. This first implementation does not split a paragraph across two rendered pages; a later renderer may become finer-grained without changing the stable anchors.
+
+Reader position is stored by semantic anchor rather than rendered page number. Switching between spread, single-page, continuous, or localized editions therefore resolves the saved anchor again in the new presentation.
+
+## 7. Lexicon manifest
 
 A world may reference one public Lexicon manifest.
 
@@ -109,7 +137,7 @@ The website must filter entries and fragments for the current spoiler profile **
 
 Prototype-only Lexicon entries may be used to exercise reveal behavior, but they must be clearly marked as prototype data and must not contain unreleased story lore.
 
-## 7. Release bundle boundary
+## 8. Release bundle boundary
 
 The private source side produces a **release bundle**. The Library consumes that bundle instead of reading the private repository directly.
 
@@ -136,9 +164,11 @@ Bundle validation rejects:
 - source/target world, story, or book mismatches;
 - known book/Lexicon payloads whose IDs or state do not match the bundle.
 
+Reader-edition files may travel in the same deterministic bundle. Their semantic/localization validation occurs through the normal repository content validator after import.
+
 The neutral fixture at `fixtures/release-bundles/telanas-volume-01-prototype/` proves this transport contract without using manuscript prose or private lore.
 
-## 8. Import behavior
+## 9. Import behavior
 
 Validate any supplied bundle with:
 
@@ -164,7 +194,7 @@ Writing requires the explicit `--apply` flag. Replacing an existing target with 
 
 Importing a bundle changes only the working repository content. It does **not** approve deployment, make the repository public, create a release, or publish the site. Repository validation and normal review still follow before acceptance.
 
-## 9. Validation
+## 10. Validation
 
 `npm run validate` runs both the dependency-free public-content validator and the neutral release-bundle fixture validator.
 
@@ -174,24 +204,28 @@ The content validator checks:
 - stable IDs and slugs use safe formats and remain unique in their scope;
 - manifest states use the allowed state set;
 - enabled locales are known to the Library/world;
-- every prototype chapter has a label for every book locale;
-- prototype book manifests do not contain story-text fields;
+- every book locale has a registered reader-edition file;
+- reader-edition world/story/book/locale/state/content-mode identity matches its book manifest;
+- localized reader editions contain the same chapters, semantic block IDs, block types, and order;
+- paragraph blocks contain text and scene-break blocks do not contain prose;
+- prototype placeholder editions are explicitly marked `prototypeOnly`;
+- prototype book manifests do not contain embedded story-text fields;
 - Lexicon categories and entries use valid unique IDs;
 - Lexicon localized titles, summaries, fragments, and category labels are complete;
 - completed-volume reveal gates resolve to an existing public story and volume;
 - prototype Full Spoilers entries are explicitly marked `prototypeOnly`;
-- duplicate world/story/book/chapter/Lexicon IDs are rejected.
+- duplicate world/story/book/chapter/reader-anchor/Lexicon IDs are rejected.
 
 The release-bundle validator independently checks the deterministic transport envelope and file hashes before any import is allowed.
 
-Validation will expand when real release text, illustrations, semantic anchors, relationships, and cross-story reveal rules are introduced.
+Validation will expand when real release text, illustrations, precise cross-references, relationships, and cross-story reveal rules are introduced.
 
-## 10. Publication acceptance
+## 11. Publication acceptance
 
 Before any actual story release is accepted into The Library, review must separately confirm:
 
 - exact source release scope;
-- localization completeness;
+- localization completeness and semantic alignment;
 - spoiler boundary;
 - asset rights/provenance;
 - no private/unreleased material is included;
