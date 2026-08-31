@@ -46,9 +46,12 @@ The public data hierarchy is:
 ```text
 Library
 └── world
-    └── story
-        └── book/volume
-            └── chapter
+    ├── story
+    │   └── book/volume
+    │       └── chapter
+    └── Lexicon
+        └── entry
+            └── reveal-gated fragment
 ```
 
 Stable IDs are language-independent. Localized display text lives alongside those IDs.
@@ -84,29 +87,55 @@ The reader-side table of contents and the integrated book Contents page must bot
 
 Prototype manifests contain no real manuscript prose. They exist only to exercise the publication/reader structure safely.
 
-## 6. Import/export direction
+## 6. Lexicon manifest
+
+A world may reference one public Lexicon manifest.
+
+The Lexicon manifest owns:
+
+- stable category IDs and localized labels;
+- stable entry IDs;
+- localized public titles and summaries;
+- reveal-gated public fragments;
+- the story/volume reveal points that determine normal visibility.
+
+Current reveal modes are:
+
+- `always` — visible regardless of reading progress;
+- `completed-volume` — visible only once the configured story volume is marked completed;
+- `full-spoilers` — visible only when the reader explicitly enables Full Spoilers.
+
+The website must filter entries and fragments for the current spoiler profile **before** search, category-result rendering, relationship rendering, or other presentation logic. Hidden entries must not leak through result counts, redacted titles, autocomplete suggestions, or related-entry hints.
+
+Prototype-only Lexicon entries may be used to exercise reveal behavior, but they must be clearly marked as prototype data and must not contain unreleased story lore.
+
+## 7. Import/export direction
 
 The eventual source-side publication step should produce a deterministic public bundle containing only explicitly selected release material. The Library consumes that bundle; it must not require direct unrestricted access to the private creative repository during normal website builds.
 
 A future exporter may verify private manuscript semantic markers before creating the bundle, but website code stays in The Library.
 
-## 7. Validation
+## 8. Validation
 
 `npm run validate` runs the repository's dependency-free content validator.
 
 The validator currently checks:
 
-- Library/world/book manifest references resolve;
+- Library/world/book/Lexicon manifest references resolve;
 - stable IDs and slugs use safe formats and remain unique in their scope;
 - manifest states use the allowed state set;
-- enabled locales are known to the Library;
+- enabled locales are known to the Library/world;
 - every prototype chapter has a label for every book locale;
-- prototype manifests do not contain story-text fields;
-- duplicate world/story/book/chapter IDs are rejected.
+- prototype book manifests do not contain story-text fields;
+- Lexicon categories and entries use valid unique IDs;
+- Lexicon localized titles, summaries, fragments, and category labels are complete;
+- completed-volume reveal gates resolve to an existing public story and volume;
+- prototype Full Spoilers entries are explicitly marked `prototypeOnly`;
+- duplicate world/story/book/chapter/Lexicon IDs are rejected.
 
-Validation will expand when real release bundles, Lexicon fragments, illustrations, and semantic anchors are introduced.
+Validation will expand when real release bundles, illustrations, semantic anchors, relationships, and cross-story reveal rules are introduced.
 
-## 8. Publication acceptance
+## 9. Publication acceptance
 
 Before any actual story release is accepted into The Library, review must separately confirm:
 
