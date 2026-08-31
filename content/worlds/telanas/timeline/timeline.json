@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 1,
+  "world": "telanas",
+  "state": "prototype",
+  "locales": ["en", "de"],
+  "events": [
+    {
+      "id": "timeline-prototype-foundation",
+      "order": 10,
+      "prototypeOnly": true,
+      "visibility": { "mode": "always" },
+      "labels": {
+        "en": {
+          "period": "Public prototype",
+          "title": "Timeline foundation",
+          "summary": "A neutral marker proving that the Telanas timeline can exist without storing story chronology or private lore."
+        },
+        "de": {
+          "period": "Öffentlicher Prototyp",
+          "title": "Grundlage der Zeitleiste",
+          "summary": "Ein neutraler Marker, der zeigt, dass die Telanas-Zeitleiste ohne Handlungschronologie oder private Lore funktionieren kann."
+        }
+      }
+    },
+    {
+      "id": "timeline-volume-one-marker",
+      "order": 20,
+      "prototypeOnly": true,
+      "visibility": {
+        "mode": "completed-volume",
+        "story": "dragon-knight",
+        "volume": "volume-01"
+      },
+      "labels": {
+        "en": {
+          "period": "After Volume 1",
+          "title": "Volume 1 timeline marker — prototype",
+          "summary": "This non-canon marker appears only after Volume 1 is marked complete and contains no manuscript event."
+        },
+        "de": {
+          "period": "Nach Band 1",
+          "title": "Zeitleisten-Marker für Band 1 — Prototyp",
+          "summary": "Dieser nicht-kanonische Marker erscheint erst, nachdem Band 1 als gelesen markiert wurde, und enthält kein Manuskriptereignis."
+        }
+      },
+      "readerLinks": [
+        {
+          "id": "timeline-volume-one-reader-reference",
+          "story": "dragon-knight",
+          "book": "volume-01",
+          "anchor": "dk-v01-ch01-p004",
+          "labels": {
+            "en": "Open the prototype reader reference",
+            "de": "Prototypische Reader-Stelle öffnen"
+          }
+        }
+      ]
+    },
+    {
+      "id": "timeline-future-placeholder",
+      "order": 30,
+      "prototypeOnly": true,
+      "visibility": { "mode": "full-spoilers" },
+      "labels": {
+        "en": {
+          "period": "Future knowledge",
+          "title": "Future timeline placeholder",
+          "summary": "A neutral development marker visible only with Full Spoilers enabled. It describes no future Telanas canon."
+        },
+        "de": {
+          "period": "Späteres Wissen",
+          "title": "Platzhalter für spätere Zeitleisten-Einträge",
+          "summary": "Ein neutraler Entwicklungsmarker, der nur mit vollständigen Spoilern sichtbar ist. Er beschreibt keinen zukünftigen Telanas-Kanon."
+        }
+      }
+    }
+  ]
+}
