@@ -11,6 +11,7 @@
       "nav.stories": "Stories",
       "nav.lexicon": "Lexicon",
       "nav.timeline": "Timeline",
+      "nav.map": "Map",
       "nav.downloads": "Downloads",
       "nav.updates": "Updates",
       "nav.language": "Language",
@@ -62,6 +63,7 @@
       "nav.stories": "Geschichten",
       "nav.lexicon": "Lexikon",
       "nav.timeline": "Zeitleiste",
+      "nav.map": "Karte",
       "nav.downloads": "Downloads",
       "nav.updates": "Neuigkeiten",
       "nav.language": "Sprache",
@@ -124,17 +126,29 @@
 
   const normalizeLanguage = (value) => String(value || "").toLowerCase().startsWith("de") ? "de" : "en";
 
-  const ensureTimelineNavigation = () => {
+  const ensureWorldNavigation = () => {
     document.querySelectorAll("[data-primary-nav]").forEach((nav) => {
-      if (nav.querySelector("a[href='timeline.html']")) return;
       const lexiconLink = nav.querySelector("a[href='lexicon.html']");
       if (!lexiconLink) return;
-      const link = document.createElement("a");
-      link.className = "nav-link";
-      link.href = "timeline.html";
-      link.dataset.i18n = "nav.timeline";
-      link.textContent = "Timeline";
-      lexiconLink.insertAdjacentElement("afterend", link);
+
+      let timelineLink = nav.querySelector("a[href='timeline.html']");
+      if (!timelineLink) {
+        timelineLink = document.createElement("a");
+        timelineLink.className = "nav-link";
+        timelineLink.href = "timeline.html";
+        timelineLink.dataset.i18n = "nav.timeline";
+        timelineLink.textContent = "Timeline";
+        lexiconLink.insertAdjacentElement("afterend", timelineLink);
+      }
+
+      if (!nav.querySelector("a[href='map.html']")) {
+        const mapLink = document.createElement("a");
+        mapLink.className = "nav-link";
+        mapLink.href = "map.html";
+        mapLink.dataset.i18n = "nav.map";
+        mapLink.textContent = "Map";
+        timelineLink.insertAdjacentElement("afterend", mapLink);
+      }
     });
   };
 
@@ -173,7 +187,7 @@
     translate(document.documentElement.lang);
   };
 
-  ensureTimelineNavigation();
+  ensureWorldNavigation();
 
   document.querySelectorAll("[data-language-select]").forEach((select) => {
     select.addEventListener("change", () => translate(select.value));

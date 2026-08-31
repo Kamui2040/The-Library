@@ -6,6 +6,7 @@
   "locales": ["en", "de"],
   "lexicon": "lexicon/lexicon.json",
   "timeline": "timeline/timeline.json",
+  "map": "map/map.json",
   "stories": [
     {
       "id": "dragon-knight",

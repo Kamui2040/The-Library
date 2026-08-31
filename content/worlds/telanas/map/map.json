@@ -1,0 +1,98 @@
+{
+  "schemaVersion": 1,
+  "world": "telanas",
+  "state": "prototype",
+  "locales": ["en", "de"],
+  "labels": {
+    "en": {
+      "title": "Map",
+      "intro": "Explore only the locations available at your selected reading progress."
+    },
+    "de": {
+      "title": "Karte",
+      "intro": "Erkunde nur Orte, die zu deinem gewählten Lesefortschritt gehören."
+    }
+  },
+  "markers": [
+    {
+      "id": "prototype-map-foundation",
+      "order": 10,
+      "x": 28,
+      "y": 66,
+      "prototypeOnly": true,
+      "visibility": {
+        "mode": "always"
+      },
+      "labels": {
+        "en": {
+          "kind": "Prototype marker",
+          "title": "Map foundation",
+          "summary": "A neutral marker proving that the public map can render a stable location without storing Telanas geography."
+        },
+        "de": {
+          "kind": "Prototyp-Marker",
+          "title": "Kartengrundlage",
+          "summary": "Ein neutraler Marker, der zeigt, dass die öffentliche Karte einen stabilen Ort darstellen kann, ohne Telanas-Geografie zu speichern."
+        }
+      }
+    },
+    {
+      "id": "prototype-volume-one-location",
+      "order": 20,
+      "x": 56,
+      "y": 48,
+      "prototypeOnly": true,
+      "visibility": {
+        "mode": "completed-volume",
+        "story": "dragon-knight",
+        "volume": "volume-01"
+      },
+      "labels": {
+        "en": {
+          "kind": "Volume 1 prototype",
+          "title": "Volume 1 location marker",
+          "summary": "A non-canon marker that becomes available only after Volume 1 is marked complete."
+        },
+        "de": {
+          "kind": "Band-1-Prototyp",
+          "title": "Ortsmarker für Band 1",
+          "summary": "Ein nicht-kanonischer Marker, der erst sichtbar wird, wenn Band 1 als abgeschlossen markiert ist."
+        }
+      },
+      "readerLinks": [
+        {
+          "id": "prototype-map-reader-passage",
+          "story": "dragon-knight",
+          "book": "volume-01",
+          "anchor": "dk-v01-ch01-p004",
+          "labels": {
+            "en": "Open the relevant prototype passage",
+            "de": "Relevante Prototyp-Stelle öffnen"
+          }
+        }
+      ]
+    },
+    {
+      "id": "prototype-future-location",
+      "order": 30,
+      "x": 76,
+      "y": 28,
+      "prototypeOnly": true,
+      "visibility": {
+        "mode": "full-spoilers"
+      },
+      "labels": {
+        "en": {
+          "kind": "Full-spoilers prototype",
+          "title": "Future location placeholder",
+          "summary": "A neutral marker used only to prove that unrevealed map locations can remain completely absent."
+        },
+        "de": {
+          "kind": "Vollspoiler-Prototyp",
+          "title": "Platzhalter für einen späteren Ort",
+          "summary": "Ein neutraler Marker, der nur zeigt, dass noch nicht enthüllte Kartenorte vollständig unsichtbar bleiben können."
+        }
+      }
+    }
+  ]
+}
