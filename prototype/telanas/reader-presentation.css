@@ -148,27 +148,11 @@
   position: relative;
 }
 
-.book-spread {
-  perspective: 1700px;
-  transform-style: preserve-3d;
-}
-
 .reader-transition-overlay {
   margin: 0 !important;
   pointer-events: none !important;
   user-select: none !important;
-  z-index: 12;
-}
-
-.reader-turn-overlay {
-  backface-visibility: hidden;
-  transform-style: preserve-3d;
-  overflow: hidden;
-}
-
-.reader-fade-overlay {
   z-index: 11;
-  pointer-events: none;
 }
 
 .reader-fade-overlay .book-page {
