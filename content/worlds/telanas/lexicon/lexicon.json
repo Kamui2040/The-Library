@@ -1,0 +1,130 @@
+{
+  "schemaVersion": 1,
+  "world": "telanas",
+  "state": "prototype",
+  "locales": ["en", "de"],
+  "categories": [
+    { "id": "characters", "labels": { "en": "Characters", "de": "Charaktere" } },
+    { "id": "places", "labels": { "en": "Places", "de": "Orte" } },
+    { "id": "creatures", "labels": { "en": "Creatures", "de": "Kreaturen" } },
+    { "id": "factions", "labels": { "en": "Factions", "de": "Fraktionen" } },
+    { "id": "history", "labels": { "en": "History", "de": "Geschichte" } },
+    { "id": "magic", "labels": { "en": "Magic", "de": "Magie" } },
+    { "id": "mythology", "labels": { "en": "Mythology", "de": "Mythologie" } },
+    { "id": "items", "labels": { "en": "Items / Artifacts", "de": "Gegenstände / Artefakte" } },
+    { "id": "cultures", "labels": { "en": "Cultures", "de": "Kulturen" } },
+    { "id": "terminology", "labels": { "en": "Terminology", "de": "Begriffe" } }
+  ],
+  "entries": [
+    {
+      "id": "telanas",
+      "categories": ["terminology"],
+      "visibility": { "mode": "always" },
+      "labels": {
+        "en": {
+          "title": "Telanas",
+          "summary": "The first world area currently represented inside The Library."
+        },
+        "de": {
+          "title": "Telanas",
+          "summary": "Der erste Weltenbereich, der derzeit in The Library vertreten ist."
+        }
+      },
+      "fragments": [
+        {
+          "id": "telanas-library-context",
+          "visibility": { "mode": "always" },
+          "text": {
+            "en": "This prototype entry contains only publication-safe site context and no story lore.",
+            "de": "Dieser Prototyp-Eintrag enthält nur veröffentlichungssicheren Website-Kontext und keine Handlungslore."
+          }
+        }
+      ]
+    },
+    {
+      "id": "dragon-knight",
+      "categories": ["terminology"],
+      "visibility": { "mode": "always" },
+      "labels": {
+        "en": {
+          "title": "The Dragon Knight",
+          "summary": "The first story line currently represented for Telanas."
+        },
+        "de": {
+          "title": "Der Drachenritter",
+          "summary": "Die erste derzeit für Telanas dargestellte Geschichtenreihe."
+        }
+      },
+      "fragments": [
+        {
+          "id": "dragon-knight-volume-model",
+          "visibility": { "mode": "always" },
+          "text": {
+            "en": "The public reader is structured by volumes and stable semantic locations rather than fixed rendered page numbers.",
+            "de": "Der öffentliche Reader ist nach Bänden und stabilen semantischen Positionen aufgebaut, nicht nach festen gerenderten Seitenzahlen."
+          }
+        }
+      ]
+    },
+    {
+      "id": "prototype-volume-one-knowledge",
+      "prototypeOnly": true,
+      "categories": ["history"],
+      "visibility": {
+        "mode": "completed-volume",
+        "story": "dragon-knight",
+        "volume": "volume-01"
+      },
+      "labels": {
+        "en": {
+          "title": "Volume 1 knowledge — prototype",
+          "summary": "A non-canon placeholder proving that an entry can remain completely absent until Volume 1 is marked complete."
+        },
+        "de": {
+          "title": "Wissen aus Band 1 — Prototyp",
+          "summary": "Ein nicht-kanonischer Platzhalter, der zeigt, dass ein Eintrag vollständig unsichtbar bleiben kann, bis Band 1 als gelesen markiert wurde."
+        }
+      },
+      "fragments": [
+        {
+          "id": "prototype-volume-one-fragment",
+          "visibility": {
+            "mode": "completed-volume",
+            "story": "dragon-knight",
+            "volume": "volume-01"
+          },
+          "text": {
+            "en": "No manuscript fact is stored here. Released Lexicon fragments will later use this same reveal gate.",
+            "de": "Hier ist keine Manuskriptinformation gespeichert. Veröffentlichte Lexikon-Fragmente werden später dieselbe Freigaberegel verwenden."
+          }
+        }
+      ]
+    },
+    {
+      "id": "prototype-full-spoilers-entry",
+      "prototypeOnly": true,
+      "categories": ["mythology"],
+      "visibility": { "mode": "full-spoilers" },
+      "labels": {
+        "en": {
+          "title": "Future knowledge placeholder",
+          "summary": "A non-canon development entry visible only when Full Spoilers is enabled."
+        },
+        "de": {
+          "title": "Platzhalter für späteres Wissen",
+          "summary": "Ein nicht-kanonischer Entwicklungseintrag, der nur bei aktivierten vollständigen Spoilern sichtbar ist."
+        }
+      },
+      "fragments": [
+        {
+          "id": "prototype-full-spoilers-fragment",
+          "visibility": { "mode": "full-spoilers" },
+          "text": {
+            "en": "This entry exists only to exercise the Full Spoilers path. It does not describe future Telanas canon.",
+            "de": "Dieser Eintrag dient nur zum Testen des Modus für vollständige Spoiler. Er beschreibt keinen zukünftigen Telanas-Kanon."
+          }
+        }
+      ]
+    }
+  ]
+}
