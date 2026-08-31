@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "world": "telanas",
+  "story": "dragon-knight",
+  "id": "volume-01",
+  "state": "prototype",
+  "contentMode": "placeholder",
+  "locales": [
+    "en",
+    "de"
+  ],
+  "labels": {
+    "en": {
+      "world": "Telanas",
+      "series": "The Dragon Knight",
+      "volume": "Volume 1 — Home",
+      "contents": "Contents"
+    },
+    "de": {
+      "world": "Telanas",
+      "series": "Der Drachenritter",
+      "volume": "Band 1 — Zuhause",
+      "contents": "Inhalt"
+    }
+  },
+  "chapters": [
+    {
+      "id": "dk-v01-prologue",
+      "slug": "prologue",
+      "labels": {
+        "en": "Prologue",
+        "de": "Prolog"
+      }
+    },
+    {
+      "id": "dk-v01-ch01",
+      "slug": "chapter-1",
+      "labels": {
+        "en": "Chapter 1",
+        "de": "Kapitel 1"
+      }
+    },
+    {
+      "id": "dk-v01-ch02",
+      "slug": "chapter-2",
+      "labels": {
+        "en": "Chapter 2",
+        "de": "Kapitel 2"
+      }
+    },
+    {
+      "id": "dk-v01-ch03",
+      "slug": "chapter-3",
+      "labels": {
+        "en": "Chapter 3",
+        "de": "Kapitel 3"
+      }
+    }
+  ]
+}
