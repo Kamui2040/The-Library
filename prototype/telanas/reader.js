@@ -7,6 +7,7 @@
   const panel = document.querySelector("[data-toc-panel]");
   const tocList = document.querySelector("[data-reader-toc-list]");
   const tocHeading = document.querySelector("[data-toc-heading]");
+  const bookStage = document.querySelector(".book-stage");
   const spread = document.querySelector("[data-book-spread]");
   const leftPage = document.querySelector("[data-book-page='left']");
   const rightPage = document.querySelector("[data-book-page='right']");
@@ -18,7 +19,7 @@
   const nextButton = document.querySelector("[data-page-next]");
 
   if (
-    !engine || !dock || !toggle || !panel || !tocList || !tocHeading || !spread ||
+    !engine || !dock || !toggle || !panel || !tocList || !tocHeading || !bookStage || !spread ||
     !leftPage || !rightPage || !probe || !positionLabel || !modeLabel || !titleLabel ||
     !previousButton || !nextButton
   ) return;
@@ -371,6 +372,40 @@
     updatePagedStatus();
   };
 
+  const turnPage = (direction) => {
+    if (layoutPreference === "continuous") return;
+    if (direction < 0) {
+      if (!previousButton.disabled) renderPagedAt(currentPageIndex - pageStep());
+      return;
+    }
+    if (!nextButton.disabled) renderPagedAt(currentPageIndex + pageStep());
+  };
+
+  const isInteractiveTarget = (target) => (
+    target instanceof Element && Boolean(
+      target.closest("button, a, input, select, textarea, summary, label, [contenteditable='true']"),
+    )
+  );
+
+  const handlePageClick = (event) => {
+    if (layoutPreference === "continuous" || event.button !== 0 || isInteractiveTarget(event.target)) return;
+
+    const selection = window.getSelection();
+    if (selection && !selection.isCollapsed && selection.toString().trim()) return;
+
+    if (effectiveSpread()) {
+      if (leftPage.contains(event.target)) turnPage(-1);
+      else if (rightPage.contains(event.target)) turnPage(1);
+      return;
+    }
+
+    const rect = leftPage.getBoundingClientRect();
+    if (event.clientY < rect.top || event.clientY > rect.bottom) return;
+
+    const midpoint = rect.left + rect.width / 2;
+    turnPage(event.clientX < midpoint ? -1 : 1);
+  };
+
   const disconnectScrollTracking = () => {
     if (scrollObserver) scrollObserver.disconnect();
     scrollObserver = null;
@@ -586,14 +621,14 @@
     if (button) navigate(button.dataset.inlineTarget);
   });
 
+  bookStage.addEventListener("click", handlePageClick);
+
   previousButton.addEventListener("click", () => {
-    if (layoutPreference === "continuous") return;
-    renderPagedAt(currentPageIndex - pageStep());
+    turnPage(-1);
   });
 
   nextButton.addEventListener("click", () => {
-    if (layoutPreference === "continuous") return;
-    renderPagedAt(currentPageIndex + pageStep());
+    turnPage(1);
   });
 
   document.addEventListener("keydown", (event) => {
@@ -609,13 +644,13 @@
     const tag = document.activeElement?.tagName;
     if (["INPUT", "SELECT", "TEXTAREA"].includes(tag)) return;
 
-    if (event.key === "ArrowLeft" && !previousButton.disabled) {
+    if (event.key === "ArrowLeft") {
       event.preventDefault();
-      renderPagedAt(currentPageIndex - pageStep());
+      turnPage(-1);
     }
-    if (event.key === "ArrowRight" && !nextButton.disabled) {
+    if (event.key === "ArrowRight") {
       event.preventDefault();
-      renderPagedAt(currentPageIndex + pageStep());
+      turnPage(1);
     }
   });
 
