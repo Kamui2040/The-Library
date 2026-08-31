@@ -5,6 +5,7 @@
   "theme": "telanas",
   "locales": ["en", "de"],
   "lexicon": "lexicon/lexicon.json",
+  "timeline": "timeline/timeline.json",
   "stories": [
     {
       "id": "dragon-knight",

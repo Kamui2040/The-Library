@@ -14,6 +14,7 @@ The Library may contain:
 - public world/story/book metadata;
 - approved released text;
 - approved public Lexicon fragments;
+- approved public timeline events;
 - approved public updates/download metadata;
 - approved assets with usable rights/provenance;
 - development placeholders that reveal no private story material.
@@ -52,9 +53,11 @@ Library
     │       ├── chapter
     │       │   └── semantic reader block
     │       └── localized edition
-    └── Lexicon
-        └── entry
-            └── reveal-gated fragment
+    ├── Lexicon
+    │   └── entry
+    │       └── reveal-gated fragment
+    └── Timeline
+        └── reveal-gated event
 ```
 
 Stable IDs are language-independent. Localized display text lives alongside those IDs.
@@ -121,7 +124,7 @@ Current illustration placements are:
 
 `before-title` exists specifically so an opening sequence can remain **illustration page → chapter title page → chapter text** while still using semantic anchors rather than fixed rendered page numbers. Continuous mode preserves the same logical order.
 
-Illustration blocks are ordinary semantic anchors. Bookmarks, Lexicon reader links, language changes, layout changes, and repagination may resolve directly to them in the same way as paragraph and scene anchors.
+Illustration blocks are ordinary semantic anchors. Bookmarks, Lexicon reader links, timeline reader links, language changes, layout changes, and repagination may resolve directly to them in the same way as paragraph and scene anchors.
 
 Chapter IDs and block IDs are canonical semantic positions. Localized editions must use the same chapter IDs, block IDs, block types, and order. Illustration asset references and placements must also match. Only localized text differs.
 
@@ -165,7 +168,25 @@ Visible relationship controls may navigate to the target entry inside the curren
 
 Prototype-only Lexicon entries may be used to exercise reveal, reader-link, and relationship behavior, but they must be clearly marked as prototype data and must not contain unreleased story lore.
 
-## 8. Release bundle boundary
+## 8. Timeline manifest
+
+A world may reference one public timeline manifest. Timeline events are ordinary public data and use the same spoiler-profile contract as the Lexicon.
+
+Each timeline event owns:
+
+- a stable event ID;
+- a stable integer `order` used only to arrange currently visible events;
+- a visibility rule;
+- localized period, title, and summary text;
+- optional semantic reader links.
+
+Event existence is filtered **before** timeline rendering or search. A hidden event contributes no period label, title, summary, reader-link label, placeholder, count, gap marker, or search term. The visible timeline is therefore intentionally incomplete when later chronology is still spoiler-gated; the site must not hint that hidden events exist between visible events.
+
+Timeline reader links use the same stable story/book/anchor model as Lexicon reader links. They store no rendered page number and no arbitrary URL, and the target anchor must exist in every timeline locale exposed by the target book.
+
+Prototype timeline events must be marked `prototypeOnly` and contain neutral development text rather than real chronology, manuscript events, or future canon.
+
+## 9. Release bundle boundary
 
 The private source side produces a **release bundle**. The Library consumes that bundle instead of reading the private repository directly.
 
@@ -196,7 +217,7 @@ Reader-edition files and approved illustration assets may travel in the same det
 
 The neutral fixture at `fixtures/release-bundles/telanas-volume-01-prototype/` proves this transport contract without using manuscript prose or private lore.
 
-## 9. Import behavior
+## 10. Import behavior
 
 Validate any supplied bundle with:
 
@@ -222,13 +243,13 @@ Writing requires the explicit `--apply` flag. Replacing an existing target with 
 
 Importing a bundle changes only the working repository content. It does **not** approve deployment, make the repository public, create a release, or publish the site. Repository validation and normal review still follow before acceptance.
 
-## 10. Validation
+## 11. Validation
 
-`npm run validate` runs the dependency-free public-content validator, the semantic Lexicon reader-link validator, the semantic Lexicon relationship validator, and the neutral release-bundle fixture validator.
+`npm run validate` runs the dependency-free public-content validator, semantic Lexicon reader-link validator, semantic Lexicon relationship validator, spoiler-safe timeline validator, and neutral release-bundle fixture validator.
 
 The validators check:
 
-- Library/world/book/Lexicon manifest references resolve;
+- Library/world/book/Lexicon/timeline manifest references resolve;
 - stable IDs and slugs use safe formats and remain unique in their scope;
 - manifest states use the allowed state set;
 - enabled locales are known to the Library/world;
@@ -249,16 +270,21 @@ The validators check:
 - every semantic Lexicon reader link resolves to an existing story, book, and anchor in every relevant locale;
 - Lexicon reader links use stable IDs rather than stored URLs or rendered page numbers;
 - Lexicon relationships use stable IDs, resolve to existing entries, and do not store URLs;
-- prototype Full Spoilers entries are explicitly marked `prototypeOnly`;
-- duplicate world/story/book/chapter/reader-anchor/Lexicon/link/relationship IDs are rejected.
+- timeline event IDs and ordering values are unique;
+- timeline localized period/title/summary text is complete;
+- timeline reveal gates resolve to existing public stories and volumes;
+- timeline reader links resolve to stable story/book/anchor targets in every relevant locale and store no URLs;
+- prototype timeline events are explicitly marked `prototypeOnly`;
+- prototype Full Spoilers Lexicon entries are explicitly marked `prototypeOnly`;
+- duplicate world/story/book/chapter/reader-anchor/Lexicon/link/relationship/timeline IDs are rejected.
 
 The release-bundle validator independently checks the deterministic transport envelope and file hashes before any import is allowed.
 
 Validation cannot establish illustration ownership or publication rights; those remain a manual acceptance gate.
 
-Validation will expand when real release text, production illustrations, cross-story reveal rules, and more complex relationship types are introduced.
+Validation will expand when real release text, production illustrations, cross-story reveal rules, real timeline chronology, and more complex relationship types are introduced.
 
-## 11. Publication acceptance
+## 12. Publication acceptance
 
 Before any actual story release is accepted into The Library, review must separately confirm:
 
