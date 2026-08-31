@@ -29,7 +29,8 @@
       empty: "No entries match this view.",
       loading: "Loading Lexicon…",
       error: "The Lexicon could not be loaded.",
-      prototype: "Prototype"
+      prototype: "Prototype",
+      related: "Related"
     },
     de: {
       title: "Lexikon",
@@ -50,7 +51,8 @@
       empty: "Keine Einträge passen zu dieser Ansicht.",
       loading: "Lexikon wird geladen…",
       error: "Das Lexikon konnte nicht geladen werden.",
-      prototype: "Prototyp"
+      prototype: "Prototyp",
+      related: "Verwandt"
     }
   };
 
@@ -94,6 +96,10 @@
     return false;
   };
 
+  const rawEntry = (entryId) => (
+    (lexicon?.entries || []).find((entry) => entry.id === entryId) || null
+  );
+
   const localizedReaderLink = (link, lang) => {
     if (!link || volumeIndex(link.story, link.book) < 0) return null;
     const label = link.labels?.[lang];
@@ -105,6 +111,23 @@
       book: link.book,
       anchor: link.anchor,
       label
+    };
+  };
+
+  const localizedRelationship = (relationship, profile, lang) => {
+    const target = rawEntry(relationship?.target);
+    if (!target || !visibilityAllowed(target.visibility, profile)) return null;
+
+    const label = relationship.labels?.[lang];
+    const targetTitle = target.labels?.[lang]?.title;
+    if (typeof label !== "string" || !label.trim()) return null;
+    if (typeof targetTitle !== "string" || !targetTitle.trim()) return null;
+
+    return {
+      id: relationship.id,
+      target: target.id,
+      label,
+      targetTitle
     };
   };
 
@@ -131,13 +154,18 @@
       })
       .filter(Boolean);
 
+    const relationships = (entry.relationships || [])
+      .map((relationship) => localizedRelationship(relationship, profile, lang))
+      .filter(Boolean);
+
     return {
       id: entry.id,
       categories: entry.categories || [],
       prototypeOnly: entry.prototypeOnly === true,
       title: labels.title,
       summary: labels.summary,
-      fragments
+      fragments,
+      relationships
     };
   };
 
@@ -155,7 +183,8 @@
     const haystack = [
       entry.title,
       entry.summary,
-      ...entry.fragments.map((fragment) => fragment.text)
+      ...entry.fragments.map((fragment) => fragment.text),
+      ...entry.relationships.flatMap((relationship) => [relationship.label, relationship.targetTitle])
     ]
       .join(" ")
       .toLocaleLowerCase(language());
@@ -236,9 +265,61 @@
     return section;
   };
 
+  const focusEntry = (entryId) => {
+    activeCategory = "all";
+    query = "";
+    searchInput.value = "";
+    render();
+
+    requestAnimationFrame(() => {
+      const target = resultsNode.querySelector(`[data-lexicon-entry='${entryId}']`);
+      if (!target) return;
+      target.scrollIntoView({ block: "center", behavior: "smooth" });
+      target.focus({ preventScroll: true });
+    });
+  };
+
+  const renderRelationship = (relationship) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "lexicon-relationship";
+    button.dataset.relationshipTarget = relationship.target;
+
+    const label = document.createElement("span");
+    label.textContent = relationship.label;
+    const target = document.createElement("strong");
+    target.textContent = relationship.targetTitle;
+    const arrow = document.createElement("span");
+    arrow.setAttribute("aria-hidden", "true");
+    arrow.textContent = "→";
+
+    button.append(label, target, arrow);
+    button.addEventListener("click", () => focusEntry(relationship.target));
+    return button;
+  };
+
+  const renderRelationships = (relationships) => {
+    if (relationships.length === 0) return null;
+
+    const section = document.createElement("section");
+    section.className = "lexicon-relationships";
+
+    const heading = document.createElement("h4");
+    heading.textContent = ui[language()].related;
+
+    const links = document.createElement("div");
+    links.className = "lexicon-relationship-list";
+    links.append(...relationships.map(renderRelationship));
+
+    section.append(heading, links);
+    return section;
+  };
+
   const renderEntry = (entry) => {
     const article = document.createElement("article");
     article.className = "lexicon-entry framed-panel";
+    article.dataset.lexiconEntry = entry.id;
+    article.tabIndex = -1;
 
     const headingRow = document.createElement("div");
     headingRow.className = "lexicon-entry-heading";
@@ -259,6 +340,8 @@
     summary.textContent = entry.summary;
 
     article.append(headingRow, summary, ...entry.fragments.map(renderFragment));
+    const relationships = renderRelationships(entry.relationships);
+    if (relationships) article.append(relationships);
     return article;
   };
 
