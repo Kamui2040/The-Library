@@ -39,9 +39,11 @@ It contains no unreleased manuscript text, private lore, or production story art
   - spine-anchored soft page turns in paged layouts, with reduced-motion fallback
 - semantic illustration blocks:
   - assets are registered once in the book manifest
-  - localized editions place illustrations in the content sequence
+  - localized editions place illustrations in the semantic content sequence
   - `flow` illustrations paginate with surrounding content
-  - `full-page` illustrations occupy their own rendered page
+  - `full-page` illustrations occupy their own rendered page at their source position
+  - `before-title` illustrations occupy their own page before the generated chapter title page
+  - the Prologue prototype exercises the intended illustration page → chapter title page → chapter text sequence
   - localized alternative text and optional captions
   - neutral CSS placeholders test placement without committing story artwork
   - illustration anchors survive language, layout, and viewport changes
