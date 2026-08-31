@@ -115,6 +115,8 @@ Rendered pages are created dynamically by the browser. The prototype measures wh
 
 Reader position is stored by semantic anchor rather than rendered page number. Switching between spread, single-page, continuous, or localized editions therefore resolves the saved anchor again in the new presentation.
 
+Reader completion may advance the spoiler profile by stable world/story/book ID. The reader supports three user choices: ask for confirmation at the end, update automatically, or leave completion entirely manual in the Lexicon. Merely reaching the final rendered position does not change spoiler visibility unless automatic updating is enabled or the reader explicitly confirms the prompt. Completion is monotonic within a story: rereading an earlier volume must never lower a later completed volume. Layout-specific end detection never becomes a public content identifier; the saved completion value remains the stable book ID.
+
 ## 7. Lexicon manifest
 
 A world may reference one public Lexicon manifest.

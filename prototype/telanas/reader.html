@@ -10,13 +10,21 @@
   <link rel="stylesheet" href="reader-content.css">
   <link rel="stylesheet" href="reader-presentation.css">
   <link rel="stylesheet" href="reader-page-turn.css">
+  <link rel="stylesheet" href="reader-progress.css">
+  <script defer src="spoiler-profile.js"></script>
   <script defer src="site.js"></script>
   <script defer src="reader-engine.js"></script>
   <script defer src="reader-presentation.js"></script>
   <script defer src="reader-page-turn.js"></script>
+  <script defer src="reader-progress.js"></script>
   <script defer src="reader.js"></script>
 </head>
-<body class="reader-page" data-reader-theme="dark" data-reader-typeface="serif">
+<body
+  class="reader-page"
+  data-reader-theme="dark"
+  data-reader-typeface="serif"
+  data-reader-book-manifest="../../content/worlds/telanas/books/dragon-knight/volume-01/book.json"
+>
   <header class="reader-header">
     <div class="reader-header-inner">
       <a class="reader-home" href="index.html">← <span data-reader-back>Telanas</span></a>
@@ -61,6 +69,14 @@
                 <option value="2">Relaxed</option>
               </select>
             </label>
+            <label class="reader-setting">
+              <span data-reader-progress-setting-label>Spoiler progress</span>
+              <select data-reader-progress-mode>
+                <option value="ask" selected>Ask when a volume ends</option>
+                <option value="automatic">Update automatically</option>
+                <option value="manual">Manual in Lexicon</option>
+              </select>
+            </label>
           </div>
         </details>
 
@@ -100,6 +116,19 @@
         </div>
         <span data-reader-mode>Book spread</span>
       </div>
+
+      <section class="reader-completion" hidden data-reader-completion aria-live="polite" aria-labelledby="reader-completion-title">
+        <div class="reader-completion-copy">
+          <p class="eyebrow" data-reader-completion-eyebrow>Reading progress</p>
+          <h2 id="reader-completion-title" data-reader-completion-title>Mark this volume as finished?</h2>
+          <p class="reader-completion-text" data-reader-completion-text></p>
+        </div>
+        <div class="reader-completion-actions">
+          <button class="reader-tool reader-completion-primary" type="button" data-reader-mark-complete>Mark finished</button>
+          <button class="reader-tool" type="button" data-reader-dismiss-completion>Not now</button>
+          <a class="reader-completion-link" href="lexicon.html" data-reader-completion-lexicon>Open Lexicon</a>
+        </div>
+      </section>
     </section>
   </main>
 </body>
