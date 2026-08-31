@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="reader-presentation.css">
   <link rel="stylesheet" href="reader-page-turn.css">
   <link rel="stylesheet" href="reader-progress.css">
+  <link rel="stylesheet" href="reader-bookmarks.css">
   <script defer src="spoiler-profile.js"></script>
   <script defer src="site.js"></script>
   <script defer src="reader-engine.js"></script>
@@ -18,6 +19,7 @@
   <script defer src="reader-page-turn.js"></script>
   <script defer src="reader-progress.js"></script>
   <script defer src="reader.js"></script>
+  <script defer src="reader-bookmarks.js"></script>
 </head>
 <body
   class="reader-page"
@@ -33,6 +35,15 @@
         <button class="reader-tool" type="button" data-layout-button="spread" aria-pressed="true">Spread</button>
         <button class="reader-tool" type="button" data-layout-button="single" aria-pressed="false">Single</button>
         <button class="reader-tool" type="button" data-layout-button="continuous" aria-pressed="false">Continuous</button>
+        <button
+          class="reader-tool reader-bookmark-toggle"
+          type="button"
+          data-reader-bookmark-toggle
+          aria-pressed="false"
+          aria-label="Bookmark current place"
+          title="Bookmark current place"
+          disabled
+        ><span aria-hidden="true" data-reader-bookmark-icon>☆</span></button>
 
         <details class="reader-settings" data-reader-settings>
           <summary class="reader-tool reader-settings-toggle" data-reader-settings-toggle aria-label="Reader settings" title="Reader settings">Aa</summary>
@@ -97,6 +108,14 @@
       <aside class="toc-panel" id="reader-toc" aria-label="Table of contents" data-toc-panel>
         <p class="toc-heading" data-toc-heading>Contents</p>
         <nav class="toc-list" data-reader-toc-list></nav>
+        <section class="reader-bookmarks-panel" aria-labelledby="reader-bookmarks-heading">
+          <div class="reader-bookmarks-heading-row">
+            <p class="reader-bookmarks-heading" id="reader-bookmarks-heading" data-reader-bookmarks-heading>Bookmarks</p>
+            <span class="reader-bookmark-count" data-reader-bookmark-count aria-label="Saved bookmark count">0</span>
+          </div>
+          <p class="reader-bookmarks-empty" data-reader-bookmarks-empty>No saved places yet.</p>
+          <div class="reader-bookmark-list" data-reader-bookmarks-list hidden></div>
+        </section>
       </aside>
     </div>
 
