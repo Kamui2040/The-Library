@@ -143,22 +143,6 @@
   border-color: var(--metal);
 }
 
-.book-stage,
-.book-spread {
-  position: relative;
-}
-
-.reader-transition-overlay {
-  margin: 0 !important;
-  pointer-events: none !important;
-  user-select: none !important;
-  z-index: 11;
-}
-
-.reader-fade-overlay .book-page {
-  pointer-events: none;
-}
-
 @media (max-width: 980px) {
   .reader-settings-panel {
     position: fixed;
@@ -182,11 +166,5 @@
   .reader-setting {
     grid-template-columns: 1fr;
     gap: 5px;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .reader-transition-overlay {
-    display: none !important;
   }
 }
