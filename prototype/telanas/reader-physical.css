@@ -1,24 +1,15 @@
 /* Physical-book cues layered on top of the reader presentation system. */
 
 .book-spread {
-  --reader-left-stack-depth: 0px;
-  --reader-left-stack-drop: 0px;
-  --reader-left-stack-opacity: 0;
-  --reader-right-stack-depth: 0px;
-  --reader-right-stack-drop: 0px;
-  --reader-right-stack-opacity: 0;
   isolation: isolate;
 }
 
-.book-spread::before,
-.book-spread::after {
-  content: "";
+.reader-page-stack {
   position: absolute;
-  top: 3px;
-  bottom: -3px;
-  width: 50%;
-  pointer-events: none;
   z-index: 0;
+  box-sizing: border-box;
+  pointer-events: none;
+  overflow: hidden;
   border: 1px solid var(--border-soft);
   background:
     repeating-linear-gradient(
@@ -29,19 +20,8 @@
       var(--surface-soft) 2px
     );
   box-shadow: 0 7px 16px rgba(0,0,0,.12);
+  opacity: 0;
   transition: transform 180ms ease-out, opacity 180ms ease-out;
-}
-
-.book-spread::before {
-  left: 0;
-  opacity: var(--reader-left-stack-opacity);
-  transform: translateX(calc(0px - var(--reader-left-stack-depth))) translateY(var(--reader-left-stack-drop));
-}
-
-.book-spread::after {
-  right: 0;
-  opacity: var(--reader-right-stack-opacity);
-  transform: translateX(var(--reader-right-stack-depth)) translateY(var(--reader-right-stack-drop));
 }
 
 .book-spread > .book-page {
@@ -49,13 +29,7 @@
   z-index: 2;
 }
 
-.book-spread.single::before,
-.book-spread.single::after {
-  width: 100%;
-}
-
-.book-spread.continuous::before,
-.book-spread.continuous::after {
+.book-spread.continuous > .reader-page-stack {
   display: none;
 }
 
