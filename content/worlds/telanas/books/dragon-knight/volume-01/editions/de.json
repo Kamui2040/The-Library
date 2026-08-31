@@ -22,6 +22,14 @@
           "text": "Eine gerenderte Seite ist nur vorübergehende Darstellung. Breitere Bildschirme können mehr Text aufnehmen, kleinere weniger, und ein Wechsel von Sprache oder Layout kann eine andere Seitenzahl erzeugen, ohne die Identität dieses Absatzes zu verändern."
         },
         {
+          "id": "dk-v01-prologue-i001",
+          "type": "illustration",
+          "asset": "dk-v01-prototype-full-page",
+          "placement": "full-page",
+          "alt": "Neutraler Prototyp-Platzhalter für eine eigene ganzseitige Illustrationsposition.",
+          "caption": "Prototypischer Marker für eine ganzseitige Illustration."
+        },
+        {
           "id": "dk-v01-prologue-s02",
           "type": "scene-break"
         },
@@ -99,6 +107,14 @@
           "text": "Ein Wechsel der Ansicht erzeugt keine neue kanonische Position. Vor dem Neuaufbau merkt sich der Reader den nächsten semantischen Anker und löst ihn anschließend im neuen Layout wieder auf. So verändert sich die Darstellung um den Leser herum, ohne seinen Platz zu verlieren."
         },
         {
+          "id": "dk-v01-ch02-i001",
+          "type": "illustration",
+          "asset": "dk-v01-prototype-flow",
+          "placement": "flow",
+          "alt": "Neutraler Prototyp-Platzhalter innerhalb des fortlaufenden Lesetextes.",
+          "caption": "Prototypischer Marker für eine Illustration im Lesefluss."
+        },
+        {
           "id": "dk-v01-ch02-p004",
           "type": "paragraph",
           "text": "Dasselbe Prinzip gilt bei einer Änderung der Fenstergröße. Neuumbruch ist erwartet und unproblematisch. Eine vorübergehende Seitenzahl kann steigen oder sinken, während ein stabiler Anker weiterhin denselben Teil der öffentlichen Ausgabe bezeichnet."
@@ -135,7 +151,7 @@
         {
           "id": "dk-v01-ch03-p004",
           "type": "paragraph",
-          "text": "Dieser Prototyp enthält weiterhin keinen echten Manuskripttext, keine endgültige Typografie, keine Illustrationen und keine Umblättereffekte. Diese Elemente können später ergänzt werden, ohne das hier getestete semantische Modell zu schwächen oder unveröffentlichtes kreatives Material offenzulegen."
+          "text": "Dieser Prototyp enthält weiterhin keinen echten Manuskripttext, keine endgültige Typografie und keine fertigen Illustrationsdateien. Neutrale semantische Platzhalter können Illustrationspositionen markieren, ohne unveröffentlichtes kreatives Material offenzulegen."
         },
         {
           "id": "dk-v01-ch03-p005",
