@@ -40,6 +40,9 @@ It intentionally contains no unreleased manuscript text, private lore, or produc
   - previous/next controls, page-click navigation, and left/right arrow-key paging
   - persistent reading position stored as a semantic anchor, never a rendered page number
   - language and layout changes restore the nearest stable semantic location
+  - multiple local bookmarks store only stable world/story/book and semantic-anchor identities
+  - bookmark labels are rebuilt from the current localized chapter navigation rather than saved page text or page numbers
+  - bookmarked places can be reopened after repagination or language/layout changes
   - dark, light, and parchment reader themes
   - serif/sans typeface, text-size, and line-spacing controls
   - a spine-anchored soft page turn for paged layouts, with reduced-motion fallback
@@ -68,6 +71,7 @@ It intentionally contains no unreleased manuscript text, private lore, or produc
   - tap `☰` to open/close on touch devices
   - `Escape` closes the panel
   - chapter selection resolves to stable semantic chapter IDs
+  - saved bookmarks are listed below the chapter navigation
   - Continuous mode keeps the control reachable while scrolling and uses available horizontal space when open
 
 ## Running the prototype
