@@ -109,17 +109,66 @@ The website must filter entries and fragments for the current spoiler profile **
 
 Prototype-only Lexicon entries may be used to exercise reveal behavior, but they must be clearly marked as prototype data and must not contain unreleased story lore.
 
-## 7. Import/export direction
+## 7. Release bundle boundary
 
-The eventual source-side publication step should produce a deterministic public bundle containing only explicitly selected release material. The Library consumes that bundle; it must not require direct unrestricted access to the private creative repository during normal website builds.
+The private source side produces a **release bundle**. The Library consumes that bundle instead of reading the private repository directly.
 
-A future exporter may verify private manuscript semantic markers before creating the bundle, but website code stays in The Library.
+A release bundle is a directory containing `bundle.json` plus only the selected public payload files. `bundle.json` identifies:
 
-## 8. Validation
+- schema and bundle ID;
+- content state;
+- source world/story/book and a release-selection ID;
+- target world/story/book;
+- every payload path;
+- the exact target path under `content/`;
+- a SHA-256 digest for every payload file.
 
-`npm run validate` runs the repository's dependency-free content validator.
+The bundle deliberately does not need to record private repository URLs, local checkout paths, Drive paths, or other internal topology.
 
-The validator currently checks:
+Version 1 accepts bundle states `prototype`, `approved`, and `published`. The Library tooling accepts `prototype` bundles normally. `approved` or `published` bundles require the explicit `--allow-release-content` acknowledgement so actual release material cannot be imported accidentally during ordinary prototype work.
+
+Bundle validation rejects:
+
+- absolute paths, `..`, empty path segments, and targets outside `content/`;
+- symbolic-link payload files;
+- duplicate source or target paths;
+- missing or mismatched SHA-256 digests;
+- source/target world, story, or book mismatches;
+- known book/Lexicon payloads whose IDs or state do not match the bundle.
+
+The neutral fixture at `fixtures/release-bundles/telanas-volume-01-prototype/` proves this transport contract without using manuscript prose or private lore.
+
+## 8. Import behavior
+
+Validate any supplied bundle with:
+
+```text
+node scripts/validate-release-bundle.mjs <bundle-directory>
+```
+
+For real approved/published release material, validation additionally requires:
+
+```text
+--allow-release-content
+```
+
+The importer is dry-run by default:
+
+```text
+npm run import:bundle -- <bundle-directory>
+```
+
+A dry run validates hashes and target safety, then reports what would change. It writes nothing.
+
+Writing requires the explicit `--apply` flag. Replacing an existing target with different bytes additionally requires `--replace`. If the target already has the expected SHA-256, the importer treats it as unchanged.
+
+Importing a bundle changes only the working repository content. It does **not** approve deployment, make the repository public, create a release, or publish the site. Repository validation and normal review still follow before acceptance.
+
+## 9. Validation
+
+`npm run validate` runs both the dependency-free public-content validator and the neutral release-bundle fixture validator.
+
+The content validator checks:
 
 - Library/world/book/Lexicon manifest references resolve;
 - stable IDs and slugs use safe formats and remain unique in their scope;
@@ -133,9 +182,11 @@ The validator currently checks:
 - prototype Full Spoilers entries are explicitly marked `prototypeOnly`;
 - duplicate world/story/book/chapter/Lexicon IDs are rejected.
 
-Validation will expand when real release bundles, illustrations, semantic anchors, relationships, and cross-story reveal rules are introduced.
+The release-bundle validator independently checks the deterministic transport envelope and file hashes before any import is allowed.
 
-## 9. Publication acceptance
+Validation will expand when real release text, illustrations, semantic anchors, relationships, and cross-story reveal rules are introduced.
+
+## 10. Publication acceptance
 
 Before any actual story release is accepted into The Library, review must separately confirm:
 
@@ -144,6 +195,7 @@ Before any actual story release is accepted into The Library, review must separa
 - spoiler boundary;
 - asset rights/provenance;
 - no private/unreleased material is included;
+- bundle hashes and target mapping are correct;
 - semantic references resolve;
 - reader/build checks pass;
 - deployment/publication approval has been given for any external release action.
