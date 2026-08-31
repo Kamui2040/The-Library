@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "kind": "library-release-bundle",
+  "bundleId": "telanas-dragon-knight-volume-01-prototype",
+  "state": "prototype",
+  "source": {
+    "world": "telanas",
+    "story": "dragon-knight",
+    "book": "volume-01",
+    "releaseId": "fixture-volume-01"
+  },
+  "target": {
+    "world": "telanas",
+    "story": "dragon-knight",
+    "book": "volume-01"
+  },
+  "files": [
+    {
+      "path": "payload/book.json",
+      "target": "content/worlds/telanas/books/dragon-knight/volume-01/book.json",
+      "sha256": "32e1ae0917db91c6c48e632531e56c37c6df69c397e5295fd47d173e27e34881"
+    },
+    {
+      "path": "payload/lexicon.json",
+      "target": "content/worlds/telanas/lexicon/lexicon.json",
+      "sha256": "23fe3b6fa52ab0d849fb2d856274d8655a1c42f85710a88fd8b608f2f2e47df9"
+    }
+  ]
+}
