@@ -1,0 +1,56 @@
+/* Semantic reader references attached only to already-visible Lexicon fragments. */
+
+.lexicon-fragment + .lexicon-fragment {
+  margin-top: 18px;
+  padding-top: 18px;
+  border-top: 1px solid var(--border-soft);
+}
+
+.lexicon-fragment > p {
+  margin-bottom: 0;
+}
+
+.lexicon-reader-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.lexicon-reader-link {
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 7px 12px;
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--surface-raised) 82%, transparent);
+  color: var(--metal);
+  text-decoration: none;
+  line-height: 1.35;
+}
+
+.lexicon-reader-link:hover,
+.lexicon-reader-link:focus-visible {
+  border-color: var(--metal);
+  background: color-mix(in srgb, var(--accent) 10%, var(--surface-raised));
+  color: var(--text);
+}
+
+.lexicon-reader-link span {
+  flex: 0 0 auto;
+  transition: transform 120ms ease;
+}
+
+.lexicon-reader-link:hover span,
+.lexicon-reader-link:focus-visible span {
+  transform: translateX(2px);
+}
+
+@media (max-width: 560px) {
+  .lexicon-reader-link {
+    width: 100%;
+    justify-content: space-between;
+  }
+}

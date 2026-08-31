@@ -76,7 +76,7 @@
 
   const volumeIndex = (storyId, volumeId) => {
     const story = world?.stories?.find((item) => item.id === storyId);
-    if (!story) return -1;
+    if (!Array.isArray(story?.books)) return -1;
     return story.books.findIndex((book) => book.id === volumeId);
   };
 
@@ -94,6 +94,20 @@
     return false;
   };
 
+  const localizedReaderLink = (link, lang) => {
+    if (!link || volumeIndex(link.story, link.book) < 0) return null;
+    const label = link.labels?.[lang];
+    if (typeof label !== "string" || !label.trim()) return null;
+
+    return {
+      id: link.id,
+      story: link.story,
+      book: link.book,
+      anchor: link.anchor,
+      label
+    };
+  };
+
   const localizedEntry = (entry, profile) => {
     if (!visibilityAllowed(entry.visibility, profile)) return null;
 
@@ -103,8 +117,19 @@
 
     const fragments = (entry.fragments || [])
       .filter((fragment) => visibilityAllowed(fragment.visibility, profile))
-      .map((fragment) => fragment.text?.[lang])
-      .filter((text) => typeof text === "string" && text.trim());
+      .map((fragment) => {
+        const text = fragment.text?.[lang];
+        if (typeof text !== "string" || !text.trim()) return null;
+
+        return {
+          id: fragment.id,
+          text,
+          readerLinks: (fragment.readerLinks || [])
+            .map((link) => localizedReaderLink(link, lang))
+            .filter(Boolean)
+        };
+      })
+      .filter(Boolean);
 
     return {
       id: entry.id,
@@ -127,7 +152,11 @@
     if (activeCategory !== "all" && !entry.categories.includes(activeCategory)) return false;
     if (!query) return true;
 
-    const haystack = [entry.title, entry.summary, ...entry.fragments]
+    const haystack = [
+      entry.title,
+      entry.summary,
+      ...entry.fragments.map((fragment) => fragment.text)
+    ]
       .join(" ")
       .toLocaleLowerCase(language());
     return haystack.includes(query);
@@ -164,6 +193,49 @@
     void entries;
   };
 
+  const readerHref = (link) => {
+    const parameters = new URLSearchParams({
+      world: lexicon.world,
+      story: link.story,
+      book: link.book,
+      source: "lexicon"
+    });
+    return `reader.html?${parameters.toString()}#${encodeURIComponent(link.anchor)}`;
+  };
+
+  const renderReaderLink = (link) => {
+    const anchor = document.createElement("a");
+    anchor.className = "lexicon-reader-link";
+    anchor.href = readerHref(link);
+    anchor.dataset.readerReference = link.id;
+    anchor.textContent = link.label;
+
+    const arrow = document.createElement("span");
+    arrow.setAttribute("aria-hidden", "true");
+    arrow.textContent = "→";
+    anchor.append(arrow);
+    return anchor;
+  };
+
+  const renderFragment = (fragment) => {
+    const section = document.createElement("section");
+    section.className = "lexicon-fragment";
+    section.dataset.lexiconFragment = fragment.id;
+
+    const paragraph = document.createElement("p");
+    paragraph.textContent = fragment.text;
+    section.append(paragraph);
+
+    if (fragment.readerLinks.length > 0) {
+      const links = document.createElement("div");
+      links.className = "lexicon-reader-links";
+      links.append(...fragment.readerLinks.map(renderReaderLink));
+      section.append(links);
+    }
+
+    return section;
+  };
+
   const renderEntry = (entry) => {
     const article = document.createElement("article");
     article.className = "lexicon-entry framed-panel";
@@ -186,14 +258,7 @@
     summary.className = "lexicon-entry-summary";
     summary.textContent = entry.summary;
 
-    article.append(headingRow, summary);
-
-    for (const text of entry.fragments) {
-      const paragraph = document.createElement("p");
-      paragraph.textContent = text;
-      article.append(paragraph);
-    }
-
+    article.append(headingRow, summary, ...entry.fragments.map(renderFragment));
     return article;
   };
 
