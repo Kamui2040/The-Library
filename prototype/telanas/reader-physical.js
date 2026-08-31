@@ -15,6 +15,15 @@
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   const wideSpread = window.matchMedia("(min-width: 981px)");
 
+  const leftStack = document.createElement("span");
+  const rightStack = document.createElement("span");
+  leftStack.className = "reader-page-stack reader-page-stack--left";
+  rightStack.className = "reader-page-stack reader-page-stack--right";
+  leftStack.setAttribute("aria-hidden", "true");
+  rightStack.setAttribute("aria-hidden", "true");
+  spread.prepend(rightStack);
+  spread.prepend(leftStack);
+
   const effectiveSpread = () => (
     !spread.classList.contains("single") && !spread.classList.contains("continuous") && wideSpread.matches
   );
@@ -31,45 +40,76 @@
 
   const stackDepth = (pageCount) => {
     if (pageCount <= 0) return 0;
-    return Math.min(11, 1.5 + Math.log2(pageCount + 1) * 2.15);
+    return Math.min(10, 1.2 + Math.log2(pageCount + 1) * 1.8);
   };
 
-  const setStack = (side, pageCount) => {
-    const depth = stackDepth(pageCount);
-    spread.style.setProperty(`--reader-${side}-stack-depth`, `${depth.toFixed(2)}px`);
-    spread.style.setProperty(`--reader-${side}-stack-drop`, `${(depth * 0.58).toFixed(2)}px`);
-    spread.style.setProperty(`--reader-${side}-stack-opacity`, pageCount > 0 ? "0.88" : "0");
-  };
-
-  const updatePageStacks = () => {
-    if (spread.classList.contains("continuous")) {
-      setStack("left", 0);
-      setStack("right", 0);
+  const positionStack = (stack, source, pageCount, side) => {
+    if (
+      spread.classList.contains("continuous") ||
+      pageCount <= 0 ||
+      !source ||
+      source.classList.contains("is-empty")
+    ) {
+      stack.style.opacity = "0";
       return;
     }
 
+    const spreadRect = spread.getBoundingClientRect();
+    const pageRect = source.getBoundingClientRect();
+    if (!pageRect.width || !pageRect.height) {
+      stack.style.opacity = "0";
+      return;
+    }
+
+    const depth = stackDepth(pageCount);
+    const drop = depth * 0.46;
+    Object.assign(stack.style, {
+      left: `${pageRect.left - spreadRect.left}px`,
+      top: `${pageRect.top - spreadRect.top}px`,
+      width: `${pageRect.width}px`,
+      height: `${pageRect.height}px`,
+      opacity: "0.88",
+      transform: side === "left"
+        ? `translate(${-depth}px, ${drop}px)`
+        : `translate(${depth}px, ${drop}px)`
+    });
+  };
+
+  const visiblePageNumbers = () => {
     const text = positionLabel.textContent || "";
     const pageText = text.split("·").pop() || text;
     const numbers = (pageText.match(/\d+/g) || []).map(Number);
 
-    let firstVisible;
-    let lastVisible;
-    let total;
-
     if (numbers.length >= 3) {
-      [firstVisible, lastVisible, total] = numbers.slice(-3);
-    } else if (numbers.length === 2) {
-      [firstVisible, total] = numbers;
-      lastVisible = firstVisible;
-    } else {
-      setStack("left", 0);
-      setStack("right", 0);
+      const [firstVisible, lastVisible, total] = numbers.slice(-3);
+      return { firstVisible, lastVisible, total };
+    }
+
+    if (numbers.length === 2) {
+      const [firstVisible, total] = numbers;
+      return { firstVisible, lastVisible: firstVisible, total };
+    }
+
+    return null;
+  };
+
+  const updatePageStacks = () => {
+    const visible = visiblePageNumbers();
+    if (!visible || spread.classList.contains("continuous")) {
+      leftStack.style.opacity = "0";
+      rightStack.style.opacity = "0";
       return;
     }
 
-    setStack("left", Math.max(0, firstVisible - 1));
-    setStack("right", Math.max(0, total - lastVisible));
+    const leftCount = Math.max(0, visible.firstVisible - 1);
+    const rightCount = Math.max(0, visible.total - visible.lastVisible);
+    const singleSource = leftPage;
+
+    positionStack(leftStack, effectiveSpread() ? leftPage : singleSource, leftCount, "left");
+    positionStack(rightStack, effectiveSpread() ? rightPage : singleSource, rightCount, "right");
   };
+
+  const scheduleStackUpdate = () => requestAnimationFrame(updatePageStacks);
 
   const clearPaperTurns = () => {
     document.querySelectorAll(".reader-paper-turn-overlay").forEach((node) => node.remove());
@@ -86,6 +126,7 @@
     const overlay = source.cloneNode(true);
     overlay.classList.add("reader-paper-turn-overlay");
     overlay.dataset.turnDirection = direction < 0 ? "backward" : "forward";
+    overlay.removeAttribute("data-book-page");
     overlay.setAttribute("aria-hidden", "true");
     overlay.querySelectorAll("[id]").forEach((node) => node.removeAttribute("id"));
 
@@ -224,17 +265,18 @@
     if (event.key === "ArrowRight" && !nextButton.disabled) preparePaperTurn(1);
   }, true);
 
-  new MutationObserver(updatePageStacks).observe(positionLabel, {
+  new MutationObserver(scheduleStackUpdate).observe(positionLabel, {
     childList: true,
     characterData: true,
     subtree: true
   });
 
-  new MutationObserver(updatePageStacks).observe(spread, {
+  new MutationObserver(scheduleStackUpdate).observe(spread, {
     attributes: true,
     attributeFilter: ["class"]
   });
 
+  window.addEventListener("resize", scheduleStackUpdate);
   reducedMotion.addEventListener("change", clearPaperTurns);
-  updatePageStacks();
+  scheduleStackUpdate();
 })();
