@@ -1,0 +1,118 @@
+.reader-bookmark-toggle {
+  min-width: 44px;
+  padding-inline: 12px;
+  font-size: 1.08rem;
+}
+
+.reader-bookmark-toggle.is-bookmarked {
+  color: var(--platinum);
+  border-color: var(--metal);
+  background: color-mix(in srgb, var(--accent) 10%, var(--surface));
+}
+
+.reader-bookmarks-panel {
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border-soft);
+}
+
+.reader-bookmarks-heading-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.reader-bookmarks-heading {
+  margin: 0;
+  color: var(--platinum);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: .95rem;
+}
+
+.reader-bookmark-count {
+  min-width: 1.7rem;
+  min-height: 1.7rem;
+  display: inline-grid;
+  place-items: center;
+  border: 1px solid var(--border-soft);
+  color: var(--muted);
+  font-size: .72rem;
+}
+
+.reader-bookmarks-empty {
+  margin: 10px 0 0;
+  color: var(--muted);
+  font-size: .8rem;
+  line-height: 1.45;
+}
+
+.reader-bookmark-list {
+  display: grid;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.reader-bookmark-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 6px;
+  align-items: stretch;
+}
+
+.reader-bookmark-jump,
+.reader-bookmark-remove {
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--muted);
+}
+
+.reader-bookmark-jump {
+  min-width: 0;
+  display: grid;
+  gap: 2px;
+  padding: 8px 9px;
+  text-align: left;
+}
+
+.reader-bookmark-jump strong,
+.reader-bookmark-jump span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.reader-bookmark-jump strong {
+  color: var(--text);
+  font-size: .83rem;
+  font-weight: 600;
+}
+
+.reader-bookmark-jump span {
+  font-size: .72rem;
+}
+
+.reader-bookmark-remove {
+  width: 34px;
+  min-height: 38px;
+  display: grid;
+  place-items: center;
+  font-size: 1rem;
+}
+
+.reader-bookmark-jump:hover,
+.reader-bookmark-jump:focus-visible,
+.reader-bookmark-remove:hover,
+.reader-bookmark-remove:focus-visible {
+  border-color: var(--border);
+  background: color-mix(in srgb, var(--accent) 8%, var(--surface));
+  color: var(--text);
+}
+
+@media (max-width: 700px) {
+  .reader-bookmark-toggle {
+    min-width: 40px;
+    padding-inline: 10px;
+  }
+}
