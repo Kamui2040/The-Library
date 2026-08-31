@@ -207,7 +207,52 @@
     return element;
   };
 
+  const illustrationSource = (relativeSource) => {
+    const manifestAbsolute = new URL(manifestUrl, window.location.href);
+    return new URL(relativeSource, manifestAbsolute).href;
+  };
+
+  const makeIllustration = (block) => {
+    const figure = createAnchorElement(
+      "figure",
+      block.id,
+      block.chapterId,
+      `reader-illustration reader-illustration--${block.placement}`,
+    );
+    figure.style.setProperty("--reader-illustration-ratio", block.asset.aspectRatio.replace(":", " / "));
+
+    let media;
+    if (block.asset.mode === "image") {
+      media = document.createElement("img");
+      media.className = "reader-illustration-media";
+      media.src = illustrationSource(block.asset.src);
+      media.alt = block.alt;
+      media.loading = "lazy";
+      media.decoding = "async";
+    } else {
+      media = document.createElement("div");
+      media.className = "reader-illustration-media reader-illustration-placeholder";
+      media.setAttribute("role", "img");
+      media.setAttribute("aria-label", block.alt);
+      const mark = document.createElement("span");
+      mark.className = "reader-illustration-placeholder-mark";
+      mark.setAttribute("aria-hidden", "true");
+      mark.textContent = "◇";
+      media.append(mark);
+    }
+
+    figure.append(media);
+    if (block.caption) {
+      const caption = document.createElement("figcaption");
+      caption.textContent = block.caption;
+      figure.append(caption);
+    }
+    return figure;
+  };
+
   const renderBlock = (block) => {
+    if (block.type === "illustration") return makeIllustration(block);
+
     if (block.type === "scene-break") {
       const separator = createAnchorElement("div", block.id, block.chapterId, "reader-scene-break");
       separator.setAttribute("role", "separator");
@@ -297,13 +342,30 @@
     return probe.scrollHeight <= probe.clientHeight + 1;
   };
 
+  const beforeTitleBlocks = (chapter) => chapter.blocks.filter(
+    (block) => block.type === "illustration" && block.placement === "before-title",
+  );
+
+  const chapterBodyBlocks = (chapter) => chapter.blocks.filter(
+    (block) => !(block.type === "illustration" && block.placement === "before-title"),
+  );
+
   const buildPages = () => {
     prepareProbe();
     const built = [{ kind: "contents", anchor: "contents", chapterId: null, blocks: [] }];
 
     for (const chapter of model.chapters) {
+      for (const illustration of beforeTitleBlocks(chapter)) {
+        built.push({
+          kind: "body",
+          anchor: illustration.id,
+          chapterId: chapter.id,
+          blocks: [illustration],
+        });
+      }
+
       built.push({ kind: "chapter-title", anchor: chapter.id, chapterId: chapter.id, blocks: [] });
-      const bodyPages = engine.paginateBlocks(chapter.blocks, blocksFitPage);
+      const bodyPages = engine.paginateBlocks(chapterBodyBlocks(chapter), blocksFitPage);
       for (const blocks of bodyPages) {
         built.push({
           kind: "body",
@@ -325,6 +387,7 @@
       "chapter-title-page",
       "body-page",
       "continuous-page",
+      "illustration-page",
       "is-empty",
     );
 
@@ -346,6 +409,13 @@
     }
 
     node.classList.add("body-page");
+    if (
+      page.blocks?.length === 1 &&
+      page.blocks[0].type === "illustration" &&
+      page.blocks[0].placement !== "flow"
+    ) {
+      node.classList.add("illustration-page");
+    }
     node.append(...page.blocks.map(renderBlock));
   };
 
@@ -448,8 +518,8 @@
     disconnectScrollTracking();
     leftPage.replaceChildren();
     rightPage.replaceChildren();
-    leftPage.classList.remove("contents-page", "chapter-title-page", "body-page", "is-empty");
-    rightPage.classList.remove("contents-page", "chapter-title-page", "body-page", "continuous-page");
+    leftPage.classList.remove("contents-page", "chapter-title-page", "body-page", "illustration-page", "is-empty");
+    rightPage.classList.remove("contents-page", "chapter-title-page", "body-page", "continuous-page", "illustration-page");
     leftPage.classList.add("continuous-page");
     rightPage.classList.add("is-empty");
 
@@ -457,7 +527,11 @@
     for (const chapter of model.chapters) {
       const section = document.createElement("section");
       section.className = "reader-continuous-chapter";
-      section.append(makeChapterTitle(chapter), ...chapter.blocks.map(renderBlock));
+      section.append(
+        ...beforeTitleBlocks(chapter).map(renderBlock),
+        makeChapterTitle(chapter),
+        ...chapterBodyBlocks(chapter).map(renderBlock),
+      );
       leftPage.append(section);
     }
 
@@ -576,8 +650,8 @@
     tocList.replaceChildren();
     leftPage.replaceChildren();
     rightPage.replaceChildren();
-    leftPage.classList.remove("continuous-page");
-    rightPage.classList.remove("continuous-page");
+    leftPage.classList.remove("continuous-page", "illustration-page");
+    rightPage.classList.remove("continuous-page", "illustration-page");
     const heading = document.createElement("h1");
     heading.textContent = localCopy.loadError;
     const hint = document.createElement("p");
