@@ -1,12 +1,15 @@
-import { readFile } from "node:fs/promises";
+import { lstat, readFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const allowedStates = new Set(["development", "prototype", "approved", "published"]);
 const allowedVisibilityModes = new Set(["always", "completed-volume", "full-spoilers"]);
-const allowedReaderBlockTypes = new Set(["paragraph", "scene-break"]);
+const allowedReaderBlockTypes = new Set(["paragraph", "scene-break", "illustration"]);
+const allowedIllustrationModes = new Set(["placeholder", "image"]);
+const allowedIllustrationPlacements = new Set(["flow", "full-page", "before-title"]);
 const safeId = /^[a-z0-9][a-z0-9-]*$/;
+const aspectRatio = /^\d+(?:\.\d+)?:\d+(?:\.\d+)?$/;
 const forbiddenPrototypeKeys = new Set(["storyText", "prose", "paragraphs", "html", "markdown", "body"]);
 
 const fail = (message) => {
@@ -101,6 +104,8 @@ let worldCount = 0;
 let bookCount = 0;
 let chapterCount = 0;
 let readerEditionCount = 0;
+let illustrationAssetCount = 0;
+let illustrationBlockCount = 0;
 let lexiconEntryCount = 0;
 
 for (const worldRef of library.worlds) {
@@ -172,6 +177,39 @@ for (const worldRef of library.worlds) {
         assertRelativeManifest(book.editions[locale], `${bookPath} ${locale} reader edition`);
       }
 
+      const illustrationDefinitions = book.illustrations ?? [];
+      assert(Array.isArray(illustrationDefinitions), `${bookPath} illustrations must be an array`);
+      const illustrationAssets = new Map();
+      const bookDirectory = path.posix.dirname(bookPath);
+
+      for (const asset of illustrationDefinitions) {
+        assert(asset && typeof asset === "object" && !Array.isArray(asset), `${bookPath} has an invalid illustration asset`);
+        assertId(asset.id, `${bookPath} illustration asset id`);
+        assert(!illustrationAssets.has(asset.id), `${bookPath} has duplicate illustration asset: ${asset.id}`);
+        assert(allowedIllustrationModes.has(asset.mode), `${bookPath} illustration ${asset.id} has unsupported mode: ${asset.mode}`);
+        assert(typeof asset.aspectRatio === "string" && aspectRatio.test(asset.aspectRatio), `${bookPath} illustration ${asset.id} has invalid aspectRatio`);
+
+        if (asset.mode === "placeholder") {
+          assert(asset.prototypeOnly === true, `${bookPath} placeholder illustration ${asset.id} must be prototypeOnly`);
+          assert(["development", "prototype"].includes(book.state), `${bookPath} placeholder illustration ${asset.id} is not allowed in ${book.state} content`);
+          assert(asset.src === undefined, `${bookPath} placeholder illustration ${asset.id} must not store an image path`);
+        } else {
+          assertRelativeManifest(asset.src, `${bookPath} illustration ${asset.id} source`);
+          const assetPath = path.join(root, bookDirectory, asset.src);
+          let assetStat;
+          try {
+            assetStat = await lstat(assetPath);
+          } catch (error) {
+            fail(`Cannot read illustration asset ${assetPath}: ${error.message}`);
+          }
+          assert(!assetStat.isSymbolicLink(), `${bookPath} illustration ${asset.id} source must not be a symbolic link`);
+          assert(assetStat.isFile(), `${bookPath} illustration ${asset.id} source must be a regular file`);
+        }
+
+        illustrationAssets.set(asset.id, asset);
+        illustrationAssetCount += 1;
+      }
+
       const chapterIds = new Set();
       const chapterSlugs = new Set();
       for (const chapter of book.chapters) {
@@ -194,7 +232,6 @@ for (const worldRef of library.worlds) {
         assert(!forbidden, `${bookPath} placeholder manifest contains story-text field: ${forbidden}`);
       }
 
-      const bookDirectory = path.posix.dirname(bookPath);
       let baselineStructure = null;
       let baselineLocale = null;
 
@@ -229,6 +266,8 @@ for (const worldRef of library.worlds) {
           assert(Array.isArray(editionChapter.blocks), `${editionPath} ${expectedChapter.id} blocks must be an array`);
 
           structure.push(`chapter:${editionChapter.id}`);
+          let beforeTitleOpen = true;
+
           for (const block of editionChapter.blocks) {
             assert(block && typeof block === "object", `${editionPath} has invalid block in ${editionChapter.id}`);
             assertId(block.id, `Reader block id in ${editionChapter.id}`);
@@ -238,11 +277,31 @@ for (const worldRef of library.worlds) {
 
             if (block.type === "paragraph") {
               assertLocalizedString(block.text, `${editionPath} paragraph ${block.id} text`);
+              beforeTitleOpen = false;
+              structure.push(`${block.id}:${block.type}`);
             } else if (block.type === "scene-break") {
               assert(block.text === undefined || block.text === "", `${editionPath} scene break ${block.id} must not contain prose`);
+              beforeTitleOpen = false;
+              structure.push(`${block.id}:${block.type}`);
+            } else {
+              assertId(block.asset, `${editionPath} illustration ${block.id} asset`);
+              const asset = illustrationAssets.get(block.asset);
+              assert(asset, `${editionPath} illustration ${block.id} references unknown asset: ${block.asset}`);
+              assert(allowedIllustrationPlacements.has(block.placement), `${editionPath} illustration ${block.id} has unsupported placement: ${block.placement}`);
+              assertLocalizedString(block.alt, `${editionPath} illustration ${block.id} alt text`);
+              assert(
+                block.caption === undefined || (typeof block.caption === "string" && block.caption.trim()),
+                `${editionPath} illustration ${block.id} caption must be a non-empty string when present`,
+              );
+              assert(block.text === undefined || block.text === "", `${editionPath} illustration ${block.id} must not contain prose text`);
+              if (block.placement === "before-title") {
+                assert(beforeTitleOpen, `${editionPath} illustration ${block.id} before-title placement must precede chapter body blocks`);
+              } else {
+                beforeTitleOpen = false;
+              }
+              structure.push(`${block.id}:${block.type}:${block.asset}:${block.placement}`);
+              illustrationBlockCount += 1;
             }
-
-            structure.push(`${block.id}:${block.type}`);
           }
         }
 
@@ -328,5 +387,6 @@ for (const worldRef of library.worlds) {
 assert(worldIds.has(library.defaultWorld), `Default world does not exist: ${library.defaultWorld}`);
 console.log(
   `PASS: validated ${worldCount} world(s), ${bookCount} book(s), ${chapterCount} chapter(s), ` +
-  `${readerEditionCount} reader edition(s), ${lexiconEntryCount} Lexicon entry/entries`,
+  `${readerEditionCount} reader edition(s), ${illustrationAssetCount} illustration asset(s), ` +
+  `${illustrationBlockCount} illustration block(s), ${lexiconEntryCount} Lexicon entry/entries`,
 );

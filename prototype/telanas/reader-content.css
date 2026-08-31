@@ -110,6 +110,91 @@
   margin-bottom: 3rem;
 }
 
+.reader-illustration {
+  width: 100%;
+  margin: 1.75rem 0;
+  display: grid;
+  gap: .7rem;
+}
+
+.reader-illustration-media {
+  display: block;
+  width: 100%;
+  aspect-ratio: var(--reader-illustration-ratio, 3 / 2);
+  border: 1px solid var(--border-soft);
+  background: color-mix(in srgb, var(--surface) 82%, var(--page-surface));
+  object-fit: contain;
+}
+
+.reader-illustration-placeholder {
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  color: var(--metal);
+}
+
+.reader-illustration-placeholder::before,
+.reader-illustration-placeholder::after {
+  content: "";
+  position: absolute;
+  inset: 12%;
+  border: 1px solid color-mix(in srgb, var(--metal) 20%, transparent);
+  pointer-events: none;
+}
+
+.reader-illustration-placeholder::before {
+  transform: rotate(45deg) scale(.72);
+}
+
+.reader-illustration-placeholder::after {
+  inset: 27% 14%;
+  border-width: 1px 0;
+}
+
+.reader-illustration-placeholder-mark {
+  position: relative;
+  z-index: 1;
+  font-size: clamp(2rem, 7vw, 4.2rem);
+  opacity: .72;
+}
+
+.reader-illustration figcaption {
+  color: var(--muted);
+  font-size: .78rem;
+  line-height: 1.45;
+  text-align: center;
+}
+
+.illustration-page {
+  display: grid;
+  place-items: center;
+}
+
+.illustration-page .reader-illustration {
+  height: 100%;
+  margin: 0;
+  align-content: center;
+}
+
+.illustration-page .reader-illustration-media {
+  width: auto;
+  max-width: 100%;
+  height: calc(clamp(675px, 75vh, 900px) - clamp(118px, 12vw, 158px));
+  max-height: 100%;
+}
+
+.book-spread.continuous .reader-illustration {
+  width: min(100%, 42rem);
+  margin: 3rem auto;
+}
+
+.book-spread.continuous .reader-illustration--full-page .reader-illustration-media,
+.book-spread.continuous .reader-illustration--before-title .reader-illustration-media {
+  width: 100%;
+  height: auto;
+}
+
 .reader-pager {
   display: inline-flex;
   align-items: center;
@@ -161,6 +246,10 @@
 
   .book-page {
     min-height: min(675px, 78vh);
+  }
+
+  .illustration-page .reader-illustration-media {
+    height: calc(min(675px, 78vh) - 96px);
   }
 
   .reader-status {

@@ -1,7 +1,9 @@
 (() => {
   "use strict";
 
-  const supportedBlockTypes = new Set(["paragraph", "scene-break"]);
+  const supportedBlockTypes = new Set(["paragraph", "scene-break", "illustration"]);
+  const supportedIllustrationModes = new Set(["placeholder", "image"]);
+  const supportedIllustrationPlacements = new Set(["flow", "full-page", "before-title"]);
 
   const fail = (message) => {
     throw new Error(message);
@@ -21,6 +23,32 @@
     assert(Array.isArray(book.chapters), "Book chapters are missing");
     assert(Array.isArray(edition.chapters), "Reader edition chapters are missing");
     assert(book.chapters.length === edition.chapters.length, "Reader edition chapter count does not match book manifest");
+
+    const illustrationDefinitions = book.illustrations ?? [];
+    assert(Array.isArray(illustrationDefinitions), "Book illustrations must be an array");
+
+    const illustrations = new Map();
+    for (const asset of illustrationDefinitions) {
+      assert(asset && typeof asset === "object", "Invalid illustration asset in book manifest");
+      assert(typeof asset.id === "string" && asset.id, "Illustration asset id is missing");
+      assert(!illustrations.has(asset.id), `Duplicate illustration asset: ${asset.id}`);
+      assert(supportedIllustrationModes.has(asset.mode), `Unsupported illustration asset mode: ${asset.mode}`);
+      assert(
+        typeof asset.aspectRatio === "string" && /^\d+(?:\.\d+)?:\d+(?:\.\d+)?$/.test(asset.aspectRatio),
+        `Illustration asset ${asset.id} has an invalid aspect ratio`,
+      );
+      if (asset.mode === "image") {
+        assert(typeof asset.src === "string" && asset.src, `Illustration asset ${asset.id} source is missing`);
+      }
+
+      illustrations.set(asset.id, {
+        id: asset.id,
+        mode: asset.mode,
+        src: asset.mode === "image" ? asset.src : "",
+        aspectRatio: asset.aspectRatio,
+        prototypeOnly: asset.prototypeOnly === true
+      });
+    }
 
     const anchors = new Map();
     const slugs = new Map();
@@ -51,13 +79,40 @@
           assert(typeof block.text === "string" && block.text.trim(), `Reader paragraph ${block.id} text is missing`);
         }
 
+        let illustration = null;
+        if (block.type === "illustration") {
+          assert(typeof block.asset === "string" && block.asset, `Reader illustration ${block.id} asset is missing`);
+          illustration = illustrations.get(block.asset);
+          assert(illustration, `Reader illustration ${block.id} references unknown asset: ${block.asset}`);
+          assert(
+            supportedIllustrationPlacements.has(block.placement),
+            `Reader illustration ${block.id} has unsupported placement: ${block.placement}`,
+          );
+          assert(typeof block.alt === "string" && block.alt.trim(), `Reader illustration ${block.id} alt text is missing`);
+          assert(
+            block.caption === undefined || (typeof block.caption === "string" && block.caption.trim()),
+            `Reader illustration ${block.id} caption must be a non-empty string when present`,
+          );
+        }
+
         const normalized = {
           id: block.id,
           type: block.type,
           text: block.type === "paragraph" ? block.text : "",
           chapterId: chapter.id,
-          keepWithNext: block.type === "scene-break"
+          keepWithNext: block.type === "scene-break",
+          forceOwnPage: block.type === "illustration" && ["full-page", "before-title"].includes(block.placement)
         };
+
+        if (illustration) {
+          Object.assign(normalized, {
+            assetId: block.asset,
+            asset: illustration,
+            placement: block.placement,
+            alt: block.alt,
+            caption: block.caption || ""
+          });
+        }
         chapter.blocks.push(normalized);
         anchors.set(block.id, { chapterId: chapter.id, kind: block.type, blockIndex });
       });
@@ -92,6 +147,13 @@
     let current = [];
 
     for (const block of blocks) {
+      if (block.forceOwnPage) {
+        if (current.length) pages.push(current);
+        pages.push([block]);
+        current = [];
+        continue;
+      }
+
       if (current.length === 0) {
         current = [block];
         continue;

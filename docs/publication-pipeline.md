@@ -48,6 +48,7 @@ Library
 └── world
     ├── story
     │   └── book/volume
+    │       ├── illustration asset registry
     │       ├── chapter
     │       │   └── semantic reader block
     │       └── localized edition
@@ -84,9 +85,11 @@ A public book manifest owns reader-visible structure such as:
 - ordered chapter IDs/slugs;
 - localized chapter labels;
 - one public edition-file reference per released locale;
-- public illustration references when applicable.
+- a central registry of illustration assets used by the book.
 
 The reader-side table of contents and the integrated book Contents page both derive from this same ordered chapter list.
+
+Illustration assets use stable IDs. A production `image` asset stores one relative path and an aspect ratio in the book manifest. The path must stay inside the book content directory and resolve to a regular non-symlink file. A neutral `placeholder` asset is allowed only for development/prototype content, must be marked `prototypeOnly`, and stores no image path. Rights and provenance for production illustration files remain a separate acceptance requirement.
 
 Prototype manifests contain no real manuscript prose. They exist only to exercise the publication/reader structure safely.
 
@@ -102,16 +105,29 @@ A reader edition records:
 - the same ordered chapter IDs as the book manifest;
 - ordered semantic blocks inside each chapter.
 
-The initial public block types are:
+The public block types are:
 
 - `paragraph` — localized prose attached to a stable block ID;
-- `scene-break` — a structural anchor/separator containing no prose.
+- `scene-break` — a structural anchor/separator containing no prose;
+- `illustration` — a semantic visual position attached to a registered book illustration asset.
 
-Chapter IDs and block IDs are canonical semantic positions. Localized editions must use the same chapter IDs, block IDs, block types, and order. Only the localized text differs.
+An illustration block stores a stable block ID, asset ID, placement, localized alternative text, and an optional localized caption. Asset ID and placement must match across localized editions; alt text and captions may differ by language. The edition stores no arbitrary image URL and no rendered page number.
 
-The current prototype editions are explicitly `prototypeOnly` and contain neutral implementation text rather than Telanas manuscript material.
+Current illustration placements are:
 
-Rendered pages are created dynamically by the browser. The prototype measures whole semantic blocks against the current page surface, keeps chapter-title pages separate, and repaginates when layout, language, or viewport width changes. This first implementation does not split a paragraph across two rendered pages; a later renderer may become finer-grained without changing the stable anchors.
+- `flow` — participates in normal adaptive pagination at its semantic source position;
+- `full-page` — occupies its own rendered page at its semantic source position;
+- `before-title` — occupies its own page before the generated chapter title page.
+
+`before-title` exists specifically so an opening sequence can remain **illustration page → chapter title page → chapter text** while still using semantic anchors rather than fixed rendered page numbers. Continuous mode preserves the same logical order.
+
+Illustration blocks are ordinary semantic anchors. Bookmarks, Lexicon reader links, language changes, layout changes, and repagination may resolve directly to them in the same way as paragraph and scene anchors.
+
+Chapter IDs and block IDs are canonical semantic positions. Localized editions must use the same chapter IDs, block IDs, block types, and order. Illustration asset references and placements must also match. Only localized text differs.
+
+The current prototype editions are explicitly `prototypeOnly` and contain neutral implementation text and neutral illustration placeholders rather than Telanas manuscript or story artwork.
+
+Rendered pages are created dynamically by the browser. The prototype measures whole semantic blocks against the current page surface, keeps chapter-title pages separate, gives `full-page`/`before-title` illustration blocks dedicated pages, and repaginates when layout, language, viewport width, or typography changes. This first implementation does not split a paragraph across two rendered pages; a later renderer may become finer-grained without changing the stable anchors.
 
 Reader position is stored by semantic anchor rather than rendered page number. Switching between spread, single-page, continuous, or localized editions therefore resolves the saved anchor again in the new presentation.
 
@@ -140,7 +156,7 @@ The website must filter entries and fragments for the current spoiler profile **
 
 A fragment may contain a `readerLinks` array. Each reader link uses a stable link ID, target story ID, target book ID, semantic anchor, and one display label per Lexicon locale. The manifest stores no rendered page number and no arbitrary URL. The website derives the reader route from the stable IDs and opens the target anchor through the reader's normal semantic-location handling.
 
-Reader links inherit the visibility of their containing fragment. A hidden fragment's links must remain absent from the DOM and search data. A visible link must resolve to a real anchor in every localized edition exposed by the Lexicon, so switching language cannot turn a valid source link into a missing location.
+Reader links inherit the visibility of their containing fragment. A hidden fragment's links must remain absent from the DOM and search data. A visible link must resolve to a real anchor—including an illustration anchor when used—in every localized edition exposed by the Lexicon, so switching language cannot turn a valid source link into a missing location.
 
 Prototype-only Lexicon entries may be used to exercise reveal and reader-link behavior, but they must be clearly marked as prototype data and must not contain unreleased story lore.
 
@@ -171,7 +187,7 @@ Bundle validation rejects:
 - source/target world, story, or book mismatches;
 - known book/Lexicon payloads whose IDs or state do not match the bundle.
 
-Reader-edition files may travel in the same deterministic bundle. Their semantic/localization validation occurs through the normal repository content validator after import.
+Reader-edition files and approved illustration assets may travel in the same deterministic bundle. Their semantic/localization and illustration-contract validation occurs through normal repository validation after import.
 
 The neutral fixture at `fixtures/release-bundles/telanas-volume-01-prototype/` proves this transport contract without using manuscript prose or private lore.
 
@@ -215,6 +231,11 @@ The content and reader-link validators check:
 - reader-edition world/story/book/locale/state/content-mode identity matches its book manifest;
 - localized reader editions contain the same chapters, semantic block IDs, block types, and order;
 - paragraph blocks contain text and scene-break blocks do not contain prose;
+- illustration assets use valid unique IDs, supported modes, aspect ratios, and safe paths;
+- prototype illustration placeholders are explicitly marked and cannot appear in approved/published books;
+- illustration blocks reference known assets and have localized alternative text;
+- illustration asset IDs and placements match across localized editions;
+- `before-title` illustration blocks precede chapter body blocks;
 - prototype placeholder editions are explicitly marked `prototypeOnly`;
 - prototype book manifests do not contain embedded story-text fields;
 - Lexicon categories and entries use valid unique IDs;
@@ -227,7 +248,9 @@ The content and reader-link validators check:
 
 The release-bundle validator independently checks the deterministic transport envelope and file hashes before any import is allowed.
 
-Validation will expand when real release text, illustrations, relationships, and cross-story reveal rules are introduced.
+Validation cannot establish illustration ownership or publication rights; those remain a manual acceptance gate.
+
+Validation will expand when real release text, production illustrations, relationships, and cross-story reveal rules are introduced.
 
 ## 11. Publication acceptance
 

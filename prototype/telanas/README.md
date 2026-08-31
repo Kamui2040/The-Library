@@ -2,7 +2,7 @@
 
 This is the first publication-safe visual prototype for the Telanas world area inside **The Library**.
 
-It intentionally contains no unreleased manuscript text or private lore. The landscape, cover, update text, reader editions, and Lexicon examples are neutral placeholders used only to test layout and interaction.
+It intentionally contains no unreleased manuscript text, private lore, or production story artwork. The landscape, cover, update text, reader editions, Lexicon examples, and illustration markers are neutral placeholders used only to test layout and interaction.
 
 ## Pages
 
@@ -31,7 +31,7 @@ It intentionally contains no unreleased manuscript text or private lore. The lan
 - semantic reader content:
   - separate English and German prototype editions
   - identical chapter/block semantic IDs across both locales
-  - paragraph and scene-break anchors
+  - paragraph, scene-break, and illustration anchors
   - dedicated chapter-title pages
   - dynamic block-based pagination from the current page dimensions
   - automatic repagination after layout, language, viewport, or typography changes
@@ -43,6 +43,16 @@ It intentionally contains no unreleased manuscript text or private lore. The lan
   - dark, light, and parchment reader themes
   - serif/sans typeface, text-size, and line-spacing controls
   - a spine-anchored soft page turn for paged layouts, with reduced-motion fallback
+- semantic illustration blocks:
+  - illustration assets are registered once in the book manifest
+  - localized editions reference the same stable asset IDs and placements
+  - `flow` illustrations paginate with surrounding content
+  - `full-page` illustrations receive a dedicated rendered page
+  - `before-title` illustrations receive a dedicated page before the generated chapter title
+  - the Prologue prototype exercises illustration page → chapter title page → chapter text
+  - alternative text and optional captions remain localized
+  - neutral CSS placeholders test layout without committing story artwork
+  - illustration anchors survive language, layout, and viewport changes
 - reader completion and spoiler progress:
   - `Ask when a volume ends` prompts before changing the spoiler profile
   - `Update automatically` marks a volume complete at its final reading position
@@ -71,13 +81,14 @@ Current public prototype data includes:
 - `content/worlds/telanas/books/dragon-knight/volume-01/editions/de.json`
 - `content/worlds/telanas/lexicon/lexicon.json`
 
-Run `npm run validate` from the repository root to validate the Library/world/book/reader-edition/Lexicon data, semantic Lexicon reader links, and the neutral release-bundle fixture.
+Run `npm run validate` from the repository root to validate the Library/world/book/reader-edition/Lexicon data, semantic reader links, illustration contracts, and the neutral release-bundle fixture.
 
 ## Deliberately not implemented yet
 
 - final hero artwork
 - final web fonts
 - released manuscript text
+- production illustration assets
 - real released Lexicon content
 - private-source exporter/parser
 - finer line-level paragraph pagination
