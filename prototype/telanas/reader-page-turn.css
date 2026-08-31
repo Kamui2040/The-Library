@@ -1,0 +1,142 @@
+/* Soft paper page turn. This layer is transient only and must never affect reader layout. */
+
+.book-spread {
+  position: relative;
+  perspective: 1900px;
+  transform-style: preserve-3d;
+  overflow: visible;
+}
+
+.reader-page-turn-layer {
+  position: absolute;
+  z-index: 30;
+  margin: 0;
+  pointer-events: none;
+  user-select: none;
+  transform-style: preserve-3d;
+  will-change: transform, filter;
+}
+
+.reader-page-turn-sheet {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  will-change: transform, filter;
+}
+
+.reader-page-turn-face {
+  position: absolute !important;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  margin: 0 !important;
+  overflow: hidden;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+  box-sizing: border-box;
+}
+
+.reader-page-turn-front {
+  transform: translateZ(.6px);
+  will-change: clip-path, filter;
+}
+
+.reader-page-turn-back {
+  transform: rotateY(180deg) translateZ(.6px);
+  will-change: filter;
+}
+
+.reader-page-turn-back.is-empty {
+  color: transparent;
+}
+
+.reader-page-turn-fold,
+.reader-page-turn-crease {
+  position: absolute;
+  pointer-events: none;
+  backface-visibility: hidden;
+}
+
+.reader-page-turn-fold {
+  z-index: 6;
+  width: 46%;
+  height: 46%;
+  opacity: 0;
+  transform: translateZ(2px) scale(.06);
+  background:
+    linear-gradient(135deg,
+      color-mix(in srgb, var(--page-surface) 92%, white) 0%,
+      var(--page-surface) 46%,
+      color-mix(in srgb, var(--page-surface) 72%, black) 76%,
+      color-mix(in srgb, var(--page-surface) 58%, black) 100%);
+  filter: drop-shadow(0 7px 8px rgba(0,0,0,.22));
+  will-change: transform, opacity;
+}
+
+.reader-page-turn-crease {
+  z-index: 7;
+  width: 34%;
+  height: 11px;
+  opacity: 0;
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(255,255,255,.18) 34%,
+    rgba(0,0,0,.3) 56%,
+    transparent);
+  filter: blur(4px);
+  transform-origin: center;
+  will-change: transform, opacity;
+}
+
+.reader-page-turn-layer[data-turn-side="right"][data-turn-corner="bottom"] .reader-page-turn-fold {
+  right: 0;
+  bottom: 0;
+  clip-path: polygon(100% 100%, 0 100%, 100% 0);
+  transform-origin: 100% 100%;
+}
+
+.reader-page-turn-layer[data-turn-side="right"][data-turn-corner="top"] .reader-page-turn-fold {
+  right: 0;
+  top: 0;
+  clip-path: polygon(100% 0, 0 0, 100% 100%);
+  transform-origin: 100% 0;
+}
+
+.reader-page-turn-layer[data-turn-side="left"][data-turn-corner="bottom"] .reader-page-turn-fold {
+  left: 0;
+  bottom: 0;
+  clip-path: polygon(0 100%, 100% 100%, 0 0);
+  transform-origin: 0 100%;
+}
+
+.reader-page-turn-layer[data-turn-side="left"][data-turn-corner="top"] .reader-page-turn-fold {
+  left: 0;
+  top: 0;
+  clip-path: polygon(0 0, 100% 0, 0 100%);
+  transform-origin: 0 0;
+}
+
+.reader-page-turn-layer[data-turn-side="right"] .reader-page-turn-crease {
+  right: 4%;
+}
+
+.reader-page-turn-layer[data-turn-side="left"] .reader-page-turn-crease {
+  left: 4%;
+  transform: scaleX(-1);
+}
+
+.reader-page-turn-layer[data-turn-corner="bottom"] .reader-page-turn-crease {
+  bottom: 18%;
+}
+
+.reader-page-turn-layer[data-turn-corner="top"] .reader-page-turn-crease {
+  top: 18%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reader-page-turn-layer {
+    display: none !important;
+  }
+}
