@@ -51,48 +51,47 @@
     if (!prepared.layer.isConnected || prepared.token !== turnToken) return;
 
     const directionSign = prepared.direction < 0 ? 1 : -1;
-    const travel = directionSign * 100;
     const duration = 1020;
 
     const sheetAnimation = prepared.sheet.animate([
       {
         offset: 0,
-        transform: "translateX(0%) translateZ(0) rotateY(0deg) skewY(0deg) scaleX(1)",
+        transform: "translateZ(0) rotateY(0deg) skewY(0deg) scaleX(1)",
         filter: "drop-shadow(0 0 0 rgba(0,0,0,0))"
       },
       {
         offset: 0.12,
-        transform: `translateX(${travel * .015}%) translateZ(4px) rotateY(${directionSign * 5}deg) skewY(${directionSign * .5}deg) scaleX(.999)`,
+        transform: `translateZ(4px) rotateY(${directionSign * 5}deg) skewY(${directionSign * .5}deg) scaleX(.999)`,
         filter: "drop-shadow(0 4px 6px rgba(0,0,0,.06))"
       },
       {
         offset: 0.28,
-        transform: `translateX(${travel * .07}%) translateZ(12px) rotateY(${directionSign * 20}deg) skewY(${directionSign * 1.1}deg) scaleX(.994)`,
+        transform: `translateZ(12px) rotateY(${directionSign * 20}deg) skewY(${directionSign * 1.1}deg) scaleX(.994)`,
         filter: "drop-shadow(0 8px 12px rgba(0,0,0,.11))"
       },
       {
         offset: 0.47,
-        transform: `translateX(${travel * .22}%) translateZ(24px) rotateY(${directionSign * 54}deg) skewY(${directionSign * 1.5}deg) scaleX(.986)`,
+        transform: `translateZ(24px) rotateY(${directionSign * 54}deg) skewY(${directionSign * 1.5}deg) scaleX(.986)`,
         filter: "drop-shadow(0 14px 20px rgba(0,0,0,.18))"
       },
       {
         offset: 0.63,
-        transform: `translateX(${travel * .46}%) translateZ(32px) rotateY(${directionSign * 92}deg) skewY(${directionSign * .7}deg) scaleX(.98)`,
+        transform: `translateZ(32px) rotateY(${directionSign * 92}deg) skewY(${directionSign * .7}deg) scaleX(.98)`,
         filter: "drop-shadow(0 17px 24px rgba(0,0,0,.21))"
       },
       {
         offset: 0.79,
-        transform: `translateX(${travel * .72}%) translateZ(23px) rotateY(${directionSign * 130}deg) skewY(${directionSign * -.45}deg) scaleX(.987)`,
+        transform: `translateZ(23px) rotateY(${directionSign * 130}deg) skewY(${directionSign * -.45}deg) scaleX(.987)`,
         filter: "drop-shadow(0 12px 17px rgba(0,0,0,.15))"
       },
       {
         offset: 0.92,
-        transform: `translateX(${travel * .91}%) translateZ(10px) rotateY(${directionSign * 160}deg) skewY(${directionSign * -.2}deg) scaleX(.996)`,
+        transform: `translateZ(10px) rotateY(${directionSign * 160}deg) skewY(${directionSign * -.2}deg) scaleX(.996)`,
         filter: "drop-shadow(0 6px 9px rgba(0,0,0,.08))"
       },
       {
         offset: 1,
-        transform: `translateX(${travel}%) translateZ(0) rotateY(${directionSign * 178}deg) skewY(0deg) scaleX(1)`,
+        transform: `translateZ(0) rotateY(${directionSign * 178}deg) skewY(0deg) scaleX(1)`,
         filter: "drop-shadow(0 0 0 rgba(0,0,0,0))"
       }
     ], {
