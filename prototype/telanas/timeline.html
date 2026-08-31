@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark light">
+  <meta name="description" content="Spoiler-aware Telanas timeline prototype inside The Library.">
+  <title>The Library — Telanas Timeline</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="timeline.css">
+  <script defer src="spoiler-profile.js"></script>
+  <script defer src="site.js"></script>
+  <script defer src="spoiler-controls.js"></script>
+  <script defer src="timeline.js"></script>
+</head>
+<body class="timeline-page">
+  <header class="site-header" data-site-header>
+    <div class="header-inner">
+      <details class="menu-popover global-menu">
+        <summary class="brand-control" aria-label="K2040 navigation">
+          <span class="brand-glyph" aria-hidden="true">K</span>
+          <strong>K2040</strong>
+          <span aria-hidden="true">⌄</span>
+        </summary>
+        <nav class="popover-panel global-panel" aria-label="K2040">
+          <a href="https://kamui2040.github.io/" data-i18n="global.home">Home</a>
+          <a href="https://kamui2040.github.io/K2040-Android-Releases/" data-i18n="global.android">Android Projects</a>
+          <a href="https://kamui2040.github.io/K2040-Gaming-Mods/" data-i18n="global.gaming">Gaming Mods</a>
+        </nav>
+      </details>
+
+      <div class="library-context" aria-label="Library context">
+        <span class="library-name">The Library</span>
+        <span class="context-separator" aria-hidden="true">/</span>
+        <a class="world-name" href="index.html">TELANAS</a>
+      </div>
+
+      <button class="mobile-menu-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation" data-mobile-menu>
+        <span aria-hidden="true">☰</span>
+        <span class="visually-hidden" data-i18n="nav.menu">Menu</span>
+      </button>
+
+      <nav class="primary-nav" id="primary-navigation" aria-label="Telanas" data-primary-nav>
+        <a class="nav-link" href="index.html" data-i18n="nav.home">Home</a>
+        <details class="menu-popover nav-dropdown">
+          <summary class="nav-link">
+            <span data-i18n="nav.stories">Stories</span>
+            <span aria-hidden="true">⌄</span>
+          </summary>
+          <div class="popover-panel stories-panel">
+            <p class="menu-kicker">TELANAS</p>
+            <p class="menu-heading" data-i18n="stories.arc">The Dragon Knight</p>
+            <a href="index.html#stories">
+              <strong data-i18n="stories.volume">Volume 1 — Home</strong>
+              <span data-i18n="stories.overview">Overview</span>
+            </a>
+            <a href="reader.html" data-i18n="stories.read">Read Volume 1</a>
+          </div>
+        </details>
+        <a class="nav-link" href="lexicon.html" data-i18n="nav.lexicon">Lexicon</a>
+        <a class="nav-link is-current" href="timeline.html" data-i18n="nav.timeline">Timeline</a>
+        <a class="nav-link" href="index.html#downloads" data-i18n="nav.downloads">Downloads</a>
+        <a class="nav-link" href="index.html#updates" data-i18n="nav.updates">Updates</a>
+
+        <label class="select-control">
+          <span class="visually-hidden" data-i18n="nav.language">Language</span>
+          <select data-language-select aria-label="Language">
+            <option value="en">English</option>
+            <option value="de">Deutsch</option>
+          </select>
+        </label>
+
+        <button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false">
+          <span aria-hidden="true" data-theme-icon>☾</span>
+          <span data-theme-label data-i18n="theme.light">Light</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="timeline-hero">
+      <div class="page-width timeline-hero-inner">
+        <p class="eyebrow">THE LIBRARY · TELANAS</p>
+        <h1 data-timeline-i18n="title">Timeline</h1>
+        <p class="timeline-lede" data-timeline-i18n="intro">Browse only timeline knowledge available at your selected reading progress.</p>
+      </div>
+    </section>
+
+    <section class="content-section page-width timeline-controls" aria-labelledby="timeline-spoiler-title">
+      <div class="framed-panel timeline-progress">
+        <div>
+          <p class="eyebrow" data-timeline-i18n="progressEyebrow">Reading progress</p>
+          <h2 id="timeline-spoiler-title" data-timeline-i18n="progressTitle">Choose what you have finished</h2>
+          <p data-timeline-i18n="progressHelp">Later events remain completely absent until your spoiler profile allows them.</p>
+        </div>
+        <div class="timeline-progress-fields">
+          <label class="timeline-field">
+            <span data-timeline-i18n="through">Spoilers through</span>
+            <select data-spoiler-progress-select>
+              <option value="none">No completed volumes</option>
+              <option value="volume-01">Through Volume 1 — Home</option>
+            </select>
+          </label>
+          <label class="timeline-full-spoilers">
+            <input type="checkbox" data-full-spoilers-toggle>
+            <span>
+              <strong data-timeline-i18n="fullSpoilers">Full spoilers</strong>
+              <small data-timeline-i18n="fullSpoilersHelp">Show every public timeline event regardless of progress.</small>
+            </span>
+          </label>
+        </div>
+      </div>
+    </section>
+
+    <section class="content-section section-dark timeline-browser" aria-labelledby="timeline-browse-title">
+      <div class="page-width">
+        <div class="section-heading section-heading--split timeline-browser-heading">
+          <div>
+            <p class="eyebrow" data-timeline-i18n="browseEyebrow">Available chronology</p>
+            <h2 id="timeline-browse-title" data-timeline-i18n="browseTitle">Telanas timeline</h2>
+            <p data-timeline-i18n="browseHelp">Search uses only events already visible at the current spoiler level.</p>
+          </div>
+          <div class="timeline-status framed-inline">
+            <span data-timeline-i18n="currentView">Current view</span>
+            <strong data-spoiler-summary>No completed volumes</strong>
+          </div>
+        </div>
+
+        <label class="timeline-search">
+          <span class="visually-hidden" data-timeline-i18n="searchLabel">Search visible timeline events</span>
+          <input type="search" data-timeline-search autocomplete="off" spellcheck="false" placeholder="Search visible timeline events">
+        </label>
+
+        <p class="timeline-state" data-timeline-state aria-live="polite"></p>
+        <div class="timeline-list" data-timeline-results></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="page-width footer-inner">
+      <div>
+        <p class="footer-title">The Library</p>
+        <p class="footer-world">TELANAS</p>
+      </div>
+      <nav class="footer-links" aria-label="K2040 ecosystem">
+        <a href="https://kamui2040.github.io/" data-i18n="global.home">Home</a>
+        <a href="https://kamui2040.github.io/K2040-Android-Releases/" data-i18n="global.android">Android Projects</a>
+        <a href="https://kamui2040.github.io/K2040-Gaming-Mods/" data-i18n="global.gaming">Gaming Mods</a>
+        <a href="https://github.com/Kamui2040">GitHub</a>
+        <a href="https://ko-fi.com/k2040">Ko-fi</a>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>
