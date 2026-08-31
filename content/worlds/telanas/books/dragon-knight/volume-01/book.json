@@ -6,6 +6,10 @@
   "state": "prototype",
   "contentMode": "placeholder",
   "locales": ["en", "de"],
+  "editions": {
+    "en": "editions/en.json",
+    "de": "editions/de.json"
+  },
   "labels": {
     "en": {
       "world": "Telanas",
