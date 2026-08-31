@@ -42,7 +42,28 @@
 
       <nav class="primary-nav" id="primary-navigation" aria-label="Telanas" data-primary-nav>
         <a class="nav-link" href="index.html" data-i18n="nav.home">Home</a>
-        <a class="nav-link" href="index.html#stories" data-i18n="nav.stories">Stories</a>
+
+        <details class="menu-popover nav-dropdown">
+          <summary class="nav-link">
+            <span data-i18n="nav.stories">Stories</span>
+            <span aria-hidden="true">⌄</span>
+          </summary>
+          <div class="popover-panel stories-panel">
+            <p class="menu-kicker">TELANAS</p>
+            <p class="menu-heading" data-i18n="stories.arc">The Dragon Knight</p>
+            <a href="index.html#stories">
+              <strong data-i18n="stories.volume">Volume 1 — Home</strong>
+              <span data-i18n="stories.overview">Overview</span>
+            </a>
+            <a href="reader.html" data-i18n="stories.read">Read Volume 1</a>
+            <div class="menu-divider"></div>
+            <p class="menu-heading" data-i18n="stories.chapters">Chapters</p>
+            <a href="reader.html#prologue" data-i18n="chapter.prologue">Prologue</a>
+            <a href="reader.html#chapter-1" data-i18n="chapter.one">Chapter 1</a>
+            <a href="reader.html#chapter-2" data-i18n="chapter.two">Chapter 2</a>
+          </div>
+        </details>
+
         <a class="nav-link is-current" href="lexicon.html" data-i18n="nav.lexicon">Lexicon</a>
         <a class="nav-link" href="index.html#downloads" data-i18n="nav.downloads">Downloads</a>
         <a class="nav-link" href="index.html#updates" data-i18n="nav.updates">Updates</a>
