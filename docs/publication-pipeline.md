@@ -86,7 +86,7 @@ A public book manifest owns reader-visible structure such as:
 
 The reader-side table of contents and the integrated Contents page both derive from the same ordered chapter list.
 
-Each illustration asset has a stable asset ID, mode, and aspect ratio. A production `image` asset stores one relative path in the book manifest. An asset path must stay inside the book content directory and resolve to a regular file. A neutral `placeholder` asset may be used only for development/prototype work, must be marked `prototypeOnly`, and stores no image path.
+Each illustration asset has a stable asset ID, mode, and aspect ratio. A production `image` asset stores one relative path in the book manifest. An asset path must stay inside the book content directory and resolve to a regular non-symlink file. A neutral `placeholder` asset may be used only for development/prototype work, must be marked `prototypeOnly`, and stores no image path.
 
 Production illustration files require separate rights and provenance review. The registry does not replace that approval.
 
@@ -114,13 +114,15 @@ An illustration block stores:
 
 - its stable semantic block ID;
 - the registered asset ID;
-- placement: `flow` or `full-page`;
+- placement: `flow`, `full-page`, or `before-title`;
 - localized alternative text;
 - an optional localized caption.
 
 Asset ID and placement must match across localized editions. Alternative text and captions are localized independently. The edition does not store an arbitrary image URL or duplicate the asset path.
 
-`flow` illustrations participate in normal adaptive pagination. `full-page` illustrations always occupy their own rendered page in paged layouts. Continuous mode keeps both placements in their semantic source order. The reader renders an illustration as a semantic `figure`; a production asset uses its localized alternative text, while a neutral prototype placeholder exposes the same accessible description without requiring an image file.
+`flow` illustrations participate in normal adaptive pagination. `full-page` illustrations occupy their own rendered page at their semantic source position. `before-title` illustrations also occupy their own page, but are rendered before the generated chapter title page. This preserves the approved opening sequence of illustration page → chapter title page → chapter text without tying it to a rendered page number. Continuous mode keeps the same semantic order.
+
+The reader renders an illustration as a semantic `figure`; a production asset uses its localized alternative text, while a neutral prototype placeholder exposes the same accessible description without requiring an image file.
 
 Illustration positions are ordinary semantic anchors. Bookmarks, reader links, language changes, layout changes, and viewport repagination resolve them in the same way as paragraph and scene anchors.
 
@@ -216,6 +218,7 @@ Validation checks include:
 - prototype placeholder marking and prohibition in approved/published books;
 - localized illustration alternative text and optional captions;
 - matching illustration asset references and placements across editions;
+- `before-title` illustration markers occurring before chapter body blocks;
 - Lexicon categories, entries, reveal gates, localization, and reader-link targets;
 - stable semantic targets rather than URLs or rendered page numbers;
 - duplicate IDs and anchors;
