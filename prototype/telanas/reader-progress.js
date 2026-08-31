@@ -124,8 +124,12 @@
   function isBookCompleted() {
     const books = storyBooks();
     const currentIndex = books.findIndex((candidate) => candidate.id === book?.id);
-    const completedIndex = books.findIndex((candidate) => candidate.id === completedBookId());
-    return currentIndex >= 0 && completedIndex >= currentIndex;
+    const completedId = completedBookId();
+    const completedIndex = books.findIndex((candidate) => candidate.id === completedId);
+
+    if (currentIndex < 0) return false;
+    if (completedId !== "none" && completedIndex < 0) return true;
+    return completedIndex >= currentIndex;
   }
 
   function readerHasContent() {
@@ -174,6 +178,8 @@
 
   function maintainContinuousSentinel() {
     if (!spread.classList.contains("continuous") || !leftPage.classList.contains("continuous-page")) {
+      const staleSentinel = leftPage.querySelector("[data-reader-progress-end]");
+      if (staleSentinel) staleSentinel.remove();
       disconnectSentinelObserver();
       sentinel = null;
       continuousAtEnd = false;
