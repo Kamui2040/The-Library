@@ -47,75 +47,53 @@
     return direction < 0 ? leftPage : rightPage;
   };
 
-  const clipFrames = (side) => side === "right"
-    ? [
-        "inset(0 0% 0 0)",
-        "inset(0 3% 0 0)",
-        "inset(0 11% 0 0)",
-        "inset(0 28% 0 0)",
-        "inset(0 51% 0 0)",
-        "inset(0 76% 0 0)",
-        "inset(0 94% 0 0)",
-        "inset(0 100% 0 0)"
-      ]
-    : [
-        "inset(0 0 0 0%)",
-        "inset(0 0 0 3%)",
-        "inset(0 0 0 11%)",
-        "inset(0 0 0 28%)",
-        "inset(0 0 0 51%)",
-        "inset(0 0 0 76%)",
-        "inset(0 0 0 94%)",
-        "inset(0 0 0 100%)"
-      ];
-
-  const edgePositions = (side) => side === "right"
-    ? ["93%", "90%", "82%", "65%", "42%", "17%", "-1%", "-7%"]
-    : ["-7%", "-4%", "4%", "21%", "44%", "69%", "87%", "93%"];
-
   const playPreparedTurn = (prepared) => {
     if (!prepared.layer.isConnected || prepared.token !== turnToken) return;
 
-    const rotationSign = prepared.direction < 0 ? 1 : -1;
-    const clips = clipFrames(prepared.side);
-    const positions = edgePositions(prepared.side);
+    const directionSign = prepared.direction < 0 ? 1 : -1;
+    const travel = directionSign * 100;
     const duration = 1020;
 
     const sheetAnimation = prepared.sheet.animate([
       {
         offset: 0,
-        transform: "translateZ(0) rotateY(0deg) skewY(0deg) scaleX(1)",
+        transform: "translateX(0%) translateZ(0) rotateY(0deg) skewY(0deg) scaleX(1)",
         filter: "drop-shadow(0 0 0 rgba(0,0,0,0))"
       },
       {
         offset: 0.12,
-        transform: `translateZ(3px) rotateY(${rotationSign * 3}deg) skewY(${rotationSign * .35}deg) scaleX(.999)`,
+        transform: `translateX(${travel * .015}%) translateZ(4px) rotateY(${directionSign * 5}deg) skewY(${directionSign * .5}deg) scaleX(.999)`,
         filter: "drop-shadow(0 4px 6px rgba(0,0,0,.06))"
       },
       {
         offset: 0.28,
-        transform: `translateZ(10px) rotateY(${rotationSign * 12}deg) skewY(${rotationSign * 1.1}deg) scaleX(.994)`,
+        transform: `translateX(${travel * .07}%) translateZ(12px) rotateY(${directionSign * 20}deg) skewY(${directionSign * 1.1}deg) scaleX(.994)`,
         filter: "drop-shadow(0 8px 12px rgba(0,0,0,.11))"
       },
       {
-        offset: 0.48,
-        transform: `translateZ(20px) rotateY(${rotationSign * 31}deg) skewY(${rotationSign * 1.8}deg) scaleX(.983)`,
-        filter: "drop-shadow(0 13px 19px rgba(0,0,0,.17))"
+        offset: 0.47,
+        transform: `translateX(${travel * .22}%) translateZ(24px) rotateY(${directionSign * 54}deg) skewY(${directionSign * 1.5}deg) scaleX(.986)`,
+        filter: "drop-shadow(0 14px 20px rgba(0,0,0,.18))"
       },
       {
-        offset: 0.66,
-        transform: `translateZ(25px) rotateY(${rotationSign * 54}deg) skewY(${rotationSign * 1.1}deg) scaleX(.969)`,
-        filter: "drop-shadow(0 16px 23px rgba(0,0,0,.2))"
+        offset: 0.63,
+        transform: `translateX(${travel * .46}%) translateZ(32px) rotateY(${directionSign * 92}deg) skewY(${directionSign * .7}deg) scaleX(.98)`,
+        filter: "drop-shadow(0 17px 24px rgba(0,0,0,.21))"
       },
       {
-        offset: 0.82,
-        transform: `translateZ(17px) rotateY(${rotationSign * 73}deg) skewY(${rotationSign * .4}deg) scaleX(.966)`,
-        filter: "drop-shadow(0 11px 16px rgba(0,0,0,.14))"
+        offset: 0.79,
+        transform: `translateX(${travel * .72}%) translateZ(23px) rotateY(${directionSign * 130}deg) skewY(${directionSign * -.45}deg) scaleX(.987)`,
+        filter: "drop-shadow(0 12px 17px rgba(0,0,0,.15))"
+      },
+      {
+        offset: 0.92,
+        transform: `translateX(${travel * .91}%) translateZ(10px) rotateY(${directionSign * 160}deg) skewY(${directionSign * -.2}deg) scaleX(.996)`,
+        filter: "drop-shadow(0 6px 9px rgba(0,0,0,.08))"
       },
       {
         offset: 1,
-        transform: `translateZ(5px) rotateY(${rotationSign * 88}deg) skewY(0deg) scaleX(.985)`,
-        filter: "drop-shadow(0 5px 8px rgba(0,0,0,.07))"
+        transform: `translateX(${travel}%) translateZ(0) rotateY(${directionSign * 178}deg) skewY(0deg) scaleX(1)`,
+        filter: "drop-shadow(0 0 0 rgba(0,0,0,0))"
       }
     ], {
       duration,
@@ -124,36 +102,47 @@
     });
 
     const frontAnimation = prepared.front.animate([
-      { offset: 0, clipPath: clips[0], filter: "brightness(1)", opacity: 1 },
-      { offset: 0.10, clipPath: clips[1], filter: "brightness(1.01)", opacity: 1 },
-      { offset: 0.26, clipPath: clips[2], filter: "brightness(1.025)", opacity: 1 },
-      { offset: 0.44, clipPath: clips[3], filter: "brightness(1.035)", opacity: 1 },
-      { offset: 0.62, clipPath: clips[4], filter: "brightness(.99)", opacity: 1 },
-      { offset: 0.78, clipPath: clips[5], filter: "brightness(.94)", opacity: .98 },
-      { offset: 0.91, clipPath: clips[6], filter: "brightness(.9)", opacity: .72 },
-      { offset: 1, clipPath: clips[7], filter: "brightness(.88)", opacity: 0 }
+      { offset: 0, filter: "brightness(1)", opacity: 1 },
+      { offset: 0.25, filter: "brightness(1.025)", opacity: 1 },
+      { offset: 0.52, filter: "brightness(.99)", opacity: 1 },
+      { offset: 0.61, filter: "brightness(.93)", opacity: .98 },
+      { offset: 0.66, filter: "brightness(.9)", opacity: .12 },
+      { offset: 1, filter: "brightness(.9)", opacity: 0 }
     ], {
       duration,
-      easing: "cubic-bezier(.26,.04,.2,1)",
+      easing: "ease-out",
+      fill: "forwards"
+    });
+
+    const backAnimation = prepared.back.animate([
+      { offset: 0, opacity: 0, filter: "brightness(.84)" },
+      { offset: 0.57, opacity: 0, filter: "brightness(.84)" },
+      { offset: 0.64, opacity: .92, filter: "brightness(.87)" },
+      { offset: 0.82, opacity: 1, filter: "brightness(.95)" },
+      { offset: 0.96, opacity: .96, filter: "brightness(1)" },
+      { offset: 1, opacity: 0, filter: "brightness(1)" }
+    ], {
+      duration,
+      easing: "ease-out",
       fill: "forwards"
     });
 
     const edgeAnimation = prepared.edge.animate([
-      { offset: 0, left: positions[0], transform: "translateZ(2px) scaleX(.28)", opacity: 0, filter: "brightness(1)" },
-      { offset: 0.08, left: positions[1], transform: "translateZ(5px) scaleX(.42)", opacity: .44, filter: "brightness(1.03)" },
-      { offset: 0.22, left: positions[2], transform: "translateZ(10px) scaleX(.64)", opacity: .78, filter: "brightness(1.06)" },
-      { offset: 0.42, left: positions[3], transform: "translateZ(18px) scaleX(.92)", opacity: .94, filter: "brightness(1.08)" },
-      { offset: 0.61, left: positions[4], transform: "translateZ(22px) scaleX(1.06)", opacity: .88, filter: "brightness(.98)" },
-      { offset: 0.78, left: positions[5], transform: "translateZ(15px) scaleX(.86)", opacity: .68, filter: "brightness(.92)" },
-      { offset: 0.91, left: positions[6], transform: "translateZ(8px) scaleX(.52)", opacity: .32, filter: "brightness(.9)" },
-      { offset: 1, left: positions[7], transform: "translateZ(2px) scaleX(.3)", opacity: 0, filter: "brightness(.9)" }
+      { offset: 0, transform: "translateZ(2px) rotateY(0deg) scaleX(.22)", opacity: 0, filter: "brightness(1)" },
+      { offset: 0.08, transform: `translateZ(5px) rotateY(${directionSign * 8}deg) scaleX(.42)`, opacity: .42, filter: "brightness(1.03)" },
+      { offset: 0.22, transform: `translateZ(10px) rotateY(${directionSign * 16}deg) scaleX(.68)`, opacity: .76, filter: "brightness(1.06)" },
+      { offset: 0.43, transform: `translateZ(18px) rotateY(${directionSign * 24}deg) scaleX(.94)`, opacity: .94, filter: "brightness(1.08)" },
+      { offset: 0.62, transform: `translateZ(22px) rotateY(${directionSign * 18}deg) scaleX(1.06)`, opacity: .9, filter: "brightness(.98)" },
+      { offset: 0.79, transform: `translateZ(15px) rotateY(${directionSign * 10}deg) scaleX(.82)`, opacity: .64, filter: "brightness(.93)" },
+      { offset: 0.93, transform: `translateZ(7px) rotateY(${directionSign * 4}deg) scaleX(.46)`, opacity: .28, filter: "brightness(.91)" },
+      { offset: 1, transform: "translateZ(2px) rotateY(0deg) scaleX(.24)", opacity: 0, filter: "brightness(.91)" }
     ], {
       duration,
       easing: "cubic-bezier(.2,.08,.18,1)",
       fill: "forwards"
     });
 
-    const animations = [sheetAnimation, frontAnimation, edgeAnimation];
+    const animations = [sheetAnimation, frontAnimation, backAnimation, edgeAnimation];
     activeTurn = { layer: prepared.layer, animations };
 
     Promise.allSettled(animations.map((animation) => animation.finished)).finally(() => {
@@ -197,10 +186,12 @@
     sheet.style.transformOrigin = direction < 0 ? "right center" : "left center";
 
     const front = clonePage(source);
+    const back = document.createElement("div");
+    back.className = "reader-page-turn-back";
     const edge = document.createElement("span");
     edge.className = "reader-page-turn-edge";
 
-    sheet.append(front, edge);
+    sheet.append(front, back, edge);
     layer.append(sheet);
     spread.append(layer);
 
@@ -211,6 +202,7 @@
       layer,
       sheet,
       front,
+      back,
       edge
     }));
   };
