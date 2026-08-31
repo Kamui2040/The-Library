@@ -127,7 +127,8 @@ The Lexicon manifest owns:
 - stable entry IDs;
 - localized public titles and summaries;
 - reveal-gated public fragments;
-- the story/volume reveal points that determine normal visibility.
+- the story/volume reveal points that determine normal visibility;
+- optional semantic reader references attached to revealed fragments.
 
 Current reveal modes are:
 
@@ -135,9 +136,13 @@ Current reveal modes are:
 - `completed-volume` — visible only once the configured story volume is marked completed;
 - `full-spoilers` — visible only when the reader explicitly enables Full Spoilers.
 
-The website must filter entries and fragments for the current spoiler profile **before** search, category-result rendering, relationship rendering, or other presentation logic. Hidden entries must not leak through result counts, redacted titles, autocomplete suggestions, or related-entry hints.
+The website must filter entries and fragments for the current spoiler profile **before** search, category-result rendering, relationship rendering, reader-link construction, or other presentation logic. Hidden entries must not leak through result counts, redacted titles, autocomplete suggestions, related-entry hints, or source links.
 
-Prototype-only Lexicon entries may be used to exercise reveal behavior, but they must be clearly marked as prototype data and must not contain unreleased story lore.
+A fragment may contain a `readerLinks` array. Each reader link uses a stable link ID, target story ID, target book ID, semantic anchor, and one display label per Lexicon locale. The manifest stores no rendered page number and no arbitrary URL. The website derives the reader route from the stable IDs and opens the target anchor through the reader's normal semantic-location handling.
+
+Reader links inherit the visibility of their containing fragment. A hidden fragment's links must remain absent from the DOM and search data. A visible link must resolve to a real anchor in every localized edition exposed by the Lexicon, so switching language cannot turn a valid source link into a missing location.
+
+Prototype-only Lexicon entries may be used to exercise reveal and reader-link behavior, but they must be clearly marked as prototype data and must not contain unreleased story lore.
 
 ## 8. Release bundle boundary
 
@@ -198,9 +203,9 @@ Importing a bundle changes only the working repository content. It does **not** 
 
 ## 10. Validation
 
-`npm run validate` runs both the dependency-free public-content validator and the neutral release-bundle fixture validator.
+`npm run validate` runs the dependency-free public-content validator, the semantic Lexicon reader-link validator, and the neutral release-bundle fixture validator.
 
-The content validator checks:
+The content and reader-link validators check:
 
 - Library/world/book/Lexicon manifest references resolve;
 - stable IDs and slugs use safe formats and remain unique in their scope;
@@ -213,14 +218,16 @@ The content validator checks:
 - prototype placeholder editions are explicitly marked `prototypeOnly`;
 - prototype book manifests do not contain embedded story-text fields;
 - Lexicon categories and entries use valid unique IDs;
-- Lexicon localized titles, summaries, fragments, and category labels are complete;
+- Lexicon localized titles, summaries, fragments, category labels, and reader-link labels are complete;
 - completed-volume reveal gates resolve to an existing public story and volume;
+- every semantic Lexicon reader link resolves to an existing story, book, and anchor in every relevant locale;
+- Lexicon reader links use stable IDs rather than stored URLs or rendered page numbers;
 - prototype Full Spoilers entries are explicitly marked `prototypeOnly`;
-- duplicate world/story/book/chapter/reader-anchor/Lexicon IDs are rejected.
+- duplicate world/story/book/chapter/reader-anchor/Lexicon/link IDs are rejected.
 
 The release-bundle validator independently checks the deterministic transport envelope and file hashes before any import is allowed.
 
-Validation will expand when real release text, illustrations, precise cross-references, relationships, and cross-story reveal rules are introduced.
+Validation will expand when real release text, illustrations, relationships, and cross-story reveal rules are introduced.
 
 ## 11. Publication acceptance
 
