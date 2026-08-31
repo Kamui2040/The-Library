@@ -4,6 +4,7 @@
   "state": "development",
   "theme": "telanas",
   "locales": ["en", "de"],
+  "lexicon": "lexicon/lexicon.json",
   "stories": [
     {
       "id": "dragon-knight",
