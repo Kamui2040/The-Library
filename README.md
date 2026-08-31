@@ -12,8 +12,11 @@ The repository contains only publication-safe website material and neutral devel
 
 - `docs/site-foundation.md` — information architecture, localization, spoiler, and reader model
 - `docs/visual-system.md` — shared Library and Telanas visual direction
-- `docs/publication-pipeline.md` — private-source to public-Library content boundary
+- `docs/publication-pipeline.md` — private-source to public-Library boundary and release-bundle contract
 - `content/library.json` — data-driven Library/world/locale registry
-- `prototype/telanas/` — current Telanas landing and reader prototype
+- `prototype/telanas/` — current Telanas landing, reader, and spoiler-aware Lexicon prototype
+- `fixtures/release-bundles/` — neutral deterministic bundle fixtures used to verify the import boundary
 
-Run `npm run validate` to check the public content manifests. The validator has no third-party runtime dependencies.
+`npm run validate` checks both the public content manifests and the neutral release-bundle fixture. The validators have no third-party runtime dependencies.
+
+`npm run import:bundle -- <bundle-directory>` performs a non-mutating dry run. Actual file writes require explicit import flags as described in `docs/publication-pipeline.md`.
