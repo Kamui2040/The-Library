@@ -63,7 +63,7 @@ for (const story of world.stories || []) {
 
   for (const bookRef of story.books || []) {
     books.add(bookRef.id);
-    const bookPath = path.posix.join("content", worldDirectory, bookRef.manifest);
+    const bookPath = path.posix.join(worldDirectory, bookRef.manifest);
     const bookDirectory = path.posix.dirname(bookPath);
     const book = await readJson(bookPath);
     const anchorsByLocale = new Map();
