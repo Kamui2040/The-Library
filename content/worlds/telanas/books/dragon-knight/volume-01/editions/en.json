@@ -12,6 +12,14 @@
       "id": "dk-v01-prologue",
       "blocks": [
         {
+          "id": "dk-v01-prologue-i001",
+          "type": "illustration",
+          "asset": "dk-v01-prototype-full-page",
+          "placement": "before-title",
+          "alt": "Neutral prototype illustration placeholder marking a dedicated opening illustration position before the Prologue title.",
+          "caption": "Prototype opening illustration marker."
+        },
+        {
           "id": "dk-v01-prologue-p001",
           "type": "paragraph",
           "text": "This neutral prototype text exists only to exercise the Library reader. It carries no Telanas plot, character, place, or lore information. The reader treats this paragraph as a stable semantic location even when the visible page on which it appears changes."
@@ -20,14 +28,6 @@
           "id": "dk-v01-prologue-p002",
           "type": "paragraph",
           "text": "A rendered page is temporary presentation data. Wider screens may place more text on a page, smaller screens may place less, and a language or layout change may produce a different page count without changing this paragraph's identity."
-        },
-        {
-          "id": "dk-v01-prologue-i001",
-          "type": "illustration",
-          "asset": "dk-v01-prototype-full-page",
-          "placement": "full-page",
-          "alt": "Neutral prototype illustration placeholder marking a dedicated full-page position.",
-          "caption": "Prototype full-page illustration marker."
         },
         {
           "id": "dk-v01-prologue-s02",
