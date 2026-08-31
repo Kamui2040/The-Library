@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark light">
+  <meta name="description" content="Spoiler-aware Telanas map prototype inside The Library.">
+  <title>The Library — Telanas Map</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="map.css">
+  <script defer src="spoiler-profile.js"></script>
+  <script defer src="site.js"></script>
+  <script defer src="spoiler-controls.js"></script>
+  <script defer src="map.js"></script>
+</head>
+<body class="map-page">
+  <header class="site-header" data-site-header>
+    <div class="header-inner">
+      <details class="menu-popover global-menu">
+        <summary class="brand-control" aria-label="K2040 navigation">
+          <span class="brand-glyph" aria-hidden="true">K</span>
+          <strong>K2040</strong>
+          <span aria-hidden="true">⌄</span>
+        </summary>
+        <nav class="popover-panel global-panel" aria-label="K2040">
+          <a href="https://kamui2040.github.io/" data-i18n="global.home">Home</a>
+          <a href="https://kamui2040.github.io/K2040-Android-Releases/" data-i18n="global.android">Android Projects</a>
+          <a href="https://kamui2040.github.io/K2040-Gaming-Mods/" data-i18n="global.gaming">Gaming Mods</a>
+        </nav>
+      </details>
+
+      <div class="library-context" aria-label="Library context">
+        <span class="library-name">The Library</span>
+        <span class="context-separator" aria-hidden="true">/</span>
+        <a class="world-name" href="index.html">TELANAS</a>
+      </div>
+
+      <button class="mobile-menu-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation" data-mobile-menu>
+        <span aria-hidden="true">☰</span>
+        <span class="visually-hidden" data-i18n="nav.menu">Menu</span>
+      </button>
+
+      <nav class="primary-nav" id="primary-navigation" aria-label="Telanas" data-primary-nav>
+        <a class="nav-link" href="index.html" data-i18n="nav.home">Home</a>
+        <a class="nav-link" href="lexicon.html" data-i18n="nav.lexicon">Lexicon</a>
+        <a class="nav-link" href="timeline.html" data-i18n="nav.timeline">Timeline</a>
+        <a class="nav-link is-current" href="map.html" data-i18n="nav.map">Map</a>
+        <a class="nav-link" href="index.html#downloads" data-i18n="nav.downloads">Downloads</a>
+        <a class="nav-link" href="index.html#updates" data-i18n="nav.updates">Updates</a>
+
+        <label class="select-control">
+          <span class="visually-hidden" data-i18n="nav.language">Language</span>
+          <select data-language-select aria-label="Language">
+            <option value="en">English</option>
+            <option value="de">Deutsch</option>
+          </select>
+        </label>
+
+        <button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false">
+          <span aria-hidden="true" data-theme-icon>☾</span>
+          <span data-theme-label data-i18n="theme.light">Light</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="map-hero">
+      <div class="page-width map-hero-inner">
+        <p class="eyebrow">THE LIBRARY · TELANAS</p>
+        <h1 data-map-i18n="title">Map</h1>
+        <p class="map-lede" data-map-i18n="intro">Explore only the locations available at your selected reading progress.</p>
+      </div>
+    </section>
+
+    <section class="content-section page-width map-controls" aria-labelledby="map-progress-title">
+      <div class="framed-panel map-progress-panel">
+        <div>
+          <p class="eyebrow" data-map-i18n="progressEyebrow">Reading progress</p>
+          <h2 id="map-progress-title" data-map-i18n="progressTitle">Choose what you have finished</h2>
+          <p data-map-i18n="progressHelp">Locations beyond this point do not exist in the rendered map.</p>
+        </div>
+        <div class="map-progress-fields">
+          <label class="map-progress-field">
+            <span data-map-i18n="through">Spoilers through</span>
+            <select data-spoiler-progress-select>
+              <option value="none">No completed volumes</option>
+              <option value="volume-01">Through Volume 1 — Home</option>
+            </select>
+          </label>
+          <label class="map-full-spoilers">
+            <input type="checkbox" data-full-spoilers-toggle>
+            <span>
+              <strong data-map-i18n="fullSpoilers">Full spoilers</strong>
+              <small data-map-i18n="fullSpoilersHelp">Show every public map marker regardless of progress.</small>
+            </span>
+          </label>
+        </div>
+      </div>
+    </section>
+
+    <section class="content-section section-dark map-browser" aria-labelledby="map-browse-title">
+      <div class="page-width">
+        <div class="section-heading section-heading--split map-browser-heading">
+          <div>
+            <p class="eyebrow" data-map-i18n="browseEyebrow">Available locations</p>
+            <h2 id="map-browse-title" data-map-i18n="browseTitle">Explore the map</h2>
+            <p data-map-i18n="browseHelp">Search and map markers use the same spoiler-filtered data set.</p>
+          </div>
+          <div class="spoiler-status framed-inline">
+            <span data-map-i18n="currentView">Current view</span>
+            <strong data-spoiler-summary>No completed volumes</strong>
+          </div>
+        </div>
+
+        <label class="map-search">
+          <span class="visually-hidden" data-map-i18n="searchLabel">Search visible locations</span>
+          <input type="search" data-map-search autocomplete="off" spellcheck="false" placeholder="Search visible locations">
+        </label>
+
+        <p class="map-state" data-map-state aria-live="polite"></p>
+
+        <div class="map-layout">
+          <div class="map-canvas framed-panel" data-map-canvas role="region" aria-label="Spoiler-filtered prototype map">
+            <div class="map-grid" aria-hidden="true"></div>
+            <div class="map-compass" aria-hidden="true"><span>N</span><i></i></div>
+            <div class="map-markers" data-map-markers></div>
+          </div>
+
+          <aside class="map-sidebar">
+            <div class="map-selected framed-panel" data-map-selected></div>
+            <div class="map-list" data-map-list></div>
+          </aside>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="page-width footer-inner">
+      <div>
+        <p class="footer-title">The Library</p>
+        <p class="footer-world">TELANAS</p>
+      </div>
+      <nav class="footer-links" aria-label="K2040 ecosystem">
+        <a href="https://kamui2040.github.io/" data-i18n="global.home">Home</a>
+        <a href="https://kamui2040.github.io/K2040-Android-Releases/" data-i18n="global.android">Android Projects</a>
+        <a href="https://kamui2040.github.io/K2040-Gaming-Mods/" data-i18n="global.gaming">Gaming Mods</a>
+        <a href="https://github.com/Kamui2040">GitHub</a>
+        <a href="https://next.nexusmods.com/profile/kamui2040">Nexus Mods</a>
+        <a href="https://ko-fi.com/k2040">Ko-fi</a>
+        <a href="https://www.instagram.com/k2040.projects/">Instagram</a>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>

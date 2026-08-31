@@ -2,7 +2,7 @@
 
 This is the first publication-safe visual prototype for the Telanas world area inside **The Library**.
 
-It intentionally contains no unreleased manuscript text, private lore, or production story artwork. The landscape, cover, update text, reader editions, Lexicon examples, timeline markers, and illustration markers are neutral placeholders used only to test layout and interaction.
+It intentionally contains no unreleased manuscript text, private lore, production story artwork, or real map geography. The landscape, cover, update text, reader editions, Lexicon examples, timeline markers, map markers, and illustration markers are neutral placeholders used only to test layout and interaction.
 
 ## Pages
 
@@ -10,6 +10,7 @@ It intentionally contains no unreleased manuscript text, private lore, or produc
 - `reader.html` — semantic reader prototype
 - `lexicon.html` — spoiler-aware Lexicon prototype
 - `timeline.html` — spoiler-aware timeline prototype
+- `map.html` — spoiler-aware map prototype
 
 ## Implemented interactions
 
@@ -38,6 +39,13 @@ It intentionally contains no unreleased manuscript text, private lore, or produc
   - hidden events contribute no titles, periods, summaries, reader-link labels, placeholders, or counts
   - visible events may link to exact semantic reader anchors
   - neutral prototype events test reveal behavior without storing Telanas chronology or future canon
+- spoiler-aware map:
+  - the world manifest registers one public map manifest
+  - marker existence is filtered before rendering or search
+  - hidden markers contribute no pins, titles, summaries, labels, reader-link labels, placeholders, or counts
+  - visible marker coordinates are normalized presentation positions, not permanent page coordinates
+  - visible markers may link to exact semantic reader anchors
+  - neutral prototype markers test progress and Full Spoilers gates without storing real Telanas geography
 - semantic reader content:
   - separate English and German prototype editions
   - identical chapter/block semantic IDs across both locales
@@ -86,7 +94,7 @@ It intentionally contains no unreleased manuscript text, private lore, or produc
 
 ## Running the prototype
 
-The reader, Lexicon, and timeline load public manifests with `fetch()`, so open them through a local static web server or normal website host rather than directly from a `file://` URL.
+The reader, Lexicon, timeline, and map load public manifests with `fetch()`, so open them through a local static web server or normal website host rather than directly from a `file://` URL.
 
 Current public prototype data includes:
 
@@ -95,8 +103,9 @@ Current public prototype data includes:
 - `content/worlds/telanas/books/dragon-knight/volume-01/editions/de.json`
 - `content/worlds/telanas/lexicon/lexicon.json`
 - `content/worlds/telanas/timeline/timeline.json`
+- `content/worlds/telanas/map/map.json`
 
-Run `npm run validate` from the repository root to validate the Library/world/book/reader-edition/Lexicon/timeline data, semantic reader links, semantic Lexicon relationships, illustration contracts, and the neutral release-bundle fixture.
+Run `npm run validate` from the repository root to validate the Library/world/book/reader-edition/Lexicon/timeline/map data, semantic reader links, semantic Lexicon relationships, illustration contracts, and the neutral release-bundle fixture.
 
 ## Deliberately not implemented yet
 
@@ -106,6 +115,7 @@ Run `npm run validate` from the repository root to validate the Library/world/bo
 - production illustration assets
 - real released Lexicon content
 - real released timeline chronology
+- real released map geography and locations
 - private-source exporter/parser
 - finer line-level paragraph pagination
 - released download files and metadata
