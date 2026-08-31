@@ -12,6 +12,14 @@
       "id": "dk-v01-prologue",
       "blocks": [
         {
+          "id": "dk-v01-prologue-i001",
+          "type": "illustration",
+          "asset": "dk-v01-prototype-full-page",
+          "placement": "before-title",
+          "alt": "Neutraler Prototyp-Platzhalter für eine eigene Illustrationsposition vor der Prolog-Titelseite.",
+          "caption": "Prototypischer Marker für die einleitende Illustration."
+        },
+        {
           "id": "dk-v01-prologue-p001",
           "type": "paragraph",
           "text": "Dieser neutrale Prototyptext dient ausschließlich dazu, den Reader von The Library zu testen. Er enthält keine Informationen über Handlung, Charaktere, Orte oder Lore von Telanas. Der Reader behandelt diesen Absatz als stabile semantische Position, auch wenn sich die sichtbare Seite ändert."
@@ -20,14 +28,6 @@
           "id": "dk-v01-prologue-p002",
           "type": "paragraph",
           "text": "Eine gerenderte Seite ist nur vorübergehende Darstellung. Breitere Bildschirme können mehr Text aufnehmen, kleinere weniger, und ein Wechsel von Sprache oder Layout kann eine andere Seitenzahl erzeugen, ohne die Identität dieses Absatzes zu verändern."
-        },
-        {
-          "id": "dk-v01-prologue-i001",
-          "type": "illustration",
-          "asset": "dk-v01-prototype-full-page",
-          "placement": "full-page",
-          "alt": "Neutraler Prototyp-Platzhalter für eine eigene ganzseitige Illustrationsposition.",
-          "caption": "Prototypischer Marker für eine ganzseitige Illustration."
         },
         {
           "id": "dk-v01-prologue-s02",
