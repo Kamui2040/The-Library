@@ -4,6 +4,7 @@ import { fileURLToPath } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const allowedStates = new Set(["development", "prototype", "approved", "published"]);
+const allowedVisibilityModes = new Set(["always", "completed-volume", "full-spoilers"]);
 const safeId = /^[a-z0-9][a-z0-9-]*$/;
 const forbiddenPrototypeKeys = new Set(["storyText", "prose", "paragraphs", "html", "markdown", "body"]);
 
@@ -27,6 +28,10 @@ const assertRelativeManifest = (value, label) => {
   assert(typeof value === "string" && value.length > 0, `${label} is missing`);
   assert(!path.posix.isAbsolute(value), `${label} must be relative`);
   assert(!value.split("/").includes(".."), `${label} must not escape its content directory`);
+};
+
+const assertLocalizedString = (value, label) => {
+  assert(typeof value === "string" && value.trim(), `${label} is missing`);
 };
 
 const readJson = async (relativePath) => {
@@ -63,6 +68,19 @@ const findForbiddenPrototypeKey = (value, trail = "book") => {
   return null;
 };
 
+const validateVisibility = (visibility, label, storyBooks) => {
+  assert(visibility && typeof visibility === "object", `${label} visibility is missing`);
+  assert(allowedVisibilityModes.has(visibility.mode), `${label} has unsupported visibility mode: ${visibility.mode}`);
+
+  if (visibility.mode === "completed-volume") {
+    assertId(visibility.story, `${label} visibility story`);
+    assertId(visibility.volume, `${label} visibility volume`);
+    const books = storyBooks.get(visibility.story);
+    assert(books, `${label} references unknown story: ${visibility.story}`);
+    assert(books.has(visibility.volume), `${label} references unknown volume: ${visibility.story}/${visibility.volume}`);
+  }
+};
+
 const library = await readJson("content/library.json");
 assert(library.schemaVersion === 1, "content/library.json must use schemaVersion 1");
 assertId(library.id, "Library id");
@@ -81,6 +99,7 @@ const worldIds = new Set();
 let worldCount = 0;
 let bookCount = 0;
 let chapterCount = 0;
+let lexiconEntryCount = 0;
 
 for (const worldRef of library.worlds) {
   assertId(worldRef.id, "World id");
@@ -102,7 +121,10 @@ for (const worldRef of library.worlds) {
     assert(enabledLocales.has(locale), `World ${world.id} uses disabled or unknown locale: ${locale}`);
   }
 
+  const worldDirectory = path.posix.dirname(worldRef.manifest);
   const storyIds = new Set();
+  const storyBooks = new Map();
+
   for (const story of world.stories) {
     assertId(story.id, `Story id in ${world.id}`);
     assert(!storyIds.has(story.id), `Duplicate story id in ${world.id}: ${story.id}`);
@@ -110,6 +132,8 @@ for (const worldRef of library.worlds) {
     assert(Array.isArray(story.books), `Story ${story.id} books must be an array`);
 
     const bookIds = new Set();
+    storyBooks.set(story.id, bookIds);
+
     for (const bookRef of story.books) {
       assertId(bookRef.id, `Book id in ${story.id}`);
       assert(!bookIds.has(bookRef.id), `Duplicate book id in ${story.id}: ${bookRef.id}`);
@@ -117,7 +141,6 @@ for (const worldRef of library.worlds) {
       assertState(bookRef.state, `Book reference ${story.id}/${bookRef.id}`);
       assertRelativeManifest(bookRef.manifest, `Book ${story.id}/${bookRef.id} manifest`);
 
-      const worldDirectory = path.posix.dirname(worldRef.manifest);
       const bookPath = path.posix.join("content", worldDirectory, bookRef.manifest);
       const book = await readJson(bookPath);
       bookCount += 1;
@@ -137,7 +160,7 @@ for (const worldRef of library.worlds) {
         const labels = book.labels[locale];
         assert(labels && typeof labels === "object", `${bookPath} is missing ${locale} book labels`);
         for (const required of ["world", "series", "volume", "contents"]) {
-          assert(typeof labels[required] === "string" && labels[required].trim(), `${bookPath} is missing ${locale}.${required}`);
+          assertLocalizedString(labels[required], `${bookPath} ${locale}.${required}`);
         }
       }
 
@@ -154,7 +177,7 @@ for (const worldRef of library.worlds) {
 
         assert(chapter.labels && typeof chapter.labels === "object", `Chapter ${chapter.id} labels are missing`);
         for (const locale of book.locales) {
-          assert(typeof chapter.labels[locale] === "string" && chapter.labels[locale].trim(), `Chapter ${chapter.id} is missing ${locale} label`);
+          assertLocalizedString(chapter.labels[locale], `Chapter ${chapter.id} ${locale} label`);
         }
       }
 
@@ -164,7 +187,74 @@ for (const worldRef of library.worlds) {
       }
     }
   }
+
+  if (world.lexicon) {
+    assertRelativeManifest(world.lexicon, `World ${world.id} Lexicon manifest`);
+    const lexiconPath = path.posix.join("content", worldDirectory, world.lexicon);
+    const lexicon = await readJson(lexiconPath);
+
+    assert(lexicon.schemaVersion === 1, `${lexiconPath} must use schemaVersion 1`);
+    assert(lexicon.world === world.id, `${lexiconPath} world id does not match ${world.id}`);
+    assertState(lexicon.state, `Lexicon ${world.id}`);
+    assert(Array.isArray(lexicon.locales) && lexicon.locales.length > 0, `${lexiconPath} locales are missing`);
+    assert(Array.isArray(lexicon.categories), `${lexiconPath} categories must be an array`);
+    assert(Array.isArray(lexicon.entries), `${lexiconPath} entries must be an array`);
+
+    for (const locale of lexicon.locales) {
+      assert(world.locales.includes(locale), `${lexiconPath} uses locale not enabled for world ${world.id}: ${locale}`);
+    }
+
+    const categoryIds = new Set();
+    for (const category of lexicon.categories) {
+      assertId(category.id, `Lexicon category id in ${world.id}`);
+      assert(!categoryIds.has(category.id), `Duplicate Lexicon category id: ${category.id}`);
+      categoryIds.add(category.id);
+      assert(category.labels && typeof category.labels === "object", `Lexicon category ${category.id} labels are missing`);
+      for (const locale of lexicon.locales) {
+        assertLocalizedString(category.labels[locale], `Lexicon category ${category.id} ${locale} label`);
+      }
+    }
+
+    const entryIds = new Set();
+    for (const entry of lexicon.entries) {
+      assertId(entry.id, `Lexicon entry id in ${world.id}`);
+      assert(!entryIds.has(entry.id), `Duplicate Lexicon entry id: ${entry.id}`);
+      entryIds.add(entry.id);
+      lexiconEntryCount += 1;
+
+      assert(Array.isArray(entry.categories) && entry.categories.length > 0, `Lexicon entry ${entry.id} categories are missing`);
+      for (const category of entry.categories) {
+        assert(categoryIds.has(category), `Lexicon entry ${entry.id} uses unknown category: ${category}`);
+      }
+
+      validateVisibility(entry.visibility, `Lexicon entry ${entry.id}`, storyBooks);
+      if (lexicon.state === "prototype" && entry.visibility.mode === "full-spoilers") {
+        assert(entry.prototypeOnly === true, `Prototype full-spoilers entry ${entry.id} must be marked prototypeOnly`);
+      }
+
+      assert(entry.labels && typeof entry.labels === "object", `Lexicon entry ${entry.id} labels are missing`);
+      for (const locale of lexicon.locales) {
+        const labels = entry.labels[locale];
+        assert(labels && typeof labels === "object", `Lexicon entry ${entry.id} is missing ${locale} labels`);
+        assertLocalizedString(labels.title, `Lexicon entry ${entry.id} ${locale} title`);
+        assertLocalizedString(labels.summary, `Lexicon entry ${entry.id} ${locale} summary`);
+      }
+
+      assert(Array.isArray(entry.fragments), `Lexicon entry ${entry.id} fragments must be an array`);
+      const fragmentIds = new Set();
+      for (const fragment of entry.fragments) {
+        assertId(fragment.id, `Lexicon fragment id in ${entry.id}`);
+        assert(!fragmentIds.has(fragment.id), `Duplicate Lexicon fragment id in ${entry.id}: ${fragment.id}`);
+        fragmentIds.add(fragment.id);
+        validateVisibility(fragment.visibility, `Lexicon fragment ${entry.id}/${fragment.id}`, storyBooks);
+        assert(fragment.text && typeof fragment.text === "object", `Lexicon fragment ${entry.id}/${fragment.id} text is missing`);
+        for (const locale of lexicon.locales) {
+          assertLocalizedString(fragment.text[locale], `Lexicon fragment ${entry.id}/${fragment.id} ${locale} text`);
+        }
+      }
+    }
+  }
 }
 
 assert(worldIds.has(library.defaultWorld), `Default world does not exist: ${library.defaultWorld}`);
-console.log(`PASS: validated ${worldCount} world(s), ${bookCount} book(s), ${chapterCount} chapter(s)`);
+console.log(`PASS: validated ${worldCount} world(s), ${bookCount} book(s), ${chapterCount} chapter(s), ${lexiconEntryCount} Lexicon entry/entries`);
