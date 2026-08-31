@@ -157,6 +157,19 @@
   overflow-y: auto;
 }
 
+/* At medium desktop widths there is enough horizontal room for both the open
+   contents panel and the continuous page. Reserve that room instead of letting
+   the fixed panel cover the text. Very wide layouts remain naturally centred. */
+@media (min-width: 1100px) and (max-width: 1360px) {
+  .reader-page:has(.book-spread.continuous) .reader-shell {
+    transition: padding-left 140ms ease;
+  }
+
+  .reader-page:has(.book-spread.continuous) .reader-shell:has(.toc-dock.is-open, .toc-dock.is-pinned) {
+    padding-left: 340px;
+  }
+}
+
 @media (max-width: 980px) {
   .reader-settings-panel {
     position: fixed;
