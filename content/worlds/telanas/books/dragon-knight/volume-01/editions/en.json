@@ -1,0 +1,148 @@
+{
+  "schemaVersion": 1,
+  "world": "telanas",
+  "story": "dragon-knight",
+  "book": "volume-01",
+  "locale": "en",
+  "state": "prototype",
+  "contentMode": "placeholder",
+  "prototypeOnly": true,
+  "chapters": [
+    {
+      "id": "dk-v01-prologue",
+      "blocks": [
+        {
+          "id": "dk-v01-prologue-p001",
+          "type": "paragraph",
+          "text": "This neutral prototype text exists only to exercise the Library reader. It carries no Telanas plot, character, place, or lore information. The reader treats this paragraph as a stable semantic location even when the visible page on which it appears changes."
+        },
+        {
+          "id": "dk-v01-prologue-p002",
+          "type": "paragraph",
+          "text": "A rendered page is temporary presentation data. Wider screens may place more text on a page, smaller screens may place less, and a language or layout change may produce a different page count without changing this paragraph's identity."
+        },
+        {
+          "id": "dk-v01-prologue-s02",
+          "type": "scene-break"
+        },
+        {
+          "id": "dk-v01-prologue-p003",
+          "type": "paragraph",
+          "text": "The scene separator above is also a semantic anchor. In released material, equivalent anchors can represent meaningful scene boundaries while the reader remains free to paginate the surrounding prose according to the current display and reading preferences."
+        },
+        {
+          "id": "dk-v01-prologue-p004",
+          "type": "paragraph",
+          "text": "Bookmarks and reading progress therefore point to anchors rather than fixed page numbers. A saved position can survive repagination, switching between a spread and a single page, or moving to another localized edition that shares the same semantic structure."
+        },
+        {
+          "id": "dk-v01-prologue-p005",
+          "type": "paragraph",
+          "text": "This sample is intentionally long enough to make the pagination engine do real work. The exact number of visible prototype pages is not important; preserving the same stable reading location while those pages are rebuilt is the behavior being tested."
+        }
+      ]
+    },
+    {
+      "id": "dk-v01-ch01",
+      "blocks": [
+        {
+          "id": "dk-v01-ch01-p001",
+          "type": "paragraph",
+          "text": "Each chapter begins with its own title page before body text is paginated. That rule mirrors the intended book structure while still allowing the body pages that follow to adapt naturally to the available reading area."
+        },
+        {
+          "id": "dk-v01-ch01-p002",
+          "type": "paragraph",
+          "text": "The same chapter list powers both the integrated Contents page and the reader's side navigation. Selecting a chapter resolves to the chapter's semantic identifier, not to a page number that could become invalid after a resize or appearance change."
+        },
+        {
+          "id": "dk-v01-ch01-s02",
+          "type": "scene-break"
+        },
+        {
+          "id": "dk-v01-ch01-p003",
+          "type": "paragraph",
+          "text": "Body blocks are kept in source order and measured against the current page surface. The prototype moves whole semantic blocks between rendered pages rather than cutting text in the middle of a paragraph, which keeps the first implementation predictable and easy to validate."
+        },
+        {
+          "id": "dk-v01-ch01-p004",
+          "type": "paragraph",
+          "text": "A later production renderer may support finer-grained line breaking while preserving the same anchors. That implementation detail does not need to alter the public edition structure, bookmarks, Lexicon references, or the chapter navigation model."
+        },
+        {
+          "id": "dk-v01-ch01-p005",
+          "type": "paragraph",
+          "text": "No private source repository is needed to display this prototype. The reader consumes only the publication-safe book manifest and its selected public edition file, which keeps the website boundary independent from private creative working material."
+        }
+      ]
+    },
+    {
+      "id": "dk-v01-ch02",
+      "blocks": [
+        {
+          "id": "dk-v01-ch02-p001",
+          "type": "paragraph",
+          "text": "Spread mode presents two rendered pages when enough horizontal space is available. On a narrow viewport the same preference falls back to one visible page so text is never squeezed merely to preserve a decorative two-page arrangement."
+        },
+        {
+          "id": "dk-v01-ch02-p002",
+          "type": "paragraph",
+          "text": "Single-page mode always advances one rendered page at a time. Continuous mode removes temporary page boundaries and presents the semantic content as one reading flow while still retaining chapter and block anchors for navigation and position tracking."
+        },
+        {
+          "id": "dk-v01-ch02-s02",
+          "type": "scene-break"
+        },
+        {
+          "id": "dk-v01-ch02-p003",
+          "type": "paragraph",
+          "text": "Changing modes does not create a new canonical location. Before the view is rebuilt, the reader remembers the nearest semantic anchor and then resolves that anchor in the new layout, allowing the visible presentation to change around the reader rather than losing their place."
+        },
+        {
+          "id": "dk-v01-ch02-p004",
+          "type": "paragraph",
+          "text": "The same principle applies when the browser window changes size. Repagination is expected and harmless. A temporary page count may rise or fall, but a stable anchor continues to identify the same part of the public edition."
+        },
+        {
+          "id": "dk-v01-ch02-p005",
+          "type": "paragraph",
+          "text": "Rendered page numbers can still be shown as a convenience. They are deliberately treated as status information only and are never written into Lexicon references, publication manifests, or other durable cross-links."
+        }
+      ]
+    },
+    {
+      "id": "dk-v01-ch03",
+      "blocks": [
+        {
+          "id": "dk-v01-ch03-p001",
+          "type": "paragraph",
+          "text": "Reading position is stored locally without requiring an account. The saved value records a semantic anchor for this world, story, and volume, so returning to the reader can resume near the same logical place instead of relying on a transient rendered page."
+        },
+        {
+          "id": "dk-v01-ch03-p002",
+          "type": "paragraph",
+          "text": "English and German prototype editions deliberately use the same chapter and block identifiers in the same order. The visible sentences differ by language, but the structural location stays aligned, allowing a language switch to preserve the reader's position."
+        },
+        {
+          "id": "dk-v01-ch03-s02",
+          "type": "scene-break"
+        },
+        {
+          "id": "dk-v01-ch03-p003",
+          "type": "paragraph",
+          "text": "The content validator checks that alignment before a public edition is accepted. Missing anchors, reordered blocks, mismatched block types, or an edition tied to the wrong world, story, book, or locale are errors rather than silent reader fallbacks."
+        },
+        {
+          "id": "dk-v01-ch03-p004",
+          "type": "paragraph",
+          "text": "This prototype still omits real manuscript prose, final typography, illustrations, and page-turn effects. Those can be added later without weakening the semantic model proven here or exposing unreleased creative material during website development."
+        },
+        {
+          "id": "dk-v01-ch03-p005",
+          "type": "paragraph",
+          "text": "The useful result is a reader that can rebuild presentation from publication-safe structured text while preserving navigation and progress. The visible pages are disposable; the world, story, volume, chapter, scene, and paragraph anchors are the durable layer."
+        }
+      ]
+    }
+  ]
+}

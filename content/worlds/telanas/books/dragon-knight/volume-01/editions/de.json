@@ -1,0 +1,148 @@
+{
+  "schemaVersion": 1,
+  "world": "telanas",
+  "story": "dragon-knight",
+  "book": "volume-01",
+  "locale": "de",
+  "state": "prototype",
+  "contentMode": "placeholder",
+  "prototypeOnly": true,
+  "chapters": [
+    {
+      "id": "dk-v01-prologue",
+      "blocks": [
+        {
+          "id": "dk-v01-prologue-p001",
+          "type": "paragraph",
+          "text": "Dieser neutrale Prototyptext dient ausschließlich dazu, den Reader von The Library zu testen. Er enthält keine Informationen über Handlung, Charaktere, Orte oder Lore von Telanas. Der Reader behandelt diesen Absatz als stabile semantische Position, auch wenn sich die sichtbare Seite ändert."
+        },
+        {
+          "id": "dk-v01-prologue-p002",
+          "type": "paragraph",
+          "text": "Eine gerenderte Seite ist nur vorübergehende Darstellung. Breitere Bildschirme können mehr Text aufnehmen, kleinere weniger, und ein Wechsel von Sprache oder Layout kann eine andere Seitenzahl erzeugen, ohne die Identität dieses Absatzes zu verändern."
+        },
+        {
+          "id": "dk-v01-prologue-s02",
+          "type": "scene-break"
+        },
+        {
+          "id": "dk-v01-prologue-p003",
+          "type": "paragraph",
+          "text": "Auch der Szenentrenner darüber ist ein semantischer Anker. In veröffentlichtem Material können entsprechende Anker echte Szenengrenzen darstellen, während der Reader den umgebenden Text weiterhin an Anzeige und Leseeinstellungen anpassen darf."
+        },
+        {
+          "id": "dk-v01-prologue-p004",
+          "type": "paragraph",
+          "text": "Lesezeichen und Lesefortschritt verweisen deshalb auf Anker statt auf feste Seitenzahlen. Eine gespeicherte Position kann Neuumbruch, den Wechsel zwischen Doppelseite und Einzelseite oder den Wechsel zu einer anderen lokalisierten Ausgabe mit derselben semantischen Struktur überstehen."
+        },
+        {
+          "id": "dk-v01-prologue-p005",
+          "type": "paragraph",
+          "text": "Dieser Beispieltext ist absichtlich lang genug, damit die Seiteneinteilung tatsächlich arbeiten muss. Die genaue Zahl sichtbarer Prototypseiten ist unwichtig; getestet wird, dass dieselbe stabile Leseposition erhalten bleibt, während diese Seiten neu aufgebaut werden."
+        }
+      ]
+    },
+    {
+      "id": "dk-v01-ch01",
+      "blocks": [
+        {
+          "id": "dk-v01-ch01-p001",
+          "type": "paragraph",
+          "text": "Jedes Kapitel beginnt mit einer eigenen Titelseite, bevor der eigentliche Text auf Seiten verteilt wird. Diese Regel entspricht der vorgesehenen Buchstruktur und erlaubt den folgenden Textseiten dennoch, sich natürlich an den verfügbaren Lesebereich anzupassen."
+        },
+        {
+          "id": "dk-v01-ch01-p002",
+          "type": "paragraph",
+          "text": "Dieselbe Kapitelliste erzeugt sowohl die integrierte Inhaltsseite als auch die seitliche Reader-Navigation. Die Auswahl eines Kapitels führt zu seiner semantischen Kennung und nicht zu einer Seitenzahl, die nach Größen- oder Darstellungsänderungen ungültig werden könnte."
+        },
+        {
+          "id": "dk-v01-ch01-s02",
+          "type": "scene-break"
+        },
+        {
+          "id": "dk-v01-ch01-p003",
+          "type": "paragraph",
+          "text": "Textblöcke bleiben in Quellreihenfolge und werden gegen die aktuelle Seitenfläche gemessen. Der Prototyp verschiebt ganze semantische Blöcke zwischen gerenderten Seiten, statt Absätze mitten im Text zu trennen. So bleibt die erste Umsetzung vorhersehbar und gut prüfbar."
+        },
+        {
+          "id": "dk-v01-ch01-p004",
+          "type": "paragraph",
+          "text": "Ein späterer Produktions-Reader kann feinere Zeilenumbrüche unterstützen und trotzdem dieselben Anker beibehalten. Dieses Implementierungsdetail muss weder die öffentliche Ausgabenstruktur noch Lesezeichen, Lexikon-Verweise oder die Kapitelnavigation verändern."
+        },
+        {
+          "id": "dk-v01-ch01-p005",
+          "type": "paragraph",
+          "text": "Zum Anzeigen dieses Prototyps ist kein privates Quellrepository nötig. Der Reader verwendet nur das veröffentlichungssichere Buchmanifest und die ausgewählte öffentliche Ausgabedatei. Dadurch bleibt die Website klar von privatem kreativem Arbeitsmaterial getrennt."
+        }
+      ]
+    },
+    {
+      "id": "dk-v01-ch02",
+      "blocks": [
+        {
+          "id": "dk-v01-ch02-p001",
+          "type": "paragraph",
+          "text": "Die Doppelseitenansicht zeigt zwei gerenderte Seiten, wenn genügend horizontaler Platz vorhanden ist. Auf einem schmalen Bildschirm fällt dieselbe Einstellung auf eine sichtbare Seite zurück, damit Text niemals nur für eine dekorative Doppelseitenanordnung zusammengedrückt wird."
+        },
+        {
+          "id": "dk-v01-ch02-p002",
+          "type": "paragraph",
+          "text": "Die Einzelseitenansicht blättert immer eine gerenderte Seite weiter. Die fortlaufende Ansicht entfernt vorübergehende Seitengrenzen und zeigt den semantischen Inhalt als zusammenhängenden Lesefluss, behält aber Kapitel- und Blockanker für Navigation und Positionsverfolgung bei."
+        },
+        {
+          "id": "dk-v01-ch02-s02",
+          "type": "scene-break"
+        },
+        {
+          "id": "dk-v01-ch02-p003",
+          "type": "paragraph",
+          "text": "Ein Wechsel der Ansicht erzeugt keine neue kanonische Position. Vor dem Neuaufbau merkt sich der Reader den nächsten semantischen Anker und löst ihn anschließend im neuen Layout wieder auf. So verändert sich die Darstellung um den Leser herum, ohne seinen Platz zu verlieren."
+        },
+        {
+          "id": "dk-v01-ch02-p004",
+          "type": "paragraph",
+          "text": "Dasselbe Prinzip gilt bei einer Änderung der Fenstergröße. Neuumbruch ist erwartet und unproblematisch. Eine vorübergehende Seitenzahl kann steigen oder sinken, während ein stabiler Anker weiterhin denselben Teil der öffentlichen Ausgabe bezeichnet."
+        },
+        {
+          "id": "dk-v01-ch02-p005",
+          "type": "paragraph",
+          "text": "Gerenderte Seitenzahlen können trotzdem als Komfortinformation angezeigt werden. Sie sind bewusst nur Statusdaten und werden niemals in Lexikon-Verweise, Publikationsmanifeste oder andere dauerhafte Querverweise geschrieben."
+        }
+      ]
+    },
+    {
+      "id": "dk-v01-ch03",
+      "blocks": [
+        {
+          "id": "dk-v01-ch03-p001",
+          "type": "paragraph",
+          "text": "Die Leseposition wird lokal gespeichert und benötigt kein Konto. Der gespeicherte Wert enthält einen semantischen Anker für diese Welt, Geschichte und diesen Band. Beim Zurückkehren kann der Reader damit an derselben logischen Stelle fortsetzen, statt einer kurzlebigen Seitenzahl zu vertrauen."
+        },
+        {
+          "id": "dk-v01-ch03-p002",
+          "type": "paragraph",
+          "text": "Die englische und deutsche Prototypausgabe verwenden absichtlich dieselben Kapitel- und Blockkennungen in derselben Reihenfolge. Die sichtbaren Sätze unterscheiden sich sprachlich, die strukturelle Position bleibt jedoch ausgerichtet, sodass ein Sprachwechsel die Leseposition erhalten kann."
+        },
+        {
+          "id": "dk-v01-ch03-s02",
+          "type": "scene-break"
+        },
+        {
+          "id": "dk-v01-ch03-p003",
+          "type": "paragraph",
+          "text": "Der Inhaltsvalidator prüft diese Ausrichtung, bevor eine öffentliche Ausgabe akzeptiert wird. Fehlende Anker, umgeordnete Blöcke, abweichende Blocktypen oder eine Ausgabe mit falscher Welt-, Geschichten-, Buch- oder Sprachzuordnung sind Fehler statt stiller Reader-Fallbacks."
+        },
+        {
+          "id": "dk-v01-ch03-p004",
+          "type": "paragraph",
+          "text": "Dieser Prototyp enthält weiterhin keinen echten Manuskripttext, keine endgültige Typografie, keine Illustrationen und keine Umblättereffekte. Diese Elemente können später ergänzt werden, ohne das hier getestete semantische Modell zu schwächen oder unveröffentlichtes kreatives Material offenzulegen."
+        },
+        {
+          "id": "dk-v01-ch03-p005",
+          "type": "paragraph",
+          "text": "Das nützliche Ergebnis ist ein Reader, der seine Darstellung aus veröffentlichungssicherem strukturiertem Text neu aufbauen und dabei Navigation und Fortschritt erhalten kann. Sichtbare Seiten sind austauschbar; Welt-, Geschichten-, Band-, Kapitel-, Szenen- und Absatzanker bilden die dauerhafte Ebene."
+        }
+      ]
+    }
+  ]
+}

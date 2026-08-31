@@ -5,6 +5,7 @@ import { fileURLToPath } from "node:url";
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const allowedStates = new Set(["development", "prototype", "approved", "published"]);
 const allowedVisibilityModes = new Set(["always", "completed-volume", "full-spoilers"]);
+const allowedReaderBlockTypes = new Set(["paragraph", "scene-break"]);
 const safeId = /^[a-z0-9][a-z0-9-]*$/;
 const forbiddenPrototypeKeys = new Set(["storyText", "prose", "paragraphs", "html", "markdown", "body"]);
 
@@ -99,6 +100,7 @@ const worldIds = new Set();
 let worldCount = 0;
 let bookCount = 0;
 let chapterCount = 0;
+let readerEditionCount = 0;
 let lexiconEntryCount = 0;
 
 for (const worldRef of library.worlds) {
@@ -153,7 +155,12 @@ for (const worldRef of library.worlds) {
       assert(book.state === bookRef.state, `${bookPath} state does not match its world registry entry`);
       assert(Array.isArray(book.locales) && book.locales.length > 0, `${bookPath} locales are missing`);
       assert(book.labels && typeof book.labels === "object", `${bookPath} labels are missing`);
+      assert(book.editions && typeof book.editions === "object" && !Array.isArray(book.editions), `${bookPath} editions are missing`);
       assert(Array.isArray(book.chapters), `${bookPath} chapters must be an array`);
+
+      for (const locale of Object.keys(book.editions)) {
+        assert(book.locales.includes(locale), `${bookPath} registers an edition for unknown locale: ${locale}`);
+      }
 
       for (const locale of book.locales) {
         assert(world.locales.includes(locale), `${bookPath} uses locale not enabled for world ${world.id}: ${locale}`);
@@ -162,6 +169,7 @@ for (const worldRef of library.worlds) {
         for (const required of ["world", "series", "volume", "contents"]) {
           assertLocalizedString(labels[required], `${bookPath} ${locale}.${required}`);
         }
+        assertRelativeManifest(book.editions[locale], `${bookPath} ${locale} reader edition`);
       }
 
       const chapterIds = new Set();
@@ -184,6 +192,67 @@ for (const worldRef of library.worlds) {
       if (book.contentMode === "placeholder") {
         const forbidden = findForbiddenPrototypeKey(book);
         assert(!forbidden, `${bookPath} placeholder manifest contains story-text field: ${forbidden}`);
+      }
+
+      const bookDirectory = path.posix.dirname(bookPath);
+      let baselineStructure = null;
+      let baselineLocale = null;
+
+      for (const locale of book.locales) {
+        const editionPath = path.posix.join(bookDirectory, book.editions[locale]);
+        const edition = await readJson(editionPath);
+        readerEditionCount += 1;
+
+        assert(edition.schemaVersion === 1, `${editionPath} must use schemaVersion 1`);
+        assert(edition.world === world.id, `${editionPath} world id does not match ${world.id}`);
+        assert(edition.story === story.id, `${editionPath} story id does not match ${story.id}`);
+        assert(edition.book === book.id, `${editionPath} book id does not match ${book.id}`);
+        assert(edition.locale === locale, `${editionPath} locale does not match ${locale}`);
+        assertState(edition.state, `Reader edition ${story.id}/${book.id}/${locale}`);
+        assert(edition.state === book.state, `${editionPath} state does not match book manifest`);
+        assert(edition.contentMode === book.contentMode, `${editionPath} contentMode does not match book manifest`);
+        assert(Array.isArray(edition.chapters), `${editionPath} chapters must be an array`);
+        assert(edition.chapters.length === book.chapters.length, `${editionPath} chapter count does not match book manifest`);
+
+        if (book.state === "prototype" && book.contentMode === "placeholder") {
+          assert(edition.prototypeOnly === true, `${editionPath} prototype placeholder edition must be marked prototypeOnly`);
+        }
+
+        const anchors = new Set(chapterIds);
+        const structure = [];
+
+        for (let chapterIndex = 0; chapterIndex < book.chapters.length; chapterIndex += 1) {
+          const expectedChapter = book.chapters[chapterIndex];
+          const editionChapter = edition.chapters[chapterIndex];
+          assert(editionChapter && typeof editionChapter === "object", `${editionPath} chapter ${chapterIndex + 1} is missing`);
+          assert(editionChapter.id === expectedChapter.id, `${editionPath} chapter order/ID does not match ${expectedChapter.id}`);
+          assert(Array.isArray(editionChapter.blocks), `${editionPath} ${expectedChapter.id} blocks must be an array`);
+
+          structure.push(`chapter:${editionChapter.id}`);
+          for (const block of editionChapter.blocks) {
+            assert(block && typeof block === "object", `${editionPath} has invalid block in ${editionChapter.id}`);
+            assertId(block.id, `Reader block id in ${editionChapter.id}`);
+            assert(!anchors.has(block.id), `${editionPath} has duplicate semantic anchor: ${block.id}`);
+            anchors.add(block.id);
+            assert(allowedReaderBlockTypes.has(block.type), `${editionPath} block ${block.id} has unsupported type: ${block.type}`);
+
+            if (block.type === "paragraph") {
+              assertLocalizedString(block.text, `${editionPath} paragraph ${block.id} text`);
+            } else if (block.type === "scene-break") {
+              assert(block.text === undefined || block.text === "", `${editionPath} scene break ${block.id} must not contain prose`);
+            }
+
+            structure.push(`${block.id}:${block.type}`);
+          }
+        }
+
+        const signature = JSON.stringify(structure);
+        if (baselineStructure === null) {
+          baselineStructure = signature;
+          baselineLocale = locale;
+        } else {
+          assert(signature === baselineStructure, `${editionPath} semantic structure does not match ${baselineLocale} edition`);
+        }
       }
     }
   }
@@ -257,4 +326,7 @@ for (const worldRef of library.worlds) {
 }
 
 assert(worldIds.has(library.defaultWorld), `Default world does not exist: ${library.defaultWorld}`);
-console.log(`PASS: validated ${worldCount} world(s), ${bookCount} book(s), ${chapterCount} chapter(s), ${lexiconEntryCount} Lexicon entry/entries`);
+console.log(
+  `PASS: validated ${worldCount} world(s), ${bookCount} book(s), ${chapterCount} chapter(s), ` +
+  `${readerEditionCount} reader edition(s), ${lexiconEntryCount} Lexicon entry/entries`,
+);
