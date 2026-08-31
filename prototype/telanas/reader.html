@@ -8,11 +8,13 @@
   <title>The Library — Telanas Reader</title>
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="reader-content.css">
+  <link rel="stylesheet" href="reader-presentation.css">
   <script defer src="site.js"></script>
   <script defer src="reader-engine.js"></script>
+  <script defer src="reader-presentation.js"></script>
   <script defer src="reader.js"></script>
 </head>
-<body class="reader-page">
+<body class="reader-page" data-reader-theme="dark" data-reader-typeface="serif">
   <header class="reader-header">
     <div class="reader-header-inner">
       <a class="reader-home" href="index.html">← <span data-reader-back>Telanas</span></a>
@@ -21,6 +23,45 @@
         <button class="reader-tool" type="button" data-layout-button="spread" aria-pressed="true">Spread</button>
         <button class="reader-tool" type="button" data-layout-button="single" aria-pressed="false">Single</button>
         <button class="reader-tool" type="button" data-layout-button="continuous" aria-pressed="false">Continuous</button>
+
+        <details class="reader-settings" data-reader-settings>
+          <summary class="reader-tool reader-settings-toggle" data-reader-settings-toggle aria-label="Reader settings" title="Reader settings">Aa</summary>
+          <div class="reader-settings-panel">
+            <label class="reader-setting">
+              <span data-reader-setting-label="theme">Theme</span>
+              <select data-reader-theme>
+                <option value="dark">Dark</option>
+                <option value="light">Light</option>
+                <option value="parchment">Parchment</option>
+              </select>
+            </label>
+            <label class="reader-setting">
+              <span data-reader-setting-label="typeface">Typeface</span>
+              <select data-reader-typeface>
+                <option value="serif">Book serif</option>
+                <option value="sans">Sans serif</option>
+              </select>
+            </label>
+            <label class="reader-setting">
+              <span data-reader-setting-label="fontSize">Text size</span>
+              <select data-reader-font-size>
+                <option value="0.9">Small</option>
+                <option value="1" selected>Standard</option>
+                <option value="1.1">Large</option>
+                <option value="1.2">Extra large</option>
+              </select>
+            </label>
+            <label class="reader-setting">
+              <span data-reader-setting-label="lineHeight">Line spacing</span>
+              <select data-reader-line-height>
+                <option value="1.5">Compact</option>
+                <option value="1.75" selected>Comfortable</option>
+                <option value="2">Relaxed</option>
+              </select>
+            </label>
+          </div>
+        </details>
+
         <label class="select-control reader-language">
           <span class="visually-hidden" data-i18n="nav.language">Language</span>
           <select data-language-select aria-label="Language">
@@ -28,10 +69,6 @@
             <option value="de">Deutsch</option>
           </select>
         </label>
-        <button class="reader-tool" type="button" data-theme-toggle aria-pressed="false">
-          <span aria-hidden="true" data-theme-icon>☾</span>
-          <span data-theme-label data-i18n="theme.light">Light</span>
-        </button>
       </div>
     </div>
   </header>
