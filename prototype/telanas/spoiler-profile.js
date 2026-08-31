@@ -17,21 +17,27 @@
   });
 
   const normalize = (value) => {
-    const fallback = defaultProfile();
-    if (!value || typeof value !== "object") return fallback;
-
-    const completed = value.worlds?.telanas?.completed?.["dragon-knight"];
-    return {
+    const normalized = {
       version: 1,
-      fullSpoilers: value.fullSpoilers === true,
-      worlds: {
-        telanas: {
-          completed: {
-            "dragon-knight": typeof completed === "string" ? completed : "none"
-          }
-        }
-      }
+      fullSpoilers: value?.fullSpoilers === true,
+      worlds: {}
     };
+
+    if (value?.worlds && typeof value.worlds === "object" && !Array.isArray(value.worlds)) {
+      for (const [worldId, worldValue] of Object.entries(value.worlds)) {
+        if (!worldValue?.completed || typeof worldValue.completed !== "object" || Array.isArray(worldValue.completed)) continue;
+        const completed = {};
+        for (const [storyId, volumeId] of Object.entries(worldValue.completed)) {
+          if (typeof volumeId === "string") completed[storyId] = volumeId;
+        }
+        normalized.worlds[worldId] = { completed };
+      }
+    }
+
+    normalized.worlds.telanas ||= { completed: {} };
+    normalized.worlds.telanas.completed ||= {};
+    normalized.worlds.telanas.completed["dragon-knight"] ||= "none";
+    return normalized;
   };
 
   const read = () => {
