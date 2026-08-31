@@ -5,11 +5,28 @@
   "id": "volume-01",
   "state": "prototype",
   "contentMode": "placeholder",
-  "locales": ["en", "de"],
+  "locales": [
+    "en",
+    "de"
+  ],
   "editions": {
     "en": "editions/en.json",
     "de": "editions/de.json"
   },
+  "illustrations": [
+    {
+      "id": "dk-v01-prototype-full-page",
+      "mode": "placeholder",
+      "aspectRatio": "2:3",
+      "prototypeOnly": true
+    },
+    {
+      "id": "dk-v01-prototype-flow",
+      "mode": "placeholder",
+      "aspectRatio": "4:3",
+      "prototypeOnly": true
+    }
+  ],
   "labels": {
     "en": {
       "world": "Telanas",
