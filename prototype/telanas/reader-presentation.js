@@ -15,6 +15,7 @@
   ) return;
 
   const storageKey = "library-reader-presentation-v1";
+
   const defaults = {
     theme: "dark",
     typeface: "serif",
