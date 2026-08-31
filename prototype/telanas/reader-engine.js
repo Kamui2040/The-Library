@@ -111,7 +111,7 @@
       pages.push(current);
       current = [...carried, block];
 
-      if (!fits(current) && current.length > 1) {
+      if (!fits(current) && current.length > 1 && !current[0].keepWithNext) {
         const overflow = current.pop();
         pages.push(current);
         current = [overflow];
