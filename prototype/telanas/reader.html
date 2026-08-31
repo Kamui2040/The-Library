@@ -9,11 +9,9 @@
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="reader-content.css">
   <link rel="stylesheet" href="reader-presentation.css">
-  <link rel="stylesheet" href="reader-physical.css">
   <script defer src="site.js"></script>
   <script defer src="reader-engine.js"></script>
   <script defer src="reader-presentation.js"></script>
-  <script defer src="reader-physical.js"></script>
   <script defer src="reader.js"></script>
 </head>
 <body class="reader-page" data-reader-theme="dark" data-reader-typeface="serif">
@@ -64,9 +62,8 @@
             <label class="reader-setting">
               <span data-reader-setting-label="transition">Page transition</span>
               <select data-reader-transition>
-                <option value="page-turn">Page turn</option>
+                <option value="none" selected>None</option>
                 <option value="fade">Fade</option>
-                <option value="none">None</option>
               </select>
             </label>
           </div>
