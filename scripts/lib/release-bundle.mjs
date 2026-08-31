@@ -20,6 +20,7 @@ const assertId = (value, label) => {
 
 const assertRelativePath = (value, label) => {
   assert(typeof value === "string" && value.length > 0, `${label} is missing`);
+  assert(!value.includes("\\"), `${label} must use forward slashes`);
   assert(!path.posix.isAbsolute(value), `${label} must be relative`);
   const parts = value.split("/");
   assert(!parts.includes("") && !parts.includes(".") && !parts.includes(".."), `${label} contains an unsafe path segment`);
@@ -67,7 +68,11 @@ const validateKnownPayload = async (file, absolutePath, bundle) => {
   if (!file.target.endsWith(".json")) return;
   const payload = await readJson(absolutePath, file.path);
 
+  const canonicalBookTarget = `content/worlds/${bundle.target.world}/books/${bundle.target.story}/${bundle.target.book}/book.json`;
+  const canonicalLexiconTarget = `content/worlds/${bundle.target.world}/lexicon/lexicon.json`;
+
   if (file.target.endsWith("/book.json")) {
+    assert(file.target === canonicalBookTarget, `${file.path} book target must be ${canonicalBookTarget}`);
     assert(payload.schemaVersion === 1, `${file.path} book payload must use schemaVersion 1`);
     assert(payload.world === bundle.target.world, `${file.path} book world does not match bundle target`);
     assert(payload.story === bundle.target.story, `${file.path} book story does not match bundle target`);
@@ -76,6 +81,7 @@ const validateKnownPayload = async (file, absolutePath, bundle) => {
   }
 
   if (file.target.endsWith("/lexicon/lexicon.json")) {
+    assert(file.target === canonicalLexiconTarget, `${file.path} Lexicon target must be ${canonicalLexiconTarget}`);
     assert(payload.schemaVersion === 1, `${file.path} Lexicon payload must use schemaVersion 1`);
     assert(payload.world === bundle.target.world, `${file.path} Lexicon world does not match bundle target`);
     assert(payload.state === bundle.state, `${file.path} Lexicon state does not match bundle state`);
@@ -119,12 +125,13 @@ export const validateReleaseBundle = async (bundleDirectory, options = {}) => {
   const sourcePaths = new Set();
   const targetPaths = new Set();
   const files = [];
+  const worldTargetPrefix = `content/worlds/${bundle.target.world}/`;
 
   for (const file of bundle.files) {
     assert(file && typeof file === "object", "Bundle file entry must be an object");
     assertRelativePath(file.path, "Bundle file path");
     assertRelativePath(file.target, `Target path for ${file.path}`);
-    assert(file.target.startsWith("content/"), `Target path must stay under content/: ${file.target}`);
+    assert(file.target.startsWith(worldTargetPrefix), `Target path must stay inside world ${bundle.target.world}: ${file.target}`);
     assert(sha256Pattern.test(file.sha256), `Invalid SHA-256 for ${file.path}`);
     assert(!sourcePaths.has(file.path), `Duplicate bundle file path: ${file.path}`);
     assert(!targetPaths.has(file.target), `Duplicate bundle target path: ${file.target}`);
