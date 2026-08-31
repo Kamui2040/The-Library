@@ -8,13 +8,14 @@
   <title>The Library — Telanas Reader</title>
   <link rel="stylesheet" href="styles.css">
   <script defer src="site.js"></script>
+  <script defer src="reader-engine.js"></script>
   <script defer src="reader.js"></script>
 </head>
 <body class="reader-page">
   <header class="reader-header">
     <div class="reader-header-inner">
       <a class="reader-home" href="index.html">← <span data-reader-back>Telanas</span></a>
-      <div class="reader-title" aria-live="polite" data-reader-title>Loading book structure…</div>
+      <div class="reader-title" aria-live="polite" data-reader-title>Loading reader…</div>
       <div class="reader-tools" aria-label="Reader controls">
         <button class="reader-tool" type="button" data-layout-button="spread" aria-pressed="true">Spread</button>
         <button class="reader-tool" type="button" data-layout-button="single" aria-pressed="false">Single</button>
@@ -48,8 +49,15 @@
         <article class="book-page" data-book-page="left"></article>
         <article class="book-page" data-book-page="right"></article>
       </div>
+
+      <article class="book-page pagination-probe" data-pagination-probe aria-hidden="true"></article>
+
       <div class="reader-status">
-        <span data-reader-position>Loading…</span>
+        <div class="reader-pager">
+          <button class="reader-page-nav" type="button" data-page-previous aria-label="Previous page">←</button>
+          <span data-reader-position>Loading…</span>
+          <button class="reader-page-nav" type="button" data-page-next aria-label="Next page">→</button>
+        </div>
         <span data-reader-mode>Book spread</span>
       </div>
     </section>
