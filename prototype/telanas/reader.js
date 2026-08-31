@@ -36,7 +36,6 @@
   let scrollObserver = null;
   let editionLoadToken = 0;
   let book = null;
-  let edition = null;
   let model = null;
   let pages = [];
   let currentPageIndex = 0;
@@ -49,6 +48,8 @@
       spread: "Book spread",
       single: "Single page",
       continuous: "Continuous",
+      previous: "Previous page",
+      next: "Next page",
       contentsIntro: "Contents and reader navigation come from the same public book structure.",
       loadError: "The prototype reader content could not be loaded.",
       loadHint: "Serve the repository through a local web server or normal website host so the reader can load its public manifests and edition files.",
@@ -59,6 +60,8 @@
       spread: "Buchansicht",
       single: "Einzelseite",
       continuous: "Fortlaufend",
+      previous: "Vorherige Seite",
+      next: "Nächste Seite",
       contentsIntro: "Inhaltsseite und Reader-Navigation stammen aus derselben öffentlichen Buchstruktur.",
       loadError: "Der Prototyp-Reader-Inhalt konnte nicht geladen werden.",
       loadHint: "Stelle das Repository über einen lokalen Webserver oder einen normalen Website-Host bereit, damit der Reader seine öffentlichen Manifeste und Ausgabedateien laden kann.",
@@ -69,7 +72,7 @@
 
   const language = () => document.documentElement.lang === "de" ? "de" : "en";
   const table = () => copy[language()];
-  const nextFrame = () => new Promise((resolve) => requestAnimationFrame(() => resolve()));
+  const nextFrame = () => new Promise((resolve) => requestAnimationFrame(resolve));
 
   const bookLabels = () => {
     if (!book) return null;
@@ -221,7 +224,12 @@
 
   const makeContents = ({ compact = false } = {}) => {
     const labels = bookLabels();
-    const wrapper = createAnchorElement("section", "contents", null, compact ? "reader-contents reader-contents--compact" : "reader-contents");
+    const wrapper = createAnchorElement(
+      "section",
+      "contents",
+      null,
+      compact ? "reader-contents reader-contents--compact" : "reader-contents",
+    );
     const heading = document.createElement("h1");
     heading.textContent = labels?.contents || "Contents";
     const subheading = document.createElement("h2");
@@ -300,7 +308,7 @@
           kind: "body",
           anchor: blocks[0]?.id || chapter.id,
           chapterId: chapter.id,
-          blocks
+          blocks,
         });
       }
     }
@@ -311,7 +319,13 @@
 
   const renderPage = (page, node) => {
     node.replaceChildren();
-    node.classList.remove("contents-page", "chapter-title-page", "body-page", "is-empty");
+    node.classList.remove(
+      "contents-page",
+      "chapter-title-page",
+      "body-page",
+      "continuous-page",
+      "is-empty",
+    );
 
     if (!page) {
       node.classList.add("is-empty");
@@ -350,7 +364,6 @@
 
   const renderPagedAt = (index, { updateHash = true, persist = true } = {}) => {
     if (!pages.length) return;
-    const step = pageStep();
     currentPageIndex = Math.max(0, Math.min(index, pages.length - 1));
     renderPage(pages[currentPageIndex], leftPage);
     renderPage(effectiveSpread() ? pages[currentPageIndex + 1] : null, rightPage);
@@ -365,7 +378,9 @@
 
   const continuousAnchorElements = () => [...leftPage.querySelectorAll("[data-reader-anchor]")];
 
-  const findContinuousAnchor = (anchor) => continuousAnchorElements().find((node) => node.dataset.readerAnchor === anchor) || null;
+  const findContinuousAnchor = (anchor) => (
+    continuousAnchorElements().find((node) => node.dataset.readerAnchor === anchor) || null
+  );
 
   const updateContinuousStatus = () => {
     positionLabel.textContent = chapterLabelForAnchor(currentAnchor);
@@ -388,7 +403,7 @@
     }, {
       root: null,
       rootMargin: "-16% 0px -70% 0px",
-      threshold: 0
+      threshold: 0,
     });
 
     continuousAnchorElements().forEach((node) => scrollObserver.observe(node));
@@ -399,8 +414,9 @@
     leftPage.replaceChildren();
     rightPage.replaceChildren();
     leftPage.classList.remove("contents-page", "chapter-title-page", "body-page", "is-empty");
-    rightPage.classList.add("is-empty");
+    rightPage.classList.remove("contents-page", "chapter-title-page", "body-page", "continuous-page");
     leftPage.classList.add("continuous-page");
+    rightPage.classList.add("is-empty");
 
     leftPage.append(makeContents({ compact: true }));
     for (const chapter of model.chapters) {
@@ -431,7 +447,7 @@
       if (target) {
         target.scrollIntoView({
           block: "start",
-          behavior: reducedMotion.matches ? "auto" : "smooth"
+          behavior: reducedMotion.matches ? "auto" : "smooth",
         });
       }
     } else {
@@ -446,22 +462,24 @@
     spread.classList.toggle("single", layoutPreference === "single");
     spread.classList.toggle("continuous", layoutPreference === "continuous");
 
+    const localCopy = table();
     document.querySelectorAll("[data-layout-button]").forEach((button) => {
-      button.setAttribute("aria-pressed", String(button.dataset.layoutButton === layoutPreference));
+      const buttonLayout = button.dataset.layoutButton;
+      button.setAttribute("aria-pressed", String(buttonLayout === layoutPreference));
+      if (localCopy[buttonLayout]) button.textContent = localCopy[buttonLayout];
     });
 
-    const localCopy = table();
-    modeLabel.textContent = layoutPreference === "single"
-      ? localCopy.single
-      : layoutPreference === "continuous"
-        ? localCopy.continuous
-        : localCopy.spread;
+    previousButton.setAttribute("aria-label", localCopy.previous);
+    nextButton.setAttribute("aria-label", localCopy.next);
+    modeLabel.textContent = localCopy[layoutPreference];
     saveLayout(layoutPreference);
   };
 
   const repaginate = async (restoreAnchor = currentAnchor) => {
     if (!model || layoutPreference === "continuous") return;
     disconnectScrollTracking();
+    leftPage.classList.remove("continuous-page");
+    rightPage.classList.remove("continuous-page");
     await nextFrame();
     buildPages();
     renderPagedAt(pageForAnchor(restoreAnchor));
@@ -500,11 +518,9 @@
     const token = ++editionLoadToken;
     const locale = language();
     const loadedEdition = await loadEdition(locale);
-    if (token !== editionLoadToken) return;
+    if (token !== editionLoadToken) return false;
 
-    const loadedModel = engine.buildModel(book, loadedEdition, locale);
-    edition = loadedEdition;
-    model = loadedModel;
+    model = engine.buildModel(book, loadedEdition, locale);
     titleLabel.textContent = currentTitle();
     currentAnchor = engine.resolveAnchor(model, restoreAnchor);
     renderToc();
@@ -514,6 +530,7 @@
     } else {
       await repaginate(currentAnchor);
     }
+    return true;
   };
 
   const showLoadError = (error) => {
@@ -524,6 +541,8 @@
     tocList.replaceChildren();
     leftPage.replaceChildren();
     rightPage.replaceChildren();
+    leftPage.classList.remove("continuous-page");
+    rightPage.classList.remove("continuous-page");
     const heading = document.createElement("h1");
     heading.textContent = localCopy.loadError;
     const hint = document.createElement("p");
@@ -607,9 +626,9 @@
   window.addEventListener("library-language-change", async () => {
     if (!book) return;
     const restoreAnchor = currentAnchor;
+    applyLayoutClasses(layoutPreference);
     try {
       await loadSelectedEdition(restoreAnchor);
-      applyLayoutClasses(layoutPreference);
     } catch (error) {
       showLoadError(error);
     }
