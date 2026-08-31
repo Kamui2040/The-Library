@@ -108,6 +108,16 @@
             "de": "Dieser Prototyp-Eintrag enthält nur veröffentlichungssicheren Website-Kontext und keine Handlungslore."
           }
         }
+      ],
+      "relationships": [
+        {
+          "id": "future-knowledge",
+          "target": "prototype-full-spoilers-entry",
+          "labels": {
+            "en": "Related knowledge",
+            "de": "Verwandtes Wissen"
+          }
+        }
       ]
     },
     {
@@ -137,6 +147,16 @@
           "text": {
             "en": "The public reader is structured by volumes and stable semantic locations rather than fixed rendered page numbers.",
             "de": "Der öffentliche Reader ist nach Bänden und stabilen semantischen Positionen aufgebaut, nicht nach festen gerenderten Seitenzahlen."
+          }
+        }
+      ],
+      "relationships": [
+        {
+          "id": "volume-one-knowledge",
+          "target": "prototype-volume-one-knowledge",
+          "labels": {
+            "en": "Related knowledge",
+            "de": "Verwandtes Wissen"
           }
         }
       ]
