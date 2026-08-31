@@ -10,11 +10,11 @@
   const rightPage = document.querySelector("[data-book-page='right']");
   const previousButton = document.querySelector("[data-page-previous]");
   const nextButton = document.querySelector("[data-page-next]");
-  const themeSelect = document.querySelector("[data-reader-theme]");
-  const typefaceSelect = document.querySelector("[data-reader-typeface]");
-  const fontSizeSelect = document.querySelector("[data-reader-font-size]");
-  const lineHeightSelect = document.querySelector("[data-reader-line-height]");
-  const transitionSelect = document.querySelector("[data-reader-transition]");
+  const themeSelect = document.querySelector("select[data-reader-theme]");
+  const typefaceSelect = document.querySelector("select[data-reader-typeface]");
+  const fontSizeSelect = document.querySelector("select[data-reader-font-size]");
+  const lineHeightSelect = document.querySelector("select[data-reader-line-height]");
+  const transitionSelect = document.querySelector("select[data-reader-transition]");
 
   if (
     !body || !settings || !settingsToggle || !spread || !stage || !leftPage || !rightPage ||
