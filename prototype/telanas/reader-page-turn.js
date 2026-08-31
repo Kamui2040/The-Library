@@ -26,11 +26,11 @@
     node.querySelectorAll("[id]").forEach((child) => child.removeAttribute("id"));
   };
 
-  const cloneFace = (source, faceClass) => {
+  const clonePage = (source) => {
     const clone = source.cloneNode(true);
     clone.removeAttribute("data-book-page");
     stripIds(clone);
-    clone.classList.add("reader-page-turn-face", faceClass);
+    clone.classList.add("reader-page-turn-front");
     return clone;
   };
 
@@ -47,166 +47,113 @@
     return direction < 0 ? leftPage : rightPage;
   };
 
-  const destinationForDirection = (direction) => {
-    if (!effectiveSpread()) return leftPage;
-    return direction < 0 ? rightPage : leftPage;
-  };
-
-  const nearestCorner = (source, clientY) => {
-    if (!Number.isFinite(clientY)) return "bottom";
-    const rect = source.getBoundingClientRect();
-    return Math.abs(clientY - rect.top) < Math.abs(rect.bottom - clientY) ? "top" : "bottom";
-  };
-
-  const clipFrames = (side, corner) => {
-    if (side === "right" && corner === "bottom") {
-      return [
-        "polygon(0 0, 100% 0, 100% 100%, 100% 100%, 0 100%)",
-        "polygon(0 0, 100% 0, 100% 90%, 90% 100%, 0 100%)",
-        "polygon(0 0, 100% 0, 100% 68%, 68% 100%, 0 100%)",
-        "polygon(0 0, 100% 0, 100% 42%, 42% 100%, 0 100%)"
+  const clipFrames = (side) => side === "right"
+    ? [
+        "inset(0 0% 0 0)",
+        "inset(0 3% 0 0)",
+        "inset(0 11% 0 0)",
+        "inset(0 28% 0 0)",
+        "inset(0 51% 0 0)",
+        "inset(0 76% 0 0)",
+        "inset(0 94% 0 0)",
+        "inset(0 100% 0 0)"
+      ]
+    : [
+        "inset(0 0 0 0%)",
+        "inset(0 0 0 3%)",
+        "inset(0 0 0 11%)",
+        "inset(0 0 0 28%)",
+        "inset(0 0 0 51%)",
+        "inset(0 0 0 76%)",
+        "inset(0 0 0 94%)",
+        "inset(0 0 0 100%)"
       ];
-    }
 
-    if (side === "right") {
-      return [
-        "polygon(0 0, 100% 0, 100% 0, 100% 100%, 0 100%)",
-        "polygon(0 0, 90% 0, 100% 10%, 100% 100%, 0 100%)",
-        "polygon(0 0, 68% 0, 100% 32%, 100% 100%, 0 100%)",
-        "polygon(0 0, 42% 0, 100% 58%, 100% 100%, 0 100%)"
-      ];
-    }
-
-    if (corner === "bottom") {
-      return [
-        "polygon(0 0, 100% 0, 100% 100%, 0 100%, 0 100%)",
-        "polygon(0 0, 100% 0, 100% 100%, 10% 100%, 0 90%)",
-        "polygon(0 0, 100% 0, 100% 100%, 32% 100%, 0 68%)",
-        "polygon(0 0, 100% 0, 100% 100%, 58% 100%, 0 42%)"
-      ];
-    }
-
-    return [
-      "polygon(0 0, 0 0, 100% 0, 100% 100%, 0 100%)",
-      "polygon(0 10%, 10% 0, 100% 0, 100% 100%, 0 100%)",
-      "polygon(0 32%, 32% 0, 100% 0, 100% 100%, 0 100%)",
-      "polygon(0 58%, 58% 0, 100% 0, 100% 100%, 0 100%)"
-    ];
-  };
+  const edgePositions = (side) => side === "right"
+    ? ["93%", "90%", "82%", "65%", "42%", "17%", "-1%", "-7%"]
+    : ["-7%", "-4%", "4%", "21%", "44%", "69%", "87%", "93%"];
 
   const playPreparedTurn = (prepared) => {
     if (!prepared.layer.isConnected || prepared.token !== turnToken) return;
 
-    const destination = destinationForDirection(prepared.direction);
-    if (destination && !destination.classList.contains("is-empty")) {
-      const destinationClone = destination.cloneNode(true);
-      destinationClone.removeAttribute("data-book-page");
-      stripIds(destinationClone);
-      prepared.back.className = destinationClone.className;
-      prepared.back.classList.add("reader-page-turn-face", "reader-page-turn-back");
-      prepared.back.replaceChildren(...[...destinationClone.childNodes].map((node) => node.cloneNode(true)));
-    }
-
     const rotationSign = prepared.direction < 0 ? 1 : -1;
-    const cornerSign = prepared.corner === "bottom" ? 1 : -1;
-    const bendSign = rotationSign * cornerSign;
-    const clips = clipFrames(prepared.side, prepared.corner);
-    const duration = 1120;
+    const clips = clipFrames(prepared.side);
+    const positions = edgePositions(prepared.side);
+    const duration = 1020;
 
     const sheetAnimation = prepared.sheet.animate([
       {
         offset: 0,
-        transform: "translateZ(0) rotateY(0deg) rotateZ(0deg) skewY(0deg) scaleX(1)",
+        transform: "translateZ(0) rotateY(0deg) skewY(0deg) scaleX(1)",
         filter: "drop-shadow(0 0 0 rgba(0,0,0,0))"
       },
       {
         offset: 0.12,
-        transform: `translateZ(4px) rotateY(${rotationSign * 4}deg) rotateZ(${bendSign * 0.45}deg) skewY(${bendSign * 0.7}deg) scaleX(.998)`,
-        filter: "drop-shadow(0 5px 7px rgba(0,0,0,.08))"
+        transform: `translateZ(3px) rotateY(${rotationSign * 3}deg) skewY(${rotationSign * .35}deg) scaleX(.999)`,
+        filter: "drop-shadow(0 4px 6px rgba(0,0,0,.06))"
       },
       {
-        offset: 0.30,
-        transform: `translateZ(16px) rotateY(${rotationSign * 26}deg) rotateZ(${bendSign * 1.1}deg) skewY(${bendSign * 2.4}deg) scaleX(.982)`,
-        filter: "drop-shadow(0 10px 14px rgba(0,0,0,.16))"
+        offset: 0.28,
+        transform: `translateZ(10px) rotateY(${rotationSign * 12}deg) skewY(${rotationSign * 1.1}deg) scaleX(.994)`,
+        filter: "drop-shadow(0 8px 12px rgba(0,0,0,.11))"
       },
       {
-        offset: 0.50,
-        transform: `translateZ(34px) rotateY(${rotationSign * 68}deg) rotateZ(${bendSign * 0.4}deg) skewY(${bendSign * 4.5}deg) scaleX(.945)`,
-        filter: "drop-shadow(0 17px 24px rgba(0,0,0,.25))"
+        offset: 0.48,
+        transform: `translateZ(20px) rotateY(${rotationSign * 31}deg) skewY(${rotationSign * 1.8}deg) scaleX(.983)`,
+        filter: "drop-shadow(0 13px 19px rgba(0,0,0,.17))"
       },
       {
-        offset: 0.64,
-        transform: `translateZ(38px) rotateY(${rotationSign * 104}deg) rotateZ(${bendSign * -0.7}deg) skewY(${bendSign * -3.2}deg) scaleX(.93)`,
-        filter: "drop-shadow(0 20px 28px rgba(0,0,0,.27))"
+        offset: 0.66,
+        transform: `translateZ(25px) rotateY(${rotationSign * 54}deg) skewY(${rotationSign * 1.1}deg) scaleX(.969)`,
+        filter: "drop-shadow(0 16px 23px rgba(0,0,0,.2))"
       },
       {
-        offset: 0.80,
-        transform: `translateZ(18px) rotateY(${rotationSign * 145}deg) rotateZ(${bendSign * -0.35}deg) skewY(${bendSign * -1.2}deg) scaleX(.97)`,
-        filter: "drop-shadow(0 10px 16px rgba(0,0,0,.16))"
+        offset: 0.82,
+        transform: `translateZ(17px) rotateY(${rotationSign * 73}deg) skewY(${rotationSign * .4}deg) scaleX(.966)`,
+        filter: "drop-shadow(0 11px 16px rgba(0,0,0,.14))"
       },
       {
         offset: 1,
-        transform: `translateZ(0) rotateY(${rotationSign * 180}deg) rotateZ(0deg) skewY(0deg) scaleX(1)`,
-        filter: "drop-shadow(0 0 0 rgba(0,0,0,0))"
+        transform: `translateZ(5px) rotateY(${rotationSign * 88}deg) skewY(0deg) scaleX(.985)`,
+        filter: "drop-shadow(0 5px 8px rgba(0,0,0,.07))"
       }
     ], {
       duration,
-      easing: "cubic-bezier(.22,.08,.2,1)",
+      easing: "cubic-bezier(.22,.08,.18,1)",
       fill: "forwards"
     });
 
     const frontAnimation = prepared.front.animate([
-      { offset: 0, clipPath: clips[0], filter: "brightness(1)" },
-      { offset: 0.10, clipPath: clips[1], filter: "brightness(1.015)" },
-      { offset: 0.27, clipPath: clips[2], filter: "brightness(1.045)" },
-      { offset: 0.48, clipPath: clips[3], filter: "brightness(.96)" },
-      { offset: 1, clipPath: clips[3], filter: "brightness(.88)" }
+      { offset: 0, clipPath: clips[0], filter: "brightness(1)", opacity: 1 },
+      { offset: 0.10, clipPath: clips[1], filter: "brightness(1.01)", opacity: 1 },
+      { offset: 0.26, clipPath: clips[2], filter: "brightness(1.025)", opacity: 1 },
+      { offset: 0.44, clipPath: clips[3], filter: "brightness(1.035)", opacity: 1 },
+      { offset: 0.62, clipPath: clips[4], filter: "brightness(.99)", opacity: 1 },
+      { offset: 0.78, clipPath: clips[5], filter: "brightness(.94)", opacity: .98 },
+      { offset: 0.91, clipPath: clips[6], filter: "brightness(.9)", opacity: .72 },
+      { offset: 1, clipPath: clips[7], filter: "brightness(.88)", opacity: 0 }
     ], {
       duration,
-      easing: "cubic-bezier(.3,.02,.22,1)",
+      easing: "cubic-bezier(.26,.04,.2,1)",
       fill: "forwards"
     });
 
-    const backAnimation = prepared.back.animate([
-      { offset: 0, filter: "brightness(.78)" },
-      { offset: 0.52, filter: "brightness(.84)" },
-      { offset: 0.72, filter: "brightness(.96)" },
-      { offset: 1, filter: "brightness(1)" }
+    const edgeAnimation = prepared.edge.animate([
+      { offset: 0, left: positions[0], transform: "translateZ(2px) scaleX(.28)", opacity: 0, filter: "brightness(1)" },
+      { offset: 0.08, left: positions[1], transform: "translateZ(5px) scaleX(.42)", opacity: .44, filter: "brightness(1.03)" },
+      { offset: 0.22, left: positions[2], transform: "translateZ(10px) scaleX(.64)", opacity: .78, filter: "brightness(1.06)" },
+      { offset: 0.42, left: positions[3], transform: "translateZ(18px) scaleX(.92)", opacity: .94, filter: "brightness(1.08)" },
+      { offset: 0.61, left: positions[4], transform: "translateZ(22px) scaleX(1.06)", opacity: .88, filter: "brightness(.98)" },
+      { offset: 0.78, left: positions[5], transform: "translateZ(15px) scaleX(.86)", opacity: .68, filter: "brightness(.92)" },
+      { offset: 0.91, left: positions[6], transform: "translateZ(8px) scaleX(.52)", opacity: .32, filter: "brightness(.9)" },
+      { offset: 1, left: positions[7], transform: "translateZ(2px) scaleX(.3)", opacity: 0, filter: "brightness(.9)" }
     ], {
       duration,
-      easing: "ease-out",
+      easing: "cubic-bezier(.2,.08,.18,1)",
       fill: "forwards"
     });
 
-    const foldAnimation = prepared.fold.animate([
-      { offset: 0, opacity: 0, transform: "translateZ(2px) scale(.06) rotateZ(0deg)" },
-      { offset: 0.08, opacity: 0.42, transform: `translateZ(4px) scale(.2) rotateZ(${bendSign * 4}deg)` },
-      { offset: 0.24, opacity: 0.9, transform: `translateZ(10px) scale(.62) rotateZ(${bendSign * 11}deg)` },
-      { offset: 0.45, opacity: 0.94, transform: `translateZ(18px) scale(1.12) rotateZ(${bendSign * 18}deg)` },
-      { offset: 0.62, opacity: 0.36, transform: `translateZ(13px) scale(1.36) rotateZ(${bendSign * 10}deg)` },
-      { offset: 0.76, opacity: 0, transform: `translateZ(6px) scale(1.5) rotateZ(${bendSign * 4}deg)` },
-      { offset: 1, opacity: 0, transform: "translateZ(0) scale(1.5) rotateZ(0deg)" }
-    ], {
-      duration,
-      easing: "cubic-bezier(.18,.14,.2,1)",
-      fill: "forwards"
-    });
-
-    const creaseTravel = prepared.side === "right" ? -150 : 150;
-    const creaseAnimation = prepared.crease.animate([
-      { offset: 0, opacity: 0, transform: "translateX(0) rotate(0deg) scaleX(.4)" },
-      { offset: 0.12, opacity: 0.28, transform: `translateX(${creaseTravel * 0.08}%) rotate(${bendSign * 4}deg) scaleX(.65)` },
-      { offset: 0.36, opacity: 0.72, transform: `translateX(${creaseTravel * 0.48}%) rotate(${bendSign * 10}deg) scaleX(1)` },
-      { offset: 0.57, opacity: 0.56, transform: `translateX(${creaseTravel * 0.9}%) rotate(${bendSign * 7}deg) scaleX(1.2)` },
-      { offset: 0.72, opacity: 0, transform: `translateX(${creaseTravel}%) rotate(${bendSign * 3}deg) scaleX(1.3)` },
-      { offset: 1, opacity: 0, transform: `translateX(${creaseTravel}%) rotate(0deg) scaleX(1.3)` }
-    ], {
-      duration,
-      easing: "ease-out",
-      fill: "forwards"
-    });
-
-    const animations = [sheetAnimation, frontAnimation, backAnimation, foldAnimation, creaseAnimation];
+    const animations = [sheetAnimation, frontAnimation, edgeAnimation];
     activeTurn = { layer: prepared.layer, animations };
 
     Promise.allSettled(animations.map((animation) => animation.finished)).finally(() => {
@@ -220,7 +167,7 @@
     }, duration + 180);
   };
 
-  const prepareTurn = (direction, clientY = Number.NaN) => {
+  const prepareTurn = (direction) => {
     if (reducedMotion.matches || spread.classList.contains("continuous")) return;
     if (direction < 0 && previousButton.disabled) return;
     if (direction > 0 && nextButton.disabled) return;
@@ -233,12 +180,10 @@
     const sourceRect = source.getBoundingClientRect();
     const spreadRect = spread.getBoundingClientRect();
     const side = direction < 0 ? "left" : "right";
-    const corner = nearestCorner(source, clientY);
 
     const layer = document.createElement("div");
     layer.className = "reader-page-turn-layer";
     layer.dataset.turnSide = side;
-    layer.dataset.turnCorner = corner;
     layer.setAttribute("aria-hidden", "true");
     Object.assign(layer.style, {
       left: `${sourceRect.left - spreadRect.left}px`,
@@ -251,16 +196,11 @@
     sheet.className = "reader-page-turn-sheet";
     sheet.style.transformOrigin = direction < 0 ? "right center" : "left center";
 
-    const front = cloneFace(source, "reader-page-turn-front");
-    const back = document.createElement("article");
-    back.className = "book-page reader-page-turn-face reader-page-turn-back";
+    const front = clonePage(source);
+    const edge = document.createElement("span");
+    edge.className = "reader-page-turn-edge";
 
-    const fold = document.createElement("span");
-    fold.className = "reader-page-turn-fold";
-    const crease = document.createElement("span");
-    crease.className = "reader-page-turn-crease";
-
-    sheet.append(front, back, fold, crease);
+    sheet.append(front, edge);
     layer.append(sheet);
     spread.append(layer);
 
@@ -268,13 +208,10 @@
       token,
       direction,
       side,
-      corner,
       layer,
       sheet,
       front,
-      back,
-      fold,
-      crease
+      edge
     }));
   };
 
@@ -303,7 +240,7 @@
 
   stage.addEventListener("click", (event) => {
     const direction = directionForPageClick(event);
-    if (direction) prepareTurn(direction, event.clientY);
+    if (direction) prepareTurn(direction);
   }, true);
 
   previousButton.addEventListener("click", () => prepareTurn(-1), true);
