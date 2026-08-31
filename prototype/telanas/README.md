@@ -11,6 +11,7 @@ It intentionally contains no unreleased manuscript text, private lore, productio
 - `lexicon.html` — spoiler-aware Lexicon prototype
 - `timeline.html` — spoiler-aware timeline prototype
 - `map.html` — spoiler-aware map prototype
+- `world-search.html` — spoiler-aware cross-feature world search prototype
 
 ## Implemented interactions
 
@@ -22,6 +23,14 @@ It intentionally contains no unreleased manuscript text, private lore, productio
   - completed-volume selection
   - Full Spoilers toggle
   - the same profile is available across Library pages
+- spoiler-aware world search:
+  - searches the public Lexicon, Timeline, and Map through one interface
+  - every source applies the shared spoiler profile before a searchable record is constructed
+  - hidden entries, fragments, relationships, events, and markers contribute no search terms, result cards, source hints, or counts
+  - source filters operate only on records already allowed by the spoiler profile
+  - visible results can open their exact stable Lexicon entry, Timeline event, or Map marker
+  - source-page focus waits for the requested visible target and does nothing when that target is hidden
+  - visible semantic reader references remain direct links to stable story/book/anchor targets
 - spoiler-aware Lexicon:
   - entry visibility is filtered before rendering
   - search runs only against already-visible entries and fragments
@@ -94,7 +103,7 @@ It intentionally contains no unreleased manuscript text, private lore, productio
 
 ## Running the prototype
 
-The reader, Lexicon, timeline, and map load public manifests with `fetch()`, so open them through a local static web server or normal website host rather than directly from a `file://` URL.
+The reader, Lexicon, timeline, map, and world search load public manifests with `fetch()`, so open them through a local static web server or normal website host rather than directly from a `file://` URL.
 
 Current public prototype data includes:
 
@@ -105,7 +114,7 @@ Current public prototype data includes:
 - `content/worlds/telanas/timeline/timeline.json`
 - `content/worlds/telanas/map/map.json`
 
-Run `npm run validate` from the repository root to validate the Library/world/book/reader-edition/Lexicon/timeline/map data, semantic reader links, semantic Lexicon relationships, illustration contracts, and the neutral release-bundle fixture.
+Run `npm run validate` from the repository root to validate the Library/world/book/reader-edition/Lexicon/timeline/map data, semantic reader links, semantic Lexicon relationships, illustration contracts, and the neutral release-bundle fixture. World search consumes only those already validated public manifests and adds no separate content store.
 
 ## Deliberately not implemented yet
 

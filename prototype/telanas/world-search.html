@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark light">
+  <meta name="description" content="Spoiler-aware Telanas world search prototype inside The Library.">
+  <title>The Library — Telanas Search</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="world-search.css">
+  <script defer src="spoiler-profile.js"></script>
+  <script defer src="site.js"></script>
+  <script defer src="spoiler-controls.js"></script>
+  <script defer src="world-search.js"></script>
+</head>
+<body class="world-search-page">
+  <header class="site-header" data-site-header>
+    <div class="header-inner">
+      <details class="menu-popover global-menu">
+        <summary class="brand-control" aria-label="K2040 navigation">
+          <span class="brand-glyph" aria-hidden="true">K</span>
+          <strong>K2040</strong>
+          <span aria-hidden="true">⌄</span>
+        </summary>
+        <nav class="popover-panel global-panel" aria-label="K2040">
+          <a href="https://kamui2040.github.io/" data-i18n="global.home">Home</a>
+          <a href="https://kamui2040.github.io/K2040-Android-Releases/" data-i18n="global.android">Android Projects</a>
+          <a href="https://kamui2040.github.io/K2040-Gaming-Mods/" data-i18n="global.gaming">Gaming Mods</a>
+        </nav>
+      </details>
+
+      <div class="library-context" aria-label="Library context">
+        <span class="library-name">The Library</span>
+        <span class="context-separator" aria-hidden="true">/</span>
+        <a class="world-name" href="index.html">TELANAS</a>
+      </div>
+
+      <button class="mobile-menu-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation" data-mobile-menu>
+        <span aria-hidden="true">☰</span>
+        <span class="visually-hidden" data-i18n="nav.menu">Menu</span>
+      </button>
+
+      <nav class="primary-nav" id="primary-navigation" aria-label="Telanas" data-primary-nav>
+        <a class="nav-link" href="index.html" data-i18n="nav.home">Home</a>
+
+        <details class="menu-popover nav-dropdown">
+          <summary class="nav-link">
+            <span data-i18n="nav.stories">Stories</span>
+            <span aria-hidden="true">⌄</span>
+          </summary>
+          <div class="popover-panel stories-panel">
+            <p class="menu-kicker">TELANAS</p>
+            <p class="menu-heading" data-i18n="stories.arc">The Dragon Knight</p>
+            <a href="index.html#stories">
+              <strong data-i18n="stories.volume">Volume 1 — Home</strong>
+              <span data-i18n="stories.overview">Overview</span>
+            </a>
+            <a href="reader.html" data-i18n="stories.read">Read Volume 1</a>
+            <div class="menu-divider"></div>
+            <p class="menu-heading" data-i18n="stories.chapters">Chapters</p>
+            <a href="reader.html#prologue" data-i18n="chapter.prologue">Prologue</a>
+            <a href="reader.html#chapter-1" data-i18n="chapter.one">Chapter 1</a>
+            <a href="reader.html#chapter-2" data-i18n="chapter.two">Chapter 2</a>
+          </div>
+        </details>
+
+        <a class="nav-link" href="lexicon.html" data-i18n="nav.lexicon">Lexicon</a>
+        <a class="nav-link" href="timeline.html" data-i18n="nav.timeline">Timeline</a>
+        <a class="nav-link" href="map.html" data-i18n="nav.map">Map</a>
+        <a class="nav-link is-current" href="world-search.html" data-i18n="nav.search">Search</a>
+        <a class="nav-link" href="index.html#downloads" data-i18n="nav.downloads">Downloads</a>
+        <a class="nav-link" href="index.html#updates" data-i18n="nav.updates">Updates</a>
+
+        <label class="select-control">
+          <span class="visually-hidden" data-i18n="nav.language">Language</span>
+          <select data-language-select aria-label="Language">
+            <option value="en">English</option>
+            <option value="de">Deutsch</option>
+          </select>
+        </label>
+
+        <button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false">
+          <span aria-hidden="true" data-theme-icon>☾</span>
+          <span data-theme-label data-i18n="theme.light">Light</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="world-search-hero">
+      <div class="page-width world-search-hero-inner">
+        <p class="eyebrow">THE LIBRARY · TELANAS</p>
+        <h1 data-world-search-i18n="title">Search</h1>
+        <p class="world-search-lede" data-world-search-i18n="intro">Search only the world knowledge currently available at your reading progress.</p>
+      </div>
+    </section>
+
+    <section class="content-section page-width world-search-controls" aria-labelledby="search-spoiler-title">
+      <div class="framed-panel search-progress-panel">
+        <div>
+          <p class="eyebrow" data-world-search-i18n="progressEyebrow">Reading progress</p>
+          <h2 id="search-spoiler-title" data-world-search-i18n="progressTitle">Choose what you have finished</h2>
+          <p data-world-search-i18n="progressHelp">Hidden knowledge is excluded before the search index is built.</p>
+        </div>
+
+        <div class="search-progress-fields">
+          <label class="search-progress-field">
+            <span data-world-search-i18n="through">Spoilers through</span>
+            <select data-spoiler-progress-select>
+              <option value="none">No completed volumes</option>
+              <option value="volume-01">Through Volume 1 — Home</option>
+            </select>
+          </label>
+
+          <label class="search-full-spoilers">
+            <input type="checkbox" data-full-spoilers-toggle>
+            <span>
+              <strong data-world-search-i18n="fullSpoilers">Full spoilers</strong>
+              <small data-world-search-i18n="fullSpoilersHelp">Include every public world-search source regardless of progress.</small>
+            </span>
+          </label>
+        </div>
+      </div>
+    </section>
+
+    <section class="content-section section-dark world-search-browser" aria-labelledby="world-search-title">
+      <div class="page-width">
+        <div class="section-heading section-heading--split world-search-heading">
+          <div>
+            <p class="eyebrow" data-world-search-i18n="browseEyebrow">Available knowledge</p>
+            <h2 id="world-search-title" data-world-search-i18n="browseTitle">Search Telanas</h2>
+            <p data-world-search-i18n="browseHelp">Lexicon, Timeline, and Map results use one spoiler-filtered view.</p>
+          </div>
+          <div class="world-search-status framed-inline">
+            <span data-world-search-i18n="currentView">Current view</span>
+            <strong data-spoiler-summary>No completed volumes</strong>
+          </div>
+        </div>
+
+        <div class="world-search-query-row">
+          <label class="world-search-query">
+            <span class="visually-hidden" data-world-search-i18n="searchLabel">Search visible world knowledge</span>
+            <input type="search" data-world-search-input autocomplete="off" spellcheck="false" placeholder="Search visible world knowledge">
+          </label>
+        </div>
+
+        <nav class="world-search-source-filters" aria-label="Search sources" data-world-search-sources></nav>
+        <p class="world-search-state" data-world-search-state aria-live="polite"></p>
+        <div class="world-search-results" data-world-search-results></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="page-width footer-inner">
+      <div>
+        <p class="footer-title">The Library</p>
+        <p class="footer-world">TELANAS</p>
+      </div>
+      <nav class="footer-links" aria-label="K2040 ecosystem">
+        <a href="https://kamui2040.github.io/" data-i18n="global.home">Home</a>
+        <a href="https://kamui2040.github.io/K2040-Android-Releases/" data-i18n="global.android">Android Projects</a>
+        <a href="https://kamui2040.github.io/K2040-Gaming-Mods/" data-i18n="global.gaming">Gaming Mods</a>
+        <a href="https://github.com/Kamui2040">GitHub</a>
+        <a href="https://next.nexusmods.com/profile/kamui2040">Nexus Mods</a>
+        <a href="https://ko-fi.com/k2040">Ko-fi</a>
+        <a href="https://www.instagram.com/k2040.projects/">Instagram</a>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>
