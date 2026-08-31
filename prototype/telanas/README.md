@@ -32,12 +32,20 @@ It intentionally contains no unreleased manuscript text or private lore. The lan
   - paragraph and scene-break anchors
   - dedicated chapter-title pages
   - dynamic block-based pagination from the current page dimensions
-  - automatic repagination after layout, language, or viewport changes
+  - automatic repagination after layout, language, viewport, or typography changes
   - spread mode with narrow-screen single-page fallback
   - explicit single-page and continuous modes
-  - previous/next page controls plus left/right arrow-key paging
+  - previous/next controls, page-click navigation, and left/right arrow-key paging
   - persistent reading position stored as a semantic anchor, never a rendered page number
   - language and layout changes restore the nearest stable semantic location
+  - dark, light, and parchment reader themes
+  - serif/sans typeface, text-size, and line-spacing controls
+  - a spine-anchored soft page turn for paged layouts, with reduced-motion fallback
+- reader completion and spoiler progress:
+  - `Ask when a volume ends` prompts before changing the spoiler profile
+  - `Update automatically` marks a volume complete at its final reading position
+  - `Manual in Lexicon` leaves progress entirely under the reader's direct control
+  - completion advances by stable book ID and never lowers a later completed volume
 - reader table of contents:
   - generated from the public Volume 1 book manifest
   - the integrated Contents page uses that same ordered chapter data
@@ -48,6 +56,7 @@ It intentionally contains no unreleased manuscript text or private lore. The lan
   - tap `☰` to open/close on touch devices
   - `Escape` closes the panel
   - chapter selection resolves to stable semantic chapter IDs
+  - Continuous mode keeps the control reachable while scrolling and uses available horizontal space when open
 
 ## Running the prototype
 
@@ -70,9 +79,7 @@ Run `npm run validate` from the repository root to validate the Library/world/bo
 - real released Lexicon content
 - private-source exporter/parser
 - finer line-level paragraph pagination
-- final reader font/spacing/page-width controls
-- true page-turn rendering
-- downloads
+- released download files and metadata
 - deployment
 
 The durable architecture is in `docs/site-foundation.md`; visual rules are in `docs/visual-system.md`; the public-content boundary is in `docs/publication-pipeline.md`.
