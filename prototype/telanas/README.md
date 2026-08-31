@@ -23,9 +23,11 @@ It intentionally contains no unreleased manuscript text or private lore. The lan
 - spoiler-aware Lexicon:
   - entry visibility is filtered before rendering
   - search runs only against already-visible entries and fragments
-  - hidden entries do not appear as redacted results, counts, or suggestions
+  - hidden entries do not appear as redacted results, counts, suggestions, or source links
   - category controls do not expose hidden-entry counts
-  - prototype-only entries prove Volume 1 and Full Spoilers reveal gates without storing story lore
+  - visible fragments may link to exact semantic reader anchors without rendered page numbers
+  - reader links are constructed only after their containing fragment passes the spoiler gate
+  - prototype-only entries prove Volume 1, Full Spoilers, and semantic-link behavior without storing story lore
 - semantic reader content:
   - separate English and German prototype editions
   - identical chapter/block semantic IDs across both locales
@@ -69,7 +71,7 @@ Current public prototype data includes:
 - `content/worlds/telanas/books/dragon-knight/volume-01/editions/de.json`
 - `content/worlds/telanas/lexicon/lexicon.json`
 
-Run `npm run validate` from the repository root to validate the Library/world/book/reader-edition/Lexicon data and the neutral release-bundle fixture.
+Run `npm run validate` from the repository root to validate the Library/world/book/reader-edition/Lexicon data, semantic Lexicon reader links, and the neutral release-bundle fixture.
 
 ## Deliberately not implemented yet
 
