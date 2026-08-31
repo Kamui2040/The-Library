@@ -9,6 +9,21 @@
   pointer-events: none;
 }
 
+/* Keep paged layouts closer to a printed-book proportion instead of filling
+   the available desktop width. The surrounding stage remains wider in single
+   mode so its invisible left/right page-turn areas have useful reach. */
+.book-stage {
+  width: min(100%, 900px);
+}
+
+.book-spread.single {
+  max-width: 460px;
+}
+
+.book-page {
+  min-height: 675px;
+}
+
 .book-spread.single .book-page:nth-child(2),
 .book-spread.continuous .book-page:nth-child(2) {
   display: none;
@@ -117,12 +132,32 @@
 }
 
 @media (max-width: 980px) {
+  .book-stage {
+    width: min(100%, 620px);
+  }
+
+  .book-spread:not(.continuous) {
+    max-width: 460px;
+  }
+
   .book-spread.continuous .book-page:nth-child(2) {
     display: none;
   }
 }
 
 @media (max-width: 700px) {
+  .book-stage {
+    width: 100%;
+  }
+
+  .book-spread:not(.continuous) {
+    width: min(100%, 430px);
+  }
+
+  .book-page {
+    min-height: min(675px, 78vh);
+  }
+
   .reader-status {
     align-items: center;
   }
