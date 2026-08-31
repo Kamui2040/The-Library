@@ -18,6 +18,7 @@
   const copy = {
     en: {
       heading: "Bookmarks",
+      countLabel: "Saved bookmarks",
       empty: "No saved places yet.",
       add: "Bookmark current place",
       removeCurrent: "Remove bookmark from current place",
@@ -28,6 +29,7 @@
     },
     de: {
       heading: "Lesezeichen",
+      countLabel: "Gespeicherte Lesezeichen",
       empty: "Noch keine gespeicherten Stellen.",
       add: "Aktuelle Stelle als Lesezeichen speichern",
       removeCurrent: "Lesezeichen an aktueller Stelle entfernen",
@@ -200,6 +202,7 @@
     heading.textContent = localCopy.heading;
     empty.textContent = localCopy.empty;
     count.textContent = String(bookmarks.length);
+    count.setAttribute("aria-label", `${localCopy.countLabel}: ${bookmarks.length}`);
     empty.hidden = bookmarks.length > 0;
     list.hidden = bookmarks.length === 0;
     renderList(bookmarks);
