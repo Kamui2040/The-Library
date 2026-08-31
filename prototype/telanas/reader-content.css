@@ -189,7 +189,8 @@
   margin: 3rem auto;
 }
 
-.book-spread.continuous .reader-illustration--full-page .reader-illustration-media {
+.book-spread.continuous .reader-illustration--full-page .reader-illustration-media,
+.book-spread.continuous .reader-illustration--before-title .reader-illustration-media {
   width: 100%;
   height: auto;
 }
@@ -245,6 +246,10 @@
 
   .book-page {
     min-height: min(675px, 78vh);
+  }
+
+  .illustration-page .reader-illustration-media {
+    height: calc(min(675px, 78vh) - 96px);
   }
 
   .reader-status {
