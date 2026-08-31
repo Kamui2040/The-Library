@@ -10,6 +10,7 @@
       "nav.home": "Home",
       "nav.stories": "Stories",
       "nav.lexicon": "Lexicon",
+      "nav.timeline": "Timeline",
       "nav.downloads": "Downloads",
       "nav.updates": "Updates",
       "nav.language": "Language",
@@ -60,6 +61,7 @@
       "nav.home": "Home",
       "nav.stories": "Geschichten",
       "nav.lexicon": "Lexikon",
+      "nav.timeline": "Zeitleiste",
       "nav.downloads": "Downloads",
       "nav.updates": "Neuigkeiten",
       "nav.language": "Sprache",
@@ -122,6 +124,20 @@
 
   const normalizeLanguage = (value) => String(value || "").toLowerCase().startsWith("de") ? "de" : "en";
 
+  const ensureTimelineNavigation = () => {
+    document.querySelectorAll("[data-primary-nav]").forEach((nav) => {
+      if (nav.querySelector("a[href='timeline.html']")) return;
+      const lexiconLink = nav.querySelector("a[href='lexicon.html']");
+      if (!lexiconLink) return;
+      const link = document.createElement("a");
+      link.className = "nav-link";
+      link.href = "timeline.html";
+      link.dataset.i18n = "nav.timeline";
+      link.textContent = "Timeline";
+      lexiconLink.insertAdjacentElement("afterend", link);
+    });
+  };
+
   const translate = (language) => {
     const lang = normalizeLanguage(language);
     const table = translations[lang];
@@ -156,6 +172,8 @@
     storageSet("library-theme", next);
     translate(document.documentElement.lang);
   };
+
+  ensureTimelineNavigation();
 
   document.querySelectorAll("[data-language-select]").forEach((select) => {
     select.addEventListener("change", () => translate(select.value));
