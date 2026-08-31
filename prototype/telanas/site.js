@@ -12,6 +12,7 @@
       "nav.lexicon": "Lexicon",
       "nav.timeline": "Timeline",
       "nav.map": "Map",
+      "nav.search": "Search",
       "nav.downloads": "Downloads",
       "nav.updates": "Updates",
       "nav.language": "Language",
@@ -64,6 +65,7 @@
       "nav.lexicon": "Lexikon",
       "nav.timeline": "Zeitleiste",
       "nav.map": "Karte",
+      "nav.search": "Suche",
       "nav.downloads": "Downloads",
       "nav.updates": "Neuigkeiten",
       "nav.language": "Sprache",
@@ -141,15 +143,60 @@
         lexiconLink.insertAdjacentElement("afterend", timelineLink);
       }
 
-      if (!nav.querySelector("a[href='map.html']")) {
-        const mapLink = document.createElement("a");
+      let mapLink = nav.querySelector("a[href='map.html']");
+      if (!mapLink) {
+        mapLink = document.createElement("a");
         mapLink.className = "nav-link";
         mapLink.href = "map.html";
         mapLink.dataset.i18n = "nav.map";
         mapLink.textContent = "Map";
         timelineLink.insertAdjacentElement("afterend", mapLink);
       }
+
+      if (!nav.querySelector("a[href='world-search.html']")) {
+        const searchLink = document.createElement("a");
+        searchLink.className = "nav-link";
+        searchLink.href = "world-search.html";
+        searchLink.dataset.i18n = "nav.search";
+        searchLink.textContent = "Search";
+        mapLink.insertAdjacentElement("afterend", searchLink);
+      }
     });
+  };
+
+  const focusLinkedWorldTarget = () => {
+    const page = location.pathname.split("/").pop();
+    const params = new URLSearchParams(location.search);
+    const config = page === "lexicon.html"
+      ? { parameter: "entry", attribute: "data-lexicon-entry", datasetKey: "lexiconEntry", activate: false }
+      : page === "timeline.html"
+        ? { parameter: "event", attribute: "data-timeline-event", datasetKey: "timelineEvent", activate: false }
+        : page === "map.html"
+          ? { parameter: "marker", attribute: "data-map-marker", datasetKey: "mapMarker", activate: true }
+          : null;
+
+    if (!config) return;
+    const targetId = params.get(config.parameter);
+    if (!targetId) return;
+
+    const attempt = () => {
+      const target = [...document.querySelectorAll(`[${config.attribute}]`)]
+        .find((node) => node.dataset[config.datasetKey] === targetId);
+      if (!target) return false;
+      if (config.activate && target instanceof HTMLButtonElement) target.click();
+      if (!target.hasAttribute("tabindex")) target.tabIndex = -1;
+      const behavior = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth";
+      target.scrollIntoView({ block: "center", behavior });
+      target.focus({ preventScroll: true });
+      return true;
+    };
+
+    if (attempt()) return;
+    const observer = new MutationObserver(() => {
+      if (attempt()) observer.disconnect();
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+    window.setTimeout(() => observer.disconnect(), 5000);
   };
 
   const translate = (language) => {
@@ -188,6 +235,7 @@
   };
 
   ensureWorldNavigation();
+  focusLinkedWorldTarget();
 
   document.querySelectorAll("[data-language-select]").forEach((select) => {
     select.addEventListener("change", () => translate(select.value));
