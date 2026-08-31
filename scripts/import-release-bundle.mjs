@@ -41,20 +41,24 @@ if (positional.length !== 1) {
 
       const existingSha = await readExistingSha(targetPath);
       const unchanged = existingSha === file.sha256;
-      if (existingSha && !unchanged && !replace) {
-        throw new Error(`Target already exists with different content; use --replace explicitly: ${file.target}`);
-      }
-
-      plan.push({ ...file, targetPath, existingSha, unchanged });
+      const replacement = Boolean(existingSha && !unchanged);
+      plan.push({ ...file, targetPath, existingSha, unchanged, replacement });
     }
 
     if (!apply) {
       const writes = plan.filter((item) => !item.unchanged).length;
+      const replacements = plan.filter((item) => item.replacement).length;
       const unchanged = plan.length - writes;
+      const replacementNote = replacements > 0 ? ` ${replacements} would require --replace when applying.` : "";
       console.log(
-        `PASS: dry-run ${result.bundle.bundleId}; ${writes} file(s) would be written, ${unchanged} already match. Use --apply to write.`,
+        `PASS: dry-run ${result.bundle.bundleId}; ${writes} file(s) would be written, ${unchanged} already match.${replacementNote}`,
       );
     } else {
+      const blockedReplacement = plan.find((item) => item.replacement && !replace);
+      if (blockedReplacement) {
+        throw new Error(`Target already exists with different content; use --replace explicitly: ${blockedReplacement.target}`);
+      }
+
       let writes = 0;
       for (const item of plan) {
         if (item.unchanged) continue;
