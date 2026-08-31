@@ -2,24 +2,91 @@
   "schemaVersion": 1,
   "world": "telanas",
   "state": "prototype",
-  "locales": ["en", "de"],
+  "locales": [
+    "en",
+    "de"
+  ],
   "categories": [
-    { "id": "characters", "labels": { "en": "Characters", "de": "Charaktere" } },
-    { "id": "places", "labels": { "en": "Places", "de": "Orte" } },
-    { "id": "creatures", "labels": { "en": "Creatures", "de": "Kreaturen" } },
-    { "id": "factions", "labels": { "en": "Factions", "de": "Fraktionen" } },
-    { "id": "history", "labels": { "en": "History", "de": "Geschichte" } },
-    { "id": "magic", "labels": { "en": "Magic", "de": "Magie" } },
-    { "id": "mythology", "labels": { "en": "Mythology", "de": "Mythologie" } },
-    { "id": "items", "labels": { "en": "Items / Artifacts", "de": "Gegenstände / Artefakte" } },
-    { "id": "cultures", "labels": { "en": "Cultures", "de": "Kulturen" } },
-    { "id": "terminology", "labels": { "en": "Terminology", "de": "Begriffe" } }
+    {
+      "id": "characters",
+      "labels": {
+        "en": "Characters",
+        "de": "Charaktere"
+      }
+    },
+    {
+      "id": "places",
+      "labels": {
+        "en": "Places",
+        "de": "Orte"
+      }
+    },
+    {
+      "id": "creatures",
+      "labels": {
+        "en": "Creatures",
+        "de": "Kreaturen"
+      }
+    },
+    {
+      "id": "factions",
+      "labels": {
+        "en": "Factions",
+        "de": "Fraktionen"
+      }
+    },
+    {
+      "id": "history",
+      "labels": {
+        "en": "History",
+        "de": "Geschichte"
+      }
+    },
+    {
+      "id": "magic",
+      "labels": {
+        "en": "Magic",
+        "de": "Magie"
+      }
+    },
+    {
+      "id": "mythology",
+      "labels": {
+        "en": "Mythology",
+        "de": "Mythologie"
+      }
+    },
+    {
+      "id": "items",
+      "labels": {
+        "en": "Items / Artifacts",
+        "de": "Gegenstände / Artefakte"
+      }
+    },
+    {
+      "id": "cultures",
+      "labels": {
+        "en": "Cultures",
+        "de": "Kulturen"
+      }
+    },
+    {
+      "id": "terminology",
+      "labels": {
+        "en": "Terminology",
+        "de": "Begriffe"
+      }
+    }
   ],
   "entries": [
     {
       "id": "telanas",
-      "categories": ["terminology"],
-      "visibility": { "mode": "always" },
+      "categories": [
+        "terminology"
+      ],
+      "visibility": {
+        "mode": "always"
+      },
       "labels": {
         "en": {
           "title": "Telanas",
@@ -33,7 +100,9 @@
       "fragments": [
         {
           "id": "telanas-library-context",
-          "visibility": { "mode": "always" },
+          "visibility": {
+            "mode": "always"
+          },
           "text": {
             "en": "This prototype entry contains only publication-safe site context and no story lore.",
             "de": "Dieser Prototyp-Eintrag enthält nur veröffentlichungssicheren Website-Kontext und keine Handlungslore."
@@ -43,8 +112,12 @@
     },
     {
       "id": "dragon-knight",
-      "categories": ["terminology"],
-      "visibility": { "mode": "always" },
+      "categories": [
+        "terminology"
+      ],
+      "visibility": {
+        "mode": "always"
+      },
       "labels": {
         "en": {
           "title": "The Dragon Knight",
@@ -58,7 +131,9 @@
       "fragments": [
         {
           "id": "dragon-knight-volume-model",
-          "visibility": { "mode": "always" },
+          "visibility": {
+            "mode": "always"
+          },
           "text": {
             "en": "The public reader is structured by volumes and stable semantic locations rather than fixed rendered page numbers.",
             "de": "Der öffentliche Reader ist nach Bänden und stabilen semantischen Positionen aufgebaut, nicht nach festen gerenderten Seitenzahlen."
@@ -69,7 +144,9 @@
     {
       "id": "prototype-volume-one-knowledge",
       "prototypeOnly": true,
-      "categories": ["history"],
+      "categories": [
+        "history"
+      ],
       "visibility": {
         "mode": "completed-volume",
         "story": "dragon-knight",
@@ -94,17 +171,33 @@
             "volume": "volume-01"
           },
           "text": {
-            "en": "No manuscript fact is stored here. Released Lexicon fragments will later use this same reveal gate.",
-            "de": "Hier ist keine Manuskriptinformation gespeichert. Veröffentlichte Lexikon-Fragmente werden später dieselbe Freigaberegel verwenden."
-          }
+            "en": "No manuscript fact is stored here. The link below proves that a revealed Lexicon fragment can open a stable reader passage without using a rendered page number.",
+            "de": "Hier ist keine Manuskriptinformation gespeichert. Der folgende Link zeigt, dass ein enthülltes Lexikon-Fragment eine stabile Reader-Stelle ohne gerenderte Seitenzahl öffnen kann."
+          },
+          "readerLinks": [
+            {
+              "id": "prototype-reader-passage",
+              "story": "dragon-knight",
+              "book": "volume-01",
+              "anchor": "dk-v01-ch01-p004",
+              "labels": {
+                "en": "Open the relevant prototype passage",
+                "de": "Relevante Prototyp-Stelle öffnen"
+              }
+            }
+          ]
         }
       ]
     },
     {
       "id": "prototype-full-spoilers-entry",
       "prototypeOnly": true,
-      "categories": ["mythology"],
-      "visibility": { "mode": "full-spoilers" },
+      "categories": [
+        "mythology"
+      ],
+      "visibility": {
+        "mode": "full-spoilers"
+      },
       "labels": {
         "en": {
           "title": "Future knowledge placeholder",
@@ -118,7 +211,9 @@
       "fragments": [
         {
           "id": "prototype-full-spoilers-fragment",
-          "visibility": { "mode": "full-spoilers" },
+          "visibility": {
+            "mode": "full-spoilers"
+          },
           "text": {
             "en": "This entry exists only to exercise the Full Spoilers path. It does not describe future Telanas canon.",
             "de": "Dieser Eintrag dient nur zum Testen des Modus für vollständige Spoiler. Er beschreibt keinen zukünftigen Telanas-Kanon."
