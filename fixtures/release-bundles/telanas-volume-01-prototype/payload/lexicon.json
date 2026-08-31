@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "world": "telanas",
+  "state": "prototype",
+  "locales": [
+    "en",
+    "de"
+  ],
+  "categories": [
+    {
+      "id": "terminology",
+      "labels": {
+        "en": "Terminology",
+        "de": "Begriffe"
+      }
+    },
+    {
+      "id": "history",
+      "labels": {
+        "en": "History",
+        "de": "Geschichte"
+      }
+    }
+  ],
+  "entries": [
+    {
+      "id": "bundle-fixture",
+      "prototypeOnly": true,
+      "categories": [
+        "terminology"
+      ],
+      "visibility": {
+        "mode": "always"
+      },
+      "labels": {
+        "en": {
+          "title": "Release bundle fixture",
+          "summary": "Neutral prototype data used to verify the Library release-bundle boundary."
+        },
+        "de": {
+          "title": "Release-Bundle-Prototyp",
+          "summary": "Neutrale Prototypdaten zur Prüfung der Veröffentlichungsgrenze von The Library."
+        }
+      },
+      "fragments": [
+        {
+          "id": "bundle-fixture-purpose",
+          "visibility": {
+            "mode": "always"
+          },
+          "text": {
+            "en": "This payload contains no manuscript facts or unreleased lore.",
+            "de": "Diese Nutzlast enthält keine Manuskriptinformationen oder unveröffentlichte Lore."
+          }
+        }
+      ]
+    }
+  ]
+}
