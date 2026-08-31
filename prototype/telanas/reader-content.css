@@ -30,6 +30,10 @@
   display: none;
 }
 
+.book-spread.continuous {
+  margin-inline: auto;
+}
+
 .book-spread.continuous .book-page:first-child {
   display: block;
   min-height: auto;
