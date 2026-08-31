@@ -4,7 +4,7 @@
   position: relative;
   perspective: 1900px;
   transform-style: preserve-3d;
-  overflow: visible;
+  overflow: hidden;
 }
 
 .reader-page-turn-layer {
@@ -54,8 +54,8 @@
 }
 
 /* The outer edge stays attached to the moving sheet. It rolls slightly along
-   its full height instead of travelling inward and making the page look as if
-   it is being swallowed by the spine. */
+   its full height while the opposite edge remains visually attached to the
+   book spine. */
 .reader-page-turn-edge {
   position: absolute;
   top: -.25%;
