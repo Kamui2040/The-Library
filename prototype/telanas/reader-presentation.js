@@ -6,8 +6,6 @@
   const settingsToggle = document.querySelector("[data-reader-settings-toggle]");
   const spread = document.querySelector("[data-book-spread]");
   const stage = document.querySelector(".book-stage");
-  const leftPage = document.querySelector("[data-book-page='left']");
-  const rightPage = document.querySelector("[data-book-page='right']");
   const previousButton = document.querySelector("[data-page-previous]");
   const nextButton = document.querySelector("[data-page-next]");
   const themeSelect = document.querySelector("select[data-reader-theme]");
@@ -17,20 +15,18 @@
   const transitionSelect = document.querySelector("select[data-reader-transition]");
 
   if (
-    !body || !settings || !settingsToggle || !spread || !stage || !leftPage || !rightPage ||
-    !previousButton || !nextButton || !themeSelect || !typefaceSelect || !fontSizeSelect ||
-    !lineHeightSelect || !transitionSelect
+    !body || !settings || !settingsToggle || !spread || !stage || !previousButton || !nextButton ||
+    !themeSelect || !typefaceSelect || !fontSizeSelect || !lineHeightSelect || !transitionSelect
   ) return;
 
   const storageKey = "library-reader-presentation-v1";
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-  const wideSpread = window.matchMedia("(min-width: 981px)");
   const defaults = {
     theme: "dark",
     typeface: "serif",
     fontSize: "1",
     lineHeight: "1.75",
-    transition: "page-turn"
+    transition: "none"
   };
 
   const allowed = {
@@ -38,7 +34,7 @@
     typeface: new Set(["serif", "sans"]),
     fontSize: new Set(["0.9", "1", "1.1", "1.2"]),
     lineHeight: new Set(["1.5", "1.75", "2"]),
-    transition: new Set(["page-turn", "fade", "none"])
+    transition: new Set(["fade", "none"])
   };
 
   const copy = {
@@ -61,7 +57,6 @@
       lineCompact: "Compact",
       lineComfortable: "Comfortable",
       lineRelaxed: "Relaxed",
-      transitionTurn: "Page turn",
       transitionFade: "Fade",
       transitionNone: "None"
     },
@@ -84,7 +79,6 @@
       lineCompact: "Kompakt",
       lineComfortable: "Bequem",
       lineRelaxed: "Locker",
-      transitionTurn: "Umblättern",
       transitionFade: "Überblenden",
       transitionNone: "Keine"
     }
@@ -137,6 +131,7 @@
       lineHeight: localCopy.lineHeight,
       transition: localCopy.transition
     };
+
     settings.querySelectorAll("[data-reader-setting-label]").forEach((label) => {
       const key = label.dataset.readerSettingLabel;
       if (labels[key]) label.textContent = labels[key];
@@ -163,7 +158,6 @@
       "2": localCopy.lineRelaxed
     });
     setOptionText(transitionSelect, {
-      "page-turn": localCopy.transitionTurn,
       fade: localCopy.transitionFade,
       none: localCopy.transitionNone
     });
@@ -193,25 +187,17 @@
     document.querySelectorAll(".reader-transition-overlay").forEach((node) => node.remove());
   };
 
-  const effectiveSpread = () => (
-    !spread.classList.contains("single") && !spread.classList.contains("continuous") && wideSpread.matches
-  );
-
-  const transitionMode = () => reducedMotion.matches ? "none" : preferences.transition;
-
-  const animateAndRemove = (overlay, keyframes, options) => {
-    const animation = overlay.animate(keyframes, options);
-    animation.finished.catch(() => undefined).finally(() => overlay.remove());
-    window.setTimeout(() => overlay.remove(), (options.duration || 0) + 120);
-  };
-
   const prepareFadeOverlay = () => {
+    if (reducedMotion.matches || preferences.transition !== "fade" || spread.classList.contains("continuous")) return;
+
+    clearTransitionOverlays();
     const stageRect = stage.getBoundingClientRect();
     const spreadRect = spread.getBoundingClientRect();
     const overlay = spread.cloneNode(true);
     overlay.classList.add("reader-transition-overlay", "reader-fade-overlay");
     overlay.setAttribute("aria-hidden", "true");
     overlay.querySelectorAll("[id]").forEach((node) => node.removeAttribute("id"));
+
     Object.assign(overlay.style, {
       position: "absolute",
       left: `${spreadRect.left - stageRect.left}px`,
@@ -219,57 +205,17 @@
       width: `${spreadRect.width}px`,
       height: `${spreadRect.height}px`
     });
+
     stage.append(overlay);
     requestAnimationFrame(() => {
-      animateAndRemove(overlay, [{ opacity: 1 }, { opacity: 0 }], {
+      const animation = overlay.animate([{ opacity: 1 }, { opacity: 0 }], {
         duration: 220,
         easing: "ease-out",
         fill: "forwards"
       });
+      animation.finished.catch(() => undefined).finally(() => overlay.remove());
+      window.setTimeout(() => overlay.remove(), 340);
     });
-  };
-
-  const preparePageTurnOverlay = (direction) => {
-    const source = effectiveSpread() ? (direction < 0 ? leftPage : rightPage) : leftPage;
-    if (!source || source.classList.contains("is-empty")) return;
-
-    const overlay = source.cloneNode(true);
-    overlay.classList.add("reader-transition-overlay", "reader-turn-overlay");
-    overlay.setAttribute("aria-hidden", "true");
-    overlay.querySelectorAll("[id]").forEach((node) => node.removeAttribute("id"));
-
-    const spreadRect = spread.getBoundingClientRect();
-    const sourceRect = source.getBoundingClientRect();
-    Object.assign(overlay.style, {
-      position: "absolute",
-      left: `${sourceRect.left - spreadRect.left}px`,
-      top: `${sourceRect.top - spreadRect.top}px`,
-      width: `${sourceRect.width}px`,
-      height: `${sourceRect.height}px`,
-      transformOrigin: direction < 0 ? "right center" : "left center"
-    });
-    spread.append(overlay);
-
-    const finalRotation = direction < 0 ? "rotateY(178deg)" : "rotateY(-178deg)";
-    requestAnimationFrame(() => {
-      animateAndRemove(overlay, [
-        { transform: "rotateY(0deg)", opacity: 1, boxShadow: "0 0 0 rgba(0,0,0,0)" },
-        { transform: direction < 0 ? "rotateY(84deg)" : "rotateY(-84deg)", opacity: 0.96, boxShadow: "0 18px 34px rgba(0,0,0,.28)" },
-        { transform: finalRotation, opacity: 0.08, boxShadow: "0 8px 18px rgba(0,0,0,.08)" }
-      ], {
-        duration: 520,
-        easing: "cubic-bezier(.22,.61,.36,1)",
-        fill: "forwards"
-      });
-    });
-  };
-
-  const prepareTransition = (direction) => {
-    if (spread.classList.contains("continuous")) return;
-    clearTransitionOverlays();
-    const mode = transitionMode();
-    if (mode === "fade") prepareFadeOverlay();
-    else if (mode === "page-turn") preparePageTurnOverlay(direction);
   };
 
   const isInteractiveTarget = (target) => (
@@ -278,34 +224,35 @@
     )
   );
 
-  const directionForPageClick = (event) => {
-    if (spread.classList.contains("continuous") || event.button !== 0 || isInteractiveTarget(event.target)) return 0;
+  const pageClickCanTurn = (event) => {
+    if (spread.classList.contains("continuous") || event.button !== 0 || isInteractiveTarget(event.target)) return false;
     const selection = window.getSelection();
-    if (selection && !selection.isCollapsed && selection.toString().trim()) return 0;
+    if (selection && !selection.isCollapsed && selection.toString().trim()) return false;
 
-    if (effectiveSpread()) {
-      if (leftPage.contains(event.target)) return -1;
-      if (rightPage.contains(event.target)) return 1;
-      return 0;
+    const pages = [...spread.querySelectorAll("[data-book-page]")];
+    const clickedPage = pages.find((page) => page.contains(event.target));
+    if (clickedPage) {
+      if (clickedPage.dataset.bookPage === "left") return !previousButton.disabled;
+      if (clickedPage.dataset.bookPage === "right") return !nextButton.disabled;
     }
 
-    const rect = leftPage.getBoundingClientRect();
-    if (event.clientY < rect.top || event.clientY > rect.bottom) return 0;
-    return event.clientX < rect.left + rect.width / 2 ? -1 : 1;
+    const visiblePage = pages[0];
+    if (!visiblePage) return false;
+    const rect = visiblePage.getBoundingClientRect();
+    if (event.clientY < rect.top || event.clientY > rect.bottom) return false;
+    return event.clientX < rect.left + rect.width / 2 ? !previousButton.disabled : !nextButton.disabled;
   };
 
   stage.addEventListener("click", (event) => {
-    const direction = directionForPageClick(event);
-    if (direction < 0 && !previousButton.disabled) prepareTransition(-1);
-    if (direction > 0 && !nextButton.disabled) prepareTransition(1);
+    if (pageClickCanTurn(event)) prepareFadeOverlay();
   }, true);
 
   previousButton.addEventListener("click", () => {
-    if (!previousButton.disabled) prepareTransition(-1);
+    if (!previousButton.disabled) prepareFadeOverlay();
   }, true);
 
   nextButton.addEventListener("click", () => {
-    if (!nextButton.disabled) prepareTransition(1);
+    if (!nextButton.disabled) prepareFadeOverlay();
   }, true);
 
   document.addEventListener("keydown", (event) => {
@@ -317,8 +264,8 @@
     if (spread.classList.contains("continuous") || event.altKey || event.ctrlKey || event.metaKey) return;
     const tag = document.activeElement?.tagName;
     if (["INPUT", "SELECT", "TEXTAREA"].includes(tag)) return;
-    if (event.key === "ArrowLeft" && !previousButton.disabled) prepareTransition(-1);
-    if (event.key === "ArrowRight" && !nextButton.disabled) prepareTransition(1);
+    if (event.key === "ArrowLeft" && !previousButton.disabled) prepareFadeOverlay();
+    if (event.key === "ArrowRight" && !nextButton.disabled) prepareFadeOverlay();
   }, true);
 
   const bindPreference = (select, key, { repaginate = false } = {}) => {
