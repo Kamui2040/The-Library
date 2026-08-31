@@ -3,7 +3,7 @@
 
   const supportedBlockTypes = new Set(["paragraph", "scene-break", "illustration"]);
   const supportedIllustrationModes = new Set(["placeholder", "image"]);
-  const supportedIllustrationPlacements = new Set(["flow", "full-page"]);
+  const supportedIllustrationPlacements = new Set(["flow", "full-page", "before-title"]);
 
   const fail = (message) => {
     throw new Error(message);
@@ -101,7 +101,7 @@
           text: block.type === "paragraph" ? block.text : "",
           chapterId: chapter.id,
           keepWithNext: block.type === "scene-break",
-          forceOwnPage: block.type === "illustration" && block.placement === "full-page"
+          forceOwnPage: block.type === "illustration" && ["full-page", "before-title"].includes(block.placement)
         };
 
         if (illustration) {
