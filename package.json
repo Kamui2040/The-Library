@@ -8,8 +8,9 @@
     "validate:relationships": "node scripts/validate-lexicon-relationships.mjs",
     "validate:timeline": "node scripts/validate-timeline.mjs",
     "validate:map": "node scripts/validate-map.mjs",
+    "validate:routes": "node scripts/validate-production-routes.mjs",
     "validate:bundle": "node scripts/validate-release-bundle.mjs fixtures/release-bundles/telanas-volume-01-prototype",
-    "validate": "npm run validate:content && npm run validate:links && npm run validate:relationships && npm run validate:timeline && npm run validate:map && npm run validate:bundle",
+    "validate": "npm run validate:content && npm run validate:links && npm run validate:relationships && npm run validate:timeline && npm run validate:map && npm run validate:routes && npm run validate:bundle",
     "import:bundle": "node scripts/import-release-bundle.mjs"
   },
   "engines": {

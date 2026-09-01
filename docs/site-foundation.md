@@ -62,7 +62,7 @@ While Telanas is the only published world, those roots may resolve or redirect d
 
 When another world is added, `/en/` and `/de/` become Library landing pages listing available worlds. Existing Telanas URLs remain unchanged.
 
-The current implementation is still under `prototype/telanas/`; production work will map the established behavior onto the canonical locale/world routes rather than changing the semantic model.
+Production-route phase 1 now implements `/en/` and `/de/` as locale-preserving redirects to the canonical Telanas landing pages and provides `/en/telanas/` and `/de/telanas/` as real localized pages. Reader, Lexicon, Timeline, Map, Search, and chapter destinations still use explicitly marked temporary bridges to the accepted prototype while their canonical replacements are migrated and verified. The spoiler profile, theme, and selected locale persist across that bridge.
 
 ## 1.3 Telanas navigation
 
@@ -116,7 +116,7 @@ The Telanas landing page contains or provides access to:
 - Updates;
 - shared footer functions in Telanas styling.
 
-The current prototype uses neutral placeholders. Final artwork and release content remain separate acceptance steps.
+The canonical EN/DE landing pages currently use publication-safe neutral placeholders and the established Telanas visual treatment. Final artwork and release content remain separate acceptance steps.
 
 # 2. URL and localization model
 
@@ -135,7 +135,7 @@ Only actually released languages appear publicly. Released story editions remain
 
 ## 2.2 Canonical route pattern
 
-Production routes should follow stable semantic structure such as:
+Production routes use stable semantic structure such as:
 
 ```text
 /en/telanas/
@@ -151,6 +151,8 @@ Production routes should follow stable semantic structure such as:
 
 /de/... equivalent structure ...
 ```
+
+Phase 1 implements the locale roots and Telanas landing routes. The remaining routes above are migration targets, not permission to expose unreleased content or deploy the site.
 
 Structural route segments and stable IDs remain consistent across locales. Visible labels and titles are localized.
 
@@ -348,6 +350,7 @@ Before released book/world data is accepted, validation should establish at leas
 - released locale strings are complete;
 - unreleased locales are absent from public navigation;
 - integrated Contents and reader navigation derive from the same structure;
+- canonical locale roots and implemented production routes resolve to real files without broken local references;
 - release bundles match declared hashes and safe target paths;
 - no private/unreleased source material is accidentally included.
 
@@ -355,11 +358,12 @@ Asset ownership/licensing and publication approval remain separate manual accept
 
 # 6. Current production work still ahead
 
-The architecture is no longer waiting on decisions about whether Timeline, Map, or Search should be first-class Telanas destinations; the prototype has answered that.
+The architecture is no longer waiting on decisions about whether Timeline, Map, or Search should be first-class Telanas destinations; the prototype has answered that. The canonical EN/DE Telanas landing route is now the first migrated production surface.
 
 Remaining implementation work is mainly productionization:
 
-- convert the prototype shell to canonical locale/world routes;
+- migrate Reader, Lexicon, Timeline, Map, Search, story/volume, and update routes into the canonical locale/world structure and retire each temporary prototype bridge only after its replacement passes validation;
+- extract or relocate shared presentation assets from the prototype area when doing so removes temporary bridge dependencies without duplicating them;
 - implement the private-source exporter/parser;
 - add release-approved manuscript and world content;
 - add production illustrations, cover/hero artwork, and final licensed web fonts;

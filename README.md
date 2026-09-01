@@ -12,18 +12,20 @@ The repository contains only publication-safe website material and neutral devel
 - `docs/visual-system.md` — shared Library and Telanas visual direction
 - `docs/publication-pipeline.md` — private-source to public-Library boundary and release-bundle contract
 - `content/library.json` — data-driven Library/world/locale registry
-- `prototype/telanas/` — current Telanas landing page, reader, spoiler-aware Lexicon, Timeline, Map, and cross-feature Search
+- `en/` and `de/` — canonical locale roots; phase 1 now provides the canonical Telanas landing page in both locales
+- `assets/library-shell.js` — route-aware shared shell behavior for canonical pages
+- `prototype/telanas/` — accepted feature baseline and temporary bridge for Reader, Lexicon, Timeline, Map, and Search while those routes are migrated
 - `fixtures/release-bundles/` — neutral deterministic bundle fixtures used to verify the import boundary
 
-The current prototype already proves shared EN/DE localization, the semantic reader, bookmarks, reader-completion spoiler progress, Lexicon relationships and reader links, Timeline, Map, and a unified spoiler-safe world search.
+The accepted feature foundation already proves shared EN/DE localization, the semantic reader, bookmarks, reader-completion spoiler progress, Lexicon relationships and reader links, Timeline, Map, and a unified spoiler-safe world search.
 
-`npm run validate` checks the public content manifests, semantic links and relationships, Timeline, Map, illustration contracts, and the neutral release-bundle fixture. The validators have no third-party runtime dependencies.
+`npm run validate` checks the public content manifests, semantic links and relationships, Timeline, Map, canonical production routes, illustration contracts, and the neutral release-bundle fixture. The validators have no third-party runtime dependencies.
 
 `npm run import:bundle -- <bundle-directory>` performs a non-mutating dry run. Actual file writes require explicit import flags as described in `docs/publication-pipeline.md`.
 
 ## Main work still ahead
 
-- convert the prototype routes and shell into the production locale/world route structure;
+- continue migrating Reader, Lexicon, Timeline, Map, Search, and story routes into the canonical locale/world structure, then retire the temporary prototype bridges after replacement behavior is proven;
 - build the private-source exporter/parser that produces deterministic release bundles;
 - add release-approved manuscript text, Lexicon content, chronology, geography, illustrations, cover/hero assets, and downloads when they are ready;
 - refine reader pagination where useful without changing semantic anchors;
