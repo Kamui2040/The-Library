@@ -23,6 +23,7 @@ const required = [
   "assets/spoiler-controls.js",
   "assets/telanas/styles.css",
   ...readerAssets,
+  "prototype/telanas/site.js",
   "en/index.html",
   "de/index.html",
   "en/telanas/index.html",
@@ -108,5 +109,11 @@ assert(readerController.includes("dataset.readerBookManifest"), "Production read
 const shell = await readFile(path.join(root, "assets/library-shell.js"), "utf8");
 assert(shell.includes("destination.search = window.location.search"), "Language switching must preserve the current query string");
 assert(shell.includes("destination.hash = window.location.hash"), "Language switching must preserve the semantic reader anchor/hash");
+
+const prototypeSite = await readFile(path.join(root, "prototype/telanas/site.js"), "utf8");
+assert(prototypeSite.includes("dataset.prototypeReaderHref"), "Prototype knowledge views must retain their original reader target while bridging to the canonical route");
+assert(prototypeSite.includes("/telanas/read/"), "Prototype knowledge views must route reader links to the canonical locale reader");
+assert(prototypeSite.includes("target.search = source.search"), "Prototype-to-reader bridges must preserve semantic source query data");
+assert(prototypeSite.includes("target.hash = source.hash"), "Prototype-to-reader bridges must preserve semantic reader anchors");
 
 console.log("PASS: validated canonical EN/DE Telanas landing and reader routes");
