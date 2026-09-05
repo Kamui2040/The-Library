@@ -158,6 +158,17 @@
     return target.href;
   };
 
+  const canonicalTimelineRoute = (legacyHref, language) => {
+    const source = new URL(legacyHref, window.location.href);
+    if (!source.pathname.endsWith("/timeline.html")) return null;
+
+    const lang = normalizeLanguage(language);
+    const target = new URL(`../../${lang}/telanas/timeline/`, window.location.href);
+    target.search = source.search;
+    target.hash = source.hash;
+    return target.href;
+  };
+
   const migrateReaderLink = (anchor, language) => {
     if (!(anchor instanceof HTMLAnchorElement)) return;
     const legacyHref = anchor.dataset.prototypeReaderHref || anchor.getAttribute("href");
@@ -186,6 +197,20 @@
     anchor.href = canonicalHref;
   };
 
+  const migrateTimelineLink = (anchor, language) => {
+    if (!(anchor instanceof HTMLAnchorElement)) return;
+    const legacyHref = anchor.dataset.prototypeTimelineHref || anchor.getAttribute("href");
+    if (!legacyHref) return;
+    if (!anchor.dataset.prototypeTimelineHref && !legacyHref.startsWith("timeline.html")) return;
+
+    const canonicalHref = canonicalTimelineRoute(legacyHref, language);
+    if (!canonicalHref) return;
+
+    anchor.dataset.prototypeTimelineHref ||= legacyHref;
+    anchor.dataset.canonicalTimelineLink = "";
+    anchor.href = canonicalHref;
+  };
+
   const migrateReaderLinks = (root, language) => {
     if (root instanceof HTMLAnchorElement) migrateReaderLink(root, language);
     if (!(root instanceof Element || root instanceof Document)) return;
@@ -198,6 +223,13 @@
     if (!(root instanceof Element || root instanceof Document)) return;
     root.querySelectorAll("a[href^='lexicon.html'], a[data-prototype-lexicon-href]")
       .forEach((anchor) => migrateLexiconLink(anchor, language));
+  };
+
+  const migrateTimelineLinks = (root, language) => {
+    if (root instanceof HTMLAnchorElement) migrateTimelineLink(root, language);
+    if (!(root instanceof Element || root instanceof Document)) return;
+    root.querySelectorAll("a[href^='timeline.html'], a[data-prototype-timeline-href]")
+      .forEach((anchor) => migrateTimelineLink(anchor, language));
   };
 
   const ensureWorldNavigation = () => {
@@ -287,6 +319,7 @@
 
     migrateReaderLinks(document, lang);
     migrateLexiconLinks(document, lang);
+    migrateTimelineLinks(document, lang);
     storageSet("library-language", lang);
     window.dispatchEvent(new CustomEvent("library-language-change", { detail: { language: lang } }));
   };
@@ -317,6 +350,7 @@
       record.addedNodes.forEach((node) => {
         migrateReaderLinks(node, lang);
         migrateLexiconLinks(node, lang);
+        migrateTimelineLinks(node, lang);
       });
     });
   });

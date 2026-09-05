@@ -22,6 +22,10 @@ const lexiconAssets = [
   "lexicon-relationships.css",
   "lexicon.js"
 ].map((name) => `assets/lexicon/${name}`);
+const timelineAssets = [
+  "timeline.css",
+  "timeline.js"
+].map((name) => `assets/timeline/${name}`);
 
 const required = [
   "assets/library-shell.js",
@@ -30,6 +34,7 @@ const required = [
   "assets/telanas/styles.css",
   ...readerAssets,
   ...lexiconAssets,
+  ...timelineAssets,
   "prototype/telanas/site.js",
   "en/index.html",
   "de/index.html",
@@ -38,7 +43,9 @@ const required = [
   "en/telanas/read/dragon-knight/volume-01/index.html",
   "de/telanas/read/dragon-knight/volume-01/index.html",
   "en/telanas/lexicon/index.html",
-  "de/telanas/lexicon/index.html"
+  "de/telanas/lexicon/index.html",
+  "en/telanas/timeline/index.html",
+  "de/telanas/timeline/index.html"
 ];
 
 const fail = (message) => { throw new Error(message); };
@@ -82,10 +89,12 @@ for (const locale of ["en", "de"]) {
   const landingPath = `${locale}/telanas/index.html`;
   const readerPath = `${locale}/telanas/read/dragon-knight/volume-01/index.html`;
   const lexiconPath = `${locale}/telanas/lexicon/index.html`;
+  const timelinePath = `${locale}/telanas/timeline/index.html`;
   const rootHtml = await readFile(path.join(root, rootPath), "utf8");
   const landingHtml = await readFile(path.join(root, landingPath), "utf8");
   const readerHtml = await readFile(path.join(root, readerPath), "utf8");
   const lexiconHtml = await readFile(path.join(root, lexiconPath), "utf8");
+  const timelineHtml = await readFile(path.join(root, timelinePath), "utf8");
 
   assert(rootHtml.includes('content="0; url=telanas/"'), `${rootPath} must redirect to telanas/`);
   assert(rootHtml.includes('window.location.replace("telanas/")'), `${rootPath} must preserve the locale-root redirect without relying only on meta refresh`);
@@ -100,12 +109,14 @@ for (const locale of ["en", "de"]) {
   assert(landingHtml.includes('data-spoiler-progress-select'), `${landingPath} must preserve the shared spoiler-progress control`);
   assert(landingHtml.includes('href="read/dragon-knight/volume-01/"'), `${landingPath} must link to the canonical reader`);
   assert(landingHtml.includes('href="lexicon/"'), `${landingPath} must link to the canonical Lexicon`);
+  assert(landingHtml.includes('href="timeline/"'), `${landingPath} must link to the canonical Timeline`);
   assert(landingHtml.includes('lexicon/?category=characters'), `${landingPath} must preserve the Characters category entry point`);
   assert(landingHtml.includes('lexicon/?category=places'), `${landingPath} must preserve the Places category entry point`);
   assert(landingHtml.includes('lexicon/?category=mythology'), `${landingPath} must preserve the Mythology category entry point`);
   assert(landingHtml.includes('lexicon/?category=history'), `${landingPath} must preserve the History category entry point`);
   assert(!landingHtml.includes("prototype/telanas/reader.html"), `${landingPath} must not retain the old reader bridge`);
   assert(!landingHtml.includes("prototype/telanas/lexicon.html"), `${landingPath} must not retain the old Lexicon bridge`);
+  assert(!landingHtml.includes("prototype/telanas/timeline.html"), `${landingPath} must not retain the old Timeline bridge`);
   await validateLocalReferences(landingPath, landingHtml);
 
   assert(readerHtml.includes(`<html lang="${locale}" data-route-locale="${locale}"`), `${readerPath} must declare its route locale`);
@@ -137,8 +148,30 @@ for (const locale of ["en", "de"]) {
   assert(lexiconHtml.includes('data-full-spoilers-toggle'), `${lexiconPath} must preserve Full Spoilers controls`);
   assert(lexiconHtml.includes('data-lexicon-results'), `${lexiconPath} must render the spoiler-filtered result set`);
   assert(lexiconHtml.includes('href="../read/dragon-knight/volume-01/"'), `${lexiconPath} must expose the canonical Reader in story navigation`);
+  assert(lexiconHtml.includes('href="../timeline/"'), `${lexiconPath} must expose the canonical Timeline`);
   assert(!lexiconHtml.includes("prototype/telanas/lexicon.html"), `${lexiconPath} must not bridge back to the old Lexicon`);
+  assert(!lexiconHtml.includes("prototype/telanas/timeline.html"), `${lexiconPath} must not retain the old Timeline bridge`);
   await validateLocalReferences(lexiconPath, lexiconHtml);
+
+  assert(timelineHtml.includes(`<html lang="${locale}" data-route-locale="${locale}"`), `${timelinePath} must declare its route locale`);
+  assert(timelineHtml.includes('href="../../../en/telanas/timeline/"'), `${timelinePath} must expose the English Timeline route`);
+  assert(timelineHtml.includes('href="../../../de/telanas/timeline/"'), `${timelinePath} must expose the German Timeline route`);
+  assert(timelineHtml.includes('href="../../../assets/telanas/styles.css"'), `${timelinePath} must use the production Telanas stylesheet`);
+  assert(timelineHtml.includes('href="../../../assets/timeline/timeline.css"'), `${timelinePath} must use the production Timeline stylesheet`);
+  assert(timelineHtml.includes('src="../../../assets/library-shell.js"'), `${timelinePath} must use the production Library shell`);
+  assert(timelineHtml.includes('src="../../../assets/spoiler-profile.js"'), `${timelinePath} must use the production spoiler profile`);
+  assert(timelineHtml.includes('src="../../../assets/spoiler-controls.js"'), `${timelinePath} must use the production spoiler controls`);
+  assert(timelineHtml.includes('src="../../../assets/timeline/timeline.js"'), `${timelinePath} must use the production Timeline controller`);
+  assert(timelineHtml.includes('data-world-manifest="../../../content/worlds/telanas/world.json"'), `${timelinePath} must resolve the public world manifest`);
+  assert(timelineHtml.includes('data-timeline-manifest="../../../content/worlds/telanas/timeline/timeline.json"'), `${timelinePath} must resolve the public Timeline manifest`);
+  assert(timelineHtml.includes('data-reader-base="../read/"'), `${timelinePath} must declare the canonical Reader route base`);
+  assert(timelineHtml.includes('data-spoiler-progress-select'), `${timelinePath} must preserve spoiler-progress controls`);
+  assert(timelineHtml.includes('data-full-spoilers-toggle'), `${timelinePath} must preserve Full Spoilers controls`);
+  assert(timelineHtml.includes('data-timeline-results'), `${timelinePath} must render the spoiler-filtered chronology`);
+  assert(timelineHtml.includes('href="../lexicon/"'), `${timelinePath} must expose the canonical Lexicon`);
+  assert(timelineHtml.includes('href="../read/dragon-knight/volume-01/"'), `${timelinePath} must expose the canonical Reader in story navigation`);
+  assert(!timelineHtml.includes("prototype/telanas/timeline.html"), `${timelinePath} must not bridge back to the old Timeline`);
+  await validateLocalReferences(timelinePath, timelineHtml);
 }
 
 const readerController = await readFile(path.join(root, "assets/reader/reader.js"), "utf8");
@@ -156,6 +189,15 @@ assert(lexiconController.includes('source: "lexicon"'), "Production Lexicon Read
 assert(lexiconController.includes('get("entry")'), "Production Lexicon must accept semantic entry targets without using page numbers");
 assert(lexiconController.includes('get("category")'), "Production Lexicon must accept public category navigation state");
 
+const timelineController = await readFile(path.join(root, "assets/timeline/timeline.js"), "utf8");
+assert(timelineController.includes("dataset.worldManifest"), "Production Timeline must resolve its world manifest from the page contract");
+assert(timelineController.includes("dataset.timelineManifest"), "Production Timeline must resolve its Timeline manifest from the page contract");
+assert(timelineController.includes("dataset.readerBase"), "Production Timeline must resolve Reader routes from the page contract");
+assert(timelineController.includes("profile.fullSpoilers"), "Production Timeline must preserve the explicit Full Spoilers bypass");
+assert(timelineController.includes("visibilityAllowed(event.visibility"), "Production Timeline must filter event existence before rendering");
+assert(timelineController.includes('source: "timeline"'), "Production Timeline Reader links must carry their semantic source context");
+assert(timelineController.includes('get("event")'), "Production Timeline must accept semantic event targets without bypassing spoiler filtering");
+
 const shell = await readFile(path.join(root, "assets/library-shell.js"), "utf8");
 assert(shell.includes("destination.search = window.location.search"), "Language switching must preserve the current query string");
 assert(shell.includes("destination.hash = window.location.hash"), "Language switching must preserve semantic hashes");
@@ -165,7 +207,9 @@ assert(prototypeSite.includes("dataset.prototypeReaderHref"), "Prototype knowled
 assert(prototypeSite.includes("/telanas/read/"), "Prototype knowledge views must route reader links to the canonical locale reader");
 assert(prototypeSite.includes("dataset.prototypeLexiconHref"), "Prototype knowledge views must retain their original Lexicon target while bridging to the canonical route");
 assert(prototypeSite.includes("/telanas/lexicon/"), "Prototype knowledge views must route Lexicon links to the canonical locale Lexicon");
+assert(prototypeSite.includes("dataset.prototypeTimelineHref"), "Prototype knowledge views must retain their original Timeline target while bridging to the canonical route");
+assert(prototypeSite.includes("/telanas/timeline/"), "Prototype knowledge views must route Timeline links to the canonical locale Timeline");
 assert(prototypeSite.includes("target.search = source.search"), "Prototype canonical bridges must preserve semantic query data");
 assert(prototypeSite.includes("target.hash = source.hash"), "Prototype canonical bridges must preserve semantic hashes");
 
-console.log("PASS: validated canonical EN/DE Telanas landing, reader, and Lexicon routes");
+console.log("PASS: validated canonical EN/DE Telanas landing, reader, Lexicon, and Timeline routes");
