@@ -2,9 +2,9 @@
 
 **Status:** Working implementation foundation
 
-The Library is the common fiction website and Reader. It is designed to host independent fiction projects without forcing them to share one visual identity.
+The Library is the common fiction website and Reader. It is designed to host multiple independent worlds or series without forcing them to share one visual identity.
 
-Telanas has its own stable namespace so later Library expansion does not require changing its URLs.
+Telanas keeps a stable namespace so later Library expansion does not require changing its URLs.
 
 # 1. Reader-facing architecture
 
@@ -23,31 +23,26 @@ The Library owns shared capabilities:
 
 Each world or major fiction project may define its own stories, Lexicon, optional reference views, downloads, updates, and visual identity.
 
-Current namespace registry:
+Current Telanas hierarchy:
 
 ```text
-The Library
-└── Telanas
-    └── The Dragon Knight
-        └── Volume 1 — Home / Band 1 — Zuhause
+Telanas
+└── The Dragon Knight
+    └── Volume 1 — Home / Band 1 — Zuhause
 ```
 
 ## 1.2 Telanas surface
 
 The current Telanas reader-facing surface has two connected systems:
 
-1. **Reader** — localized reading with semantic navigation, bookmarks, presentation settings, and spoiler-progress integration.
-2. **Lexicon** — short spoiler-aware descriptions with built-in search.
+1. **Reader** — localized reading with semantic navigation, bookmarks, presentation settings, spoiler progress, and contextual Lexicon cards.
+2. **Lexicon** — spoiler-aware reference entries with built-in search.
 
-The Lexicon is the main reference surface for:
-
-- characters;
-- locations;
-- events already revealed at the selected reading progress.
+The Lexicon can hold characters, locations, events, creatures, factions, history, magic, mythology, items, cultures, terminology, and other useful reference categories. The landing page intentionally emphasizes Characters, Places, and Events, while the dedicated Lexicon exposes any category that currently has at least one spoiler-eligible entry.
 
 A standalone Timeline and standalone world-search page are not part of the current navigation. A retained Timeline route may support development and validation, but it is non-indexed and unlinked from the reader-facing surface.
 
-The Map is not exposed until Telanas geography is explicitly approved as stable enough for a definitive map. Location entries therefore must not require final coordinates, distances, borders, roads, or map geometry.
+The Map is not exposed until Telanas geography is explicitly approved as stable enough for a definitive map. Location entries therefore do not require final coordinates, distances, borders, roads, or map geometry.
 
 ## 1.3 Canonical routes
 
@@ -78,33 +73,6 @@ Structural route segments and stable IDs remain consistent across locales. Visib
 
 Language switching preserves the same semantic destination whenever equivalent localized content exists. Reader switching keeps the current query and semantic hash anchor. Lexicon switching preserves semantic `entry` and category query state without allowing a hidden target to bypass spoiler filtering.
 
-## 1.4 Navigation
-
-The reader-facing navigation keeps the main choices small:
-
-1. **Home** — Telanas landing page.
-2. **Stories / Reader** — current story, volume, and chapter access.
-3. **Lexicon** — spoiler-aware reference browsing and search.
-4. **Downloads / Updates** — supporting sections when useful.
-5. **Language / Theme** — shared controls.
-
-Optional Timeline, Map, and standalone Search surfaces are not exposed in this navigation.
-
-## 1.5 Stories hierarchy
-
-The data model supports multiple story lines without requiring the reader-facing copy to announce future structure.
-
-```text
-Stories
-└── The Dragon Knight
-    └── Volume 1 — Home / Band 1 — Zuhause
-        ├── Volume overview
-        ├── Read
-        └── Direct chapter selection
-```
-
-Display names are localized; stable internal IDs are not.
-
 # 2. Localization
 
 Current locales:
@@ -121,6 +89,7 @@ For any exposed locale:
 - interface text must exist;
 - released story content must exist;
 - visible Lexicon content must exist;
+- contextual Reader Lexicon annotations must resolve against that localized edition;
 - public updates must not silently fall back to another language.
 
 # 3. Spoiler-aware knowledge
@@ -129,9 +98,7 @@ For any exposed locale:
 
 Spoiler protection is based on explicit reader progress.
 
-Filtering happens before normal rendering and search. If the existence of something is itself a spoiler, it remains absent until the selected progress permits it. It must not appear as a blurred result, redacted title, autocomplete suggestion, count, placeholder, source hint, relationship hint, category control, or other visible gap.
-
-The same rule applies to wording. Reader-facing copy must not casually reveal unrevealed multiplicity, ordering, origins, future structure, or other facts through phrases such as “first”, “another”, or similar hints unless the selected progress already permits that information.
+Filtering happens before normal rendering and search. If the existence of something is itself a spoiler, it remains absent until the selected progress permits it. It must not appear as a blurred result, redacted title, autocomplete suggestion, count, placeholder, category name, source hint, relationship hint, or contextual Reader link.
 
 Full Spoilers explicitly bypasses normal reveal gates.
 
@@ -139,7 +106,7 @@ Spoiler protection prevents accidental spoilers; it is not a security boundary a
 
 ## 3.2 Progress profile
 
-Conceptual shape:
+The spoiler profile tracks two kinds of progress:
 
 ```yaml
 spoiler_profile:
@@ -148,39 +115,81 @@ spoiler_profile:
     telanas:
       completed:
         dragon-knight: volume-01
+      reached:
+        dragon-knight:
+          volume-01:
+            - some-semantic-milestone
 ```
 
-Reader completion may offer to advance the profile, update automatically if the reader chose that mode, or remain manual. Re-reading an earlier volume must never lower later completed progress.
+`completed` records the highest explicitly completed volume for a story.
 
-## 3.3 Lexicon
+`reached` records sparse semantic milestones encountered inside a volume. These are not every paragraph. A book declares only the anchors needed to control meaningful within-volume reveals.
+
+Reached milestones advance monotonically. Returning to an earlier chapter or anchor never lowers them. Completing a volume automatically satisfies all within-volume gates for that volume.
+
+Reader completion may offer to advance completed-volume progress, update automatically if the reader chose that mode, or remain manual.
+
+## 3.3 Visibility modes
+
+Reader-facing knowledge currently supports these visibility concepts:
+
+- `always` — visible whenever the entry itself is available;
+- `reached-anchor` — visible after a declared semantic story milestone has been reached;
+- `completed-volume` — visible after the required volume is marked complete;
+- `full-spoilers` — visible only when Full Spoilers is enabled.
+
+Entry existence and entry details are separate decisions. A character or location may have a safe general entry while one or more later fragments remain absent until an internal milestone or volume completion.
+
+The same shared visibility function must be used by the dedicated Lexicon and contextual Reader cards.
+
+## 3.4 Lexicon
 
 Lexicon entries use stable metadata plus reveal-gated fragments rather than one monolithic article.
 
-The main reader-facing categories are:
+A normal entry may therefore contain:
 
-- **Characters** — short descriptions of people already known at the selected progress.
-- **Places** — short descriptions of locations already known at the selected progress, without requiring final map coordinates.
-- **Events** — short descriptions of events already revealed in released reading material.
+- an existence gate;
+- localized title and safe summary;
+- zero or more fragments with their own visibility gates;
+- semantic Reader references;
+- relationships to other entries.
 
-The data model may retain additional categories when useful. On the dedicated Lexicon page, category controls are generated from the currently spoiler-eligible entries. A category with zero eligible entries is completely absent from the controls; its name, count, disabled state, or placeholder must not reveal that the category exists.
+Search operates only on the already-eligible entry and fragment data. Hidden text must not enter the searchable set.
 
-Visible fragments may contain semantic Reader links. Entry relationships use stable target IDs and are shown/searchable only when both source and target are visible.
+Entry relationships use stable target IDs and appear only when the target itself is visible. Category controls are derived from currently visible entries, so an empty or not-yet-revealed category cannot hint that hidden information exists.
 
-The Lexicon's own search is the current search experience. Search and category browsing operate only on the already-eligible knowledge set. Canonical links may carry a stable `entry` target or category filter; those parameters affect navigation only and never bypass the spoiler profile.
+Canonical Lexicon links may carry a stable `entry` target or category filter. Those parameters affect navigation only and never bypass the spoiler profile.
 
-## 3.4 Optional Timeline
+## 3.5 Contextual Reader Lexicon
 
-A standalone Timeline is not required for event reference. Revealed events can exist as searchable Lexicon entries.
+The Reader can annotate selected words or phrases that correspond to Lexicon entries.
 
-Any retained Timeline implementation follows the same existence filtering: a hidden event contributes no title, period, summary, Reader link, placeholder, or count.
+Contextual references are explicit publication data. They are tied to:
 
-## 3.5 Map availability rule
+- a semantic Reader paragraph anchor;
+- a stable Lexicon entry ID;
+- the exact localized text to annotate;
+- an occurrence number when the same text appears more than once in one paragraph.
 
-No reader-facing Map is exposed until the geography is explicitly approved as stable.
+The Reader does not automatically scan prose and link every word that resembles a Lexicon title. This avoids accidental links, false positives, unwanted emphasis, and spoiler hints.
 
-A location's Lexicon entry may exist independently of its final position, surrounding geography, distance relationships, borders, roads, or map artwork.
+When an explicit reference targets an entry whose existence is not yet allowed, the prose remains ordinary text. No placeholder, underline, icon, tooltip, count, or other hint is rendered.
 
-If a Map is added later, it should reference existing stable location IDs rather than redefine locations or force coordinates into earlier Lexicon data.
+When the entry is eligible, the annotated text becomes an unobtrusive keyboard-accessible control. Activating it opens a small overlay card over the Reader rather than navigating away.
+
+The card uses the same shared spoiler profile as the dedicated Lexicon and displays only:
+
+- the localized entry title;
+- its safe summary;
+- fragments currently permitted by the reader's progress.
+
+Closing the card returns focus to the triggering term. Opening a contextual card must not turn the page or change the Reader's semantic position.
+
+## 3.6 Optional Timeline and Map
+
+Revealed events can exist naturally as searchable Lexicon entries, so a standalone Timeline is optional.
+
+No reader-facing Map is exposed until the geography is explicitly approved as stable. If a Map is added later, it should reference existing stable location IDs rather than redefine locations or force coordinates into earlier Lexicon data.
 
 # 4. Reader model
 
@@ -188,7 +197,7 @@ If a Map is added later, it should reference existing stable location IDs rather
 
 The private manuscript defines semantic story structure. The Reader creates rendered pages dynamically.
 
-Pagination may change with viewport size, layout mode, font size, typeface, line spacing, margins, language, and illustration placement. Bookmarks, progress, chapter navigation, and knowledge references therefore use semantic IDs, never canonical rendered page numbers.
+Pagination may change with viewport size, layout mode, font size, typeface, line spacing, margins, language, and illustration placement. Bookmarks, progress, chapter navigation, contextual Lexicon annotations, and knowledge references therefore use semantic IDs, never canonical rendered page numbers.
 
 ## 4.2 Stable hierarchy and markers
 
@@ -205,6 +214,8 @@ illustration: dk-v01-prototype-full-page
 
 IDs remain stable across localized editions.
 
+A book may also declare a sparse ordered set of `spoilerMilestones`. Every declared milestone must resolve to a semantic anchor in every released locale edition for that book.
+
 ## 4.3 Reader blocks and illustrations
 
 Current public semantic block types are:
@@ -219,7 +230,7 @@ Current illustration placements are:
 - `full-page`;
 - `before-title`.
 
-For the established Telanas opening flow:
+For an opening illustration:
 
 ```text
 illustration page → chapter title page → chapter text
@@ -245,7 +256,11 @@ Current appearance controls include dark/light/parchment themes, serif/sans type
 
 Paged layouts use the accepted restrained spine-anchored page-turn effect. Reduced-motion preferences disable it cleanly.
 
-## 4.5 Reading position and bookmarks
+## 4.5 Reading position versus spoiler progress
+
+The Reader stores the current reading position separately from spoiler progress.
+
+Current position may move backward and forward as the reader navigates. Reached spoiler milestones only move forward. This prevents rereading earlier pages from hiding information the reader already encountered.
 
 Canonical reading position and bookmarks store semantic world/story/book/chapter/anchor identity rather than rendered page numbers. Labels are rebuilt from the current localized structural data so saved places survive repagination, layout changes, viewport changes, and language changes.
 
@@ -266,6 +281,8 @@ private source project
 → publication only after separate approval
 ```
 
+A release exporter that supplies contextual Lexicon behavior must preserve stable semantic anchors and emit explicit localized contextual annotations plus the sparse spoiler milestones used by reveal gates.
+
 # 6. Validation
 
 Before released book/world data is accepted, validation should establish at least:
@@ -275,8 +292,12 @@ Before released book/world data is accepted, validation should establish at leas
 - semantic references resolve in every relevant locale;
 - illustration references resolve and obey placement/path rules;
 - Lexicon relationships resolve without hidden-target leakage;
-- Lexicon category controls expose only categories backed by at least one spoiler-eligible entry;
-- reader-facing copy does not accidentally hint at unrevealed structure;
+- contextual Lexicon annotations target real semantic paragraph anchors and real Lexicon entries;
+- annotated localized text and requested occurrences exist exactly in each edition;
+- contextual annotations do not overlap;
+- declared spoiler milestones resolve in every released edition;
+- reached-anchor gates use declared semantic milestones;
+- dedicated Lexicon and Reader overlays share one spoiler-eligibility calculation;
 - released locale strings are complete;
 - unreleased locales are absent from public navigation;
 - integrated Contents and Reader navigation derive from the same structure;

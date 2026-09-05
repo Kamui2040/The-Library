@@ -13,6 +13,10 @@
     "en": "editions/en.json",
     "de": "editions/de.json"
   },
+  "contextualLexicon": "contextual-lexicon.json",
+  "spoilerMilestones": [
+    "dk-v01-ch01-p004"
+  ],
   "illustrations": [
     {
       "id": "dk-v01-prototype-full-page",

@@ -27,6 +27,7 @@
 - Released story editions remain separate localized editions; do not combine them into bilingual manuscripts.
 - Reader navigation, bookmarks, spoiler references, and cross-links use stable semantic IDs rather than rendered page numbers.
 - The integrated book contents page and reader-side table of contents must derive from the same ordered structure.
+- Contextual Reader Lexicon references must use explicit semantic annotations tied to stable Reader anchors and localized source text. Do not automatically link arbitrary matching words or names.
 
 ## Spoilers
 
@@ -34,7 +35,10 @@
 - Information whose existence is itself a spoiler must remain absent until the reader's selected progress level permits it.
 - Reader-facing copy must not imply unrevealed multiplicity, ordering, origins, future structure, or other facts merely through neutral-looking wording.
 - Lexicon category controls are derived from currently spoiler-eligible entries. If no eligible entry exists in a category, that category name/control must not be rendered or hinted at.
-- Full-spoiler mode may deliberately bypass reveal gates.
+- Lexicon entry existence and individual entry details may use different reveal gates. A safe base description may be visible while later fragments remain absent.
+- Within-volume spoiler progress uses sparse stable semantic Reader anchors. Reached milestones advance monotonically and must never move backward when rereading earlier material.
+- Completing a volume supersedes its internal reached-anchor gates. Full-spoiler mode may deliberately bypass all reveal gates.
+- The dedicated Lexicon and contextual Reader cards must use the same visibility calculation so they cannot disagree about what the reader is allowed to know.
 
 ## Development and publication
 

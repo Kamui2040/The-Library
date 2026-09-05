@@ -83,29 +83,15 @@
     searchInput.placeholder = table.searchPlaceholder;
   };
 
-  const completedVolume = (profile, story) => (
-    profile.worlds?.telanas?.completed?.[story] || "none"
-  );
-
   const volumeIndex = (storyId, volumeId) => {
     const story = world?.stories?.find((item) => item.id === storyId);
     if (!Array.isArray(story?.books)) return -1;
     return story.books.findIndex((book) => book.id === volumeId);
   };
 
-  const visibilityAllowed = (visibility, profile) => {
-    if (profile.fullSpoilers) return true;
-    if (!visibility || visibility.mode === "always") return true;
-    if (visibility.mode === "full-spoilers") return false;
-
-    if (visibility.mode === "completed-volume") {
-      const required = volumeIndex(visibility.story, visibility.volume);
-      const completed = volumeIndex(visibility.story, completedVolume(profile, visibility.story));
-      return required >= 0 && completed >= required;
-    }
-
-    return false;
-  };
+  const visibilityAllowed = (visibility, profile) => (
+    profileApi.visibilityAllowed(world, visibility, profile)
+  );
 
   const rawEntry = (entryId) => (
     (lexicon?.entries || []).find((entry) => entry.id === entryId) || null
@@ -219,10 +205,9 @@
     history.replaceState(null, "", url);
   };
 
-  const normalizeCategory = () => {
+  const normalizeCategory = (categoryIds) => {
     if (activeCategory === "all") return;
-    const valid = (lexicon?.categories || []).some((category) => category.id === activeCategory);
-    if (!valid) {
+    if (!categoryIds.has(activeCategory)) {
       activeCategory = "all";
       updateRouteState({ category: "all" });
     }
@@ -402,9 +387,10 @@
     translateStatic();
     if (!lexicon || !world) return;
 
-    normalizeCategory();
     const eligible = visibleEntries();
-    renderFilters(visibleCategoryIds(eligible));
+    const categoryIds = visibleCategoryIds(eligible);
+    normalizeCategory(categoryIds);
+    renderFilters(categoryIds);
 
     const filtered = eligible
       .filter(searchEligible)
