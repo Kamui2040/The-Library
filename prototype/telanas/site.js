@@ -147,6 +147,17 @@
     return target.href;
   };
 
+  const canonicalLexiconRoute = (legacyHref, language) => {
+    const source = new URL(legacyHref, window.location.href);
+    if (!source.pathname.endsWith("/lexicon.html")) return null;
+
+    const lang = normalizeLanguage(language);
+    const target = new URL(`../../${lang}/telanas/lexicon/`, window.location.href);
+    target.search = source.search;
+    target.hash = source.hash;
+    return target.href;
+  };
+
   const migrateReaderLink = (anchor, language) => {
     if (!(anchor instanceof HTMLAnchorElement)) return;
     const legacyHref = anchor.dataset.prototypeReaderHref || anchor.getAttribute("href");
@@ -161,11 +172,32 @@
     anchor.href = canonicalHref;
   };
 
+  const migrateLexiconLink = (anchor, language) => {
+    if (!(anchor instanceof HTMLAnchorElement)) return;
+    const legacyHref = anchor.dataset.prototypeLexiconHref || anchor.getAttribute("href");
+    if (!legacyHref) return;
+    if (!anchor.dataset.prototypeLexiconHref && !legacyHref.startsWith("lexicon.html")) return;
+
+    const canonicalHref = canonicalLexiconRoute(legacyHref, language);
+    if (!canonicalHref) return;
+
+    anchor.dataset.prototypeLexiconHref ||= legacyHref;
+    anchor.dataset.canonicalLexiconLink = "";
+    anchor.href = canonicalHref;
+  };
+
   const migrateReaderLinks = (root, language) => {
     if (root instanceof HTMLAnchorElement) migrateReaderLink(root, language);
     if (!(root instanceof Element || root instanceof Document)) return;
     root.querySelectorAll("a[href^='reader.html'], a[data-prototype-reader-href]")
       .forEach((anchor) => migrateReaderLink(anchor, language));
+  };
+
+  const migrateLexiconLinks = (root, language) => {
+    if (root instanceof HTMLAnchorElement) migrateLexiconLink(root, language);
+    if (!(root instanceof Element || root instanceof Document)) return;
+    root.querySelectorAll("a[href^='lexicon.html'], a[data-prototype-lexicon-href]")
+      .forEach((anchor) => migrateLexiconLink(anchor, language));
   };
 
   const ensureWorldNavigation = () => {
@@ -254,6 +286,7 @@
     });
 
     migrateReaderLinks(document, lang);
+    migrateLexiconLinks(document, lang);
     storageSet("library-language", lang);
     window.dispatchEvent(new CustomEvent("library-language-change", { detail: { language: lang } }));
   };
@@ -278,13 +311,16 @@
   ensureWorldNavigation();
   focusLinkedWorldTarget();
 
-  const readerLinkObserver = new MutationObserver((records) => {
+  const canonicalLinkObserver = new MutationObserver((records) => {
     const lang = document.documentElement.lang;
     records.forEach((record) => {
-      record.addedNodes.forEach((node) => migrateReaderLinks(node, lang));
+      record.addedNodes.forEach((node) => {
+        migrateReaderLinks(node, lang);
+        migrateLexiconLinks(node, lang);
+      });
     });
   });
-  readerLinkObserver.observe(document.body, { childList: true, subtree: true });
+  canonicalLinkObserver.observe(document.body, { childList: true, subtree: true });
 
   document.querySelectorAll("[data-language-select]").forEach((select) => {
     select.addEventListener("change", () => translate(select.value));

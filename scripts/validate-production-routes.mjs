@@ -16,6 +16,12 @@ const readerAssets = [
   "reader.js",
   "reader-bookmarks.js"
 ].map((name) => `assets/reader/${name}`);
+const lexiconAssets = [
+  "lexicon.css",
+  "lexicon-reader-links.css",
+  "lexicon-relationships.css",
+  "lexicon.js"
+].map((name) => `assets/lexicon/${name}`);
 
 const required = [
   "assets/library-shell.js",
@@ -23,13 +29,16 @@ const required = [
   "assets/spoiler-controls.js",
   "assets/telanas/styles.css",
   ...readerAssets,
+  ...lexiconAssets,
   "prototype/telanas/site.js",
   "en/index.html",
   "de/index.html",
   "en/telanas/index.html",
   "de/telanas/index.html",
   "en/telanas/read/dragon-knight/volume-01/index.html",
-  "de/telanas/read/dragon-knight/volume-01/index.html"
+  "de/telanas/read/dragon-knight/volume-01/index.html",
+  "en/telanas/lexicon/index.html",
+  "de/telanas/lexicon/index.html"
 ];
 
 const fail = (message) => { throw new Error(message); };
@@ -72,9 +81,11 @@ for (const locale of ["en", "de"]) {
   const rootPath = `${locale}/index.html`;
   const landingPath = `${locale}/telanas/index.html`;
   const readerPath = `${locale}/telanas/read/dragon-knight/volume-01/index.html`;
+  const lexiconPath = `${locale}/telanas/lexicon/index.html`;
   const rootHtml = await readFile(path.join(root, rootPath), "utf8");
   const landingHtml = await readFile(path.join(root, landingPath), "utf8");
   const readerHtml = await readFile(path.join(root, readerPath), "utf8");
+  const lexiconHtml = await readFile(path.join(root, lexiconPath), "utf8");
 
   assert(rootHtml.includes('content="0; url=telanas/"'), `${rootPath} must redirect to telanas/`);
   assert(rootHtml.includes('window.location.replace("telanas/")'), `${rootPath} must preserve the locale-root redirect without relying only on meta refresh`);
@@ -88,7 +99,13 @@ for (const locale of ["en", "de"]) {
   assert(landingHtml.includes('href="../../assets/telanas/styles.css"'), `${landingPath} must use the production Telanas stylesheet`);
   assert(landingHtml.includes('data-spoiler-progress-select'), `${landingPath} must preserve the shared spoiler-progress control`);
   assert(landingHtml.includes('href="read/dragon-knight/volume-01/"'), `${landingPath} must link to the canonical reader`);
+  assert(landingHtml.includes('href="lexicon/"'), `${landingPath} must link to the canonical Lexicon`);
+  assert(landingHtml.includes('lexicon/?category=characters'), `${landingPath} must preserve the Characters category entry point`);
+  assert(landingHtml.includes('lexicon/?category=places'), `${landingPath} must preserve the Places category entry point`);
+  assert(landingHtml.includes('lexicon/?category=mythology'), `${landingPath} must preserve the Mythology category entry point`);
+  assert(landingHtml.includes('lexicon/?category=history'), `${landingPath} must preserve the History category entry point`);
   assert(!landingHtml.includes("prototype/telanas/reader.html"), `${landingPath} must not retain the old reader bridge`);
+  assert(!landingHtml.includes("prototype/telanas/lexicon.html"), `${landingPath} must not retain the old Lexicon bridge`);
   await validateLocalReferences(landingPath, landingHtml);
 
   assert(readerHtml.includes(`<html lang="${locale}" data-route-locale="${locale}"`), `${readerPath} must declare its route locale`);
@@ -100,20 +117,55 @@ for (const locale of ["en", "de"]) {
   assert(readerHtml.includes('data-reader-bookmark-toggle'), `${readerPath} must preserve semantic bookmarks`);
   assert(readerHtml.includes('data-reader-progress-mode'), `${readerPath} must preserve reader completion/spoiler controls`);
   assert(readerHtml.includes('href="../../../"'), `${readerPath} must return to the locale-matched Telanas landing page`);
+  assert(readerHtml.includes('href="../../../lexicon/"'), `${readerPath} completion flow must open the canonical Lexicon`);
+  assert(!readerHtml.includes("prototype/telanas/lexicon.html"), `${readerPath} must not retain the old Lexicon completion bridge`);
   await validateLocalReferences(readerPath, readerHtml);
+
+  assert(lexiconHtml.includes(`<html lang="${locale}" data-route-locale="${locale}"`), `${lexiconPath} must declare its route locale`);
+  assert(lexiconHtml.includes('href="../../../en/telanas/lexicon/"'), `${lexiconPath} must expose the English Lexicon route`);
+  assert(lexiconHtml.includes('href="../../../de/telanas/lexicon/"'), `${lexiconPath} must expose the German Lexicon route`);
+  assert(lexiconHtml.includes('href="../../../assets/telanas/styles.css"'), `${lexiconPath} must use the production Telanas stylesheet`);
+  assert(lexiconHtml.includes('href="../../../assets/lexicon/lexicon.css"'), `${lexiconPath} must use the production Lexicon stylesheet`);
+  assert(lexiconHtml.includes('src="../../../assets/library-shell.js"'), `${lexiconPath} must use the production Library shell`);
+  assert(lexiconHtml.includes('src="../../../assets/spoiler-profile.js"'), `${lexiconPath} must use the production spoiler profile`);
+  assert(lexiconHtml.includes('src="../../../assets/spoiler-controls.js"'), `${lexiconPath} must use the production spoiler controls`);
+  assert(lexiconHtml.includes('src="../../../assets/lexicon/lexicon.js"'), `${lexiconPath} must use the production Lexicon controller`);
+  assert(lexiconHtml.includes('data-world-manifest="../../../content/worlds/telanas/world.json"'), `${lexiconPath} must resolve the public world manifest`);
+  assert(lexiconHtml.includes('data-lexicon-manifest="../../../content/worlds/telanas/lexicon/lexicon.json"'), `${lexiconPath} must resolve the public Lexicon manifest`);
+  assert(lexiconHtml.includes('data-reader-base="../read/"'), `${lexiconPath} must declare the canonical Reader route base`);
+  assert(lexiconHtml.includes('data-spoiler-progress-select'), `${lexiconPath} must preserve spoiler-progress controls`);
+  assert(lexiconHtml.includes('data-full-spoilers-toggle'), `${lexiconPath} must preserve Full Spoilers controls`);
+  assert(lexiconHtml.includes('data-lexicon-results'), `${lexiconPath} must render the spoiler-filtered result set`);
+  assert(lexiconHtml.includes('href="../read/dragon-knight/volume-01/"'), `${lexiconPath} must expose the canonical Reader in story navigation`);
+  assert(!lexiconHtml.includes("prototype/telanas/lexicon.html"), `${lexiconPath} must not bridge back to the old Lexicon`);
+  await validateLocalReferences(lexiconPath, lexiconHtml);
 }
 
 const readerController = await readFile(path.join(root, "assets/reader/reader.js"), "utf8");
 assert(readerController.includes("dataset.readerBookManifest"), "Production reader must resolve its book manifest from the page contract");
 
+const lexiconController = await readFile(path.join(root, "assets/lexicon/lexicon.js"), "utf8");
+assert(lexiconController.includes("dataset.worldManifest"), "Production Lexicon must resolve its world manifest from the page contract");
+assert(lexiconController.includes("dataset.lexiconManifest"), "Production Lexicon must resolve its Lexicon manifest from the page contract");
+assert(lexiconController.includes("dataset.readerBase"), "Production Lexicon must resolve Reader routes from the page contract");
+assert(lexiconController.includes("profile.fullSpoilers"), "Production Lexicon must preserve the explicit Full Spoilers bypass");
+assert(lexiconController.includes("visibilityAllowed(entry.visibility"), "Production Lexicon must filter entry existence before rendering");
+assert(lexiconController.includes("visibilityAllowed(fragment.visibility"), "Production Lexicon must filter fragments before rendering");
+assert(lexiconController.includes("visibilityAllowed(target.visibility"), "Production Lexicon must filter relationship targets before rendering");
+assert(lexiconController.includes('source: "lexicon"'), "Production Lexicon Reader links must carry their semantic source context");
+assert(lexiconController.includes('get("entry")'), "Production Lexicon must accept semantic entry targets without using page numbers");
+assert(lexiconController.includes('get("category")'), "Production Lexicon must accept public category navigation state");
+
 const shell = await readFile(path.join(root, "assets/library-shell.js"), "utf8");
 assert(shell.includes("destination.search = window.location.search"), "Language switching must preserve the current query string");
-assert(shell.includes("destination.hash = window.location.hash"), "Language switching must preserve the semantic reader anchor/hash");
+assert(shell.includes("destination.hash = window.location.hash"), "Language switching must preserve semantic hashes");
 
 const prototypeSite = await readFile(path.join(root, "prototype/telanas/site.js"), "utf8");
 assert(prototypeSite.includes("dataset.prototypeReaderHref"), "Prototype knowledge views must retain their original reader target while bridging to the canonical route");
 assert(prototypeSite.includes("/telanas/read/"), "Prototype knowledge views must route reader links to the canonical locale reader");
-assert(prototypeSite.includes("target.search = source.search"), "Prototype-to-reader bridges must preserve semantic source query data");
-assert(prototypeSite.includes("target.hash = source.hash"), "Prototype-to-reader bridges must preserve semantic reader anchors");
+assert(prototypeSite.includes("dataset.prototypeLexiconHref"), "Prototype knowledge views must retain their original Lexicon target while bridging to the canonical route");
+assert(prototypeSite.includes("/telanas/lexicon/"), "Prototype knowledge views must route Lexicon links to the canonical locale Lexicon");
+assert(prototypeSite.includes("target.search = source.search"), "Prototype canonical bridges must preserve semantic query data");
+assert(prototypeSite.includes("target.hash = source.hash"), "Prototype canonical bridges must preserve semantic hashes");
 
-console.log("PASS: validated canonical EN/DE Telanas landing and reader routes");
+console.log("PASS: validated canonical EN/DE Telanas landing, reader, and Lexicon routes");

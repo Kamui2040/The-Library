@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="de" data-route-locale="de" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark light">
+  <meta name="description" content="Durchsuche das spoilerbewusste Telanas-Lexikon in The Library.">
+  <title>The Library — Telanas Lexikon</title>
+  <link rel="alternate" hreflang="en" href="../../../en/telanas/lexicon/">
+  <link rel="alternate" hreflang="de" href="../../../de/telanas/lexicon/">
+  <link rel="stylesheet" href="../../../assets/telanas/styles.css">
+  <link rel="stylesheet" href="../../../assets/lexicon/lexicon.css">
+  <link rel="stylesheet" href="../../../assets/lexicon/lexicon-reader-links.css">
+  <link rel="stylesheet" href="../../../assets/lexicon/lexicon-relationships.css">
+  <script defer src="../../../assets/spoiler-profile.js"></script>
+  <script defer src="../../../assets/library-shell.js"></script>
+  <script defer src="../../../assets/spoiler-controls.js"></script>
+  <script defer src="../../../assets/lexicon/lexicon.js"></script>
+</head>
+<body
+  class="lexicon-page"
+  data-world-manifest="../../../content/worlds/telanas/world.json"
+  data-lexicon-manifest="../../../content/worlds/telanas/lexicon/lexicon.json"
+  data-reader-base="../read/"
+>
+  <header class="site-header" data-site-header>
+    <div class="header-inner">
+      <details class="menu-popover global-menu">
+        <summary class="brand-control" aria-label="K2040-Navigation">
+          <span class="brand-glyph" aria-hidden="true">K</span>
+          <strong>K2040</strong>
+          <span aria-hidden="true">⌄</span>
+        </summary>
+        <nav class="popover-panel global-panel" aria-label="K2040">
+          <a href="https://kamui2040.github.io/">Home</a>
+          <a href="https://kamui2040.github.io/K2040-Android-Releases/">Android-Projekte</a>
+          <a href="https://kamui2040.github.io/K2040-Gaming-Mods/">Gaming Mods</a>
+        </nav>
+      </details>
+
+      <div class="library-context" aria-label="Library-Kontext">
+        <span class="library-name">The Library</span>
+        <span class="context-separator" aria-hidden="true">/</span>
+        <a class="world-name" href="../">TELANAS</a>
+      </div>
+
+      <button class="mobile-menu-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation" data-mobile-menu>
+        <span aria-hidden="true">☰</span>
+        <span class="visually-hidden">Menü</span>
+      </button>
+
+      <nav class="primary-nav" id="primary-navigation" aria-label="Telanas" data-primary-nav>
+        <a class="nav-link" href="../">Home</a>
+
+        <details class="menu-popover nav-dropdown">
+          <summary class="nav-link">
+            <span>Geschichten</span>
+            <span aria-hidden="true">⌄</span>
+          </summary>
+          <div class="popover-panel stories-panel">
+            <p class="menu-kicker">TELANAS</p>
+            <p class="menu-heading">Der Drachenritter</p>
+            <a href="../#stories">
+              <strong>Band 1 — Zuhause</strong>
+              <span>Übersicht</span>
+            </a>
+            <a href="../read/dragon-knight/volume-01/">Band 1 lesen</a>
+            <div class="menu-divider"></div>
+            <p class="menu-heading">Kapitel</p>
+            <a href="../read/dragon-knight/volume-01/#prologue">Prolog</a>
+            <a href="../read/dragon-knight/volume-01/#chapter-1">Kapitel 1</a>
+            <a href="../read/dragon-knight/volume-01/#chapter-2">Kapitel 2</a>
+          </div>
+        </details>
+
+        <a class="nav-link is-current" href="./">Lexikon</a>
+        <a class="nav-link" href="../../../prototype/telanas/timeline.html" data-prototype-bridge>Zeitleiste</a>
+        <a class="nav-link" href="../../../prototype/telanas/map.html" data-prototype-bridge>Karte</a>
+        <a class="nav-link" href="../../../prototype/telanas/world-search.html" data-prototype-bridge>Suche</a>
+        <a class="nav-link" href="../#downloads">Downloads</a>
+        <a class="nav-link" href="../#updates">Neuigkeiten</a>
+
+        <label class="select-control">
+          <span class="visually-hidden">Sprache</span>
+          <select data-language-select aria-label="Sprache">
+            <option value="en">English</option>
+            <option value="de">Deutsch</option>
+          </select>
+        </label>
+
+        <button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false">
+          <span aria-hidden="true" data-theme-icon>☾</span>
+          <span data-theme-label>Hell</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="lexicon-hero">
+      <div class="page-width lexicon-hero-inner">
+        <p class="eyebrow">THE LIBRARY · TELANAS</p>
+        <h1 data-lexicon-i18n="title">Lexikon</h1>
+        <p class="lexicon-lede" data-lexicon-i18n="intro">Durchsuche nur Weltinformationen, die zu deinem gewählten Lesefortschritt gehören.</p>
+      </div>
+    </section>
+
+    <section class="content-section page-width lexicon-controls" aria-labelledby="spoiler-settings-title">
+      <div class="framed-panel progress-panel">
+        <div>
+          <p class="eyebrow" data-lexicon-i18n="progressEyebrow">Lesefortschritt</p>
+          <h2 id="spoiler-settings-title" data-lexicon-i18n="progressTitle">Wähle, was du abgeschlossen hast</h2>
+          <p data-lexicon-i18n="progressHelp">Spätere Einträge und Suchergebnisse werden überhaupt nicht gerendert.</p>
+        </div>
+
+        <div class="progress-fields">
+          <label class="progress-field">
+            <span data-lexicon-i18n="through">Spoiler bis</span>
+            <select data-spoiler-progress-select>
+              <option value="none">Keine abgeschlossenen Bände</option>
+              <option value="volume-01">Bis Band 1 — Zuhause</option>
+            </select>
+          </label>
+
+          <label class="full-spoilers-control">
+            <input type="checkbox" data-full-spoilers-toggle>
+            <span>
+              <strong data-lexicon-i18n="fullSpoilers">Vollständige Spoiler</strong>
+              <small data-lexicon-i18n="fullSpoilersHelp">Zeige alle öffentlichen Lexikon-Einträge unabhängig vom Fortschritt.</small>
+            </span>
+          </label>
+        </div>
+      </div>
+    </section>
+
+    <section class="content-section section-dark lexicon-browser" aria-labelledby="browse-title">
+      <div class="page-width">
+        <div class="section-heading section-heading--split lexicon-browser-heading">
+          <div>
+            <p class="eyebrow" data-lexicon-i18n="browseEyebrow">Verfügbares Wissen</p>
+            <h2 id="browse-title" data-lexicon-i18n="browseTitle">Lexikon durchsuchen</h2>
+            <p data-lexicon-i18n="browseHelp">Suche und Kategorien verwenden denselben spoilergefilterten Datensatz.</p>
+          </div>
+          <div class="spoiler-status framed-inline">
+            <span data-lexicon-i18n="currentView">Aktuelle Ansicht</span>
+            <strong data-spoiler-summary>Keine abgeschlossenen Bände</strong>
+          </div>
+        </div>
+
+        <div class="lexicon-search-row">
+          <label class="lexicon-search">
+            <span class="visually-hidden" data-lexicon-i18n="searchLabel">Sichtbare Einträge durchsuchen</span>
+            <input type="search" data-lexicon-search autocomplete="off" spellcheck="false" placeholder="Sichtbare Einträge durchsuchen">
+          </label>
+        </div>
+
+        <nav class="category-filters" aria-label="Lexikon-Kategorien" data-category-filters></nav>
+
+        <p class="lexicon-state" data-lexicon-state aria-live="polite"></p>
+        <div class="lexicon-results" data-lexicon-results></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="page-width footer-inner">
+      <div>
+        <p class="footer-title">The Library</p>
+        <p class="footer-world">TELANAS</p>
+      </div>
+      <nav class="footer-links" aria-label="K2040-Ökosystem">
+        <a href="https://kamui2040.github.io/">Home</a>
+        <a href="https://kamui2040.github.io/K2040-Android-Releases/">Android-Projekte</a>
+        <a href="https://kamui2040.github.io/K2040-Gaming-Mods/">Gaming Mods</a>
+        <a href="https://github.com/Kamui2040">GitHub</a>
+        <a href="https://next.nexusmods.com/profile/kamui2040">Nexus Mods</a>
+        <a href="https://ko-fi.com/k2040">Ko-fi</a>
+        <a href="https://www.instagram.com/k2040.projects/">Instagram</a>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>
