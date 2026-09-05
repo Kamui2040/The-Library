@@ -4,7 +4,7 @@
 
 - The Library is the publication-safe website and reader for released fiction projects.
 - This repository is FUTURE PUBLIC. Treat every tracked file as if it may later be visible publicly.
-- The site is an umbrella library. Telanas is currently the first world/series area, not the permanent identity of the whole site.
+- The site is an umbrella library. Telanas currently uses its own world/series area; it is not the permanent identity of the whole site.
 
 ## Source boundary
 
@@ -32,6 +32,8 @@
 
 - Spoiler filtering happens before normal rendering/search presentation.
 - Information whose existence is itself a spoiler must remain absent until the reader's selected progress level permits it.
+- Reader-facing copy must not imply unrevealed multiplicity, ordering, origins, future structure, or other facts merely through neutral-looking wording.
+- Lexicon category controls are derived from currently spoiler-eligible entries. If no eligible entry exists in a category, that category name/control must not be rendered or hinted at.
 - Full-spoiler mode may deliberately bypass reveal gates.
 
 ## Development and publication

@@ -1,8 +1,8 @@
 # The Library
 
-The Library is a fiction website and web reader designed to host independent worlds and story series under one shared reading platform.
+The Library is a fiction website and web reader designed to host independent fiction projects under one shared reading platform.
 
-Telanas is the first world. The repository remains private while the site and publication workflow are prepared. Public deployment and repository visibility are separate approval-gated steps.
+Telanas is the currently implemented fiction area. The repository remains private while the site and publication workflow are prepared. Public deployment and repository visibility are separate approval-gated steps.
 
 The repository contains only publication-safe website material and neutral development placeholders. Private manuscripts, canon planning, unreleased lore, and private creative assets remain in their source repositories until an explicit release/export step approves them for The Library.
 
@@ -14,6 +14,8 @@ Telanas currently focuses on two connected systems:
 - a spoiler-aware Lexicon with built-in search and short entries for characters, locations, and events the reader is allowed to know about.
 
 Locations do not depend on a map. A Telanas map is not exposed until the geography is explicitly approved as stable enough for a definitive map.
+
+Lexicon category controls are generated only for categories that currently contain at least one spoiler-eligible entry, so an empty or fully hidden category does not expose its own existence.
 
 ## Current foundation
 

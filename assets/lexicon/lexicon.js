@@ -187,6 +187,14 @@
       .filter(Boolean);
   };
 
+  const visibleCategoryIds = (entries) => {
+    const ids = new Set();
+    for (const entry of entries) {
+      for (const category of entry.categories) ids.add(category);
+    }
+    return ids;
+  };
+
   const searchEligible = (entry) => {
     if (activeCategory !== "all" && !entry.categories.includes(activeCategory)) return false;
     if (!query) return true;
@@ -220,7 +228,7 @@
     }
   };
 
-  const renderFilters = () => {
+  const renderFilters = (categoryIds) => {
     filtersNode.replaceChildren();
     const table = ui[language()];
 
@@ -244,6 +252,7 @@
     filtersNode.append(makeButton("all", table.all));
 
     for (const category of lexicon?.categories || []) {
+      if (!categoryIds.has(category.id)) continue;
       const label = category.labels?.[language()];
       if (!label) continue;
       filtersNode.append(makeButton(category.id, label));
@@ -395,7 +404,7 @@
 
     normalizeCategory();
     const eligible = visibleEntries();
-    renderFilters();
+    renderFilters(visibleCategoryIds(eligible));
 
     const filtered = eligible
       .filter(searchEligible)

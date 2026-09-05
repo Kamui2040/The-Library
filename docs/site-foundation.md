@@ -2,9 +2,9 @@
 
 **Status:** Working implementation foundation
 
-The Library is the common fiction website and Reader. It is designed to host multiple independent worlds or series without forcing them to share one visual identity.
+The Library is the common fiction website and Reader. It is designed to host independent fiction projects without forcing them to share one visual identity.
 
-Telanas is currently the first and only world. It keeps a stable namespace from the beginning so later expansion does not require changing its URLs.
+Telanas has its own stable namespace so later Library expansion does not require changing its URLs.
 
 # 1. Reader-facing architecture
 
@@ -23,7 +23,7 @@ The Library owns shared capabilities:
 
 Each world or major fiction project may define its own stories, Lexicon, optional reference views, downloads, updates, and visual identity.
 
-Current world registry:
+Current namespace registry:
 
 ```text
 The Library
@@ -31,8 +31,6 @@ The Library
     └── The Dragon Knight
         └── Volume 1 — Home / Band 1 — Zuhause
 ```
-
-Future worlds are siblings of Telanas, not children of Telanas.
 
 ## 1.2 Telanas surface
 
@@ -94,7 +92,7 @@ Optional Timeline, Map, and standalone Search surfaces are not exposed in this n
 
 ## 1.5 Stories hierarchy
 
-The world data model supports multiple story lines from the start.
+The data model supports multiple story lines without requiring the reader-facing copy to announce future structure.
 
 ```text
 Stories
@@ -131,7 +129,9 @@ For any exposed locale:
 
 Spoiler protection is based on explicit reader progress.
 
-Filtering happens before normal rendering and search. If the existence of something is itself a spoiler, it remains absent until the selected progress permits it. It must not appear as a blurred result, redacted title, autocomplete suggestion, count, placeholder, source hint, or relationship hint.
+Filtering happens before normal rendering and search. If the existence of something is itself a spoiler, it remains absent until the selected progress permits it. It must not appear as a blurred result, redacted title, autocomplete suggestion, count, placeholder, source hint, relationship hint, category control, or other visible gap.
+
+The same rule applies to wording. Reader-facing copy must not casually reveal unrevealed multiplicity, ordering, origins, future structure, or other facts through phrases such as “first”, “another”, or similar hints unless the selected progress already permits that information.
 
 Full Spoilers explicitly bypasses normal reveal gates.
 
@@ -162,7 +162,7 @@ The main reader-facing categories are:
 - **Places** — short descriptions of locations already known at the selected progress, without requiring final map coordinates.
 - **Events** — short descriptions of events already revealed in released reading material.
 
-The data model may retain additional categories when useful.
+The data model may retain additional categories when useful. On the dedicated Lexicon page, category controls are generated from the currently spoiler-eligible entries. A category with zero eligible entries is completely absent from the controls; its name, count, disabled state, or placeholder must not reveal that the category exists.
 
 Visible fragments may contain semantic Reader links. Entry relationships use stable target IDs and are shown/searchable only when both source and target are visible.
 
@@ -275,6 +275,8 @@ Before released book/world data is accepted, validation should establish at leas
 - semantic references resolve in every relevant locale;
 - illustration references resolve and obey placement/path rules;
 - Lexicon relationships resolve without hidden-target leakage;
+- Lexicon category controls expose only categories backed by at least one spoiler-eligible entry;
+- reader-facing copy does not accidentally hint at unrevealed structure;
 - released locale strings are complete;
 - unreleased locales are absent from public navigation;
 - integrated Contents and Reader navigation derive from the same structure;
