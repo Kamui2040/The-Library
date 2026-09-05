@@ -47,8 +47,12 @@
       if (next === locale) return;
       const alternate = document.querySelector(`link[rel='alternate'][hreflang='${next}']`);
       if (!alternate) return;
+
+      const destination = new URL(alternate.getAttribute("href"), window.location.href);
+      destination.search = window.location.search;
+      destination.hash = window.location.hash;
       storageSet("library-language", next);
-      window.location.assign(new URL(alternate.getAttribute("href"), window.location.href));
+      window.location.assign(destination);
     });
   });
 

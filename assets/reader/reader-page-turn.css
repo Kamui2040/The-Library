@@ -1,0 +1,142 @@
+/* Soft paper page turn. The transient layer never participates in reader layout. */
+
+.book-spread {
+  position: relative;
+  perspective: 1900px;
+  transform-style: preserve-3d;
+  overflow: hidden;
+}
+
+.reader-page-turn-layer {
+  position: absolute;
+  z-index: 30;
+  margin: 0;
+  pointer-events: none;
+  user-select: none;
+  transform-style: preserve-3d;
+}
+
+.reader-page-turn-sheet {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  will-change: transform, filter;
+}
+
+.reader-page-turn-front,
+.reader-page-turn-back {
+  position: absolute !important;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  margin: 0 !important;
+  overflow: hidden;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+  box-sizing: border-box;
+}
+
+.reader-page-turn-front {
+  transform: translateZ(.6px);
+  will-change: filter, opacity;
+}
+
+/* Use a clean paper back instead of mirrored page text. The real destination
+   remains underneath and is revealed when the transient sheet settles. */
+.reader-page-turn-back {
+  transform: rotateY(180deg) translateZ(.6px);
+  background:
+    linear-gradient(90deg, rgba(255,255,255,.012), transparent 8%, transparent 92%, rgba(0,0,0,.06)),
+    var(--page-surface);
+  border: 1px solid var(--border-soft);
+}
+
+/* The outer edge stays attached to the moving sheet. It rolls slightly along
+   its full height while the opposite edge remains visually attached to the
+   book spine. */
+.reader-page-turn-edge {
+  position: absolute;
+  top: -.25%;
+  bottom: -.25%;
+  width: 9%;
+  z-index: 5;
+  opacity: 0;
+  pointer-events: none;
+  border-radius: 55% / 3.5%;
+  transform-style: preserve-3d;
+  will-change: transform, opacity, filter;
+}
+
+.reader-page-turn-edge::before,
+.reader-page-turn-edge::after {
+  content: "";
+  position: absolute;
+  inset-block: 0;
+  pointer-events: none;
+}
+
+.reader-page-turn-edge::before {
+  inset-inline: 7% 11%;
+  border-radius: inherit;
+  opacity: .72;
+  background: linear-gradient(
+    90deg,
+    rgba(0,0,0,.17),
+    transparent 24%,
+    rgba(255,255,255,.2) 49%,
+    transparent 72%,
+    rgba(0,0,0,.18)
+  );
+  filter: blur(1.6px);
+}
+
+.reader-page-turn-edge::after {
+  top: 0;
+  bottom: 0;
+  width: 20%;
+  opacity: .5;
+  background: rgba(0,0,0,.18);
+  filter: blur(4px);
+}
+
+.reader-page-turn-layer[data-turn-side="right"] .reader-page-turn-edge {
+  right: -3.2%;
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--page-surface) 74%, black),
+    var(--page-surface) 27%,
+    color-mix(in srgb, var(--page-surface) 90%, white) 52%,
+    var(--page-surface) 74%,
+    color-mix(in srgb, var(--page-surface) 66%, black)
+  );
+  box-shadow: -7px 2px 14px rgba(0,0,0,.13), 3px 1px 7px rgba(0,0,0,.09);
+}
+
+.reader-page-turn-layer[data-turn-side="right"] .reader-page-turn-edge::after {
+  left: -8%;
+}
+
+.reader-page-turn-layer[data-turn-side="left"] .reader-page-turn-edge {
+  left: -3.2%;
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--page-surface) 66%, black),
+    var(--page-surface) 26%,
+    color-mix(in srgb, var(--page-surface) 90%, white) 48%,
+    var(--page-surface) 73%,
+    color-mix(in srgb, var(--page-surface) 74%, black)
+  );
+  box-shadow: 7px 2px 14px rgba(0,0,0,.13), -3px 1px 7px rgba(0,0,0,.09);
+}
+
+.reader-page-turn-layer[data-turn-side="left"] .reader-page-turn-edge::after {
+  right: -8%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reader-page-turn-layer {
+    display: none !important;
+  }
+}

@@ -62,7 +62,7 @@ While Telanas is the only published world, those roots may resolve or redirect d
 
 When another world is added, `/en/` and `/de/` become Library landing pages listing available worlds. Existing Telanas URLs remain unchanged.
 
-Production-route phase 1 now implements `/en/` and `/de/` as locale-preserving redirects to the canonical Telanas landing pages and provides `/en/telanas/` and `/de/telanas/` as real localized pages. Reader, Lexicon, Timeline, Map, Search, and chapter destinations still use explicitly marked temporary bridges to the accepted prototype while their canonical replacements are migrated and verified. The spoiler profile, theme, and selected locale persist across that bridge.
+Production-route phase 1 implements `/en/` and `/de/` as locale-preserving redirects to the canonical Telanas landing pages and provides `/en/telanas/` and `/de/telanas/` as real localized pages. Phase 2 adds the canonical Volume 1 Reader at `/en/telanas/read/dragon-knight/volume-01/` and `/de/telanas/read/dragon-knight/volume-01/`, with semantic reading position, bookmarks, presentation preferences, page-turn behavior, and spoiler-progress completion preserved. Lexicon, Timeline, Map, and Search still use explicitly marked temporary bridges to the accepted prototype while their canonical replacements are migrated and verified.
 
 ## 1.3 Telanas navigation
 
@@ -152,11 +152,11 @@ Production routes use stable semantic structure such as:
 /de/... equivalent structure ...
 ```
 
-Phase 1 implements the locale roots and Telanas landing routes. The remaining routes above are migration targets, not permission to expose unreleased content or deploy the site.
+The locale roots, Telanas landing routes, and Volume 1 Reader route are now implemented. The remaining routes above are migration targets, not permission to expose unreleased content or deploy the site.
 
 Structural route segments and stable IDs remain consistent across locales. Visible labels and titles are localized.
 
-Language switching should preserve the same semantic destination whenever equivalent localized content exists. Switching language while reading, viewing an entry, or following a semantic reference must not fall back to a generic landing page when the same target exists in the other locale.
+Language switching preserves the same semantic destination whenever equivalent localized content exists. In the canonical Reader, switching EN/DE keeps the current query and semantic hash anchor so the equivalent localized edition opens at the same stable location.
 
 ## 2.3 Localization completeness
 
@@ -283,7 +283,7 @@ Current public semantic block types are:
 - scene break;
 - illustration.
 
-Chapter boundaries are hard reader boundaries. Scene separators remain semantically intact. The current prototype paginates whole semantic blocks and does not split one paragraph across multiple rendered pages; finer paragraph/line pagination may be added later without changing anchors.
+Chapter boundaries are hard reader boundaries. Scene separators remain semantically intact. The current Reader paginates whole semantic blocks and does not split one paragraph across multiple rendered pages; finer paragraph/line pagination may be added later without changing anchors.
 
 ## 4.5 Illustrations
 
@@ -358,12 +358,12 @@ Asset ownership/licensing and publication approval remain separate manual accept
 
 # 6. Current production work still ahead
 
-The architecture is no longer waiting on decisions about whether Timeline, Map, or Search should be first-class Telanas destinations; the prototype has answered that. The canonical EN/DE Telanas landing route is now the first migrated production surface.
+The architecture is no longer waiting on decisions about whether Timeline, Map, or Search should be first-class Telanas destinations; the prototype has answered that. The canonical EN/DE Telanas landing pages and Volume 1 Reader are now the migrated production surfaces.
 
 Remaining implementation work is mainly productionization:
 
-- migrate Reader, Lexicon, Timeline, Map, Search, story/volume, and update routes into the canonical locale/world structure and retire each temporary prototype bridge only after its replacement passes validation;
-- extract or relocate shared presentation assets from the prototype area when doing so removes temporary bridge dependencies without duplicating them;
+- migrate Lexicon, Timeline, Map, Search, story/volume, and update routes into the canonical locale/world structure and retire each temporary prototype bridge only after its replacement passes validation;
+- continue extracting shared presentation assets from the prototype area where doing so removes temporary dependencies without duplicating behavior;
 - implement the private-source exporter/parser;
 - add release-approved manuscript and world content;
 - add production illustrations, cover/hero artwork, and final licensed web fonts;

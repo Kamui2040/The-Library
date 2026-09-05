@@ -12,9 +12,10 @@ The repository contains only publication-safe website material and neutral devel
 - `docs/visual-system.md` — shared Library and Telanas visual direction
 - `docs/publication-pipeline.md` — private-source to public-Library boundary and release-bundle contract
 - `content/library.json` — data-driven Library/world/locale registry
-- `en/` and `de/` — canonical locale roots; phase 1 now provides the canonical Telanas landing page in both locales
+- `en/` and `de/` — canonical locale roots with localized Telanas landing pages and the canonical Volume 1 Reader route
 - `assets/library-shell.js` — route-aware shared shell behavior for canonical pages
-- `prototype/telanas/` — accepted feature baseline and temporary bridge for Reader, Lexicon, Timeline, Map, and Search while those routes are migrated
+- `assets/reader/` — canonical reader engine, presentation, page-turn, progress, and bookmark behavior
+- `prototype/telanas/` — accepted feature baseline and temporary bridge for Lexicon, Timeline, Map, and Search while those routes are migrated
 - `fixtures/release-bundles/` — neutral deterministic bundle fixtures used to verify the import boundary
 
 The accepted feature foundation already proves shared EN/DE localization, the semantic reader, bookmarks, reader-completion spoiler progress, Lexicon relationships and reader links, Timeline, Map, and a unified spoiler-safe world search.
@@ -25,7 +26,7 @@ The accepted feature foundation already proves shared EN/DE localization, the se
 
 ## Main work still ahead
 
-- continue migrating Reader, Lexicon, Timeline, Map, Search, and story routes into the canonical locale/world structure, then retire the temporary prototype bridges after replacement behavior is proven;
+- continue migrating Lexicon, Timeline, Map, Search, and story routes into the canonical locale/world structure, then retire their temporary prototype bridges after replacement behavior is proven;
 - build the private-source exporter/parser that produces deterministic release bundles;
 - add release-approved manuscript text, Lexicon content, chronology, geography, illustrations, cover/hero assets, and downloads when they are ready;
 - refine reader pagination where useful without changing semantic anchors;
