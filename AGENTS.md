@@ -19,6 +19,7 @@
 - Each world/series receives its own stable namespace and landing page. Telanas currently uses the `telanas` namespace.
 - The architecture must support additional unrelated worlds/series without redesigning the root site.
 - Shared Library behavior may be reused across series, while each series may define its own visual identity.
+- Do not expose or productionize a Telanas map until the user explicitly approves the geography as stable. Lexicon location entries must remain useful without requiring final coordinates or map geometry.
 
 ## Localization and reader
 

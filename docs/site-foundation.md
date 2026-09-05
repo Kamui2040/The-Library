@@ -4,34 +4,24 @@
 
 The Library is the common fiction website and reader. It is designed to host multiple independent worlds or series without forcing them to share one visual identity.
 
-Telanas is currently the first and only world. While it remains the only published world, the Library root may lead directly into the Telanas experience. Telanas still owns a stable namespace from the beginning so later expansion does not require changing its URLs.
+Telanas is currently the first and only world. Telanas keeps a stable namespace from the beginning so later expansion does not require changing its URLs.
 
 # 1. Information architecture
 
 ## 1.1 Library level
 
-The Library owns the shared shell and capabilities:
+The Library owns shared capabilities:
 
 - K2040 project navigation;
 - Library/world selection;
 - language and theme handling;
 - shared reader engine;
-- shared accessibility behavior;
-- shared publication/content format;
-- shared spoiler-profile behavior;
+- accessibility behavior;
+- publication/content format;
+- spoiler-profile behavior;
 - common footer functions.
 
-Each world or major fiction project owns:
-
-- its landing page;
-- stories and volumes;
-- Lexicon;
-- Timeline;
-- Map;
-- world search;
-- updates and downloads;
-- visual theme;
-- public content and assets.
+Each world or major fiction project may eventually own stories, a Lexicon, optional chronology/geography views, downloads, updates, and its own visual identity. Optional views do not have to exist merely because the data model can support them.
 
 Current world registry:
 
@@ -44,7 +34,20 @@ The Library
 
 Future worlds are siblings of Telanas, not children of Telanas.
 
-## 1.2 Root and canonical routes
+## 1.2 First public Telanas iteration
+
+The first public Telanas website is intentionally focused on two reader-facing systems:
+
+1. **Reader** — stable localized reading with semantic navigation, bookmarks, presentation settings, and spoiler-progress integration.
+2. **Lexicon** — short spoiler-aware descriptions that can cover characters, locations, and events already revealed by the reader's selected progress, with search built directly into the Lexicon.
+
+The Telanas landing page and small supporting sections may link into those systems, but standalone Timeline, Map, and world-search pages are not first-version requirements.
+
+The canonical Timeline implementation is retained as development work but is not linked from the first-version canonical navigation and is marked not to be indexed. Map and standalone Search remain deferred development/prototype surfaces.
+
+The Map has an additional hard design gate: it stays hidden until Telanas geography is explicitly approved as stable enough to commit to a real map. Lexicon location entries must not require final coordinates, distances, borders, or map geometry.
+
+## 1.3 Root and canonical routes
 
 Canonical locale roots are:
 
@@ -53,41 +56,60 @@ Canonical locale roots are:
 /de/
 ```
 
-While Telanas is the only published world, those roots may resolve or redirect directly to the matching Telanas landing page. Telanas keeps permanent canonical routes:
+While Telanas is the only released world, those roots may resolve or redirect directly to the matching Telanas landing page. Telanas keeps permanent canonical roots:
 
 ```text
 /en/telanas/
 /de/telanas/
 ```
 
-When another world is added, `/en/` and `/de/` become Library landing pages listing available worlds. Existing Telanas URLs remain unchanged.
+Implemented reader-facing routes are:
 
-Production-route phase 1 implements `/en/` and `/de/` as locale-preserving redirects to the canonical Telanas landing pages and provides `/en/telanas/` and `/de/telanas/` as real localized pages. Phase 2 adds the canonical Volume 1 Reader at `/en/telanas/read/dragon-knight/volume-01/` and `/de/telanas/read/dragon-knight/volume-01/`, with semantic reading position, bookmarks, presentation preferences, page-turn behavior, and spoiler-progress completion preserved. Phase 3 adds the canonical spoiler-aware Lexicon at `/en/telanas/lexicon/` and `/de/telanas/lexicon/`, preserving reveal filtering, categories, relationships, semantic Reader references, and shared progress controls. Phase 4 adds the canonical spoiler-aware Timeline at `/en/telanas/timeline/` and `/de/telanas/timeline/`, preserving event existence filtering, chronology order, search, semantic event targets, Reader references, and shared progress controls. Map and Search still use explicitly marked temporary bridges to the accepted prototype while their canonical replacements are migrated and verified.
+```text
+/en/telanas/read/dragon-knight/volume-01/
+/en/telanas/lexicon/
+/de/telanas/read/dragon-knight/volume-01/
+/de/telanas/lexicon/
+```
 
-## 1.3 Telanas navigation
+The canonical Timeline route also exists as deferred development work:
 
-The current first-class Telanas destinations are:
+```text
+/en/telanas/timeline/
+/de/telanas/timeline/
+```
 
-1. **Home** — current world landing page.
-2. **Stories** — story/volume and chapter navigation.
-3. **Lexicon** — spoiler-aware world knowledge.
-4. **Timeline** — spoiler-aware chronology.
-5. **Map** — spoiler-aware locations.
-6. **Search** — spoiler-aware cross-feature search over Lexicon, Timeline, and Map.
-7. **Downloads** — released downloadable editions.
-8. **Updates** — Telanas news/update feed.
-9. **Language** — released languages only.
-10. **Theme** — site/reader appearance control.
+It is not part of first-version public navigation. Map and standalone Search are not canonical first-version routes.
 
-The K2040 cascade and Library/Telanas context remain part of the shared header. Mobile navigation preserves the same functions in a compact form.
+Future structural patterns may include:
 
-Timeline, Map, and Search are no longer tentative Lexicon subviews; the prototype has established them as first-class Telanas destinations.
+```text
+/en/telanas/stories/
+/en/telanas/stories/dragon-knight/
+/en/telanas/stories/dragon-knight/volume-01/
+/en/telanas/timeline/
+/en/telanas/map/
+/en/telanas/search/
+/en/telanas/updates/
+```
 
-## 1.4 Stories hierarchy
+Future patterns are not permission to expose unreleased content or to publish unfinished features.
+
+## 1.4 First-version navigation
+
+The first-version canonical navigation should keep the reader's choices small:
+
+1. **Home** — Telanas landing page.
+2. **Stories / Reader** — current story, volume, and chapter access.
+3. **Lexicon** — spoiler-aware short world knowledge with built-in search.
+4. **Downloads / Updates** — supporting sections when they contain useful released material.
+5. **Language / Theme** — shared controls.
+
+Timeline, Map, and standalone Search stay out of this navigation until they are deliberately brought back into scope.
+
+## 1.5 Stories hierarchy
 
 The world data model supports multiple story lines from the start.
-
-Current Telanas hierarchy:
 
 ```text
 Stories
@@ -100,29 +122,9 @@ Stories
 
 Later Telanas stories or side stories can be added beside The Dragon Knight without changing the world model. Display names are localized; stable internal IDs are not.
 
-## 1.5 Telanas landing page
-
-The Telanas landing page contains or provides access to:
-
-- cinematic Telanas hero/title area;
-- spoiler-free introduction;
-- featured/current story or volume;
-- Lexicon;
-- Timeline;
-- Map;
-- Search;
-- spoiler-progress control where appropriate;
-- Downloads;
-- Updates;
-- shared footer functions in Telanas styling.
-
-The canonical EN/DE landing pages currently use publication-safe neutral placeholders and the established Telanas visual treatment. Final artwork and release content remain separate acceptance steps.
-
 # 2. URL and localization model
 
 ## 2.1 Locale registry
-
-Localization is data-driven.
 
 Current locales:
 
@@ -133,42 +135,20 @@ de — Deutsch
 
 Only actually released languages appear publicly. Released story editions remain separate localized editions rather than one bilingual manuscript.
 
-## 2.2 Canonical route pattern
-
-Production routes use stable semantic structure such as:
-
-```text
-/en/telanas/
-/en/telanas/stories/
-/en/telanas/stories/dragon-knight/
-/en/telanas/stories/dragon-knight/volume-01/
-/en/telanas/read/dragon-knight/volume-01/
-/en/telanas/lexicon/
-/en/telanas/timeline/
-/en/telanas/map/
-/en/telanas/search/
-/en/telanas/updates/
-
-/de/... equivalent structure ...
-```
-
-The locale roots, Telanas landing routes, Volume 1 Reader route, Lexicon route, and Timeline route are now implemented. The remaining routes above are migration targets, not permission to expose unreleased content or deploy the site.
-
 Structural route segments and stable IDs remain consistent across locales. Visible labels and titles are localized.
 
-Language switching preserves the same semantic destination whenever equivalent localized content exists. In the canonical Reader, switching EN/DE keeps the current query and semantic hash anchor so the equivalent localized edition opens at the same stable location. In the canonical Lexicon, the same route switch preserves semantic `entry` and category query state without exposing a hidden target that the current spoiler profile does not permit. In the canonical Timeline, the route switch preserves a semantic `event` target while the Timeline still applies the current spoiler profile before that target can exist in the rendered chronology.
+Language switching preserves the same semantic destination whenever equivalent localized content exists. Reader switching keeps the current query and semantic hash anchor. Lexicon switching preserves semantic `entry` and category query state without allowing a hidden target to bypass spoiler filtering.
 
-## 2.3 Localization completeness
+## 2.2 Localization completeness
 
-For any locale exposed as released:
+For any exposed locale:
 
 - interface text must exist;
 - released story content must exist;
 - visible Lexicon content must exist;
-- visible Timeline and Map content must exist;
 - public updates must not silently fall back to another language.
 
-Validation should report incomplete localization rather than publish mixed-language content accidentally.
+Deferred surfaces do not become release requirements merely because development implementations exist.
 
 # 3. Spoiler-aware knowledge model
 
@@ -176,17 +156,15 @@ Validation should report incomplete localization rather than publish mixed-langu
 
 Spoiler protection is based on explicit reader progress.
 
-The shared progress profile controls Lexicon entries and fragments, relationships, reader references, Timeline events, Map markers, and cross-feature Search before those items are presented or indexed.
-
-If the existence of something is itself a spoiler, it is absent until revealed. It must not appear as a blurred result, redacted title, autocomplete suggestion, count, placeholder, gap, source hint, related-entry hint, hidden map pin, or hidden timeline marker.
+Filtering happens before normal rendering and search. If the existence of something is itself a spoiler, it is absent until the reader's selected progress permits it. It must not appear as a blurred result, redacted title, autocomplete suggestion, count, placeholder, gap, source hint, or relationship hint.
 
 Full Spoilers explicitly bypasses normal reveal gates.
 
-Spoiler protection is an accidental-spoiler prevention feature, not a security boundary against someone deliberately inspecting public static files.
+Spoiler protection prevents accidental spoilers; it is not a security boundary against someone deliberately inspecting public static data.
 
 ## 3.2 Progress profile
 
-The profile supports multiple worlds and stories. Current conceptual shape:
+Conceptual shape:
 
 ```yaml
 spoiler_profile:
@@ -197,72 +175,55 @@ spoiler_profile:
         dragon-knight: volume-01
 ```
 
-Reader completion may offer to advance the profile, update automatically if the user chose that mode, or remain fully manual. Re-reading an earlier volume must never lower later completed progress.
+Reader completion may offer to advance the profile, update automatically if the reader chose that mode, or remain manual. Re-reading an earlier volume must never lower later completed progress.
 
 ## 3.3 Lexicon
 
-Lexicon entries use stable metadata plus reveal-gated fragments rather than one monolithic article.
+The Lexicon is the first-version home for compact world knowledge.
 
-Entries may belong to multiple categories. Initial category families include characters, places, creatures, factions, history, magic, mythology, items/artifacts, cultures, and terminology.
+Entries use stable metadata plus reveal-gated fragments rather than one monolithic article. The initial reader-facing emphasis is:
 
-Visible fragments may contain semantic reader links. Entry relationships use stable target IDs and are shown/searchable only when both source and target are visible.
+- **Characters** — short descriptions of people already known at the selected progress.
+- **Places** — short descriptions of locations already known at the selected progress, without requiring final map coordinates.
+- **Events** — short descriptions of events that have already happened in released reading material and are allowed by the selected progress.
 
-Search and category browsing operate only on the already-eligible knowledge set. Canonical Lexicon links may carry a stable `entry` target or public category filter in the query string; those parameters affect navigation only and never bypass the spoiler profile. A hidden target remains absent even when its ID is supplied directly.
+The data model may retain additional categories for future use, but those categories do not need prominent first-version entry points.
 
-## 3.4 Timeline
+Visible fragments may contain semantic Reader links. Entry relationships use stable target IDs and are shown/searchable only when both source and target are visible.
 
-Timeline events use stable event IDs and deterministic order values. Event existence is filtered before rendering or search.
+The Lexicon's own search is the first-version search experience. Search and category browsing operate only on the already-eligible knowledge set. Canonical links may carry a stable `entry` target or category filter; those parameters affect navigation only and never bypass the spoiler profile.
 
-A hidden event contributes no chronology label, title, summary, reader reference, placeholder, gap marker, or count. The visible chronology may therefore be intentionally incomplete without exposing where hidden material exists.
+## 3.4 Deferred Timeline
 
-Canonical Timeline links may carry a stable `event` target in the query string. The target affects focus/navigation only after that event has passed spoiler filtering; directly naming a hidden event does not render, count, hint at, or otherwise expose it.
+A standalone Timeline is optional, not required for the first public iteration. The existing implementation remains useful development work and keeps the same spoiler-filtering rules, but it is not linked from first-version canonical pages.
 
-## 3.5 Map
+Until a standalone Timeline adds enough value, revealed events can live naturally as searchable Lexicon entries.
 
-Map markers use stable marker IDs and normalized presentation positions. Marker existence is filtered before rendering or search.
+## 3.5 Deferred Map
 
-A hidden location contributes no pin, name, type, description, reader reference, list item, placeholder, or count. Normalized coordinates are presentation data for the current map representation, not rendered page numbers or manuscript identifiers.
+The Map is intentionally deferred.
 
-## 3.6 World search
+No public map should be exposed until the geography is explicitly approved as stable. A location's Lexicon entry may exist long before its final position, surrounding geography, distance relationships, borders, roads, or map artwork are settled.
 
-World Search is a derived view, not a second content store.
+When a future Map is approved, it should reference existing stable location IDs rather than redefine the locations or force earlier Lexicon data to contain coordinates.
 
-It reads the public Lexicon, Timeline, and Map manifests and applies the shared spoiler profile before constructing searchable records. Hidden entries, fragments, relationship targets, events, and markers therefore never enter the searchable set.
+## 3.6 Deferred standalone Search
 
-Visible results may link back to the exact stable Lexicon entry, Timeline event, Map marker, or semantic reader anchor. An empty search field intentionally shows no result dump; Full Spoilers changes eligibility, not the requirement to enter a query.
+A separate world-search page is not needed for the first iteration because the Lexicon already provides spoiler-aware search over the content readers need first.
 
-# 4. Reader and publication content model
+A broader cross-feature Search can return later if there are enough mature public surfaces to justify it.
+
+# 4. Reader model
 
 ## 4.1 Source principle
 
-The private manuscript defines semantic story structure. The reader creates rendered pages dynamically.
+The private manuscript defines semantic story structure. The Reader creates rendered pages dynamically.
 
-No web chapter has a fixed canonical page count. Pagination may change with viewport size, layout mode, font size, typeface, line spacing, margins, language, and illustration placement.
+Pagination may change with viewport size, layout mode, font size, typeface, line spacing, margins, language, and illustration placement. Bookmarks, progress, chapter navigation, and knowledge references therefore use semantic IDs, never canonical rendered page numbers.
 
-Bookmarks, progress, chapter navigation, and world-knowledge references therefore use semantic IDs, never canonical rendered page numbers.
+## 4.2 Stable hierarchy and markers
 
-## 4.2 Publication boundary
-
-The Library repository contains only content approved for public release plus code/data required to present it.
-
-Unreleased manuscript text, internal planning, hidden future lore, private reference material, and private assets remain in the private source project.
-
-The intended production flow is:
-
-```text
-private source project
-→ explicit release selection/export
-→ deterministic release bundle
-→ Library validation/import
-→ review
-→ publication only after separate approval
-```
-
-The Library already validates and imports release bundles. The private-source exporter/parser remains production work.
-
-## 4.3 Stable hierarchy and semantic markers
-
-Stable IDs include world context where necessary:
+Examples:
 
 ```text
 world: telanas
@@ -275,9 +236,7 @@ illustration: dk-v01-prototype-full-page
 
 IDs remain stable across localized editions.
 
-The private source format may use invisible machine-readable markers for chapter boundaries, scene boundaries, illustration anchors, and precise reveal/reference anchors. Export converts those markers into the public representation without exposing unrelated private source content.
-
-## 4.4 Reader blocks and pagination
+## 4.3 Reader blocks and illustrations
 
 Current public semantic block types are:
 
@@ -285,19 +244,13 @@ Current public semantic block types are:
 - scene break;
 - illustration.
 
-Chapter boundaries are hard reader boundaries. Scene separators remain semantically intact. The current Reader paginates whole semantic blocks and does not split one paragraph across multiple rendered pages; finer paragraph/line pagination may be added later without changing anchors.
-
-## 4.5 Illustrations
-
-Illustrations use stable asset IDs and semantic anchors rather than fixed page numbers.
-
-Current placements are:
+Current illustration placements are:
 
 - `flow`;
 - `full-page`;
 - `before-title`.
 
-For Telanas Volume 1, the established opening order is:
+For the established Telanas opening flow:
 
 ```text
 illustration page → chapter title page → chapter text
@@ -309,37 +262,44 @@ When no opening illustration exists:
 chapter title page → chapter text
 ```
 
-Localized editions share illustration IDs and placements while alt text and captions may differ by locale.
-
-## 4.6 Contents and reader navigation
+## 4.4 Contents, modes, and appearance
 
 Each published book has one ordered structural manifest. That same structure generates both the integrated Contents page and the reader-side table of contents.
 
-The reader `☰` control supports hover-open/pin behavior on pointer devices, tap behavior on touch devices, keyboard access, `Escape` closing, active-chapter indication, semantic chapter jumps, and saved bookmarks.
-
-Continuous mode keeps the control reachable while scrolling.
-
-## 4.7 Reader modes and appearance
-
-Current reader layouts:
+Current layouts:
 
 - Book spread;
 - Single page;
 - Continuous.
 
-The default Telanas presentation is dark and book-like, with automatic narrow-screen fallback from spread to single-page presentation.
-
 Current appearance controls include dark/light/parchment themes, serif/sans typeface, text size, and line spacing. Preferences persist locally where available.
 
-Paged layouts use a restrained spine-anchored page-turn effect. Reduced-motion preferences disable the effect cleanly. Additional transition choices may be added later if they remain lightweight and do not change semantic navigation.
+Paged layouts use the accepted restrained spine-anchored page-turn effect. Reduced-motion preferences disable it cleanly.
 
-## 4.8 Reading position and bookmarks
+## 4.5 Reading position and bookmarks
 
-Canonical reading position stores semantic world/story/book/chapter/anchor identity rather than a rendered page number.
+Canonical reading position and bookmarks store semantic world/story/book/chapter/anchor identity rather than rendered page numbers. Labels are rebuilt from the current localized structural data so saved places survive repagination, layout changes, viewport changes, and language changes.
 
-Bookmarks likewise persist semantic locations only. Labels are rebuilt from the current localized structural data, allowing bookmarks and reading position to survive repagination, layout changes, viewport changes, and language changes.
+# 5. Publication boundary
 
-# 5. Validation and production acceptance
+The Library repository contains only content approved for public release plus code/data required to present it.
+
+Unreleased manuscript text, internal planning, hidden future lore, private reference material, and private assets remain in the private source project.
+
+Intended flow:
+
+```text
+private source project
+→ explicit release selection/export
+→ deterministic release bundle
+→ Library validation/import
+→ review
+→ publication only after separate approval
+```
+
+The Library already validates and imports release bundles. The private-source exporter/parser remains production work.
+
+# 6. Validation and production acceptance
 
 Before released book/world data is accepted, validation should establish at least:
 
@@ -348,31 +308,32 @@ Before released book/world data is accepted, validation should establish at leas
 - semantic references resolve in every relevant locale;
 - illustration references resolve and obey placement/path rules;
 - Lexicon relationships resolve without hidden-target leakage;
-- Timeline and Map reveal gates resolve to real public story/volume IDs;
 - released locale strings are complete;
 - unreleased locales are absent from public navigation;
-- integrated Contents and reader navigation derive from the same structure;
-- canonical locale roots and implemented production routes resolve to real files without broken local references;
+- integrated Contents and Reader navigation derive from the same structure;
+- first-version canonical navigation exposes Reader and Lexicon but not deferred Timeline, Map, or standalone Search;
+- the deferred Timeline remains non-indexed while retained in the repository;
 - release bundles match declared hashes and safe target paths;
 - no private/unreleased source material is accidentally included.
 
-Asset ownership/licensing and publication approval remain separate manual acceptance gates.
+Asset ownership/licensing and publication approval remain separate acceptance gates.
 
-# 6. Current production work still ahead
+# 7. Current production work still ahead
 
-The architecture is no longer waiting on decisions about whether Timeline, Map, or Search should be first-class Telanas destinations; the prototype has answered that. The canonical EN/DE Telanas landing pages, Volume 1 Reader, Lexicon, and Timeline are now the migrated production surfaces.
+The first-version product direction is now clear: stable Reader plus searchable spoiler-aware Lexicon.
 
-Remaining implementation work is mainly productionization:
+Remaining work is mainly:
 
-- migrate Map, Search, story/volume, and update routes into the canonical locale/world structure and retire each temporary prototype bridge only after its replacement passes validation;
-- continue extracting shared presentation assets from the prototype area where doing so removes temporary dependencies without duplicating behavior;
+- keep the Reader stable while real released text replaces neutral placeholders;
+- populate the Lexicon with approved short descriptions for characters, places, and already-revealed events;
 - implement the private-source exporter/parser;
-- add release-approved manuscript and world content;
 - add production illustrations, cover/hero artwork, and final licensed web fonts;
 - add released download files and metadata;
 - refine pagination where useful without changing semantic IDs;
-- choose the final hosting/deployment path;
-- complete production accessibility, responsive, localization, privacy, rights, and release-candidate QA;
+- decide final hosting/deployment;
+- complete accessibility, responsive, localization, privacy, rights, and release-candidate QA;
+- revisit Timeline and broader Search only when they add clear reader value;
+- keep Map hidden until geography is explicitly approved as stable;
 - deploy/publish only after explicit approval.
 
-Those choices must not change the stable world/story IDs, localization model, spoiler rules, or semantic reader structure established here.
+Those choices must not change the stable world/story IDs, localization model, spoiler rules, or semantic Reader structure established here.

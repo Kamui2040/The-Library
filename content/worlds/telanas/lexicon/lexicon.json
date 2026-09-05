@@ -22,6 +22,13 @@
       }
     },
     {
+      "id": "events",
+      "labels": {
+        "en": "Events",
+        "de": "Ereignisse"
+      }
+    },
+    {
       "id": "creatures",
       "labels": {
         "en": "Creatures",
@@ -165,7 +172,7 @@
       "id": "prototype-volume-one-knowledge",
       "prototypeOnly": true,
       "categories": [
-        "history"
+        "events"
       ],
       "visibility": {
         "mode": "completed-volume",
@@ -175,11 +182,11 @@
       "labels": {
         "en": {
           "title": "Volume 1 knowledge — prototype",
-          "summary": "A non-canon placeholder proving that an entry can remain completely absent until Volume 1 is marked complete."
+          "summary": "A non-canon placeholder proving that an event-style entry can remain completely absent until Volume 1 is marked complete."
         },
         "de": {
           "title": "Wissen aus Band 1 — Prototyp",
-          "summary": "Ein nicht-kanonischer Platzhalter, der zeigt, dass ein Eintrag vollständig unsichtbar bleiben kann, bis Band 1 als gelesen markiert wurde."
+          "summary": "Ein nicht-kanonischer Platzhalter, der zeigt, dass ein ereignisartiger Eintrag vollständig unsichtbar bleiben kann, bis Band 1 als gelesen markiert wurde."
         }
       },
       "fragments": [
