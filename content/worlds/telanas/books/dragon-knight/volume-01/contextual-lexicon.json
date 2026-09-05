@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "world": "telanas",
+  "story": "dragon-knight",
+  "book": "volume-01",
+  "locales": [
+    "en",
+    "de"
+  ],
+  "references": {
+    "en": [
+      {
+        "anchor": "dk-v01-prologue-p001",
+        "entry": "telanas",
+        "text": "Telanas",
+        "occurrence": 1
+      }
+    ],
+    "de": [
+      {
+        "anchor": "dk-v01-prologue-p001",
+        "entry": "telanas",
+        "text": "Telanas",
+        "occurrence": 1
+      }
+    ]
+  }
+}
