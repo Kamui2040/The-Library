@@ -1,0 +1,64 @@
+.lexicon-relationships {
+  margin-top: 24px;
+  padding-top: 18px;
+  border-top: 1px solid var(--border-soft);
+}
+
+.lexicon-relationships h4 {
+  margin: 0 0 10px;
+  color: var(--muted);
+  font-size: .72rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.lexicon-relationship-list {
+  display: grid;
+  gap: 8px;
+}
+
+.lexicon-relationship {
+  width: 100%;
+  min-height: 48px;
+  display: grid;
+  grid-template-columns: minmax(0, auto) minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: center;
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--surface-raised) 78%, transparent);
+  color: var(--text);
+  padding: 9px 12px;
+  text-align: left;
+}
+
+.lexicon-relationship:hover,
+.lexicon-relationship:focus-visible {
+  border-color: var(--metal);
+  background: color-mix(in srgb, var(--accent) 10%, var(--surface-raised));
+}
+
+.lexicon-relationship span:first-child {
+  color: var(--muted);
+  font-size: .78rem;
+}
+
+.lexicon-relationship strong {
+  min-width: 0;
+  font-weight: 500;
+}
+
+.lexicon-entry:focus {
+  outline: 1px solid var(--metal);
+  outline-offset: 4px;
+}
+
+@media (max-width: 560px) {
+  .lexicon-relationship {
+    grid-template-columns: 1fr auto;
+  }
+
+  .lexicon-relationship span:first-child {
+    grid-column: 1 / -1;
+  }
+}
