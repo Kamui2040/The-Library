@@ -22,6 +22,13 @@
       }
     },
     {
+      "id": "events",
+      "labels": {
+        "en": "Events",
+        "de": "Ereignisse"
+      }
+    },
+    {
       "id": "creatures",
       "labels": {
         "en": "Creatures",
@@ -90,11 +97,11 @@
       "labels": {
         "en": {
           "title": "Telanas",
-          "summary": "The first world area currently represented inside The Library."
+          "summary": "The setting represented in this part of The Library."
         },
         "de": {
           "title": "Telanas",
-          "summary": "Der erste Weltenbereich, der derzeit in The Library vertreten ist."
+          "summary": "Der Schauplatz, der in diesem Bereich von The Library dargestellt wird."
         }
       },
       "fragments": [
@@ -104,8 +111,8 @@
             "mode": "always"
           },
           "text": {
-            "en": "This prototype entry contains only publication-safe site context and no story lore.",
-            "de": "Dieser Prototyp-Eintrag enthält nur veröffentlichungssicheren Website-Kontext und keine Handlungslore."
+            "en": "Reference information about Telanas appears here as it becomes available at the selected reading progress.",
+            "de": "Nachschlageinformationen zu Telanas erscheinen hier, sobald sie beim gewählten Lesefortschritt verfügbar sind."
           }
         }
       ],
@@ -131,11 +138,11 @@
       "labels": {
         "en": {
           "title": "The Dragon Knight",
-          "summary": "The first story line currently represented for Telanas."
+          "summary": "A story set in Telanas."
         },
         "de": {
           "title": "Der Drachenritter",
-          "summary": "Die erste derzeit für Telanas dargestellte Geschichtenreihe."
+          "summary": "Eine Geschichte, die in Telanas spielt."
         }
       },
       "fragments": [
@@ -145,8 +152,8 @@
             "mode": "always"
           },
           "text": {
-            "en": "The public reader is structured by volumes and stable semantic locations rather than fixed rendered page numbers.",
-            "de": "Der öffentliche Reader ist nach Bänden und stabilen semantischen Positionen aufgebaut, nicht nach festen gerenderten Seitenzahlen."
+            "en": "Reader links use stable story locations so references remain useful across layouts and languages.",
+            "de": "Reader-Links verwenden stabile Positionen in der Geschichte, damit Verweise über Layouts und Sprachen hinweg erhalten bleiben."
           }
         }
       ],
@@ -165,7 +172,7 @@
       "id": "prototype-volume-one-knowledge",
       "prototypeOnly": true,
       "categories": [
-        "history"
+        "events"
       ],
       "visibility": {
         "mode": "completed-volume",
@@ -175,11 +182,11 @@
       "labels": {
         "en": {
           "title": "Volume 1 knowledge — prototype",
-          "summary": "A non-canon placeholder proving that an entry can remain completely absent until Volume 1 is marked complete."
+          "summary": "A non-canon placeholder proving that an event-style entry can remain completely absent until Volume 1 is marked complete."
         },
         "de": {
           "title": "Wissen aus Band 1 — Prototyp",
-          "summary": "Ein nicht-kanonischer Platzhalter, der zeigt, dass ein Eintrag vollständig unsichtbar bleiben kann, bis Band 1 als gelesen markiert wurde."
+          "summary": "Ein nicht-kanonischer Platzhalter, der zeigt, dass ein ereignisartiger Eintrag vollständig unsichtbar bleiben kann, bis Band 1 als gelesen markiert wurde."
         }
       },
       "fragments": [
