@@ -4,23 +4,21 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="dark light">
-  <meta name="description" content="Browse the spoiler-aware Telanas Lexicon in The Library.">
-  <title>The Library — Telanas Lexicon</title>
-  <link rel="alternate" hreflang="en" href="../../../en/telanas/lexicon/">
-  <link rel="alternate" hreflang="de" href="../../../de/telanas/lexicon/">
+  <meta name="description" content="Browse the spoiler-aware Telanas Timeline in The Library.">
+  <title>The Library — Telanas Timeline</title>
+  <link rel="alternate" hreflang="en" href="../../../en/telanas/timeline/">
+  <link rel="alternate" hreflang="de" href="../../../de/telanas/timeline/">
   <link rel="stylesheet" href="../../../assets/telanas/styles.css">
-  <link rel="stylesheet" href="../../../assets/lexicon/lexicon.css">
-  <link rel="stylesheet" href="../../../assets/lexicon/lexicon-reader-links.css">
-  <link rel="stylesheet" href="../../../assets/lexicon/lexicon-relationships.css">
+  <link rel="stylesheet" href="../../../assets/timeline/timeline.css">
   <script defer src="../../../assets/spoiler-profile.js"></script>
   <script defer src="../../../assets/library-shell.js"></script>
   <script defer src="../../../assets/spoiler-controls.js"></script>
-  <script defer src="../../../assets/lexicon/lexicon.js"></script>
+  <script defer src="../../../assets/timeline/timeline.js"></script>
 </head>
 <body
-  class="lexicon-page"
+  class="timeline-page"
   data-world-manifest="../../../content/worlds/telanas/world.json"
-  data-lexicon-manifest="../../../content/worlds/telanas/lexicon/lexicon.json"
+  data-timeline-manifest="../../../content/worlds/telanas/timeline/timeline.json"
   data-reader-base="../read/"
 >
   <header class="site-header" data-site-header>
@@ -73,8 +71,8 @@
           </div>
         </details>
 
-        <a class="nav-link is-current" href="./">Lexicon</a>
-        <a class="nav-link" href="../timeline/">Timeline</a>
+        <a class="nav-link" href="../lexicon/">Lexicon</a>
+        <a class="nav-link is-current" href="./">Timeline</a>
         <a class="nav-link" href="../../../prototype/telanas/map.html" data-prototype-bridge>Map</a>
         <a class="nav-link" href="../../../prototype/telanas/world-search.html" data-prototype-bridge>Search</a>
         <a class="nav-link" href="../#downloads">Downloads</a>
@@ -97,67 +95,61 @@
   </header>
 
   <main>
-    <section class="lexicon-hero">
-      <div class="page-width lexicon-hero-inner">
+    <section class="timeline-hero">
+      <div class="page-width timeline-hero-inner">
         <p class="eyebrow">THE LIBRARY · TELANAS</p>
-        <h1 data-lexicon-i18n="title">Lexicon</h1>
-        <p class="lexicon-lede" data-lexicon-i18n="intro">Browse only the world information available at your selected reading progress.</p>
+        <h1 data-timeline-i18n="title">Timeline</h1>
+        <p class="timeline-lede" data-timeline-i18n="intro">Browse only timeline knowledge available at your selected reading progress.</p>
       </div>
     </section>
 
-    <section class="content-section page-width lexicon-controls" aria-labelledby="spoiler-settings-title">
-      <div class="framed-panel progress-panel">
+    <section class="content-section page-width timeline-controls" aria-labelledby="timeline-spoiler-title">
+      <div class="framed-panel timeline-progress">
         <div>
-          <p class="eyebrow" data-lexicon-i18n="progressEyebrow">Reading progress</p>
-          <h2 id="spoiler-settings-title" data-lexicon-i18n="progressTitle">Choose what you have finished</h2>
-          <p data-lexicon-i18n="progressHelp">Entries and search results beyond this point are not rendered at all.</p>
+          <p class="eyebrow" data-timeline-i18n="progressEyebrow">Reading progress</p>
+          <h2 id="timeline-spoiler-title" data-timeline-i18n="progressTitle">Choose what you have finished</h2>
+          <p data-timeline-i18n="progressHelp">Later events remain completely absent until your spoiler profile allows them.</p>
         </div>
-
-        <div class="progress-fields">
-          <label class="progress-field">
-            <span data-lexicon-i18n="through">Spoilers through</span>
+        <div class="timeline-progress-fields">
+          <label class="timeline-field">
+            <span data-timeline-i18n="through">Spoilers through</span>
             <select data-spoiler-progress-select>
               <option value="none">No completed volumes</option>
               <option value="volume-01">Through Volume 1 — Home</option>
             </select>
           </label>
-
-          <label class="full-spoilers-control">
+          <label class="timeline-full-spoilers">
             <input type="checkbox" data-full-spoilers-toggle>
             <span>
-              <strong data-lexicon-i18n="fullSpoilers">Full spoilers</strong>
-              <small data-lexicon-i18n="fullSpoilersHelp">Show every public Lexicon entry regardless of progress.</small>
+              <strong data-timeline-i18n="fullSpoilers">Full spoilers</strong>
+              <small data-timeline-i18n="fullSpoilersHelp">Show every public timeline event regardless of progress.</small>
             </span>
           </label>
         </div>
       </div>
     </section>
 
-    <section class="content-section section-dark lexicon-browser" aria-labelledby="browse-title">
+    <section class="content-section section-dark timeline-browser" aria-labelledby="timeline-browse-title">
       <div class="page-width">
-        <div class="section-heading section-heading--split lexicon-browser-heading">
+        <div class="section-heading section-heading--split timeline-browser-heading">
           <div>
-            <p class="eyebrow" data-lexicon-i18n="browseEyebrow">Available knowledge</p>
-            <h2 id="browse-title" data-lexicon-i18n="browseTitle">Browse the Lexicon</h2>
-            <p data-lexicon-i18n="browseHelp">Search and categories use the same spoiler-filtered data set.</p>
+            <p class="eyebrow" data-timeline-i18n="browseEyebrow">Available chronology</p>
+            <h2 id="timeline-browse-title" data-timeline-i18n="browseTitle">Telanas timeline</h2>
+            <p data-timeline-i18n="browseHelp">Search uses only events already visible at the current spoiler level.</p>
           </div>
-          <div class="spoiler-status framed-inline">
-            <span data-lexicon-i18n="currentView">Current view</span>
+          <div class="timeline-status framed-inline">
+            <span data-timeline-i18n="currentView">Current view</span>
             <strong data-spoiler-summary>No completed volumes</strong>
           </div>
         </div>
 
-        <div class="lexicon-search-row">
-          <label class="lexicon-search">
-            <span class="visually-hidden" data-lexicon-i18n="searchLabel">Search visible entries</span>
-            <input type="search" data-lexicon-search autocomplete="off" spellcheck="false" placeholder="Search visible entries">
-          </label>
-        </div>
+        <label class="timeline-search">
+          <span class="visually-hidden" data-timeline-i18n="searchLabel">Search visible timeline events</span>
+          <input type="search" data-timeline-search autocomplete="off" spellcheck="false" placeholder="Search visible timeline events">
+        </label>
 
-        <nav class="category-filters" aria-label="Lexicon categories" data-category-filters></nav>
-
-        <p class="lexicon-state" data-lexicon-state aria-live="polite"></p>
-        <div class="lexicon-results" data-lexicon-results></div>
+        <p class="timeline-state" data-timeline-state aria-live="polite"></p>
+        <div class="timeline-list" data-timeline-results></div>
       </div>
     </section>
   </main>
