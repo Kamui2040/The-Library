@@ -85,11 +85,11 @@ const validateLocalReferences = async (filePath, html) => {
   }
 };
 
-const assertFirstVersionNavigation = (filePath, html) => {
-  assert(!html.includes('href="timeline/"'), `${filePath} must not expose Timeline in first-version navigation`);
-  assert(!html.includes('href="../timeline/"'), `${filePath} must not expose Timeline in first-version navigation`);
-  assert(!html.includes("prototype/telanas/map.html"), `${filePath} must not expose the deferred Map`);
-  assert(!html.includes("prototype/telanas/world-search.html"), `${filePath} must not expose deferred standalone Search`);
+const assertReaderFacingNavigation = (filePath, html) => {
+  assert(!html.includes('href="timeline/"'), `${filePath} must not expose optional Timeline navigation`);
+  assert(!html.includes('href="../timeline/"'), `${filePath} must not expose optional Timeline navigation`);
+  assert(!html.includes("prototype/telanas/map.html"), `${filePath} must not expose the Map`);
+  assert(!html.includes("prototype/telanas/world-search.html"), `${filePath} must not expose standalone Search`);
 };
 
 for (const locale of ["en", "de"]) {
@@ -122,7 +122,7 @@ for (const locale of ["en", "de"]) {
   assert(landingHtml.includes('lexicon/?category=events'), `${landingPath} must preserve the Events category entry point`);
   assert(!landingHtml.includes("prototype/telanas/reader.html"), `${landingPath} must not retain the old Reader bridge`);
   assert(!landingHtml.includes("prototype/telanas/lexicon.html"), `${landingPath} must not retain the old Lexicon bridge`);
-  assertFirstVersionNavigation(landingPath, landingHtml);
+  assertReaderFacingNavigation(landingPath, landingHtml);
   await validateLocalReferences(landingPath, landingHtml);
 
   assert(readerHtml.includes(`<html lang="${locale}" data-route-locale="${locale}"`), `${readerPath} must declare its route locale`);
@@ -156,17 +156,17 @@ for (const locale of ["en", "de"]) {
   assert(lexiconHtml.includes('data-lexicon-results'), `${lexiconPath} must render the spoiler-filtered result set`);
   assert(lexiconHtml.includes('href="../read/dragon-knight/volume-01/"'), `${lexiconPath} must expose the canonical Reader in story navigation`);
   assert(!lexiconHtml.includes("prototype/telanas/lexicon.html"), `${lexiconPath} must not bridge back to the old Lexicon`);
-  assertFirstVersionNavigation(lexiconPath, lexiconHtml);
+  assertReaderFacingNavigation(lexiconPath, lexiconHtml);
   await validateLocalReferences(lexiconPath, lexiconHtml);
 
   assert(timelineHtml.includes(`<html lang="${locale}" data-route-locale="${locale}"`), `${timelinePath} must declare its route locale`);
-  assert(timelineHtml.includes('<meta name="robots" content="noindex,nofollow">'), `${timelinePath} must remain non-indexed while deferred`);
+  assert(timelineHtml.includes('<meta name="robots" content="noindex,nofollow">'), `${timelinePath} must remain non-indexed while outside reader-facing navigation`);
   assert(timelineHtml.includes('href="../../../en/telanas/timeline/"'), `${timelinePath} must expose the English Timeline equivalent`);
   assert(timelineHtml.includes('href="../../../de/telanas/timeline/"'), `${timelinePath} must expose the German Timeline equivalent`);
   assert(timelineHtml.includes('src="../../../assets/timeline/timeline.js"'), `${timelinePath} must use the retained Timeline controller`);
-  assert(timelineHtml.includes('data-timeline-results'), `${timelinePath} must preserve the retained spoiler-filtered chronology`);
-  assert(!timelineHtml.includes("prototype/telanas/map.html"), `${timelinePath} must not expose the deferred Map`);
-  assert(!timelineHtml.includes("prototype/telanas/world-search.html"), `${timelinePath} must not expose deferred standalone Search`);
+  assert(timelineHtml.includes('data-timeline-results'), `${timelinePath} must preserve the spoiler-filtered chronology`);
+  assert(!timelineHtml.includes("prototype/telanas/map.html"), `${timelinePath} must not expose the Map`);
+  assert(!timelineHtml.includes("prototype/telanas/world-search.html"), `${timelinePath} must not expose standalone Search`);
   await validateLocalReferences(timelinePath, timelineHtml);
 }
 
@@ -197,10 +197,10 @@ assert(lexiconController.includes('get("entry")'), "Production Lexicon must acce
 assert(lexiconController.includes('get("category")'), "Production Lexicon must accept public category navigation state");
 
 const timelineController = await readFile(path.join(root, "assets/timeline/timeline.js"), "utf8");
-assert(timelineController.includes("dataset.worldManifest"), "Deferred Timeline must resolve its world manifest from the page contract");
-assert(timelineController.includes("dataset.timelineManifest"), "Deferred Timeline must resolve its Timeline manifest from the page contract");
-assert(timelineController.includes("profile.fullSpoilers"), "Deferred Timeline must preserve spoiler filtering while retained");
-assert(timelineController.includes("visibilityAllowed(event.visibility"), "Deferred Timeline must filter event existence before rendering");
+assert(timelineController.includes("dataset.worldManifest"), "Retained Timeline must resolve its world manifest from the page contract");
+assert(timelineController.includes("dataset.timelineManifest"), "Retained Timeline must resolve its Timeline manifest from the page contract");
+assert(timelineController.includes("profile.fullSpoilers"), "Retained Timeline must preserve spoiler filtering");
+assert(timelineController.includes("visibilityAllowed(event.visibility"), "Retained Timeline must filter event existence before rendering");
 
 const shell = await readFile(path.join(root, "assets/library-shell.js"), "utf8");
 assert(shell.includes("destination.search = window.location.search"), "Language switching must preserve the current query string");
@@ -214,4 +214,4 @@ assert(prototypeSite.includes("/telanas/lexicon/"), "Prototype knowledge views m
 assert(prototypeSite.includes("target.search = source.search"), "Prototype canonical bridges must preserve semantic query data");
 assert(prototypeSite.includes("target.hash = source.hash"), "Prototype canonical bridges must preserve semantic hashes");
 
-console.log("PASS: validated V1 Reader/Lexicon public surface and deferred Timeline route");
+console.log("PASS: validated Reader/Lexicon public surface and retained Timeline route");
