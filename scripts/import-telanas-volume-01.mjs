@@ -19,7 +19,7 @@ const ghJson = (endpoint) => JSON.parse(execFileSync("gh", ["api", endpoint], { 
 const sourceFiles = {
   "manuscript/en/band-01.md": "d68ff82e7a251f4edc111afa78dde195a0b1317c",
   "manuscript/de/band-01.md": "e3c8c29f2a0e21fdaeeaa1432b5947cdaf1e427a",
-  "docs/story/illustration-reference.md": "72a98c42ac7a247f3cbe42aaafc163116d3ba375",
+  "docs/story/illustration-reference.md": "9257d20d2adc169741f3bf129560c44fc8c8c378",
 };
 
 const chapters = [
