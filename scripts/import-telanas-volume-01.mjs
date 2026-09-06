@@ -229,16 +229,30 @@ const parseManuscript = (source, locale) => {
   assert(nonblank[1] === metadata[locale][1], `${locale} manuscript series heading mismatch`);
   assert(nonblank[2] === metadata[locale][2], `${locale} manuscript volume heading mismatch`);
 
-  const sectionHeadingIndexes = [];
-  lines.forEach((line, index) => {
-    if (/^#\s/.test(line) && line !== metadata[locale][0]) sectionHeadingIndexes.push(index);
+  const expectedHeadings = chapters.map((chapter) => chapter.headings[locale]);
+  const sectionHeadingIndexes = expectedHeadings.map((expectedHeading) => {
+    const matches = [];
+    lines.forEach((line, index) => {
+      const match = line.match(/^#{1,6}\s+(.+?)\s*$/);
+      if (match?.[1] === expectedHeading) matches.push(index);
+    });
+    assert(
+      matches.length === 1,
+      `${locale} manuscript must contain exactly one heading ${JSON.stringify(expectedHeading)}; found ${matches.length}`,
+    );
+    return matches[0];
   });
 
-  assert(sectionHeadingIndexes.length === chapters.length, `${locale} manuscript must contain exactly ${chapters.length} prologue/chapter headings; found ${sectionHeadingIndexes.length}`);
+  assert(
+    sectionHeadingIndexes.every(
+      (value, index) => index === 0 || value > sectionHeadingIndexes[index - 1],
+    ),
+    `${locale} manuscript chapter headings are not in the authoritative order`,
+  );
 
   return chapters.map((chapter, index) => {
     const headingIndex = sectionHeadingIndexes[index];
-    const heading = lines[headingIndex].slice(2);
+    const heading = lines[headingIndex].replace(/^#{1,6}\s+/, "").trim();
     assert(heading === chapter.headings[locale], `${locale} heading mismatch at ${chapter.id}: expected ${JSON.stringify(chapter.headings[locale])}, found ${JSON.stringify(heading)}`);
     const nextHeadingIndex = index + 1 < sectionHeadingIndexes.length ? sectionHeadingIndexes[index + 1] : lines.length;
     const bodyLines = trimBoundaryBlankLines(lines.slice(headingIndex + 1, nextHeadingIndex));
