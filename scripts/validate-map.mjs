@@ -128,9 +128,9 @@ for (const marker of map.markers) {
   assert(marker.labels && typeof marker.labels === "object" && !Array.isArray(marker.labels), `Map marker ${marker.id} labels are missing`);
   for (const locale of map.locales) {
     const labels = marker.labels[locale];
-    assert(labels && typeof labels === "object", `Map marker ${marker.id} is missing ${locale} labels`);
+    assert(labels && typeof labels === "object", `${mapPath} marker ${marker.id} is missing ${locale} labels`);
     for (const field of ["kind", "title", "summary"]) {
-      assertLocalizedString(labels[field], `Map marker ${marker.id} ${locale}.${field`);
+      assertLocalizedString(labels[field], `${mapPath} marker ${marker.id} ${locale}.${field}`);
     }
   }
 
