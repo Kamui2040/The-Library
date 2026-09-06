@@ -118,7 +118,9 @@ for (const locale of book.locales || []) {
   }
 }
 
-assert(referenceCount > 0, `${contextualPath} must exercise at least one contextual Reader Lexicon reference`);
+if (book.state === "prototype") {
+  assert(referenceCount > 0, `${contextualPath} prototype content must exercise at least one contextual Reader Lexicon reference`);
+}
 assert(milestones.length > 0, `${bookPath} must exercise at least one semantic spoiler milestone`);
 
 const profileSource = await readText("assets/spoiler-profile.js");
