@@ -55,10 +55,14 @@ const cleanKnownFailureResidue = () => {
     "content/worlds/telanas/books/dragon-knight/volume-01/editions/de.json",
     "content/worlds/telanas/books/dragon-knight/volume-01/editions/en.json",
     "content/worlds/telanas/lexicon/lexicon.json",
+    "content/worlds/telanas/map/map.json",
+    "content/worlds/telanas/timeline/timeline.json",
     "content/worlds/telanas/world.json",
     "scripts/fix-natural-edition-alignment.mjs",
     "scripts/import-telanas-volume-01.mjs",
+    "scripts/repair-band1-integration.mjs",
     "scripts/validate-content.mjs",
+    "scripts/validate-contextual-lexicon.mjs",
   ]);
 
   const changed = new Set([
