@@ -1621,6 +1621,446 @@
           }
         }
       ]
+    },
+    {
+      "id": "twin-dragons",
+      "categories": [
+        "creatures"
+      ],
+      "visibility": {
+        "mode": "reached-anchor",
+        "story": "dragon-knight",
+        "book": "volume-01",
+        "chapter": "dk-v01-prologue",
+        "anchor": "dk-v01-p-twins-hatch"
+      },
+      "labels": {
+        "en": {
+          "title": "The twin dragons",
+          "summary": "Two young dragon brothers who hatch from a single enormous egg in the void before the first shard exists."
+        },
+        "de": {
+          "title": "Die Zwillingsdrachen",
+          "summary": "Zwei junge Drachenbrüder, die in der Leere aus einem einzigen gewaltigen Ei schlüpfen, bevor die erste Scherbe entsteht."
+        }
+      },
+      "fragments": [
+        {
+          "id": "twin-dragons-appearance",
+          "visibility": {
+            "mode": "reached-anchor",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-prologue",
+            "anchor": "dk-v01-p-twins-hatch"
+          },
+          "text": {
+            "en": "One brother is pearlescent white, with rose, silver, blue and gold moving through his light. The other is dark and iridescent, his black scales shifting through violet, green, blue and stranger colors.",
+            "de": "Ein Bruder ist perlweiß, mit Rosa, Silber, Blau und Gold in seinem Licht. Der andere ist dunkel und schillernd; seine schwarzen Schuppen wechseln zwischen Violett, Grün, Blau und fremdartigeren Farben."
+          },
+          "readerLinks": [
+            {
+              "id": "twin-dragons-appearance-reader",
+              "story": "dragon-knight",
+              "book": "volume-01",
+              "anchor": "dk-v01-p-twins-hatch",
+              "labels": {
+                "en": "Open the related passage",
+                "de": "Zugehörige Stelle öffnen"
+              }
+            }
+          ]
+        },
+        {
+          "id": "twin-dragons-first-shard",
+          "visibility": {
+            "mode": "reached-anchor",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-prologue",
+            "anchor": "dk-v01-p-first-shard"
+          },
+          "text": {
+            "en": "While playing with fragments of their broken egg, the brothers unintentionally form a world. The sphere turning behind them becomes the first shard.",
+            "de": "Beim Spielen mit Bruchstücken ihres zerbrochenen Eis formen die Brüder unbeabsichtigt eine Welt. Die Kugel, die sich hinter ihnen weiterdreht, wird zur ersten Scherbe."
+          },
+          "readerLinks": [
+            {
+              "id": "twin-dragons-first-shard-reader",
+              "story": "dragon-knight",
+              "book": "volume-01",
+              "anchor": "dk-v01-p-first-shard",
+              "labels": {
+                "en": "Open the related passage",
+                "de": "Zugehörige Stelle öffnen"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "goblins",
+      "categories": [
+        "creatures"
+      ],
+      "visibility": {
+        "mode": "reached-anchor",
+        "story": "dragon-knight",
+        "book": "volume-01",
+        "chapter": "dk-v01-ch05",
+        "anchor": "dk-v01-ch05-goblins"
+      },
+      "labels": {
+        "en": {
+          "title": "Goblins",
+          "summary": "Small humanoid creatures Calist encounters in the Old Woods during his first trip with the hunters."
+        },
+        "de": {
+          "title": "Goblins",
+          "summary": "Kleine menschenähnliche Wesen, denen Calist im alten Wald während seiner ersten Jagd mit den Jägern begegnet."
+        }
+      },
+      "fragments": [
+        {
+          "id": "goblins-first-sighting",
+          "visibility": {
+            "mode": "reached-anchor",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch05",
+            "anchor": "dk-v01-ch05-goblins"
+          },
+          "text": {
+            "en": "Calist sees at least two near a torch in the woods. One carries a spear; another carries something like a sack or rolled hide. They withdraw after the hunters make themselves known.",
+            "de": "Calist sieht mindestens zwei bei einer Fackel im Wald. Einer trägt einen Speer; der andere etwas wie einen Sack oder eine zusammengerollte Haut. Sie ziehen sich zurück, nachdem die Jäger sich zu erkennen geben."
+          },
+          "readerLinks": [
+            {
+              "id": "goblins-first-sighting-reader",
+              "story": "dragon-knight",
+              "book": "volume-01",
+              "anchor": "dk-v01-ch05-goblins",
+              "labels": {
+                "en": "Open the related passage",
+                "de": "Zugehörige Stelle öffnen"
+              }
+            }
+          ]
+        },
+        {
+          "id": "goblins-local-behavior",
+          "visibility": {
+            "mode": "completed-chapter",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch05"
+          },
+          "text": {
+            "en": "People around Calist describe goblins as dangerous but not eager to fight without reason. They usually avoid humans, yet may steal traps, food, tools or livestock when they can.",
+            "de": "Die Menschen um Calist beschreiben Goblins als gefährlich, aber nicht darauf aus, ohne Grund zu kämpfen. Meist gehen sie Menschen aus dem Weg, können aber Fallen, Essen, Werkzeuge oder Vieh stehlen."
+          },
+          "readerLinks": [
+            {
+              "id": "goblins-local-behavior-reader",
+              "story": "dragon-knight",
+              "book": "volume-01",
+              "anchor": "dk-v01-ch05",
+              "labels": {
+                "en": "Open the related passage",
+                "de": "Zugehörige Stelle öffnen"
+              }
+            }
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "id": "seen-in",
+          "target": "old-woods",
+          "labels": {
+            "en": "Seen in the Old Woods",
+            "de": "Im alten Wald gesehen"
+          }
+        }
+      ]
+    },
+    {
+      "id": "leaf-arrow-pendant",
+      "categories": [
+        "items"
+      ],
+      "visibility": {
+        "mode": "reached-anchor",
+        "story": "dragon-knight",
+        "book": "volume-01",
+        "chapter": "dk-v01-ch06",
+        "anchor": "dk-v01-ch06-pendant-finished"
+      },
+      "labels": {
+        "en": {
+          "title": "Leaf-and-arrow pendant",
+          "summary": "A silver pendant Calist designs and makes during his apprenticeship under Bram, shaped as a leaf with a narrow arrow behind it."
+        },
+        "de": {
+          "title": "Anhänger mit Blatt und Pfeil",
+          "summary": "Ein silberner Anhänger, den Calist während seiner Lehre bei Bram entwirft und anfertigt: ein Blatt mit einem schmalen Pfeil dahinter."
+        }
+      },
+      "fragments": [
+        {
+          "id": "leaf-arrow-pendant-meaning",
+          "visibility": {
+            "mode": "reached-anchor",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch06",
+            "anchor": "dk-v01-ch06-pendant-finished"
+          },
+          "text": {
+            "en": "In Calist's design, the leaf represents home. The arrow represents leaving it and moving onward.",
+            "de": "In Calists Entwurf steht das Blatt für Zuhause. Der Pfeil steht für das Weggehen und Weiterziehen."
+          },
+          "readerLinks": [
+            {
+              "id": "leaf-arrow-pendant-meaning-reader",
+              "story": "dragon-knight",
+              "book": "volume-01",
+              "anchor": "dk-v01-ch06-pendant-design",
+              "labels": {
+                "en": "Open the related passage",
+                "de": "Zugehörige Stelle öffnen"
+              }
+            }
+          ]
+        },
+        {
+          "id": "leaf-arrow-pendant-grief",
+          "visibility": {
+            "mode": "reached-anchor",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch08",
+            "anchor": "dk-v01-ch08-necklace-grief"
+          },
+          "text": {
+            "en": "Calist had made the pendant into a necklace for Eryn, but she never saw it. After her disappearance, the unfinished act of giving it to her becomes part of his grief.",
+            "de": "Calist hatte aus dem Anhänger eine Halskette für Eryn gemacht, doch sie sah sie nie. Nach ihrem Verschwinden wird das nie überreichte Geschenk zu einem Teil seiner Trauer."
+          },
+          "readerLinks": [
+            {
+              "id": "leaf-arrow-pendant-grief-reader",
+              "story": "dragon-knight",
+              "book": "volume-01",
+              "anchor": "dk-v01-ch08-necklace-grief",
+              "labels": {
+                "en": "Open the related passage",
+                "de": "Zugehörige Stelle öffnen"
+              }
+            }
+          ]
+        },
+        {
+          "id": "leaf-arrow-pendant-clasp",
+          "visibility": {
+            "mode": "reached-anchor",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch09",
+            "anchor": "dk-v01-ch09-clasp"
+          },
+          "text": {
+            "en": "Before leaving to enlist, Calist removes the chain without melting the pendant and turns the leaf-and-arrow piece into a clasp for his cloak.",
+            "de": "Bevor Calist zum Militärdienst aufbricht, entfernt er die Kette, ohne den Anhänger einzuschmelzen, und arbeitet das Stück mit Blatt und Pfeil zu einer Schließe für seinen Umhang um."
+          },
+          "readerLinks": [
+            {
+              "id": "leaf-arrow-pendant-clasp-reader",
+              "story": "dragon-knight",
+              "book": "volume-01",
+              "anchor": "dk-v01-ch09-clasp",
+              "labels": {
+                "en": "Open the related passage",
+                "de": "Zugehörige Stelle öffnen"
+              }
+            }
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "id": "made-by",
+          "target": "calist",
+          "labels": {
+            "en": "Made by",
+            "de": "Angefertigt von"
+          }
+        },
+        {
+          "id": "apprenticeship",
+          "target": "bram",
+          "labels": {
+            "en": "Made during Bram's apprenticeship",
+            "de": "Während der Lehre bei Bram gefertigt"
+          }
+        }
+      ]
+    },
+    {
+      "id": "alden-chainmail",
+      "categories": [
+        "items"
+      ],
+      "visibility": {
+        "mode": "reached-anchor",
+        "story": "dragon-knight",
+        "book": "volume-01",
+        "chapter": "dk-v01-ch01",
+        "anchor": "dk-v01-ch01-alden-war-gear"
+      },
+      "labels": {
+        "en": {
+          "title": "Alden's chainmail",
+          "summary": "A plain shirt of chainmail from Alden's wartime life, kept wrapped in a wooden chest and carefully maintained."
+        },
+        "de": {
+          "title": "Aldens Kettenhemd",
+          "summary": "Ein schlichtes Kettenhemd aus Aldens Zeit im Krieg, das in einer Holztruhe aufbewahrt und sorgfältig instand gehalten wird."
+        }
+      },
+      "fragments": [
+        {
+          "id": "alden-chainmail-maintenance",
+          "visibility": {
+            "mode": "reached-anchor",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch01",
+            "anchor": "dk-v01-ch01-alden-war-gear"
+          },
+          "text": {
+            "en": "Alden does not wear the mail in everyday life. He takes it out to inspect it, replacing weak rings, cleaning rust and oiling the leather before returning it to the chest.",
+            "de": "Alden trägt das Kettenhemd nicht im Alltag. Er nimmt es heraus, um schwache Ringe zu ersetzen, Rost zu entfernen und das Leder zu ölen, bevor es wieder in die Truhe kommt."
+          },
+          "readerLinks": [
+            {
+              "id": "alden-chainmail-maintenance-reader",
+              "story": "dragon-knight",
+              "book": "volume-01",
+              "anchor": "dk-v01-ch01-alden-war-gear",
+              "labels": {
+                "en": "Open the related passage",
+                "de": "Zugehörige Stelle öffnen"
+              }
+            }
+          ]
+        },
+        {
+          "id": "alden-chainmail-calist",
+          "visibility": {
+            "mode": "reached-anchor",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch09",
+            "anchor": "dk-v01-ch09-chainmail-sword"
+          },
+          "text": {
+            "en": "As Calist prepares to enlist, Alden checks how the old mail fits him and replaces a worn strap.",
+            "de": "Als Calist sich auf seinen Militärdienst vorbereitet, prüft Alden, wie das alte Kettenhemd ihm passt, und ersetzt einen abgenutzten Riemen."
+          },
+          "readerLinks": [
+            {
+              "id": "alden-chainmail-calist-reader",
+              "story": "dragon-knight",
+              "book": "volume-01",
+              "anchor": "dk-v01-ch09-chainmail-sword",
+              "labels": {
+                "en": "Open the related passage",
+                "de": "Zugehörige Stelle öffnen"
+              }
+            }
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "id": "kept-by",
+          "target": "alden",
+          "labels": {
+            "en": "Kept by",
+            "de": "Aufbewahrt von"
+          }
+        }
+      ]
+    },
+    {
+      "id": "alden-sword",
+      "categories": [
+        "items"
+      ],
+      "visibility": {
+        "mode": "reached-anchor",
+        "story": "dragon-knight",
+        "book": "volume-01",
+        "chapter": "dk-v01-ch09",
+        "anchor": "dk-v01-ch09-chainmail-sword"
+      },
+      "labels": {
+        "en": {
+          "title": "Alden's sword",
+          "summary": "The plain sword Alden carried when he was ordered to war, later placed in Calist's hands as Calist prepares to enlist."
+        },
+        "de": {
+          "title": "Aldens Schwert",
+          "summary": "Das schlichte Schwert, das Alden trug, als er in den Krieg geschickt wurde, und das später in Calists Hände gelangt, als dieser sich auf den Militärdienst vorbereitet."
+        }
+      },
+      "fragments": [
+        {
+          "id": "alden-sword-plain",
+          "visibility": {
+            "mode": "reached-anchor",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch09",
+            "anchor": "dk-v01-ch09-chainmail-sword"
+          },
+          "text": {
+            "en": "The sword has a plain scabbard and plain grip. What makes it different to Calist is not its quality, but that it is the weapon his father carried to war.",
+            "de": "Das Schwert hat eine schlichte Scheide und einen schlichten Griff. Für Calist ist nicht seine Qualität das Besondere, sondern dass sein Vater es im Krieg getragen hat."
+          },
+          "readerLinks": [
+            {
+              "id": "alden-sword-plain-reader",
+              "story": "dragon-knight",
+              "book": "volume-01",
+              "anchor": "dk-v01-ch09-chainmail-sword",
+              "labels": {
+                "en": "Open the related passage",
+                "de": "Zugehörige Stelle öffnen"
+              }
+            }
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "id": "carried-by",
+          "target": "alden",
+          "labels": {
+            "en": "Carried by",
+            "de": "Getragen von"
+          }
+        },
+        {
+          "id": "given-to",
+          "target": "calist",
+          "labels": {
+            "en": "Given to",
+            "de": "Übergeben an"
+          }
+        }
+      ]
     }
   ]
 }
