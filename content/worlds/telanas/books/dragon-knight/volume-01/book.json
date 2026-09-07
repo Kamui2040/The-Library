@@ -16,18 +16,44 @@
   },
   "contextualLexicon": "contextual-lexicon.json",
   "spoilerMilestones": [
-    "dk-v01-ch01"
+    "dk-v01-p-twins-hatch",
+    "dk-v01-p-first-shard",
+    "dk-v01-ch01-corvin-arrives",
+    "dk-v01-ch01-alden-war-gear",
+    "dk-v01-ch02-old-woods-pull",
+    "dk-v01-ch03-town-arrival",
+    "dk-v01-ch03-border-warning",
+    "dk-v01-ch03-bram",
+    "dk-v01-ch03-town-fight",
+    "dk-v01-ch04-first-independent-work",
+    "dk-v01-ch05-camp",
+    "dk-v01-ch05-goblins",
+    "dk-v01-ch05-pull-confession",
+    "dk-v01-ch06-apprentice-moves",
+    "dk-v01-ch06-first-letter",
+    "dk-v01-ch06-pendant-design",
+    "dk-v01-ch06-pendant-finished",
+    "dk-v01-ch07-alden-illness",
+    "dk-v01-ch07-calist-runs-forge",
+    "dk-v01-ch08-nessa-dies",
+    "dk-v01-ch08-hunters-depart",
+    "dk-v01-ch08-ambush-return",
+    "dk-v01-ch08-search-ends",
+    "dk-v01-ch08-necklace-grief",
+    "dk-v01-ch09-enlist-decision",
+    "dk-v01-ch09-clasp",
+    "dk-v01-ch09-chainmail-sword"
   ],
   "source": {
     "repository": "Kamui2040/Telanas",
-    "commit": "8c5f071c261a00d3f785cd1827c3ccffbabf3fb6",
+    "commit": "6b654b0a3b1d7b5ebcd8e507d2ca1acaa3d33bc1",
     "manuscripts": {
       "en": "manuscript/en/band-01.md",
       "de": "manuscript/de/band-01.md"
     },
     "manuscriptBlobs": {
-      "en": "d68ff82e7a251f4edc111afa78dde195a0b1317c",
-      "de": "e3c8c29f2a0e21fdaeeaa1432b5947cdaf1e427a"
+      "en": "95acfe62ddeeb7a99a287c63dcd079187a171758",
+      "de": "96fcf7850f305ec5ac8aec2c7f19cb9bdbe063a6"
     },
     "illustrationReference": "docs/story/illustration-reference.md",
     "illustrationsDirectory": "assets/illustrations/band-01/"
