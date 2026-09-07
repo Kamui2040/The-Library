@@ -13,7 +13,9 @@
   <script defer src="../../assets/library-shell.js"></script>
   <script defer src="../../assets/spoiler-controls.js"></script>
 </head>
-<body class="landing-page">
+<body class="landing-page"
+  data-spoiler-story="dragon-knight"
+  data-spoiler-world-manifest="../../content/worlds/telanas/world.json">
   <header class="site-header" data-site-header>
     <div class="header-inner">
       <details class="menu-popover global-menu">
@@ -148,9 +150,8 @@
             <label class="select-control">
               <span class="visually-hidden">Lesefortschritt</span>
               <select data-spoiler-progress-select>
-                <option value="none">Keine abgeschlossenen Bände</option>
-                <option value="volume-01">Bis Band 1 — Zuhause</option>
-              </select>
+              <option value="none">Keine abgeschlossenen Kapitel</option>
+            </select>
             </label>
           </div>
         </div>

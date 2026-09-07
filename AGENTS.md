@@ -36,8 +36,9 @@
 - Reader-facing copy must not imply unrevealed multiplicity, ordering, origins, future structure, or other facts merely through neutral-looking wording.
 - Lexicon category controls are derived from currently spoiler-eligible entries. If no eligible entry exists in a category, that category name/control must not be rendered or hinted at.
 - Lexicon entry existence and individual entry details may use different reveal gates. A safe base description may be visible while later fragments remain absent.
-- Within-volume spoiler progress uses sparse stable semantic Reader anchors. Reached milestones advance monotonically and must never move backward when rereading earlier material.
-- Completing a volume supersedes its internal reached-anchor gates. Full-spoiler mode may deliberately bypass all reveal gates.
+- Reader-facing spoiler progress uses ordered volume + chapter completion. Chapter IDs are stable semantic IDs; visible labels remain localized.
+- Sparse semantic Reader anchors remain the finer in-chapter spoiler layer. Reached anchors advance monotonically and must never move backward when rereading earlier material.
+- Completing a chapter supersedes reached-anchor gates inside that chapter. Completing the final chapter derives completion of that volume; Full Spoilers may deliberately bypass all reveal gates.
 - The dedicated Lexicon and contextual Reader cards must use the same visibility calculation so they cannot disagree about what the reader is allowed to know.
 
 ## Development and publication

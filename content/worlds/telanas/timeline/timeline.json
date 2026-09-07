@@ -2,13 +2,18 @@
   "schemaVersion": 1,
   "world": "telanas",
   "state": "prototype",
-  "locales": ["en", "de"],
+  "locales": [
+    "en",
+    "de"
+  ],
   "events": [
     {
       "id": "timeline-prototype-foundation",
       "order": 10,
       "prototypeOnly": true,
-      "visibility": { "mode": "always" },
+      "visibility": {
+        "mode": "always"
+      },
       "labels": {
         "en": {
           "period": "Public prototype",
@@ -27,20 +32,21 @@
       "order": 20,
       "prototypeOnly": true,
       "visibility": {
-        "mode": "completed-volume",
+        "mode": "completed-chapter",
         "story": "dragon-knight",
-        "volume": "volume-01"
+        "book": "volume-01",
+        "chapter": "dk-v01-ch09"
       },
       "labels": {
         "en": {
           "period": "After Volume 1",
           "title": "Volume 1 timeline marker — prototype",
-          "summary": "This non-canon marker appears only after Volume 1 is marked complete and contains no manuscript event."
+          "summary": "This non-canon marker appears after Chapter 9 of Volume 1 is marked complete and contains no manuscript event."
         },
         "de": {
           "period": "Nach Band 1",
           "title": "Zeitleisten-Marker für Band 1 — Prototyp",
-          "summary": "Dieser nicht-kanonische Marker erscheint erst, nachdem Band 1 als gelesen markiert wurde, und enthält kein Manuskriptereignis."
+          "summary": "Dieser nicht-kanonische Marker erscheint, nachdem Kapitel 9 von Band 1 als abgeschlossen markiert wurde, und enthält kein Manuskriptereignis."
         }
       },
       "readerLinks": [
@@ -60,7 +66,9 @@
       "id": "timeline-future-placeholder",
       "order": 30,
       "prototypeOnly": true,
-      "visibility": { "mode": "full-spoilers" },
+      "visibility": {
+        "mode": "full-spoilers"
+      },
       "labels": {
         "en": {
           "period": "Future knowledge",

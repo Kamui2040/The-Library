@@ -7,11 +7,13 @@
   <meta name="description" content="Prototype Telanas landing page inside The Library.">
   <title>The Library — Telanas</title>
   <link rel="stylesheet" href="styles.css">
-  <script defer src="spoiler-profile.js"></script>
+  <script defer src="../../assets/spoiler-profile.js"></script>
   <script defer src="site.js"></script>
-  <script defer src="spoiler-controls.js"></script>
+  <script defer src="../../assets/spoiler-controls.js"></script>
 </head>
-<body class="landing-page">
+<body class="landing-page"
+  data-spoiler-story="dragon-knight"
+  data-spoiler-world-manifest="../../content/worlds/telanas/world.json">
   <header class="site-header" data-site-header>
     <div class="header-inner">
       <details class="menu-popover global-menu">
@@ -146,8 +148,7 @@
             <label class="select-control">
               <span class="visually-hidden">Reading progress</span>
               <select data-spoiler-progress-select>
-                <option value="none">No completed volumes</option>
-                <option value="volume-01">Through Volume 1 — Home</option>
+                <option value="none">No completed chapters</option>
               </select>
             </label>
           </div>

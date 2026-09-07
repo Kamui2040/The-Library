@@ -127,7 +127,7 @@ spoiler_profile:
 
 Reached milestones advance monotonically. Returning to an earlier chapter or anchor never lowers them. Completing a volume automatically satisfies all within-volume gates for that volume.
 
-Reader completion may offer to advance completed-volume progress, update automatically if the reader chose that mode, or remain manual.
+Reader completion may offer to advance volume + chapter progress, update automatically if the reader chose that mode, or remain manual.
 
 ## 3.3 Visibility modes
 
@@ -135,7 +135,7 @@ Reader-facing knowledge currently supports these visibility concepts:
 
 - `always` — visible whenever the entry itself is available;
 - `reached-anchor` — visible after a declared semantic story milestone has been reached;
-- `completed-volume` — visible after the required volume is marked complete;
+- `completed-chapter` — visible after the required chapter in the configured volume is marked complete;
 - `full-spoilers` — visible only when Full Spoilers is enabled.
 
 Entry existence and entry details are separate decisions. A character or location may have a safe general entry while one or more later fragments remain absent until an internal milestone or volume completion.
