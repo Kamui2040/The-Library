@@ -206,7 +206,7 @@ assert(
 const readerLexicon = await readText("assets/reader/reader-lexicon.js");
 assert(readerLexicon.includes("profileApi.visibilityAllowed"), "Reader contextual Lexicon must use the shared visibility calculation");
 assert(readerLexicon.includes("profileApi.markReachedAnchors"), "Reader contextual Lexicon must persist semantic spoiler milestones");
-assert(readerLexicon.includes("book.spoilerMilestones"), "Reader contextual Lexicon must read sparse spoiler milestones from the book manifest");
+assert(/book\??\.spoilerMilestones/.test(readerLexicon), "Reader contextual Lexicon must read sparse spoiler milestones from the book manifest");
 assert(readerLexicon.includes("book.contextualLexicon"), "Reader contextual Lexicon must load explicit contextual annotations from the book manifest");
 assert(readerLexicon.includes("data-reader-lexicon-entry"), "Reader contextual Lexicon must render explicit in-prose controls");
 
