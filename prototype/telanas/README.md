@@ -20,7 +20,7 @@ It intentionally contains no unreleased manuscript text, private lore, productio
 - responsive desktop/mobile navigation
 - Stories menu
 - persistent spoiler profile stored locally:
-  - completed-volume selection
+  - volume + chapter selection
   - Full Spoilers toggle
   - the same profile is available across Library pages
 - spoiler-aware world search:
@@ -44,7 +44,7 @@ It intentionally contains no unreleased manuscript text, private lore, productio
 - spoiler-aware timeline:
   - the world manifest registers one public timeline manifest
   - event existence is filtered before rendering or search
-  - completed-volume and Full Spoilers gates use the same shared spoiler profile as the Lexicon and reader
+  - completed-chapter, reached-anchor, and Full Spoilers gates use the same shared spoiler profile as the Lexicon and reader
   - hidden events contribute no titles, periods, summaries, reader-link labels, placeholders, or counts
   - visible events may link to exact semantic reader anchors
   - neutral prototype events test reveal behavior without storing Telanas chronology or future canon
@@ -84,7 +84,7 @@ It intentionally contains no unreleased manuscript text, private lore, productio
   - neutral CSS placeholders test layout without committing story artwork
   - illustration anchors survive language, layout, and viewport changes
 - reader completion and spoiler progress:
-  - `Ask when a volume ends` prompts before changing the spoiler profile
+  - `Ask when a chapter ends` prompts before changing the spoiler profile
   - `Update automatically` marks a volume complete at its final reading position
   - `Manual in Lexicon` leaves progress entirely under the reader's direct control
   - completion advances by stable book ID and never lowers a later completed volume

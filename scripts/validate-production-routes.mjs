@@ -205,7 +205,7 @@ assert(lexiconController.includes('get("category")'), "Production Lexicon must a
 const timelineController = await readFile(path.join(root, "assets/timeline/timeline.js"), "utf8");
 assert(timelineController.includes("dataset.worldManifest"), "Retained Timeline must resolve its world manifest from the page contract");
 assert(timelineController.includes("dataset.timelineManifest"), "Retained Timeline must resolve its Timeline manifest from the page contract");
-assert(timelineController.includes("profile.fullSpoilers"), "Retained Timeline must preserve spoiler filtering");
+assert(timelineController.includes("profileApi.visibilityAllowed"), "Retained Timeline must use the shared spoiler visibility calculation");
 assert(timelineController.includes("visibilityAllowed(event.visibility"), "Retained Timeline must filter event existence before rendering");
 
 const shell = await readFile(path.join(root, "assets/library-shell.js"), "utf8");

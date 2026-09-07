@@ -1,18 +1,43 @@
 (() => {
   "use strict";
 
-  const storageKey = "library-spoiler-profile-v2";
-  const legacyStorageKey = "library-spoiler-profile-v1";
+  const storageKey = "library-spoiler-profile-v3";
+  const legacyStorageKeys = [
+    "library-spoiler-profile-v2",
+    "library-spoiler-profile-v1"
+  ];
   const eventName = "library-spoiler-profile-change";
 
+  // v1/v2 existed while only this released volume could be marked complete.
+  // This is a one-time deterministic migration from the former volume model.
+  const legacyCompletionModel = {
+    telanas: {
+      "dragon-knight": [
+        {
+          id: "volume-01",
+          chapters: [
+            "dk-v01-prologue",
+            "dk-v01-ch01",
+            "dk-v01-ch02",
+            "dk-v01-ch03",
+            "dk-v01-ch04",
+            "dk-v01-ch05",
+            "dk-v01-ch06",
+            "dk-v01-ch07",
+            "dk-v01-ch08",
+            "dk-v01-ch09"
+          ]
+        }
+      ]
+    }
+  };
+
   const defaultProfile = () => ({
-    version: 2,
+    version: 3,
     fullSpoilers: false,
     worlds: {
       telanas: {
-        completed: {
-          "dragon-knight": "none"
-        },
+        completedChapters: {},
         reached: {}
       }
     }
@@ -25,19 +50,66 @@
     for (const [storyId, storyValue] of Object.entries(value)) {
       if (!storyValue || typeof storyValue !== "object" || Array.isArray(storyValue)) continue;
       const books = {};
+
       for (const [bookId, anchorsValue] of Object.entries(storyValue)) {
         if (!Array.isArray(anchorsValue)) continue;
-        const anchors = [...new Set(anchorsValue.filter((anchor) => typeof anchor === "string" && anchor))];
+        const anchors = [...new Set(
+          anchorsValue.filter((anchor) => typeof anchor === "string" && anchor)
+        )];
         if (anchors.length > 0) books[bookId] = anchors;
       }
+
       if (Object.keys(books).length > 0) reached[storyId] = books;
     }
+
     return reached;
+  };
+
+  const normalizeCompletedChapters = (value) => {
+    const completed = {};
+    if (!value || typeof value !== "object" || Array.isArray(value)) return completed;
+
+    for (const [storyId, storyValue] of Object.entries(value)) {
+      if (!storyValue || typeof storyValue !== "object" || Array.isArray(storyValue)) continue;
+      const books = {};
+
+      for (const [bookId, chaptersValue] of Object.entries(storyValue)) {
+        if (!Array.isArray(chaptersValue)) continue;
+        const chapters = [...new Set(
+          chaptersValue.filter((chapter) => typeof chapter === "string" && chapter)
+        )];
+        if (chapters.length > 0) books[bookId] = chapters;
+      }
+
+      if (Object.keys(books).length > 0) completed[storyId] = books;
+    }
+
+    return completed;
+  };
+
+  const migrateLegacyCompleted = (worldId, worldValue, completedChapters) => {
+    const legacy = worldValue?.completed;
+    if (!legacy || typeof legacy !== "object" || Array.isArray(legacy)) return;
+
+    for (const [storyId, completedBookId] of Object.entries(legacy)) {
+      if (typeof completedBookId !== "string" || completedBookId === "none") continue;
+
+      const books = legacyCompletionModel?.[worldId]?.[storyId];
+      if (!Array.isArray(books)) continue;
+
+      const targetIndex = books.findIndex((book) => book.id === completedBookId);
+      if (targetIndex < 0) continue;
+
+      completedChapters[storyId] ||= {};
+      for (let index = 0; index <= targetIndex; index += 1) {
+        completedChapters[storyId][books[index].id] = [...books[index].chapters];
+      }
+    }
   };
 
   const normalize = (value) => {
     const normalized = {
-      version: 2,
+      version: 3,
       fullSpoilers: value?.fullSpoilers === true,
       worlds: {}
     };
@@ -46,24 +118,23 @@
       for (const [worldId, worldValue] of Object.entries(value.worlds)) {
         if (!worldValue || typeof worldValue !== "object" || Array.isArray(worldValue)) continue;
 
-        const completed = {};
-        if (worldValue.completed && typeof worldValue.completed === "object" && !Array.isArray(worldValue.completed)) {
-          for (const [storyId, volumeId] of Object.entries(worldValue.completed)) {
-            if (typeof volumeId === "string") completed[storyId] = volumeId;
-          }
-        }
+        const completedChapters = normalizeCompletedChapters(worldValue.completedChapters);
+        migrateLegacyCompleted(worldId, worldValue, completedChapters);
 
         normalized.worlds[worldId] = {
-          completed,
+          completedChapters,
           reached: normalizeReached(worldValue.reached)
         };
       }
     }
 
-    normalized.worlds.telanas ||= { completed: {}, reached: {} };
-    normalized.worlds.telanas.completed ||= {};
+    normalized.worlds.telanas ||= {
+      completedChapters: {},
+      reached: {}
+    };
+    normalized.worlds.telanas.completedChapters ||= {};
     normalized.worlds.telanas.reached ||= {};
-    normalized.worlds.telanas.completed["dragon-knight"] ||= "none";
+
     return normalized;
   };
 
@@ -71,18 +142,19 @@
     try {
       localStorage.setItem(storageKey, JSON.stringify(profile));
     } catch {
-      // Persistence is optional; the current page can still use the value.
+      // Persistence is optional.
     }
   };
 
   const read = () => {
     try {
-      const raw = localStorage.getItem(storageKey);
-      if (raw) return normalize(JSON.parse(raw));
+      const current = localStorage.getItem(storageKey);
+      if (current) return normalize(JSON.parse(current));
 
-      const legacyRaw = localStorage.getItem(legacyStorageKey);
-      if (legacyRaw) {
-        const migrated = normalize(JSON.parse(legacyRaw));
+      for (const key of legacyStorageKeys) {
+        const legacy = localStorage.getItem(key);
+        if (!legacy) continue;
+        const migrated = normalize(JSON.parse(legacy));
         persist(migrated);
         return migrated;
       }
@@ -96,7 +168,9 @@
   const write = (profile) => {
     const normalized = normalize(profile);
     persist(normalized);
-    window.dispatchEvent(new CustomEvent(eventName, { detail: { profile: normalized } }));
+    window.dispatchEvent(new CustomEvent(eventName, {
+      detail: { profile: normalized }
+    }));
     return normalized;
   };
 
@@ -106,18 +180,22 @@
     return write(next);
   };
 
-  const storyBooks = (worldManifest, storyId) => {
-    const story = worldManifest?.stories?.find((candidate) => candidate.id === storyId);
-    return Array.isArray(story?.books) ? story.books : [];
+  const ensureWorld = (profile, world) => {
+    profile.worlds[world] ||= {
+      completedChapters: {},
+      reached: {}
+    };
+    profile.worlds[world].completedChapters ||= {};
+    profile.worlds[world].reached ||= {};
+    return profile.worlds[world];
   };
 
-  const completedVolumeAtLeast = (worldManifest, profile, storyId, volumeId) => {
-    const books = storyBooks(worldManifest, storyId);
-    const requiredIndex = books.findIndex((book) => book.id === volumeId);
-    const completedId = profile?.worlds?.[worldManifest?.id]?.completed?.[storyId] || "none";
-    const completedIndex = books.findIndex((book) => book.id === completedId);
-    return requiredIndex >= 0 && completedIndex >= requiredIndex;
-  };
+  const hasCompletedChapter = (profile, world, story, book, chapter) => (
+    Array.isArray(
+      profile?.worlds?.[world]?.completedChapters?.[story]?.[book]
+    ) &&
+    profile.worlds[world].completedChapters[story][book].includes(chapter)
+  );
 
   const hasReachedAnchor = (profile, world, story, book, anchor) => (
     Array.isArray(profile?.worlds?.[world]?.reached?.[story]?.[book]) &&
@@ -129,24 +207,46 @@
     if (!visibility || visibility.mode === "always") return true;
     if (visibility.mode === "full-spoilers") return false;
 
-    if (visibility.mode === "completed-volume") {
-      return completedVolumeAtLeast(worldManifest, profile, visibility.story, visibility.volume);
+    if (visibility.mode === "completed-chapter") {
+      if (
+        typeof visibility.story !== "string" ||
+        typeof visibility.book !== "string" ||
+        typeof visibility.chapter !== "string"
+      ) return false;
+
+      return hasCompletedChapter(
+        profile,
+        worldManifest?.id,
+        visibility.story,
+        visibility.book,
+        visibility.chapter
+      );
     }
 
     if (visibility.mode === "reached-anchor") {
       if (
         typeof visibility.story !== "string" ||
         typeof visibility.book !== "string" ||
+        typeof visibility.chapter !== "string" ||
         typeof visibility.anchor !== "string"
       ) return false;
 
-      if (completedVolumeAtLeast(worldManifest, profile, visibility.story, visibility.book)) return true;
+      if (
+        hasCompletedChapter(
+          profile,
+          worldManifest?.id,
+          visibility.story,
+          visibility.book,
+          visibility.chapter
+        )
+      ) return true;
+
       return hasReachedAnchor(
         profile,
         worldManifest?.id,
         visibility.story,
         visibility.book,
-        visibility.anchor,
+        visibility.anchor
       );
     }
 
@@ -155,44 +255,77 @@
 
   window.LibrarySpoilerProfile = {
     storageKey,
-    legacyStorageKey,
+    legacyStorageKeys,
     eventName,
     get: read,
     set: write,
     normalize,
     visibilityAllowed,
-    completedVolumeAtLeast,
+    hasCompletedChapter,
     hasReachedAnchor,
+
     setFullSpoilers(enabled) {
       return update((profile) => {
         profile.fullSpoilers = Boolean(enabled);
       });
     },
-    setCompletedVolume(world, story, volume) {
+
+    setStoryCompletedChapters(world, story, completedByBook) {
       return update((profile) => {
-        profile.worlds[world] ||= { completed: {}, reached: {} };
-        profile.worlds[world].completed ||= {};
-        profile.worlds[world].reached ||= {};
-        profile.worlds[world].completed[story] = volume || "none";
+        const worldProfile = ensureWorld(profile, world);
+        const normalized = normalizeCompletedChapters({
+          [story]: completedByBook
+        });
+        worldProfile.completedChapters[story] = normalized[story] || {};
       });
     },
+
+    markStoryCompletedChapters(world, story, completedByBook) {
+      return update((profile) => {
+        const worldProfile = ensureWorld(profile, world);
+        worldProfile.completedChapters[story] ||= {};
+
+        for (const [book, chaptersValue] of Object.entries(completedByBook || {})) {
+          const requested = [...new Set(
+            (Array.isArray(chaptersValue) ? chaptersValue : [chaptersValue])
+              .filter((chapter) => typeof chapter === "string" && chapter)
+          )];
+
+          if (requested.length === 0) continue;
+
+          const existing = worldProfile.completedChapters[story][book] || [];
+          worldProfile.completedChapters[story][book] = [
+            ...new Set([...existing, ...requested])
+          ];
+        }
+      });
+    },
+
     markReachedAnchors(world, story, book, anchors) {
-      const requested = [...new Set((Array.isArray(anchors) ? anchors : [anchors])
-        .filter((anchor) => typeof anchor === "string" && anchor))];
+      const requested = [...new Set(
+        (Array.isArray(anchors) ? anchors : [anchors])
+          .filter((anchor) => typeof anchor === "string" && anchor)
+      )];
+
       if (requested.length === 0) return read();
 
       const current = read();
-      const existing = current.worlds?.[world]?.reached?.[story]?.[book] || [];
-      const missing = requested.filter((anchor) => !existing.includes(anchor));
+      const existing =
+        current.worlds?.[world]?.reached?.[story]?.[book] || [];
+      const missing = requested.filter(
+        (anchor) => !existing.includes(anchor)
+      );
+
       if (missing.length === 0) return current;
 
       return update((profile) => {
-        profile.worlds[world] ||= { completed: {}, reached: {} };
-        profile.worlds[world].completed ||= {};
-        profile.worlds[world].reached ||= {};
-        profile.worlds[world].reached[story] ||= {};
-        const saved = profile.worlds[world].reached[story][book] || [];
-        profile.worlds[world].reached[story][book] = [...new Set([...saved, ...requested])];
+        const worldProfile = ensureWorld(profile, world);
+        worldProfile.reached[story] ||= {};
+        const saved = worldProfile.reached[story][book] || [];
+
+        worldProfile.reached[story][book] = [
+          ...new Set([...saved, ...requested])
+        ];
       });
     }
   };

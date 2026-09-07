@@ -8,12 +8,14 @@
   <title>The Library — Telanas Search</title>
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="world-search.css">
-  <script defer src="spoiler-profile.js"></script>
+  <script defer src="../../assets/spoiler-profile.js"></script>
   <script defer src="site.js"></script>
-  <script defer src="spoiler-controls.js"></script>
+  <script defer src="../../assets/spoiler-controls.js"></script>
   <script defer src="world-search.js"></script>
 </head>
-<body class="world-search-page">
+<body class="world-search-page"
+  data-spoiler-story="dragon-knight"
+  data-spoiler-world-manifest="../../content/worlds/telanas/world.json">
   <header class="site-header" data-site-header>
     <div class="header-inner">
       <details class="menu-popover global-menu">
@@ -108,8 +110,7 @@
           <label class="search-progress-field">
             <span data-world-search-i18n="through">Spoilers through</span>
             <select data-spoiler-progress-select>
-              <option value="none">No completed volumes</option>
-              <option value="volume-01">Through Volume 1 — Home</option>
+              <option value="none">No completed chapters</option>
             </select>
           </label>
 
@@ -134,7 +135,7 @@
           </div>
           <div class="world-search-status framed-inline">
             <span data-world-search-i18n="currentView">Current view</span>
-            <strong data-spoiler-summary>No completed volumes</strong>
+            <strong data-spoiler-summary>No completed chapters</strong>
           </div>
         </div>
 

@@ -151,7 +151,7 @@ Reader completion may advance the spoiler profile by stable world/story/book ID.
 Current reveal modes are:
 
 - `always` — visible regardless of reading progress;
-- `completed-volume` — visible once the configured story volume is marked completed;
+- `completed-chapter` — visible once the configured story/book chapter is marked completed;
 - `full-spoilers` — visible only when Full Spoilers is enabled.
 
 Full Spoilers deliberately bypasses normal reveal gates, including when no volume is marked completed.
@@ -325,7 +325,7 @@ The validators check, among other things:
 - prototype editions/manifests cannot silently masquerade as release content;
 - Lexicon categories, entries, links, and relationships use valid unique IDs;
 - Lexicon localized titles, summaries, fragments, category labels, reader-link labels, and relationship labels are complete;
-- completed-volume reveal gates resolve to existing public stories and volumes;
+- completed-chapter reveal gates resolve to existing public stories, books, and chapters;
 - semantic reader links resolve in every relevant locale and store no URLs/page numbers;
 - Lexicon relationships resolve to existing entries and store no URLs;
 - Timeline event IDs/order values are unique, localized text is complete, reveal gates resolve, and reader links are valid;

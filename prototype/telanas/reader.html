@@ -12,12 +12,12 @@
   <link rel="stylesheet" href="reader-page-turn.css">
   <link rel="stylesheet" href="reader-progress.css">
   <link rel="stylesheet" href="reader-bookmarks.css">
-  <script defer src="spoiler-profile.js"></script>
+  <script defer src="../../assets/spoiler-profile.js"></script>
   <script defer src="site.js"></script>
   <script defer src="reader-engine.js"></script>
   <script defer src="reader-presentation.js"></script>
   <script defer src="reader-page-turn.js"></script>
-  <script defer src="reader-progress.js"></script>
+  <script defer src="../../assets/reader/reader-progress.js"></script>
   <script defer src="reader.js"></script>
   <script defer src="reader-bookmarks.js"></script>
 </head>
@@ -83,7 +83,7 @@
             <label class="reader-setting">
               <span data-reader-progress-setting-label>Spoiler progress</span>
               <select data-reader-progress-mode>
-                <option value="ask" selected>Ask when a volume ends</option>
+                <option value="ask" selected>Ask when a chapter ends</option>
                 <option value="automatic">Update automatically</option>
                 <option value="manual">Manual in Lexicon</option>
               </select>
@@ -139,7 +139,7 @@
       <section class="reader-completion" hidden data-reader-completion aria-live="polite" aria-labelledby="reader-completion-title">
         <div class="reader-completion-copy">
           <p class="eyebrow" data-reader-completion-eyebrow>Reading progress</p>
-          <h2 id="reader-completion-title" data-reader-completion-title>Mark this volume as finished?</h2>
+          <h2 id="reader-completion-title" data-reader-completion-title>Mark this chapter as finished?</h2>
           <p class="reader-completion-text" data-reader-completion-text></p>
         </div>
         <div class="reader-completion-actions">

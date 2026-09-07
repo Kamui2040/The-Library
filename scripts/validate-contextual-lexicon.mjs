@@ -125,14 +125,15 @@ assert(milestones.length > 0, `${bookPath} must exercise at least one semantic s
 
 const profileSource = await readText("assets/spoiler-profile.js");
 const storage = new Map([
-  ["library-spoiler-profile-v1", JSON.stringify({
-    version: 1,
+  ["library-spoiler-profile-v2", JSON.stringify({
+    version: 2,
     fullSpoilers: false,
     worlds: {
       telanas: {
         completed: {
-          "dragon-knight": "none"
-        }
+          "dragon-knight": "volume-01"
+        },
+        reached: {}
       }
     }
   })]
@@ -143,8 +144,12 @@ const context = {
     dispatchEvent() {}
   },
   localStorage: {
-    getItem(key) { return storage.has(key) ? storage.get(key) : null; },
-    setItem(key, value) { storage.set(key, String(value)); }
+    getItem(key) {
+      return storage.has(key) ? storage.get(key) : null;
+    },
+    setItem(key, value) {
+      storage.set(key, String(value));
+    }
   },
   CustomEvent: class CustomEvent {
     constructor(type, options = {}) {
@@ -153,54 +158,141 @@ const context = {
     }
   }
 };
-vm.runInNewContext(profileSource, context, { filename: "assets/spoiler-profile.js" });
+
+vm.runInNewContext(
+  profileSource,
+  context,
+  { filename: "assets/spoiler-profile.js" }
+);
+
 const profileApi = context.window.LibrarySpoilerProfile;
 assert(profileApi, "Shared spoiler profile API did not initialize");
-assert(profileApi.storageKey === "library-spoiler-profile-v2", "Spoiler profile must use v2 storage");
+assert(
+  profileApi.storageKey === "library-spoiler-profile-v3",
+  "Spoiler profile must use v3 storage",
+);
+assert(
+  profileApi.legacyStorageKeys.includes("library-spoiler-profile-v2"),
+  "Spoiler profile must retain the v2 migration path",
+);
 
 const migrated = profileApi.get();
-assert(migrated.version === 2, "Legacy spoiler profile must normalize to version 2");
-assert(storage.has("library-spoiler-profile-v2"), "Legacy spoiler profile must migrate into v2 storage");
+assert(migrated.version === 3, "v2 spoiler profile must migrate to version 3");
+assert(
+  storage.has("library-spoiler-profile-v3"),
+  "Migrated spoiler profile must persist into v3 storage",
+);
+
+const finalChapter = book.chapters.at(-1).id;
+assert(
+  profileApi.hasCompletedChapter(
+    migrated,
+    book.world,
+    book.story,
+    book.id,
+    finalChapter,
+  ),
+  "Legacy completed Volume 1 must migrate to completed final chapter",
+);
+
+profileApi.set({
+  version: 3,
+  fullSpoilers: false,
+  worlds: {
+    [book.world]: {
+      completedChapters: {},
+      reached: {}
+    }
+  }
+});
 
 const milestone = milestones[0];
+const milestoneChapter = editions
+  .get(book.locales[0])
+  ?.chapters
+  ?.find((chapter) =>
+    chapter.blocks?.some((block) => block.id === milestone)
+  )
+  ?.id;
+
+assertId(
+  milestoneChapter,
+  "Milestone owning chapter",
+);
+
 const reachedVisibility = {
   mode: "reached-anchor",
   story: book.story,
   book: book.id,
+  chapter: milestoneChapter,
   anchor: milestone
 };
+
 assert(
-  profileApi.visibilityAllowed(world, reachedVisibility, migrated) === false,
-  "Reached-anchor visibility must stay hidden before the milestone is reached",
+  profileApi.visibilityAllowed(
+    world,
+    reachedVisibility,
+    profileApi.get(),
+  ) === false,
+  "Reached-anchor visibility must stay hidden before its anchor or chapter is reached",
 );
 
-profileApi.markReachedAnchors(book.world, book.story, book.id, [milestone]);
-const reachedProfile = profileApi.get();
-assert(
-  profileApi.hasReachedAnchor(reachedProfile, book.world, book.story, book.id, milestone),
-  "Reached milestone must persist in the shared spoiler profile",
+profileApi.markReachedAnchors(
+  book.world,
+  book.story,
+  book.id,
+  [milestone],
 );
+
 assert(
-  profileApi.visibilityAllowed(world, reachedVisibility, reachedProfile) === true,
-  "Reached-anchor visibility must unlock after the milestone is reached",
+  profileApi.visibilityAllowed(
+    world,
+    reachedVisibility,
+    profileApi.get(),
+  ) === true,
+  "Reached-anchor visibility must unlock after the anchor is reached",
 );
 
 profileApi.set({
-  version: 2,
+  version: 3,
   fullSpoilers: false,
   worlds: {
     [book.world]: {
-      completed: {
-        [book.story]: book.id
+      completedChapters: {
+        [book.story]: {
+          [book.id]: [milestoneChapter]
+        }
       },
       reached: {}
     }
   }
 });
+
 const completedProfile = profileApi.get();
+
 assert(
-  profileApi.visibilityAllowed(world, reachedVisibility, completedProfile) === true,
-  "Completed volume must supersede its internal reached-anchor gates",
+  profileApi.visibilityAllowed(
+    world,
+    reachedVisibility,
+    completedProfile,
+  ) === true,
+  "Completed chapter must supersede its internal reached-anchor gate",
+);
+
+const chapterVisibility = {
+  mode: "completed-chapter",
+  story: book.story,
+  book: book.id,
+  chapter: milestoneChapter
+};
+
+assert(
+  profileApi.visibilityAllowed(
+    world,
+    chapterVisibility,
+    completedProfile,
+  ) === true,
+  "Completed-chapter visibility must unlock at the selected chapter",
 );
 
 const readerLexicon = await readText("assets/reader/reader-lexicon.js");

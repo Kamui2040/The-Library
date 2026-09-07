@@ -5,7 +5,7 @@ import { fileURLToPath } from "node:url";
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const safeId = /^[a-z0-9][a-z0-9-]*$/;
 const allowedStates = new Set(["development", "prototype", "approved", "published"]);
-const allowedVisibilityModes = new Set(["always", "completed-volume", "full-spoilers"]);
+const allowedVisibilityModes = new Set(["always", "completed-chapter", "full-spoilers"]);
 
 const fail = (message) => { throw new Error(message); };
 const assert = (condition, message) => { if (!condition) fail(message); };
@@ -94,12 +94,14 @@ for (const story of world.stories || []) {
 const validateVisibility = (visibility, label) => {
   assert(visibility && typeof visibility === "object" && !Array.isArray(visibility), `${label} visibility is missing`);
   assert(allowedVisibilityModes.has(visibility.mode), `${label} has unsupported visibility mode: ${visibility.mode}`);
-  if (visibility.mode === "completed-volume") {
+
+  if (visibility.mode === "completed-chapter") {
     assertId(visibility.story, `${label} visibility story`);
-    assertId(visibility.volume, `${label} visibility volume`);
+    assertId(visibility.book, `${label} visibility book`);
+    assertId(visibility.chapter, `${label} visibility chapter`);
     const books = storyBooks.get(visibility.story);
     assert(books, `${label} references unknown story: ${visibility.story}`);
-    assert(books.has(visibility.volume), `${label} references unknown volume: ${visibility.story}/${visibility.volume}`);
+    assert(books.has(visibility.book), `${label} references unknown book: ${visibility.story}/${visibility.book}`);
   }
 };
 

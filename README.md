@@ -27,7 +27,7 @@ Locations do not depend on a map. A Telanas map is not exposed until the geograp
 - `content/library.json` — data-driven Library/world/locale registry
 - `en/` and `de/` — canonical locale roots with localized Telanas landing, Volume 1 Reader, and Lexicon routes
 - `assets/library-shell.js` — route-aware shared shell behavior for canonical pages
-- `assets/spoiler-profile.js` — shared completed-volume and reached-anchor spoiler profile
+- `assets/spoiler-profile.js` — shared completed-chapter and reached-anchor spoiler profile
 - `assets/reader/` — canonical Reader engine, presentation, page-turn, progress, bookmarks, and contextual Lexicon behavior
 - `assets/lexicon/` — canonical spoiler-aware Lexicon browsing, relationships, built-in search, and Reader references
 - `assets/timeline/` — retained spoiler-aware chronology module, not exposed in the current reader-facing navigation

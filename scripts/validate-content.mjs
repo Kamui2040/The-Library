@@ -5,7 +5,7 @@ import { fileURLToPath } from "node:url";
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const allowedStates = new Set(["development", "prototype", "approved", "published"]);
 const allowedEditionAlignments = new Set(["block", "chapter"]);
-const allowedVisibilityModes = new Set(["always", "completed-volume", "reached-anchor", "full-spoilers"]);
+const allowedVisibilityModes = new Set(["always", "completed-chapter", "reached-anchor", "full-spoilers"]);
 const allowedReaderBlockTypes = new Set(["paragraph", "scene-break", "illustration"]);
 const allowedIllustrationModes = new Set(["placeholder", "image"]);
 const allowedIllustrationPlacements = new Set(["flow", "full-page", "before-title"]);
@@ -77,21 +77,17 @@ const validateVisibility = (visibility, label, storyBooks) => {
   assert(visibility && typeof visibility === "object", `${label} visibility is missing`);
   assert(allowedVisibilityModes.has(visibility.mode), `${label} has unsupported visibility mode: ${visibility.mode}`);
 
-  if (visibility.mode === "completed-volume") {
-    assertId(visibility.story, `${label} visibility story`);
-    assertId(visibility.volume, `${label} visibility volume`);
-    const books = storyBooks.get(visibility.story);
-    assert(books, `${label} references unknown story: ${visibility.story}`);
-    assert(books.has(visibility.volume), `${label} references unknown volume: ${visibility.story}/${visibility.volume}`);
-  }
-
-  if (visibility.mode === "reached-anchor") {
+  if (visibility.mode === "completed-chapter" || visibility.mode === "reached-anchor") {
     assertId(visibility.story, `${label} visibility story`);
     assertId(visibility.book, `${label} visibility book`);
-    assertId(visibility.anchor, `${label} visibility anchor`);
+    assertId(visibility.chapter, `${label} visibility chapter`);
     const books = storyBooks.get(visibility.story);
     assert(books, `${label} references unknown story: ${visibility.story}`);
     assert(books.has(visibility.book), `${label} references unknown book: ${visibility.story}/${visibility.book}`);
+  }
+
+  if (visibility.mode === "reached-anchor") {
+    assertId(visibility.anchor, `${label} visibility anchor`);
   }
 };
 

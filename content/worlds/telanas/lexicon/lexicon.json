@@ -171,7 +171,8 @@
             "mode": "reached-anchor",
             "story": "dragon-knight",
             "book": "volume-01",
-            "anchor": "dk-v01-ch01-corvin-arrives"
+            "anchor": "dk-v01-ch01-corvin-arrives",
+            "chapter": "dk-v01-ch01"
           },
           "text": {
             "en": "Visiting soldiers fascinate Calist less for stories of fighting than for the roads, towns, rivers, and unfamiliar places they have seen.",
@@ -196,7 +197,8 @@
             "mode": "reached-anchor",
             "story": "dragon-knight",
             "book": "volume-01",
-            "anchor": "dk-v01-ch04-first-independent-work"
+            "anchor": "dk-v01-ch04-first-independent-work",
+            "chapter": "dk-v01-ch04"
           },
           "text": {
             "en": "Under Alden's teaching, Calist grows from fetching tools and carrying loads into making and repairing practical things people can trust.",
@@ -221,7 +223,8 @@
             "mode": "reached-anchor",
             "story": "dragon-knight",
             "book": "volume-01",
-            "anchor": "dk-v01-ch06-apprentice-moves"
+            "anchor": "dk-v01-ch06-apprentice-moves",
+            "chapter": "dk-v01-ch06"
           },
           "text": {
             "en": "Bram takes Calist on as an apprentice in fine metalwork, giving him a different kind of craft to learn from the village forge.",
@@ -246,7 +249,8 @@
             "mode": "reached-anchor",
             "story": "dragon-knight",
             "book": "volume-01",
-            "anchor": "dk-v01-ch06-first-letter"
+            "anchor": "dk-v01-ch06-first-letter",
+            "chapter": "dk-v01-ch06"
           },
           "text": {
             "en": "Because Bram receives written orders, Calist begins learning to read and write through labels, measurements, customer notes, and everyday workshop work.",
@@ -271,7 +275,8 @@
             "mode": "reached-anchor",
             "story": "dragon-knight",
             "book": "volume-01",
-            "anchor": "dk-v01-ch08-necklace-grief"
+            "anchor": "dk-v01-ch08-necklace-grief",
+            "chapter": "dk-v01-ch08"
           },
           "text": {
             "en": "Calist finishes a silver leaf-and-arrow necklace for Eryn but never gives it to her. After her disappearance, the finished gift becomes a painful reminder of all the times he believed there would still be another chance.",
@@ -296,7 +301,8 @@
             "mode": "reached-anchor",
             "story": "dragon-knight",
             "book": "volume-01",
-            "anchor": "dk-v01-ch09-enlist-decision"
+            "anchor": "dk-v01-ch09-enlist-decision",
+            "chapter": "dk-v01-ch09"
           },
           "text": {
             "en": "Calist decides to enlist because he wants the ordinary life of his village to remain possible for the people who live there.",
@@ -344,7 +350,8 @@
         "mode": "reached-anchor",
         "story": "dragon-knight",
         "book": "volume-01",
-        "anchor": "dk-v01-ch01-corvin-arrives"
+        "anchor": "dk-v01-ch01-corvin-arrives",
+        "chapter": "dk-v01-ch01"
       },
       "labels": {
         "en": {
@@ -363,7 +370,8 @@
             "mode": "reached-anchor",
             "story": "dragon-knight",
             "book": "volume-01",
-            "anchor": "dk-v01-ch01-alden-war-gear"
+            "anchor": "dk-v01-ch01-alden-war-gear",
+            "chapter": "dk-v01-ch01"
           },
           "text": {
             "en": "Alden fought in the war and once served beside Corvin. He rarely tells Calist war stories, but he still carefully maintains the plain chainmail from that life.",
@@ -388,7 +396,8 @@
             "mode": "reached-anchor",
             "story": "dragon-knight",
             "book": "volume-01",
-            "anchor": "dk-v01-ch04-first-independent-work"
+            "anchor": "dk-v01-ch04-first-independent-work",
+            "chapter": "dk-v01-ch04"
           },
           "text": {
             "en": "Alden teaches practically: work must hold, mistakes are done again, and usefulness matters more than making something impressive.",
@@ -413,7 +422,8 @@
             "mode": "reached-anchor",
             "story": "dragon-knight",
             "book": "volume-01",
-            "anchor": "dk-v01-ch07-alden-illness"
+            "anchor": "dk-v01-ch07-alden-illness",
+            "chapter": "dk-v01-ch07"
           },
           "text": {
             "en": "A winter illness keeps Alden away from the forge longer than he wants, leaving Calist to keep the village's repair work moving.",
@@ -438,7 +448,8 @@
             "mode": "reached-anchor",
             "story": "dragon-knight",
             "book": "volume-01",
-            "anchor": "dk-v01-ch09-chainmail-sword"
+            "anchor": "dk-v01-ch09-chainmail-sword",
+            "chapter": "dk-v01-ch09"
           },
           "text": {
             "en": "Before Calist joins the soldiers, Alden brings out the chainmail and sword he carried in the war and gives them to his son.",
@@ -478,7 +489,8 @@
         "mode": "reached-anchor",
         "story": "dragon-knight",
         "book": "volume-01",
-        "anchor": "dk-v01-ch04-first-independent-work"
+        "anchor": "dk-v01-ch04-first-independent-work",
+        "chapter": "dk-v01-ch04"
       },
       "labels": {
         "en": {
@@ -497,7 +509,8 @@
             "mode": "reached-anchor",
             "story": "dragon-knight",
             "book": "volume-01",
-            "anchor": "dk-v01-ch08-nessa-dies"
+            "anchor": "dk-v01-ch08-nessa-dies",
+            "chapter": "dk-v01-ch08"
           },
           "text": {
             "en": "Nessa dies in the first week of spring. At her burial, villagers remember a harvest she organized during the war, help she gave several households through a hard winter, and everyday knowledge that continued after her.",
@@ -537,7 +550,8 @@
         "mode": "reached-anchor",
         "story": "dragon-knight",
         "book": "volume-01",
-        "anchor": "dk-v01-ch01-alden-war-gear"
+        "anchor": "dk-v01-ch01-alden-war-gear",
+        "chapter": "dk-v01-ch01"
       },
       "labels": {
         "en": {
@@ -556,7 +570,8 @@
             "mode": "reached-anchor",
             "story": "dragon-knight",
             "book": "volume-01",
-            "anchor": "dk-v01-ch05-camp"
+            "anchor": "dk-v01-ch05-camp",
+            "chapter": "dk-v01-ch05"
           },
           "text": {
             "en": "Eryn hunts with Harlan, Bren, and other experienced villagers. She treats danger practically and knows when responsibility for a decision belongs to someone more experienced.",
@@ -581,7 +596,8 @@
             "mode": "reached-anchor",
             "story": "dragon-knight",
             "book": "volume-01",
-            "anchor": "dk-v01-ch08-hunters-depart"
+            "anchor": "dk-v01-ch08-hunters-depart",
+            "chapter": "dk-v01-ch08"
           },
           "text": {
             "en": "By adulthood, Eryn is no longer being taken hunting merely to learn; younger hunters sometimes come to her with questions.",
@@ -606,7 +622,8 @@
             "mode": "reached-anchor",
             "story": "dragon-knight",
             "book": "volume-01",
-            "anchor": "dk-v01-ch08-ambush-return"
+            "anchor": "dk-v01-ch08-ambush-return",
+            "chapter": "dk-v01-ch08"
           },
           "text": {
             "en": "During an ambush, Eryn initially retreats with the injured survivors but turns back after Bren stays behind.",
@@ -631,7 +648,8 @@
             "mode": "reached-anchor",
             "story": "dragon-knight",
             "book": "volume-01",
-            "anchor": "dk-v01-ch08-search-ends"
+            "anchor": "dk-v01-ch08-search-ends",
+            "chapter": "dk-v01-ch08"
           },
           "text": {
             "en": "The search finds blood, tracks, broken arrows, and signs of Bren's stand, but no body, bow, knife, or clothing belonging to Eryn. Volume 1 leaves her fate unconfirmed.",
@@ -679,7 +697,8 @@
         "mode": "reached-anchor",
         "story": "dragon-knight",
         "book": "volume-01",
-        "anchor": "dk-v01-ch01-corvin-arrives"
+        "anchor": "dk-v01-ch01-corvin-arrives",
+        "chapter": "dk-v01-ch01"
       },
       "labels": {
         "en": {
@@ -698,7 +717,8 @@
             "mode": "reached-anchor",
             "story": "dragon-knight",
             "book": "volume-01",
-            "anchor": "dk-v01-ch01-corvin-arrives"
+            "anchor": "dk-v01-ch01-corvin-arrives",
+            "chapter": "dk-v01-ch01"
           },
           "text": {
             "en": "When Calist is young, Corvin uses a broom to give him a first practical lesson in stance and balance.",
@@ -723,7 +743,8 @@
             "mode": "reached-anchor",
             "story": "dragon-knight",
             "book": "volume-01",
-            "anchor": "dk-v01-ch01-alden-war-gear"
+            "anchor": "dk-v01-ch01-alden-war-gear",
+            "chapter": "dk-v01-ch01"
           },
           "text": {
             "en": "Corvin once served beside Alden during the war, a connection Calist mostly learns by listening when adults think he is occupied elsewhere.",
@@ -748,7 +769,8 @@
             "mode": "reached-anchor",
             "story": "dragon-knight",
             "book": "volume-01",
-            "anchor": "dk-v01-ch08-search-ends"
+            "anchor": "dk-v01-ch08-search-ends",
+            "chapter": "dk-v01-ch08"
           },
           "text": {
             "en": "When word of Eryn's disappearance reaches the fort, Corvin sends soldiers to help search the woods.",
@@ -773,7 +795,8 @@
             "mode": "reached-anchor",
             "story": "dragon-knight",
             "book": "volume-01",
-            "anchor": "dk-v01-ch09-enlist-decision"
+            "anchor": "dk-v01-ch09-enlist-decision",
+            "chapter": "dk-v01-ch09"
           },
           "text": {
             "en": "When Calist decides to enlist, Corvin offers to take him to the fort and tells Alden he will teach him what he can without giving him special treatment.",
@@ -803,7 +826,8 @@
         "mode": "reached-anchor",
         "story": "dragon-knight",
         "book": "volume-01",
-        "anchor": "dk-v01-ch03-bram"
+        "anchor": "dk-v01-ch03-bram",
+        "chapter": "dk-v01-ch03"
       },
       "labels": {
         "en": {
@@ -822,7 +846,8 @@
             "mode": "reached-anchor",
             "story": "dragon-knight",
             "book": "volume-01",
-            "anchor": "dk-v01-ch06-apprentice-moves"
+            "anchor": "dk-v01-ch06-apprentice-moves",
+            "chapter": "dk-v01-ch06"
           },
           "text": {
             "en": "Bram eventually offers Calist an apprenticeship because he keeps returning, remembers what he is shown, and ruins less metal than he used to.",
@@ -847,7 +872,8 @@
             "mode": "reached-anchor",
             "story": "dragon-knight",
             "book": "volume-01",
-            "anchor": "dk-v01-ch06-first-letter"
+            "anchor": "dk-v01-ch06-first-letter",
+            "chapter": "dk-v01-ch06"
           },
           "text": {
             "en": "When Bram discovers how little Calist can read, he turns orders, labels, numbers, measurements, and customer notes into lessons.",
@@ -872,7 +898,8 @@
             "mode": "reached-anchor",
             "story": "dragon-knight",
             "book": "volume-01",
-            "anchor": "dk-v01-ch06-pendant-design"
+            "anchor": "dk-v01-ch06-pendant-design",
+            "chapter": "dk-v01-ch06"
           },
           "text": {
             "en": "While Calist develops the leaf-and-arrow design, Bram keeps pushing him to understand and refine what the shapes mean until the design becomes his own.",
@@ -897,7 +924,8 @@
             "mode": "reached-anchor",
             "story": "dragon-knight",
             "book": "volume-01",
-            "anchor": "dk-v01-ch06-pendant-finished"
+            "anchor": "dk-v01-ch06-pendant-finished",
+            "chapter": "dk-v01-ch06"
           },
           "text": {
             "en": "Bram inspects the finished necklace, calls it good, immediately realizes Calist made it as a gift, and tells him to give it.",
@@ -922,7 +950,8 @@
             "mode": "reached-anchor",
             "story": "dragon-knight",
             "book": "volume-01",
-            "anchor": "dk-v01-ch07-alden-illness"
+            "anchor": "dk-v01-ch07-alden-illness",
+            "chapter": "dk-v01-ch07"
           },
           "text": {
             "en": "When Calist stays home because Alden is ill, Bram makes it clear that family comes first and that the workbench will still be waiting.",
@@ -952,7 +981,8 @@
         "mode": "reached-anchor",
         "story": "dragon-knight",
         "book": "volume-01",
-        "anchor": "dk-v01-ch08-ambush-return"
+        "anchor": "dk-v01-ch08-ambush-return",
+        "chapter": "dk-v01-ch08"
       },
       "labels": {
         "en": {
@@ -971,7 +1001,8 @@
             "mode": "reached-anchor",
             "story": "dragon-knight",
             "book": "volume-01",
-            "anchor": "dk-v01-ch08-ambush-return"
+            "anchor": "dk-v01-ch08-ambush-return",
+            "chapter": "dk-v01-ch08"
           },
           "text": {
             "en": "Eryn turns back during the retreat after Bren remains behind.",
@@ -996,7 +1027,8 @@
             "mode": "reached-anchor",
             "story": "dragon-knight",
             "book": "volume-01",
-            "anchor": "dk-v01-ch08-search-ends"
+            "anchor": "dk-v01-ch08-search-ends",
+            "chapter": "dk-v01-ch08"
           },
           "text": {
             "en": "The later search does not establish what happened to Eryn, and her fate remains unconfirmed.",

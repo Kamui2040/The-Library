@@ -2,7 +2,10 @@
   "schemaVersion": 1,
   "world": "telanas",
   "state": "prototype",
-  "locales": ["en", "de"],
+  "locales": [
+    "en",
+    "de"
+  ],
   "labels": {
     "en": {
       "title": "Map",
@@ -43,20 +46,21 @@
       "y": 48,
       "prototypeOnly": true,
       "visibility": {
-        "mode": "completed-volume",
+        "mode": "completed-chapter",
         "story": "dragon-knight",
-        "volume": "volume-01"
+        "book": "volume-01",
+        "chapter": "dk-v01-ch09"
       },
       "labels": {
         "en": {
           "kind": "Volume 1 prototype",
           "title": "Volume 1 location marker",
-          "summary": "A non-canon marker that becomes available only after Volume 1 is marked complete."
+          "summary": "A non-canon marker that becomes available after Chapter 9 of Volume 1 is marked complete."
         },
         "de": {
           "kind": "Band-1-Prototyp",
           "title": "Ortsmarker für Band 1",
-          "summary": "Ein nicht-kanonischer Marker, der erst sichtbar wird, wenn Band 1 als abgeschlossen markiert ist."
+          "summary": "Ein nicht-kanonischer Marker, der sichtbar wird, nachdem Kapitel 9 von Band 1 als abgeschlossen markiert wurde."
         }
       },
       "readerLinks": [
