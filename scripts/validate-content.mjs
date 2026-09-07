@@ -242,6 +242,15 @@ for (const worldRef of library.worlds) {
         }
       }
 
+      const spoilerMilestones = book.spoilerMilestones ?? [];
+      assert(Array.isArray(spoilerMilestones), `${bookPath} spoilerMilestones must be an array`);
+      const spoilerMilestoneIds = new Set();
+      for (const milestone of spoilerMilestones) {
+        assertId(milestone, `${bookPath} spoiler milestone`);
+        assert(!spoilerMilestoneIds.has(milestone), `${bookPath} has duplicate spoiler milestone: ${milestone}`);
+        spoilerMilestoneIds.add(milestone);
+      }
+
       if (book.contentMode === "placeholder") {
         const forbidden = findForbiddenPrototypeKey(book);
         assert(!forbidden, `${bookPath} placeholder manifest contains story-text field: ${forbidden}`);
@@ -249,6 +258,7 @@ for (const worldRef of library.worlds) {
 
       let baselineStructure = null;
       let baselineLocale = null;
+      const sharedBodyAnchorChapters = new Map();
 
       for (const locale of book.locales) {
         const editionPath = path.posix.join(bookDirectory, book.editions[locale]);
@@ -290,10 +300,23 @@ for (const worldRef of library.worlds) {
             anchors.add(block.id);
             assert(allowedReaderBlockTypes.has(block.type), `${editionPath} block ${block.id} has unsupported type: ${block.type}`);
             if (editionAlignment === "chapter" && ["paragraph", "scene-break"].includes(block.type)) {
+              const sharedBodyAnchor = spoilerMilestoneIds.has(block.id);
               assert(
-                block.id.startsWith(`${editionChapter.id}-${locale}-`),
-                `${editionPath} ${block.id} must use a locale-specific body anchor in chapter alignment mode`,
+                sharedBodyAnchor || block.id.startsWith(`${editionChapter.id}-${locale}-`),
+                `${editionPath} ${block.id} must use a locale-specific body anchor or a registered shared semantic milestone in chapter alignment mode`,
               );
+
+              if (sharedBodyAnchor) {
+                const knownChapter = sharedBodyAnchorChapters.get(block.id);
+                if (knownChapter === undefined) {
+                  sharedBodyAnchorChapters.set(block.id, editionChapter.id);
+                } else {
+                  assert(
+                    knownChapter === editionChapter.id,
+                    `${editionPath} shared semantic anchor ${block.id} moved from ${knownChapter} to ${editionChapter.id}`,
+                  );
+                }
+              }
             }
 
             if (block.type === "paragraph") {

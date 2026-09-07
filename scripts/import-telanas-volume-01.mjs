@@ -5,7 +5,7 @@ import { fileURLToPath } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const sourceRepository = "Kamui2040/Telanas";
-const sourceCommit = "8c5f071c261a00d3f785cd1827c3ccffbabf3fb6";
+const sourceCommit = "6b654b0a3b1d7b5ebcd8e507d2ca1acaa3d33bc1";
 const expectedBranch = "release/telanas-volume-01";
 const bookDirectory = "content/worlds/telanas/books/dragon-knight/volume-01";
 const illustrationsDirectory = path.join(root, bookDirectory, "illustrations");
@@ -17,8 +17,8 @@ const git = (...args) => execFileSync("git", ["-C", root, ...args], { encoding: 
 const ghJson = (endpoint) => JSON.parse(execFileSync("gh", ["api", endpoint], { encoding: "utf8", maxBuffer: 16 * 1024 * 1024 }));
 
 const sourceFiles = {
-  "manuscript/en/band-01.md": "d68ff82e7a251f4edc111afa78dde195a0b1317c",
-  "manuscript/de/band-01.md": "e3c8c29f2a0e21fdaeeaa1432b5947cdaf1e427a",
+  "manuscript/en/band-01.md": "95acfe62ddeeb7a99a287c63dcd079187a171758",
+  "manuscript/de/band-01.md": "96fcf7850f305ec5ac8aec2c7f19cb9bdbe063a6",
   "docs/story/illustration-reference.md": "9257d20d2adc169741f3bf129560c44fc8c8c378",
 };
 
@@ -180,17 +180,27 @@ const trimBoundaryBlankLines = (lines) => {
   return lines.slice(start, end);
 };
 
+const semanticMarkerPattern = /^<!--\s*telanas:anchor\s+([a-z0-9][a-z0-9-]*)\s*-->$/;
+
 const parseBody = (lines, anchorPrefix, locale) => {
   const blocks = [];
+  const semanticAnchors = [];
   let paragraph = [];
   let paragraphIndex = 0;
   let sceneIndex = 0;
+  let pendingSemanticAnchor = null;
+
+  const consumeBlockId = (fallback) => {
+    const id = pendingSemanticAnchor || fallback;
+    pendingSemanticAnchor = null;
+    return id;
+  };
 
   const flushParagraph = () => {
     if (!paragraph.length) return;
     paragraphIndex += 1;
     blocks.push({
-      id: `${anchorPrefix}-${locale}-p${String(paragraphIndex).padStart(3, "0")}`,
+      id: consumeBlockId(`${anchorPrefix}-${locale}-p${String(paragraphIndex).padStart(3, "0")}`),
       type: "paragraph",
       text: paragraph.join("\n"),
     });
@@ -198,15 +208,34 @@ const parseBody = (lines, anchorPrefix, locale) => {
   };
 
   for (const line of lines) {
+    const trimmed = line.trim();
+    const semanticMarker = trimmed.match(semanticMarkerPattern);
+
+    if (semanticMarker) {
+      flushParagraph();
+      assert(
+        pendingSemanticAnchor === null,
+        `${anchorPrefix} has adjacent semantic anchors without a story block`,
+      );
+      pendingSemanticAnchor = semanticMarker[1];
+      semanticAnchors.push(pendingSemanticAnchor);
+      continue;
+    }
+
+    assert(
+      !trimmed.includes("telanas:anchor"),
+      `${anchorPrefix} contains a malformed semantic anchor marker: ${line}`,
+    );
+
     if (line === "") {
       flushParagraph();
       continue;
     }
 
-    if (["---", "***", "* * *"].includes(line.trim()) && paragraph.length === 0) {
+    if (["---", "***", "* * *"].includes(trimmed) && paragraph.length === 0) {
       sceneIndex += 1;
       blocks.push({
-        id: `${anchorPrefix}-${locale}-s${String(sceneIndex).padStart(3, "0")}`,
+        id: consumeBlockId(`${anchorPrefix}-${locale}-s${String(sceneIndex).padStart(3, "0")}`),
         type: "scene-break",
       });
       continue;
@@ -217,8 +246,12 @@ const parseBody = (lines, anchorPrefix, locale) => {
   }
 
   flushParagraph();
+  assert(
+    pendingSemanticAnchor === null,
+    `${anchorPrefix} ends with a semantic anchor that has no following story block`,
+  );
   assert(blocks.length > 0, `${anchorPrefix} contains no body blocks`);
-  return blocks;
+  return { blocks, semanticAnchors };
 };
 
 const parseManuscript = (source, locale) => {
@@ -256,9 +289,11 @@ const parseManuscript = (source, locale) => {
     assert(heading === chapter.headings[locale], `${locale} heading mismatch at ${chapter.id}: expected ${JSON.stringify(chapter.headings[locale])}, found ${JSON.stringify(heading)}`);
     const nextHeadingIndex = index + 1 < sectionHeadingIndexes.length ? sectionHeadingIndexes[index + 1] : lines.length;
     const bodyLines = trimBoundaryBlankLines(lines.slice(headingIndex + 1, nextHeadingIndex));
+    const parsedBody = parseBody(bodyLines, chapter.id, locale);
     return {
       id: chapter.id,
-      blocks: parseBody(bodyLines, chapter.id, locale),
+      blocks: parsedBody.blocks,
+      semanticAnchors: parsedBody.semanticAnchors,
     };
   });
 };
@@ -338,6 +373,34 @@ try {
   const enParsed = parseManuscript(enSource, "en");
   const deParsed = parseManuscript(deSource, "de");
 
+  const semanticAnchorSequence = (editionChapters) => editionChapters.flatMap(
+    (chapter) => chapter.semanticAnchors.map((anchor) => ({
+      chapter: chapter.id,
+      anchor,
+    })),
+  );
+  const enSemanticAnchorSequence = semanticAnchorSequence(enParsed);
+  const deSemanticAnchorSequence = semanticAnchorSequence(deParsed);
+
+  assert(
+    enSemanticAnchorSequence.length === 27,
+    `English manuscript must contain exactly 27 semantic anchors; found ${enSemanticAnchorSequence.length}`,
+  );
+  assert(
+    deSemanticAnchorSequence.length === 27,
+    `German manuscript must contain exactly 27 semantic anchors; found ${deSemanticAnchorSequence.length}`,
+  );
+  assert(
+    JSON.stringify(enSemanticAnchorSequence) === JSON.stringify(deSemanticAnchorSequence),
+    "English and German semantic anchor order/chapter placement must match",
+  );
+
+  const semanticAnchors = enSemanticAnchorSequence.map((item) => item.anchor);
+  assert(
+    new Set(semanticAnchors).size === semanticAnchors.length,
+    "Volume 1 semantic anchor IDs must be unique",
+  );
+
   const enChapters = withIllustrations(enParsed, "en");
   const deChapters = withIllustrations(deParsed, "de");
 
@@ -355,7 +418,7 @@ try {
       de: "editions/de.json",
     },
     contextualLexicon: "contextual-lexicon.json",
-    spoilerMilestones: ["dk-v01-ch01"],
+    spoilerMilestones: semanticAnchors,
     source: {
       repository: sourceRepository,
       commit: sourceCommit,
@@ -421,7 +484,7 @@ try {
   bookRef.state = "approved";
   await writeJson("content/worlds/telanas/world.json", world);
 
-  console.log(`PASS: imported exact EN/DE Band 1 manuscripts from ${sourceCommit} with 10 authoritative lead illustrations`);
+  console.log(`PASS: imported exact EN/DE Band 1 manuscripts from ${sourceCommit} with 27 shared semantic anchors and 10 authoritative lead illustrations`);
 } catch (error) {
   console.error(`FAIL: ${error.message}`);
   process.exitCode = 1;
