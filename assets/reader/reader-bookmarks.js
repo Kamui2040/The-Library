@@ -14,7 +14,8 @@
 
   if (!body || !toggle || !icon || !heading || !count || !empty || !list || !tocList || !positionLabel || !manifestReference) return;
 
-  const storageKey = "library-reader-bookmarks-v1";
+  const storageKey = "library-reader-bookmarks-v2";
+  const legacyStorageKey = "library-reader-bookmarks-v1";
   const copy = {
     en: {
       heading: "Bookmarks",
@@ -46,34 +47,36 @@
   const language = () => document.documentElement.lang === "de" ? "de" : "en";
   const table = () => copy[language()];
 
-  const defaultState = () => ({ version: 1, books: {} });
+  const defaultState = () => ({ version: 2, books: {} });
+
+  const normalizeEntries = (entries) => {
+    if (!Array.isArray(entries)) return [];
+    const seen = new Set();
+    const normalized = [];
+    for (const entry of entries) {
+      if (!entry || typeof entry !== "object") continue;
+      if (typeof entry.anchor !== "string" || !entry.anchor || typeof entry.chapterId !== "string" || !entry.chapterId) continue;
+      if (seen.has(entry.anchor)) continue;
+      seen.add(entry.anchor);
+      normalized.push({ anchor: entry.anchor, chapterId: entry.chapterId });
+    }
+    return normalized;
+  };
 
   const normalizeState = (value) => {
     const state = defaultState();
-    if (value?.version !== 1 || !value.books || typeof value.books !== "object" || Array.isArray(value.books)) return state;
+    if (value?.version !== 2 || !value.books || typeof value.books !== "object" || Array.isArray(value.books)) return state;
 
-    for (const [key, entries] of Object.entries(value.books)) {
-      if (!Array.isArray(entries)) continue;
-      const seen = new Set();
-      const normalized = [];
-      for (const entry of entries) {
-        if (!entry || typeof entry !== "object") continue;
-        if (typeof entry.anchor !== "string" || !entry.anchor || typeof entry.chapterId !== "string" || !entry.chapterId) continue;
-        if (seen.has(entry.anchor)) continue;
-        seen.add(entry.anchor);
-        normalized.push({ anchor: entry.anchor, chapterId: entry.chapterId });
+    for (const [key, localized] of Object.entries(value.books)) {
+      if (!localized || typeof localized !== "object" || Array.isArray(localized)) continue;
+      const normalizedLocales = {};
+      for (const locale of ["en", "de"]) {
+        const entries = normalizeEntries(localized[locale]);
+        if (entries.length) normalizedLocales[locale] = entries;
       }
-      if (normalized.length) state.books[key] = normalized;
+      if (Object.keys(normalizedLocales).length) state.books[key] = normalizedLocales;
     }
     return state;
-  };
-
-  const readState = () => {
-    try {
-      return normalizeState(JSON.parse(localStorage.getItem(storageKey) || "null"));
-    } catch {
-      return defaultState();
-    }
   };
 
   const writeState = (state) => {
@@ -84,9 +87,29 @@
     }
   };
 
+  const readState = () => {
+    try {
+      const current = JSON.parse(localStorage.getItem(storageKey) || "null");
+      if (current?.version === 2) return normalizeState(current);
+
+      const legacy = JSON.parse(localStorage.getItem(legacyStorageKey) || "null");
+      const state = defaultState();
+      if (legacy?.version === 1 && legacy.books && typeof legacy.books === "object") {
+        for (const [key, entries] of Object.entries(legacy.books)) {
+          const normalized = normalizeEntries(entries);
+          if (normalized.length) state.books[key] = { [language()]: normalized };
+        }
+        writeState(state);
+      }
+      return state;
+    } catch {
+      return defaultState();
+    }
+  };
+
   const currentBookmarks = () => {
     if (!bookKey) return [];
-    return readState().books[bookKey] || [];
+    return readState().books[bookKey]?.[language()] || [];
   };
 
   const currentAnchor = () => {
@@ -127,7 +150,12 @@
   const persistBookmarks = (bookmarks) => {
     if (!bookKey) return;
     const state = readState();
-    if (bookmarks.length) state.books[bookKey] = bookmarks;
+    const localized = state.books[bookKey] && typeof state.books[bookKey] === "object" && !Array.isArray(state.books[bookKey])
+      ? state.books[bookKey]
+      : {};
+    if (bookmarks.length) localized[language()] = bookmarks;
+    else delete localized[language()];
+    if (Object.keys(localized).length) state.books[bookKey] = localized;
     else delete state.books[bookKey];
     writeState(state);
   };

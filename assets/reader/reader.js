@@ -25,7 +25,8 @@
   ) return;
 
   const manifestUrl = document.body?.dataset.readerBookManifest || "../../content/worlds/telanas/books/dragon-knight/volume-01/book.json";
-  const positionStorageKey = "library-reader-position-v1";
+  const positionStorageKey = "library-reader-position-v2";
+  const legacyPositionStorageKey = "library-reader-position-v1";
   const layoutStorageKey = "library-reader-layout";
   const pointerHover = window.matchMedia("(hover: hover) and (pointer: fine)");
   const wideSpread = window.matchMedia("(min-width: 981px)");
@@ -87,6 +88,34 @@
 
   const chapterById = (chapterId) => model?.chapters.find((chapter) => chapter.id === chapterId) || null;
 
+  const captureLanguageTransfer = () => {
+    if (!model || currentAnchor === "contents") return { anchor: "contents", chapterId: null, ratio: 0 };
+    const chapterId = engine.chapterForAnchor(model, currentAnchor);
+    if (!chapterId) return { anchor: "contents", chapterId: null, ratio: 0 };
+    const chapter = chapterById(chapterId);
+    const blockIndex = chapter?.blocks.findIndex((block) => block.id === currentAnchor) ?? -1;
+    const denominator = Math.max(1, (chapter?.blocks.length || 1) - 1);
+    return {
+      anchor: currentAnchor,
+      chapterId,
+      ratio: blockIndex >= 0 ? blockIndex / denominator : 0
+    };
+  };
+
+  const restoreAnchorForModel = (restore) => {
+    if (typeof restore === "string") return engine.resolveAnchor(model, restore);
+    if (!restore || typeof restore !== "object") return "contents";
+    if (typeof restore.anchor === "string" && model.anchors.has(restore.anchor)) return restore.anchor;
+    if (typeof restore.chapterId !== "string") return "contents";
+
+    const chapter = chapterById(restore.chapterId);
+    if (!chapter) return "contents";
+    if (!chapter.blocks.length) return chapter.id;
+    const ratio = Number.isFinite(restore.ratio) ? Math.max(0, Math.min(1, restore.ratio)) : 0;
+    const index = Math.round(ratio * Math.max(0, chapter.blocks.length - 1));
+    return chapter.blocks[index]?.id || chapter.id;
+  };
+
   const chapterLabelForAnchor = (anchor) => {
     if (!model || anchor === "contents") return bookLabels()?.contents || "Contents";
     const chapterId = engine.chapterForAnchor(model, anchor);
@@ -100,7 +129,11 @@
     if (!key) return null;
     try {
       const parsed = JSON.parse(localStorage.getItem(positionStorageKey) || "null");
-      return parsed?.version === 1 && typeof parsed.books?.[key] === "string" ? parsed.books[key] : null;
+      const localized = parsed?.version === 2 ? parsed.books?.[key]?.[language()] : null;
+      if (typeof localized === "string") return localized;
+
+      const legacy = JSON.parse(localStorage.getItem(legacyPositionStorageKey) || "null");
+      return legacy?.version === 1 && typeof legacy.books?.[key] === "string" ? legacy.books[key] : null;
     } catch {
       return null;
     }
@@ -111,10 +144,14 @@
     if (!key) return;
     try {
       const parsed = JSON.parse(localStorage.getItem(positionStorageKey) || "null");
-      const state = parsed?.version === 1 && parsed.books && typeof parsed.books === "object"
+      const state = parsed?.version === 2 && parsed.books && typeof parsed.books === "object"
         ? parsed
-        : { version: 1, books: {} };
-      state.books[key] = anchor;
+        : { version: 2, books: {} };
+      const saved = state.books[key] && typeof state.books[key] === "object" && !Array.isArray(state.books[key])
+        ? state.books[key]
+        : {};
+      saved[language()] = anchor;
+      state.books[key] = saved;
       localStorage.setItem(positionStorageKey, JSON.stringify(state));
     } catch {
       // Local persistence is optional.
@@ -631,7 +668,7 @@
 
     model = engine.buildModel(book, loadedEdition, locale);
     titleLabel.textContent = currentTitle();
-    currentAnchor = engine.resolveAnchor(model, restoreAnchor);
+    currentAnchor = restoreAnchorForModel(restoreAnchor);
     renderToc();
 
     if (layoutPreference === "continuous") {
@@ -734,7 +771,7 @@
 
   window.addEventListener("library-language-change", async () => {
     if (!book) return;
-    const restoreAnchor = currentAnchor;
+    const restoreAnchor = captureLanguageTransfer();
     applyLayoutClasses(layoutPreference);
     try {
       await loadSelectedEdition(restoreAnchor);

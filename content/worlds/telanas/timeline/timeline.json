@@ -48,7 +48,7 @@
           "id": "timeline-volume-one-reader-reference",
           "story": "dragon-knight",
           "book": "volume-01",
-          "anchor": "dk-v01-ch01-p004",
+          "anchor": "dk-v01-ch01",
           "labels": {
             "en": "Open the prototype reader reference",
             "de": "Prototypische Reader-Stelle öffnen"

@@ -206,7 +206,7 @@
               "id": "prototype-reader-passage",
               "story": "dragon-knight",
               "book": "volume-01",
-              "anchor": "dk-v01-ch01-p004",
+              "anchor": "dk-v01-ch01",
               "labels": {
                 "en": "Open the relevant prototype passage",
                 "de": "Relevante Prototyp-Stelle öffnen"

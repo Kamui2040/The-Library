@@ -3,8 +3,9 @@
   "world": "telanas",
   "story": "dragon-knight",
   "id": "volume-01",
-  "state": "prototype",
-  "contentMode": "placeholder",
+  "state": "approved",
+  "contentMode": "released",
+  "editionAlignment": "chapter",
   "locales": [
     "en",
     "de"
@@ -15,20 +16,108 @@
   },
   "contextualLexicon": "contextual-lexicon.json",
   "spoilerMilestones": [
-    "dk-v01-ch01-p004"
+    "dk-v01-p-twins-hatch",
+    "dk-v01-p-first-shard",
+    "dk-v01-ch01-corvin-arrives",
+    "dk-v01-ch01-alden-war-gear",
+    "dk-v01-ch02-old-woods-pull",
+    "dk-v01-ch03-town-arrival",
+    "dk-v01-ch03-border-warning",
+    "dk-v01-ch03-bram",
+    "dk-v01-ch03-town-fight",
+    "dk-v01-ch04-first-independent-work",
+    "dk-v01-ch05-camp",
+    "dk-v01-ch05-goblins",
+    "dk-v01-ch05-pull-confession",
+    "dk-v01-ch06-apprentice-moves",
+    "dk-v01-ch06-first-letter",
+    "dk-v01-ch06-pendant-design",
+    "dk-v01-ch06-pendant-finished",
+    "dk-v01-ch07-alden-illness",
+    "dk-v01-ch07-calist-runs-forge",
+    "dk-v01-ch08-nessa-dies",
+    "dk-v01-ch08-hunters-depart",
+    "dk-v01-ch08-ambush-return",
+    "dk-v01-ch08-search-ends",
+    "dk-v01-ch08-necklace-grief",
+    "dk-v01-ch09-enlist-decision",
+    "dk-v01-ch09-clasp",
+    "dk-v01-ch09-chainmail-sword"
   ],
+  "source": {
+    "repository": "Kamui2040/Telanas",
+    "commit": "6b654b0a3b1d7b5ebcd8e507d2ca1acaa3d33bc1",
+    "manuscripts": {
+      "en": "manuscript/en/band-01.md",
+      "de": "manuscript/de/band-01.md"
+    },
+    "manuscriptBlobs": {
+      "en": "95acfe62ddeeb7a99a287c63dcd079187a171758",
+      "de": "96fcf7850f305ec5ac8aec2c7f19cb9bdbe063a6"
+    },
+    "illustrationReference": "docs/story/illustration-reference.md",
+    "illustrationsDirectory": "assets/illustrations/band-01/"
+  },
   "illustrations": [
     {
-      "id": "dk-v01-prototype-full-page",
-      "mode": "placeholder",
-      "aspectRatio": "2:3",
-      "prototypeOnly": true
+      "id": "dk-v01-ill-prologue",
+      "mode": "image",
+      "src": "illustrations/Band 1 - Approved Primordial Cosmos.png",
+      "aspectRatio": "2:3"
     },
     {
-      "id": "dk-v01-prototype-flow",
-      "mode": "placeholder",
-      "aspectRatio": "4:3",
-      "prototypeOnly": true
+      "id": "dk-v01-ill-ch01",
+      "mode": "image",
+      "src": "illustrations/Band 1 - Approved Village Illustration Reference.png",
+      "aspectRatio": "5:6"
+    },
+    {
+      "id": "dk-v01-ill-ch02",
+      "mode": "image",
+      "src": "illustrations/Band 1 - Approved Old Forest Entrance.png",
+      "aspectRatio": "1055:1491"
+    },
+    {
+      "id": "dk-v01-ill-ch03",
+      "mode": "image",
+      "src": "illustrations/Band 1 - Approved Town Entrance.png",
+      "aspectRatio": "1055:1491"
+    },
+    {
+      "id": "dk-v01-ill-ch04",
+      "mode": "image",
+      "src": "illustrations/Band 1 - Approved Alden Smithy.png",
+      "aspectRatio": "1055:1491"
+    },
+    {
+      "id": "dk-v01-ill-ch05",
+      "mode": "image",
+      "src": "illustrations/Band 1 - Approved Forest Camp.png",
+      "aspectRatio": "2:3"
+    },
+    {
+      "id": "dk-v01-ill-ch06",
+      "mode": "image",
+      "src": "illustrations/Band 1 - Approved Apprentice.png",
+      "aspectRatio": "2:3"
+    },
+    {
+      "id": "dk-v01-ill-ch07",
+      "mode": "image",
+      "src": "illustrations/Band 1 - Approved Long Winter.png",
+      "aspectRatio": "3:4"
+    },
+    {
+      "id": "dk-v01-ill-ch08",
+      "mode": "image",
+      "src": "illustrations/Band 1 - Approved What Remains.png",
+      "aspectRatio": "1055:1491"
+    },
+    {
+      "id": "dk-v01-ill-ch09",
+      "mode": "image",
+      "src": "illustrations/Band 1 - Approved The Choice.png",
+      "aspectRatio": "1055:1491"
     }
   ],
   "labels": {
@@ -50,32 +139,80 @@
       "id": "dk-v01-prologue",
       "slug": "prologue",
       "labels": {
-        "en": "Prologue",
-        "de": "Prolog"
+        "en": "Prologue — Before the Sky",
+        "de": "Prolog — Vor dem Himmel"
       }
     },
     {
       "id": "dk-v01-ch01",
       "slug": "chapter-1",
       "labels": {
-        "en": "Chapter 1",
-        "de": "Kapitel 1"
+        "en": "Chapter 1 — The Road",
+        "de": "Kapitel 1 — Die Straße"
       }
     },
     {
       "id": "dk-v01-ch02",
       "slug": "chapter-2",
       "labels": {
-        "en": "Chapter 2",
-        "de": "Kapitel 2"
+        "en": "Chapter 2 — The Old Woods",
+        "de": "Kapitel 2 — Der alte Wald"
       }
     },
     {
       "id": "dk-v01-ch03",
       "slug": "chapter-3",
       "labels": {
-        "en": "Chapter 3",
-        "de": "Kapitel 3"
+        "en": "Chapter 3 — Beyond Home",
+        "de": "Kapitel 3 — Jenseits des Dorfes"
+      }
+    },
+    {
+      "id": "dk-v01-ch04",
+      "slug": "chapter-4",
+      "labels": {
+        "en": "Chapter 4 — Useful Hands",
+        "de": "Kapitel 4 — Nützliche Hände"
+      }
+    },
+    {
+      "id": "dk-v01-ch05",
+      "slug": "chapter-5",
+      "labels": {
+        "en": "Chapter 5 — The Hunt",
+        "de": "Kapitel 5 — Die Jagd"
+      }
+    },
+    {
+      "id": "dk-v01-ch06",
+      "slug": "chapter-6",
+      "labels": {
+        "en": "Chapter 6 — Apprentice",
+        "de": "Kapitel 6 — Die Lehre"
+      }
+    },
+    {
+      "id": "dk-v01-ch07",
+      "slug": "chapter-7",
+      "labels": {
+        "en": "Chapter 7 — The Long Winter",
+        "de": "Kapitel 7 — Der lange Winter"
+      }
+    },
+    {
+      "id": "dk-v01-ch08",
+      "slug": "chapter-8",
+      "labels": {
+        "en": "Chapter 8 — What Remains",
+        "de": "Kapitel 8 — Was bleibt"
+      }
+    },
+    {
+      "id": "dk-v01-ch09",
+      "slug": "chapter-9",
+      "labels": {
+        "en": "Chapter 9 — The Choice",
+        "de": "Kapitel 9 — Die Entscheidung"
       }
     }
   ]

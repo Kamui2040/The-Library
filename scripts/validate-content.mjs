@@ -4,7 +4,8 @@ import { fileURLToPath } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const allowedStates = new Set(["development", "prototype", "approved", "published"]);
-const allowedVisibilityModes = new Set(["always", "completed-volume", "full-spoilers"]);
+const allowedEditionAlignments = new Set(["block", "chapter"]);
+const allowedVisibilityModes = new Set(["always", "completed-volume", "reached-anchor", "full-spoilers"]);
 const allowedReaderBlockTypes = new Set(["paragraph", "scene-break", "illustration"]);
 const allowedIllustrationModes = new Set(["placeholder", "image"]);
 const allowedIllustrationPlacements = new Set(["flow", "full-page", "before-title"]);
@@ -82,6 +83,15 @@ const validateVisibility = (visibility, label, storyBooks) => {
     const books = storyBooks.get(visibility.story);
     assert(books, `${label} references unknown story: ${visibility.story}`);
     assert(books.has(visibility.volume), `${label} references unknown volume: ${visibility.story}/${visibility.volume}`);
+  }
+
+  if (visibility.mode === "reached-anchor") {
+    assertId(visibility.story, `${label} visibility story`);
+    assertId(visibility.book, `${label} visibility book`);
+    assertId(visibility.anchor, `${label} visibility anchor`);
+    const books = storyBooks.get(visibility.story);
+    assert(books, `${label} references unknown story: ${visibility.story}`);
+    assert(books.has(visibility.book), `${label} references unknown book: ${visibility.story}/${visibility.book}`);
   }
 };
 
@@ -162,6 +172,11 @@ for (const worldRef of library.worlds) {
       assert(book.labels && typeof book.labels === "object", `${bookPath} labels are missing`);
       assert(book.editions && typeof book.editions === "object" && !Array.isArray(book.editions), `${bookPath} editions are missing`);
       assert(Array.isArray(book.chapters), `${bookPath} chapters must be an array`);
+      const editionAlignment = book.editionAlignment || "block";
+      assert(
+        allowedEditionAlignments.has(editionAlignment),
+        `${bookPath} has unsupported editionAlignment: ${editionAlignment}`,
+      );
 
       for (const locale of Object.keys(book.editions)) {
         assert(book.locales.includes(locale), `${bookPath} registers an edition for unknown locale: ${locale}`);
@@ -227,6 +242,15 @@ for (const worldRef of library.worlds) {
         }
       }
 
+      const spoilerMilestones = book.spoilerMilestones ?? [];
+      assert(Array.isArray(spoilerMilestones), `${bookPath} spoilerMilestones must be an array`);
+      const spoilerMilestoneIds = new Set();
+      for (const milestone of spoilerMilestones) {
+        assertId(milestone, `${bookPath} spoiler milestone`);
+        assert(!spoilerMilestoneIds.has(milestone), `${bookPath} has duplicate spoiler milestone: ${milestone}`);
+        spoilerMilestoneIds.add(milestone);
+      }
+
       if (book.contentMode === "placeholder") {
         const forbidden = findForbiddenPrototypeKey(book);
         assert(!forbidden, `${bookPath} placeholder manifest contains story-text field: ${forbidden}`);
@@ -234,6 +258,7 @@ for (const worldRef of library.worlds) {
 
       let baselineStructure = null;
       let baselineLocale = null;
+      const sharedBodyAnchorChapters = new Map();
 
       for (const locale of book.locales) {
         const editionPath = path.posix.join(bookDirectory, book.editions[locale]);
@@ -274,6 +299,25 @@ for (const worldRef of library.worlds) {
             assert(!anchors.has(block.id), `${editionPath} has duplicate semantic anchor: ${block.id}`);
             anchors.add(block.id);
             assert(allowedReaderBlockTypes.has(block.type), `${editionPath} block ${block.id} has unsupported type: ${block.type}`);
+            if (editionAlignment === "chapter" && ["paragraph", "scene-break"].includes(block.type)) {
+              const sharedBodyAnchor = spoilerMilestoneIds.has(block.id);
+              assert(
+                sharedBodyAnchor || block.id.startsWith(`${editionChapter.id}-${locale}-`),
+                `${editionPath} ${block.id} must use a locale-specific body anchor or a registered shared semantic milestone in chapter alignment mode`,
+              );
+
+              if (sharedBodyAnchor) {
+                const knownChapter = sharedBodyAnchorChapters.get(block.id);
+                if (knownChapter === undefined) {
+                  sharedBodyAnchorChapters.set(block.id, editionChapter.id);
+                } else {
+                  assert(
+                    knownChapter === editionChapter.id,
+                    `${editionPath} shared semantic anchor ${block.id} moved from ${knownChapter} to ${editionChapter.id}`,
+                  );
+                }
+              }
+            }
 
             if (block.type === "paragraph") {
               assertLocalizedString(block.text, `${editionPath} paragraph ${block.id} text`);
@@ -305,12 +349,14 @@ for (const worldRef of library.worlds) {
           }
         }
 
-        const signature = JSON.stringify(structure);
-        if (baselineStructure === null) {
-          baselineStructure = signature;
-          baselineLocale = locale;
-        } else {
-          assert(signature === baselineStructure, `${editionPath} semantic structure does not match ${baselineLocale} edition`);
+        if (editionAlignment === "block") {
+          const signature = JSON.stringify(structure);
+          if (baselineStructure === null) {
+            baselineStructure = signature;
+            baselineLocale = locale;
+          } else {
+            assert(signature === baselineStructure, `${editionPath} semantic structure does not match ${baselineLocale} edition`);
+          }
         }
       }
     }

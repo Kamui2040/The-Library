@@ -8,21 +8,7 @@
     "de"
   ],
   "references": {
-    "en": [
-      {
-        "anchor": "dk-v01-prologue-p001",
-        "entry": "telanas",
-        "text": "Telanas",
-        "occurrence": 1
-      }
-    ],
-    "de": [
-      {
-        "anchor": "dk-v01-prologue-p001",
-        "entry": "telanas",
-        "text": "Telanas",
-        "occurrence": 1
-      }
-    ]
+    "en": [],
+    "de": []
   }
 }

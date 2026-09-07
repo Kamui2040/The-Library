@@ -3,7 +3,10 @@
   "id": "telanas",
   "state": "development",
   "theme": "telanas",
-  "locales": ["en", "de"],
+  "locales": [
+    "en",
+    "de"
+  ],
   "lexicon": "lexicon/lexicon.json",
   "timeline": "timeline/timeline.json",
   "map": "map/map.json",
@@ -14,7 +17,7 @@
         {
           "id": "volume-01",
           "manifest": "books/dragon-knight/volume-01/book.json",
-          "state": "prototype"
+          "state": "approved"
         }
       ]
     }
