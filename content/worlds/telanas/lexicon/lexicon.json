@@ -2061,6 +2061,792 @@
           }
         }
       ]
+    },
+    {
+      "id": "first-shard-formation",
+      "categories": [
+        "events",
+        "history"
+      ],
+      "visibility": {
+        "mode": "reached-anchor",
+        "story": "dragon-knight",
+        "book": "volume-01",
+        "chapter": "dk-v01-prologue",
+        "anchor": "dk-v01-p-first-shard"
+      },
+      "labels": {
+        "en": {
+          "title": "Formation of the first shard",
+          "summary": "The primordial twin dragons accidentally form the first shard while playing in the void."
+        },
+        "de": {
+          "title": "Entstehung der ersten Scherbe",
+          "summary": "Die urzeitlichen Zwillingsdrachen formen beim Spielen in der Leere unbeabsichtigt die erste Scherbe."
+        }
+      },
+      "fragments": [
+        {
+          "id": "first-shard-formation-process",
+          "visibility": {
+            "mode": "reached-anchor",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-prologue",
+            "anchor": "dk-v01-p-first-shard"
+          },
+          "text": {
+            "en": "Shell fragments, dust and a shed scale from each brother are pressed together during their game. The growing sphere heats, glows and cools into a world without either twin realizing what they have made.",
+            "de": "Schalenstücke, Staub und je eine abgestoßene Schuppe der Brüder werden während ihres Spiels zusammengedrückt. Die wachsende Kugel wird heiß, glüht und kühlt schließlich zu einer Welt ab, ohne dass die Zwillinge verstehen, was sie geschaffen haben."
+          },
+          "readerLinks": [
+            {
+              "id": "first-shard-formation-process-reader",
+              "story": "dragon-knight",
+              "book": "volume-01",
+              "anchor": "dk-v01-p-first-shard",
+              "labels": {
+                "en": "Open the related passage",
+                "de": "Zugehörige Stelle öffnen"
+              }
+            }
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "id": "accidental-creators",
+          "target": "twin-dragons",
+          "labels": {
+            "en": "Accidental creators",
+            "de": "Unbeabsichtigte Schöpfer"
+          }
+        }
+      ]
+    },
+    {
+      "id": "town-market-fight",
+      "categories": [
+        "events"
+      ],
+      "visibility": {
+        "mode": "reached-anchor",
+        "story": "dragon-knight",
+        "book": "volume-01",
+        "chapter": "dk-v01-ch03",
+        "anchor": "dk-v01-ch03-town-fight"
+      },
+      "labels": {
+        "en": {
+          "title": "The town market fight",
+          "summary": "Calist, Eryn, Joric and Nalia get into a street fight with four town boys during their first journey beyond the village."
+        },
+        "de": {
+          "title": "Die Schlägerei in der Stadt",
+          "summary": "Calist, Eryn, Joric und Nalia geraten auf ihrer ersten Reise aus dem Dorf mit vier Jungen aus der Stadt in eine Straßenschlägerei."
+        }
+      },
+      "fragments": [
+        {
+          "id": "town-market-fight-begins",
+          "visibility": {
+            "mode": "reached-anchor",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch03",
+            "anchor": "dk-v01-ch03-town-fight"
+          },
+          "text": {
+            "en": "Insults about the village children turn into shoving and then a confused fight. Calist holds his ground while Eryn uses speed and thrown stones; Joric and Nalia join the chaos.",
+            "de": "Beleidigungen gegen die Dorfkinder werden zu Schubsen und schließlich zu einer chaotischen Schlägerei. Calist hält stand, während Eryn Schnelligkeit und geworfene Steine nutzt; Joric und Nalia geraten ebenfalls hinein."
+          },
+          "readerLinks": [
+            {
+              "id": "town-market-fight-begins-reader",
+              "story": "dragon-knight",
+              "book": "volume-01",
+              "anchor": "dk-v01-ch03-town-fight",
+              "labels": {
+                "en": "Open the related passage",
+                "de": "Zugehörige Stelle öffnen"
+              }
+            }
+          ]
+        },
+        {
+          "id": "town-market-fight-lesson",
+          "visibility": {
+            "mode": "reached-anchor",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch03",
+            "anchor": "dk-v01-ch03-town-fight"
+          },
+          "text": {
+            "en": "Corvin stops the fight. Alden is less interested in who started it than in whether Calist could have chosen to walk away.",
+            "de": "Corvin beendet die Schlägerei. Alden interessiert weniger, wer angefangen hat, als die Frage, ob Calist hätte weggehen können."
+          },
+          "readerLinks": [
+            {
+              "id": "town-market-fight-lesson-reader",
+              "story": "dragon-knight",
+              "book": "volume-01",
+              "anchor": "dk-v01-ch03-town-fight",
+              "labels": {
+                "en": "Open the related passage",
+                "de": "Zugehörige Stelle öffnen"
+              }
+            }
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "id": "participant-calist",
+          "target": "calist",
+          "labels": {
+            "en": "Participant",
+            "de": "Beteiligt"
+          }
+        },
+        {
+          "id": "participant-eryn",
+          "target": "eryn",
+          "labels": {
+            "en": "Participant",
+            "de": "Beteiligt"
+          }
+        },
+        {
+          "id": "stopped-by-corvin",
+          "target": "corvin",
+          "labels": {
+            "en": "Stopped by",
+            "de": "Beendet von"
+          }
+        },
+        {
+          "id": "location",
+          "target": "south-road-town",
+          "labels": {
+            "en": "Location",
+            "de": "Ort"
+          }
+        }
+      ]
+    },
+    {
+      "id": "border-tension",
+      "categories": [
+        "events",
+        "history"
+      ],
+      "visibility": {
+        "mode": "reached-anchor",
+        "story": "dragon-knight",
+        "book": "volume-01",
+        "chapter": "dk-v01-ch03",
+        "anchor": "dk-v01-ch03-border-warning"
+      },
+      "labels": {
+        "en": {
+          "title": "Rising border tension",
+          "summary": "Reports of raids and crossings at the far border begin to suggest that a larger conflict may be forming."
+        },
+        "de": {
+          "title": "Wachsende Spannungen an der Grenze",
+          "summary": "Berichte über Überfälle und Grenzübertritte deuten zunehmend darauf hin, dass ein größerer Konflikt entstehen könnte."
+        }
+      },
+      "fragments": [
+        {
+          "id": "border-tension-first-reports",
+          "visibility": {
+            "mode": "reached-anchor",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch03",
+            "anchor": "dk-v01-ch03-border-warning"
+          },
+          "text": {
+            "en": "Traders report crossings, attacked farms and small posts near the neighboring kingdom. A bad winter, lost stores and pressure on grazing land are among the rumors, but nobody in town knows the real cause.",
+            "de": "Händler berichten von Grenzübertritten, überfallenen Höfen und kleinen Posten nahe dem Nachbarreich. Ein schlechter Winter, verlorene Vorräte und knapperes Weideland gehören zu den Gerüchten, doch in der Stadt kennt niemand die wirkliche Ursache."
+          },
+          "readerLinks": [
+            {
+              "id": "border-tension-first-reports-reader",
+              "story": "dragon-knight",
+              "book": "volume-01",
+              "anchor": "dk-v01-ch03-border-warning",
+              "labels": {
+                "en": "Open the related passage",
+                "de": "Zugehörige Stelle öffnen"
+              }
+            }
+          ]
+        },
+        {
+          "id": "border-tension-confirmed",
+          "visibility": {
+            "mode": "completed-chapter",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch03"
+          },
+          "text": {
+            "en": "Corvin later confirms that several crossings are real, farms have been stripped and a patrol has already exchanged arrows across the border. He still stops short of calling it a war.",
+            "de": "Corvin bestätigt später mehrere tatsächliche Grenzübertritte, geplünderte Höfe und einen Pfeilwechsel zwischen einer Patrouille und Männern auf der anderen Seite. Von einem Krieg spricht er noch nicht."
+          },
+          "readerLinks": [
+            {
+              "id": "border-tension-confirmed-reader",
+              "story": "dragon-knight",
+              "book": "volume-01",
+              "anchor": "dk-v01-ch03",
+              "labels": {
+                "en": "Open the related passage",
+                "de": "Zugehörige Stelle öffnen"
+              }
+            }
+          ]
+        },
+        {
+          "id": "border-tension-drains-patrols",
+          "visibility": {
+            "mode": "completed-chapter",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch08"
+          },
+          "text": {
+            "en": "As the western conflict demands more soldiers, fewer remain near Calist's village. Patrols pass less often and the fort has less manpower to answer local threats.",
+            "de": "Als der Konflikt im Westen immer mehr Soldaten bindet, bleiben weniger in der Nähe von Calists Dorf. Patrouillen kommen seltener vorbei und dem Fort fehlen Männer für örtliche Gefahren."
+          },
+          "readerLinks": [
+            {
+              "id": "border-tension-drains-patrols-reader",
+              "story": "dragon-knight",
+              "book": "volume-01",
+              "anchor": "dk-v01-ch08",
+              "labels": {
+                "en": "Open the related passage",
+                "de": "Zugehörige Stelle öffnen"
+              }
+            }
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "id": "soldier",
+          "target": "corvin",
+          "labels": {
+            "en": "Soldier reporting the border",
+            "de": "Soldat mit Berichten von der Grenze"
+          }
+        },
+        {
+          "id": "nearby-fort",
+          "target": "border-fort",
+          "labels": {
+            "en": "Local military presence",
+            "de": "Örtliche Militärpräsenz"
+          }
+        }
+      ]
+    },
+    {
+      "id": "hardening-winters",
+      "categories": [
+        "events",
+        "history"
+      ],
+      "visibility": {
+        "mode": "completed-chapter",
+        "story": "dragon-knight",
+        "book": "volume-01",
+        "chapter": "dk-v01-ch07"
+      },
+      "labels": {
+        "en": {
+          "title": "The hardening winters",
+          "summary": "Several difficult seasons bring a long winter, smaller harvests, irregular trade and game farther from the village."
+        },
+        "de": {
+          "title": "Die härteren Winter",
+          "summary": "Mehrere schwierige Jahreszeiten bringen einen langen Winter, kleinere Ernten, unregelmäßigen Handel und Wild, das weiter vom Dorf entfernt ist."
+        }
+      },
+      "fragments": [
+        {
+          "id": "hardening-winters-alden",
+          "visibility": {
+            "mode": "completed-chapter",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch07"
+          },
+          "text": {
+            "en": "During the long winter, illness lingers in more village homes than usual. Alden becomes seriously ill and recovers only slowly.",
+            "de": "Während des langen Winters hält sich Krankheit in mehr Häusern des Dorfes als gewöhnlich. Alden wird ernsthaft krank und erholt sich nur langsam."
+          },
+          "readerLinks": [
+            {
+              "id": "hardening-winters-alden-reader",
+              "story": "dragon-knight",
+              "book": "volume-01",
+              "anchor": "dk-v01-ch07-alden-illness",
+              "labels": {
+                "en": "Open the related passage",
+                "de": "Zugehörige Stelle öffnen"
+              }
+            }
+          ]
+        },
+        {
+          "id": "hardening-winters-calist-stays",
+          "visibility": {
+            "mode": "completed-chapter",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch07"
+          },
+          "text": {
+            "en": "Calist keeps the smithy open while Alden is sick. When the roads improve, he still remains through planting and the first hay cutting because the village needs his hands.",
+            "de": "Calist hält die Schmiede offen, während Alden krank ist. Als die Straßen wieder besser werden, bleibt er dennoch bis durch die Aussaat und den ersten Heuschnitt, weil das Dorf seine Hände braucht."
+          },
+          "readerLinks": [
+            {
+              "id": "hardening-winters-calist-stays-reader",
+              "story": "dragon-knight",
+              "book": "volume-01",
+              "anchor": "dk-v01-ch07-calist-runs-forge",
+              "labels": {
+                "en": "Open the related passage",
+                "de": "Zugehörige Stelle öffnen"
+              }
+            }
+          ]
+        },
+        {
+          "id": "hardening-winters-scarcity",
+          "visibility": {
+            "mode": "completed-chapter",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch07"
+          },
+          "text": {
+            "en": "The strain continues after Alden recovers: harvests remain below older expectations, trade is irregular, portions tighten and game remains farther out.",
+            "de": "Die Belastung endet nicht mit Aldens Genesung: Ernten bleiben unter früheren Erwartungen, der Handel ist unregelmäßig, Portionen werden kleiner und das Wild bleibt weiter entfernt."
+          },
+          "readerLinks": [
+            {
+              "id": "hardening-winters-scarcity-reader",
+              "story": "dragon-knight",
+              "book": "volume-01",
+              "anchor": "dk-v01-ch07",
+              "labels": {
+                "en": "Open the related passage",
+                "de": "Zugehörige Stelle öffnen"
+              }
+            }
+          ]
+        },
+        {
+          "id": "hardening-winters-farther-hunts",
+          "visibility": {
+            "mode": "reached-anchor",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch08",
+            "anchor": "dk-v01-ch08-hunters-depart"
+          },
+          "text": {
+            "en": "Because game remains farther away, hunting trips stretch from two nights to three or four and range farther from home. Eryn's later party leaves on one of these extended hunts.",
+            "de": "Weil das Wild weiter entfernt bleibt, werden Jagdzüge von zwei Nächten auf drei oder vier verlängert und führen weiter von zu Hause weg. Eryns spätere Jagdgruppe bricht zu einem dieser längeren Jagdzüge auf."
+          },
+          "readerLinks": [
+            {
+              "id": "hardening-winters-farther-hunts-reader",
+              "story": "dragon-knight",
+              "book": "volume-01",
+              "anchor": "dk-v01-ch08-hunters-depart",
+              "labels": {
+                "en": "Open the related passage",
+                "de": "Zugehörige Stelle öffnen"
+              }
+            }
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "id": "village",
+          "target": "calists-village",
+          "labels": {
+            "en": "Strains the village",
+            "de": "Belastet das Dorf"
+          }
+        },
+        {
+          "id": "alden",
+          "target": "alden",
+          "labels": {
+            "en": "Falls ill during the long winter",
+            "de": "Erkrankt während des langen Winters"
+          }
+        },
+        {
+          "id": "calist",
+          "target": "calist",
+          "labels": {
+            "en": "Stays to keep the forge running",
+            "de": "Bleibt, um die Schmiede weiterzuführen"
+          }
+        },
+        {
+          "id": "woods",
+          "target": "old-woods",
+          "labels": {
+            "en": "Hunting ranges farther outward",
+            "de": "Die Jagd führt weiter hinaus"
+          }
+        },
+        {
+          "id": "later-ambush",
+          "target": "hunting-party-ambush",
+          "labels": {
+            "en": "Extended hunts precede the ambush",
+            "de": "Längere Jagdzüge gehen dem Hinterhalt voraus"
+          }
+        }
+      ]
+    },
+    {
+      "id": "nessas-death",
+      "categories": [
+        "events"
+      ],
+      "visibility": {
+        "mode": "reached-anchor",
+        "story": "dragon-knight",
+        "book": "volume-01",
+        "chapter": "dk-v01-ch08",
+        "anchor": "dk-v01-ch08-nessa-dies"
+      },
+      "labels": {
+        "en": {
+          "title": "Nessa's death",
+          "summary": "Nessa dies during the first week of spring after a lifetime woven deeply into village life."
+        },
+        "de": {
+          "title": "Nessas Tod",
+          "summary": "Nessa stirbt in der ersten Frühlingswoche nach einem Leben, das tief mit dem Dorf verbunden war."
+        }
+      },
+      "fragments": [
+        {
+          "id": "nessas-death-morning",
+          "visibility": {
+            "mode": "reached-anchor",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch08",
+            "anchor": "dk-v01-ch08-nessa-dies"
+          },
+          "text": {
+            "en": "Tarin brings the news before breakfast. Mara and Tessa were with Nessa during the night, and Alden and Calist close the forge for the morning.",
+            "de": "Tarin bringt die Nachricht vor dem Frühstück. Mara und Tessa waren in der Nacht bei Nessa, und Alden und Calist schließen die Schmiede für den Vormittag."
+          },
+          "readerLinks": [
+            {
+              "id": "nessas-death-morning-reader",
+              "story": "dragon-knight",
+              "book": "volume-01",
+              "anchor": "dk-v01-ch08-nessa-dies",
+              "labels": {
+                "en": "Open the related passage",
+                "de": "Zugehörige Stelle öffnen"
+              }
+            }
+          ]
+        },
+        {
+          "id": "nessas-death-memory",
+          "visibility": {
+            "mode": "completed-chapter",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch08"
+          },
+          "text": {
+            "en": "At the burial, the village remembers the work, knowledge, food and stories Nessa carried through decades of village life, including the difficult war years.",
+            "de": "Bei der Beerdigung erinnert sich das Dorf an die Arbeit, das Wissen, das Essen und die Geschichten, die Nessa über Jahrzehnte hinweg getragen hat, einschließlich der schweren Kriegsjahre."
+          },
+          "readerLinks": [
+            {
+              "id": "nessas-death-memory-reader",
+              "story": "dragon-knight",
+              "book": "volume-01",
+              "anchor": "dk-v01-ch08",
+              "labels": {
+                "en": "Open the related passage",
+                "de": "Zugehörige Stelle öffnen"
+              }
+            }
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "id": "person",
+          "target": "nessa",
+          "labels": {
+            "en": "Person",
+            "de": "Person"
+          }
+        },
+        {
+          "id": "community",
+          "target": "calists-village",
+          "labels": {
+            "en": "Community",
+            "de": "Gemeinschaft"
+          }
+        }
+      ]
+    },
+    {
+      "id": "hunting-party-ambush",
+      "categories": [
+        "events"
+      ],
+      "visibility": {
+        "mode": "reached-anchor",
+        "story": "dragon-knight",
+        "book": "volume-01",
+        "chapter": "dk-v01-ch08",
+        "anchor": "dk-v01-ch08-ambush-return"
+      },
+      "labels": {
+        "en": {
+          "title": "The hunting-party ambush",
+          "summary": "A hunting party ranging farther for game is ambushed in the woods. Three hunters return injured; Bren and Eryn do not."
+        },
+        "de": {
+          "title": "Der Hinterhalt auf die Jagdgruppe",
+          "summary": "Eine Jagdgruppe, die wegen des weiter entfernten Wildes weiter hinauszieht, gerät im Wald in einen Hinterhalt. Drei Jäger kehren verletzt zurück; Bren und Eryn nicht."
+        }
+      },
+      "fragments": [
+        {
+          "id": "hunting-party-ambush-departure",
+          "visibility": {
+            "mode": "reached-anchor",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch08",
+            "anchor": "dk-v01-ch08-hunters-depart"
+          },
+          "text": {
+            "en": "Harlan, Bren, Eryn, Renn and Kell leave for a hunt expected to last two or three nights because the game has remained farther away.",
+            "de": "Harlan, Bren, Eryn, Renn und Kell brechen zu einer Jagd auf, die wegen des weiter entfernten Wildes zwei oder drei Nächte dauern soll."
+          },
+          "readerLinks": [
+            {
+              "id": "hunting-party-ambush-departure-reader",
+              "story": "dragon-knight",
+              "book": "volume-01",
+              "anchor": "dk-v01-ch08-hunters-depart",
+              "labels": {
+                "en": "Open the related passage",
+                "de": "Zugehörige Stelle öffnen"
+              }
+            }
+          ]
+        },
+        {
+          "id": "hunting-party-ambush-return",
+          "visibility": {
+            "mode": "reached-anchor",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch08",
+            "anchor": "dk-v01-ch08-ambush-return"
+          },
+          "text": {
+            "en": "Harlan, Renn and Kell return injured. Bren stayed behind to hold the attackers while the others retreated; Eryn initially withdrew, then turned back toward him.",
+            "de": "Harlan, Renn und Kell kehren verletzt zurück. Bren blieb zurück, um die Angreifer aufzuhalten, während die anderen sich zurückzogen; Eryn zog sich zunächst mit ihnen zurück und kehrte dann zu ihm um."
+          },
+          "readerLinks": [
+            {
+              "id": "hunting-party-ambush-return-reader",
+              "story": "dragon-knight",
+              "book": "volume-01",
+              "anchor": "dk-v01-ch08-ambush-return",
+              "labels": {
+                "en": "Open the related passage",
+                "de": "Zugehörige Stelle öffnen"
+              }
+            }
+          ]
+        },
+        {
+          "id": "hunting-party-ambush-search",
+          "visibility": {
+            "mode": "reached-anchor",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch08",
+            "anchor": "dk-v01-ch08-search-ends"
+          },
+          "text": {
+            "en": "The search finds broken arrows, blood, trampled ground and signs of Bren's stand. No body, bow, knife or piece of Eryn's clothing is found, so Volume 1 does not establish what happened to her.",
+            "de": "Die Suche findet zerbrochene Pfeile, Blut, zertrampelten Boden und Spuren von Brens letztem Stand. Es werden weder eine Leiche noch Eryns Bogen, Messer oder ein Kleidungsstück gefunden; Band 1 klärt daher nicht, was mit ihr geschehen ist."
+          },
+          "readerLinks": [
+            {
+              "id": "hunting-party-ambush-search-reader",
+              "story": "dragon-knight",
+              "book": "volume-01",
+              "anchor": "dk-v01-ch08-search-ends",
+              "labels": {
+                "en": "Open the related passage",
+                "de": "Zugehörige Stelle öffnen"
+              }
+            }
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "id": "eryn-outcome",
+          "target": "eryn-disappearance",
+          "labels": {
+            "en": "Eryn's disappearance",
+            "de": "Eryns Verschwinden"
+          }
+        },
+        {
+          "id": "woods",
+          "target": "old-woods",
+          "labels": {
+            "en": "Search area",
+            "de": "Suchgebiet"
+          }
+        }
+      ]
+    },
+    {
+      "id": "calist-enlistment",
+      "categories": [
+        "events"
+      ],
+      "visibility": {
+        "mode": "reached-anchor",
+        "story": "dragon-knight",
+        "book": "volume-01",
+        "chapter": "dk-v01-ch09",
+        "anchor": "dk-v01-ch09-enlist-decision"
+      },
+      "labels": {
+        "en": {
+          "title": "Calist decides to enlist",
+          "summary": "Calist chooses to enlist voluntarily after years of seeing his home placed under increasing strain."
+        },
+        "de": {
+          "title": "Calist entscheidet sich für den Militärdienst",
+          "summary": "Calist entscheidet sich freiwillig für den Militärdienst, nachdem er über Jahre erlebt hat, wie sein Zuhause zunehmend unter Druck gerät."
+        }
+      },
+      "fragments": [
+        {
+          "id": "calist-enlistment-reason",
+          "visibility": {
+            "mode": "reached-anchor",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch09",
+            "anchor": "dk-v01-ch09-enlist-decision"
+          },
+          "text": {
+            "en": "Calist tells Alden that the choice is not simply about Eryn or anger. He wants the village, forge, fields and ordinary life around him to continue, and accepts that somebody has to do the work of protecting them.",
+            "de": "Calist erklärt Alden, dass seine Entscheidung nicht einfach nur mit Eryn oder seiner Wut zu tun hat. Er möchte, dass Dorf, Schmiede, Felder und das gewöhnliche Leben um ihn herum weiterbestehen, und akzeptiert, dass jemand die Arbeit übernehmen muss, sie zu schützen."
+          },
+          "readerLinks": [
+            {
+              "id": "calist-enlistment-reason-reader",
+              "story": "dragon-knight",
+              "book": "volume-01",
+              "anchor": "dk-v01-ch09-enlist-decision",
+              "labels": {
+                "en": "Open the related passage",
+                "de": "Zugehörige Stelle öffnen"
+              }
+            }
+          ]
+        },
+        {
+          "id": "calist-enlistment-corvin",
+          "visibility": {
+            "mode": "completed-chapter",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch09"
+          },
+          "text": {
+            "en": "When Corvin returns, he confirms that the fort accepts volunteers and offers to bring Calist with the soldiers when Calist is ready to leave.",
+            "de": "Als Corvin zurückkehrt, bestätigt er, dass das Fort Freiwillige annimmt, und bietet an, Calist mit den Soldaten mitzunehmen, sobald er bereit ist aufzubrechen."
+          },
+          "readerLinks": [
+            {
+              "id": "calist-enlistment-corvin-reader",
+              "story": "dragon-knight",
+              "book": "volume-01",
+              "anchor": "dk-v01-ch09",
+              "labels": {
+                "en": "Open the related passage",
+                "de": "Zugehörige Stelle öffnen"
+              }
+            }
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "id": "volunteer",
+          "target": "calist",
+          "labels": {
+            "en": "Volunteer",
+            "de": "Freiwilliger"
+          }
+        },
+        {
+          "id": "father",
+          "target": "alden",
+          "labels": {
+            "en": "Father",
+            "de": "Vater"
+          }
+        },
+        {
+          "id": "soldier-contact",
+          "target": "corvin",
+          "labels": {
+            "en": "Military contact",
+            "de": "Militärischer Kontakt"
+          }
+        },
+        {
+          "id": "destination",
+          "target": "border-fort",
+          "labels": {
+            "en": "Initial destination",
+            "de": "Erstes Ziel"
+          }
+        }
+      ]
     }
   ]
 }
