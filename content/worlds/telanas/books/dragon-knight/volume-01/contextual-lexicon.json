@@ -8,7 +8,81 @@
     "de"
   ],
   "references": {
-    "en": [],
-    "de": []
+    "en": [
+      {
+        "anchor": "dk-v01-ch01-en-p005",
+        "entry": "calist",
+        "text": "Calist",
+        "occurrence": 1
+      },
+      {
+        "anchor": "dk-v01-ch01-en-p021",
+        "entry": "corvin",
+        "text": "Corvin",
+        "occurrence": 1
+      },
+      {
+        "anchor": "dk-v01-ch01-en-p022",
+        "entry": "alden",
+        "text": "Alden",
+        "occurrence": 1
+      },
+      {
+        "anchor": "dk-v01-ch02-en-p128",
+        "entry": "eryn",
+        "text": "Eryn",
+        "occurrence": 1
+      },
+      {
+        "anchor": "dk-v01-ch03-bram",
+        "entry": "bram",
+        "text": "Bram",
+        "occurrence": 1
+      },
+      {
+        "anchor": "dk-v01-ch04-en-p339",
+        "entry": "nessa",
+        "text": "Nessa",
+        "occurrence": 1
+      }
+    ],
+    "de": [
+      {
+        "anchor": "dk-v01-ch01-de-p005",
+        "entry": "calist",
+        "text": "Calist",
+        "occurrence": 1
+      },
+      {
+        "anchor": "dk-v01-ch01-de-p021",
+        "entry": "corvin",
+        "text": "Corvin",
+        "occurrence": 1
+      },
+      {
+        "anchor": "dk-v01-ch01-de-p022",
+        "entry": "alden",
+        "text": "Alden",
+        "occurrence": 1
+      },
+      {
+        "anchor": "dk-v01-ch02-de-p128",
+        "entry": "eryn",
+        "text": "Eryn",
+        "occurrence": 1
+      },
+      {
+        "anchor": "dk-v01-ch03-bram",
+        "entry": "bram",
+        "text": "Bram",
+        "occurrence": 1
+      },
+      {
+        "anchor": "dk-v01-ch04-de-p339",
+        "entry": "nessa",
+        "text": "Nessa",
+        "occurrence": 1
+      }
+    ]
   }
 }

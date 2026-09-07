@@ -247,6 +247,141 @@
           }
         }
       ]
+    },
+    {
+      "id": "calist",
+      "categories": [
+        "characters"
+      ],
+      "visibility": {
+        "mode": "always"
+      },
+      "labels": {
+        "en": {
+          "title": "Calist",
+          "summary": "A character introduced in Volume 1 of The Dragon Knight."
+        },
+        "de": {
+          "title": "Calist",
+          "summary": "Eine Figur, die in Band 1 von Der Drachenritter eingeführt wird."
+        }
+      },
+      "fragments": []
+    },
+    {
+      "id": "alden",
+      "categories": [
+        "characters"
+      ],
+      "visibility": {
+        "mode": "reached-anchor",
+        "story": "dragon-knight",
+        "book": "volume-01",
+        "anchor": "dk-v01-ch01-corvin-arrives"
+      },
+      "labels": {
+        "en": {
+          "title": "Alden",
+          "summary": "A character introduced in Volume 1 of The Dragon Knight."
+        },
+        "de": {
+          "title": "Alden",
+          "summary": "Eine Figur, die in Band 1 von Der Drachenritter eingeführt wird."
+        }
+      },
+      "fragments": []
+    },
+    {
+      "id": "nessa",
+      "categories": [
+        "characters"
+      ],
+      "visibility": {
+        "mode": "reached-anchor",
+        "story": "dragon-knight",
+        "book": "volume-01",
+        "anchor": "dk-v01-ch04-first-independent-work"
+      },
+      "labels": {
+        "en": {
+          "title": "Nessa",
+          "summary": "A character introduced in Volume 1 of The Dragon Knight."
+        },
+        "de": {
+          "title": "Nessa",
+          "summary": "Eine Figur, die in Band 1 von Der Drachenritter eingeführt wird."
+        }
+      },
+      "fragments": []
+    },
+    {
+      "id": "eryn",
+      "categories": [
+        "characters"
+      ],
+      "visibility": {
+        "mode": "reached-anchor",
+        "story": "dragon-knight",
+        "book": "volume-01",
+        "anchor": "dk-v01-ch01-alden-war-gear"
+      },
+      "labels": {
+        "en": {
+          "title": "Eryn",
+          "summary": "A character introduced in Volume 1 of The Dragon Knight."
+        },
+        "de": {
+          "title": "Eryn",
+          "summary": "Eine Figur, die in Band 1 von Der Drachenritter eingeführt wird."
+        }
+      },
+      "fragments": []
+    },
+    {
+      "id": "corvin",
+      "categories": [
+        "characters"
+      ],
+      "visibility": {
+        "mode": "reached-anchor",
+        "story": "dragon-knight",
+        "book": "volume-01",
+        "anchor": "dk-v01-ch01-corvin-arrives"
+      },
+      "labels": {
+        "en": {
+          "title": "Corvin",
+          "summary": "A character introduced in Volume 1 of The Dragon Knight."
+        },
+        "de": {
+          "title": "Corvin",
+          "summary": "Eine Figur, die in Band 1 von Der Drachenritter eingeführt wird."
+        }
+      },
+      "fragments": []
+    },
+    {
+      "id": "bram",
+      "categories": [
+        "characters"
+      ],
+      "visibility": {
+        "mode": "reached-anchor",
+        "story": "dragon-knight",
+        "book": "volume-01",
+        "anchor": "dk-v01-ch03-bram"
+      },
+      "labels": {
+        "en": {
+          "title": "Bram",
+          "summary": "A character introduced in Volume 1 of The Dragon Knight."
+        },
+        "de": {
+          "title": "Bram",
+          "summary": "Eine Figur, die in Band 1 von Der Drachenritter eingeführt wird."
+        }
+      },
+      "fragments": []
     }
   ]
 }
