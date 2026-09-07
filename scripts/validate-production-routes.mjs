@@ -184,11 +184,17 @@ assert(
 const readerController = await readFile(path.join(root, "assets/reader/reader.js"), "utf8");
 assert(readerController.includes("dataset.readerBookManifest"), "Production Reader must resolve its book manifest from the page contract");
 
+const spoilerProfile = await readFile(path.join(root, "assets/spoiler-profile.js"), "utf8");
+assert(
+  spoilerProfile.includes("if (profile?.fullSpoilers === true) return true;"),
+  "Shared spoiler profile must preserve the explicit Full Spoilers bypass",
+);
+
 const lexiconController = await readFile(path.join(root, "assets/lexicon/lexicon.js"), "utf8");
 assert(lexiconController.includes("dataset.worldManifest"), "Production Lexicon must resolve its world manifest from the page contract");
 assert(lexiconController.includes("dataset.lexiconManifest"), "Production Lexicon must resolve its Lexicon manifest from the page contract");
 assert(lexiconController.includes("dataset.readerBase"), "Production Lexicon must resolve Reader routes from the page contract");
-assert(lexiconController.includes("profile.fullSpoilers"), "Production Lexicon must preserve the explicit Full Spoilers bypass");
+assert(lexiconController.includes("profileApi.visibilityAllowed"), "Production Lexicon must use the shared spoiler visibility calculation");
 assert(lexiconController.includes("visibilityAllowed(entry.visibility"), "Production Lexicon must filter entry existence before rendering");
 assert(lexiconController.includes("visibilityAllowed(fragment.visibility"), "Production Lexicon must filter fragments before rendering");
 assert(lexiconController.includes("visibilityAllowed(target.visibility"), "Production Lexicon must filter relationship targets before rendering");
