@@ -180,7 +180,7 @@ const trimBoundaryBlankLines = (lines) => {
   return lines.slice(start, end);
 };
 
-const parseBody = (lines, anchorPrefix) => {
+const parseBody = (lines, anchorPrefix, locale) => {
   const blocks = [];
   let paragraph = [];
   let paragraphIndex = 0;
@@ -190,7 +190,7 @@ const parseBody = (lines, anchorPrefix) => {
     if (!paragraph.length) return;
     paragraphIndex += 1;
     blocks.push({
-      id: `${anchorPrefix}-p${String(paragraphIndex).padStart(3, "0")}`,
+      id: `${anchorPrefix}-${locale}-p${String(paragraphIndex).padStart(3, "0")}`,
       type: "paragraph",
       text: paragraph.join("\n"),
     });
@@ -206,7 +206,7 @@ const parseBody = (lines, anchorPrefix) => {
     if (["---", "***", "* * *"].includes(line.trim()) && paragraph.length === 0) {
       sceneIndex += 1;
       blocks.push({
-        id: `${anchorPrefix}-s${String(sceneIndex).padStart(3, "0")}`,
+        id: `${anchorPrefix}-${locale}-s${String(sceneIndex).padStart(3, "0")}`,
         type: "scene-break",
       });
       continue;
@@ -258,15 +258,10 @@ const parseManuscript = (source, locale) => {
     const bodyLines = trimBoundaryBlankLines(lines.slice(headingIndex + 1, nextHeadingIndex));
     return {
       id: chapter.id,
-      blocks: parseBody(bodyLines, chapter.id),
+      blocks: parseBody(bodyLines, chapter.id, locale),
     };
   });
 };
-
-const structuralSignature = (editionChapters) => editionChapters.map((chapter) => ({
-  id: chapter.id,
-  blocks: chapter.blocks.map((block) => ({ id: block.id, type: block.type })),
-}));
 
 const withIllustrations = (editionChapters, locale) => editionChapters.map((editionChapter, index) => {
   const chapter = chapters[index];
@@ -342,7 +337,6 @@ try {
 
   const enParsed = parseManuscript(enSource, "en");
   const deParsed = parseManuscript(deSource, "de");
-  assert(JSON.stringify(structuralSignature(enParsed)) === JSON.stringify(structuralSignature(deParsed)), "English and German manuscript paragraph/scene structure is not semantically aligned; import stopped rather than inventing anchors");
 
   const enChapters = withIllustrations(enParsed, "en");
   const deChapters = withIllustrations(deParsed, "de");
@@ -354,13 +348,14 @@ try {
     id: "volume-01",
     state: "approved",
     contentMode: "released",
+    editionAlignment: "chapter",
     locales: ["en", "de"],
     editions: {
       en: "editions/en.json",
       de: "editions/de.json",
     },
     contextualLexicon: "contextual-lexicon.json",
-    spoilerMilestones: ["dk-v01-ch01-p004"],
+    spoilerMilestones: ["dk-v01-ch01"],
     source: {
       repository: sourceRepository,
       commit: sourceCommit,
