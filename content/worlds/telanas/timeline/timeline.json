@@ -1,36 +1,249 @@
 {
   "schemaVersion": 1,
   "world": "telanas",
-  "state": "prototype",
+  "state": "approved",
   "locales": [
     "en",
     "de"
   ],
   "events": [
     {
-      "id": "timeline-prototype-foundation",
+      "id": "first-shard-formation",
       "order": 10,
-      "prototypeOnly": true,
       "visibility": {
-        "mode": "always"
+        "mode": "completed-chapter",
+        "story": "dragon-knight",
+        "book": "volume-01",
+        "chapter": "dk-v01-prologue"
       },
       "labels": {
         "en": {
-          "period": "Public prototype",
-          "title": "Timeline foundation",
-          "summary": "A neutral marker proving that the Telanas timeline can exist without storing story chronology or private lore."
+          "period": "Before the known sky",
+          "title": "Formation of the first shard",
+          "summary": "The twin dragons accidentally form the first shard while playing with fragments of their broken egg."
         },
         "de": {
-          "period": "Öffentlicher Prototyp",
-          "title": "Grundlage der Zeitleiste",
-          "summary": "Ein neutraler Marker, der zeigt, dass die Telanas-Zeitleiste ohne Handlungschronologie oder private Lore funktionieren kann."
+          "period": "Vor dem bekannten Himmel",
+          "title": "Entstehung der ersten Scherbe",
+          "summary": "Die Zwillingsdrachen formen beim Spielen mit Teilen ihres zerbrochenen Eis unbeabsichtigt die erste Scherbe."
         }
-      }
+      },
+      "readerLinks": [
+        {
+          "id": "first-shard-formation-reader-1",
+          "story": "dragon-knight",
+          "book": "volume-01",
+          "anchor": "dk-v01-p-first-shard",
+          "labels": {
+            "en": "Open the related passage",
+            "de": "Zugehörige Stelle öffnen"
+          }
+        }
+      ]
     },
     {
-      "id": "timeline-volume-one-marker",
+      "id": "town-market-fight",
       "order": 20,
-      "prototypeOnly": true,
+      "visibility": {
+        "mode": "completed-chapter",
+        "story": "dragon-knight",
+        "book": "volume-01",
+        "chapter": "dk-v01-ch03"
+      },
+      "labels": {
+        "en": {
+          "period": "Calist's childhood",
+          "title": "The town market fight",
+          "summary": "Calist, Eryn, Joric and Nalia get into a street fight during their first journey beyond the village."
+        },
+        "de": {
+          "period": "Calists Kindheit",
+          "title": "Die Schlägerei in der Stadt",
+          "summary": "Calist, Eryn, Joric und Nalia geraten auf ihrer ersten Reise aus dem Dorf in eine Straßenschlägerei."
+        }
+      },
+      "readerLinks": [
+        {
+          "id": "town-market-fight-reader-1",
+          "story": "dragon-knight",
+          "book": "volume-01",
+          "anchor": "dk-v01-ch03-town-fight",
+          "labels": {
+            "en": "Open the related passage",
+            "de": "Zugehörige Stelle öffnen"
+          }
+        }
+      ]
+    },
+    {
+      "id": "border-tension",
+      "order": 30,
+      "visibility": {
+        "mode": "completed-chapter",
+        "story": "dragon-knight",
+        "book": "volume-01",
+        "chapter": "dk-v01-ch03"
+      },
+      "labels": {
+        "en": {
+          "period": "Calist's childhood",
+          "title": "Border tension grows",
+          "summary": "Reports of crossings, raids and attacked farms begin to suggest that a larger conflict may be forming."
+        },
+        "de": {
+          "period": "Calists Kindheit",
+          "title": "Die Spannungen an der Grenze wachsen",
+          "summary": "Berichte über Grenzübertritte, Überfälle und angegriffene Höfe deuten auf einen möglicherweise größeren Konflikt hin."
+        }
+      },
+      "readerLinks": [
+        {
+          "id": "border-tension-reader-1",
+          "story": "dragon-knight",
+          "book": "volume-01",
+          "anchor": "dk-v01-ch03-border-warning",
+          "labels": {
+            "en": "Open the related passage",
+            "de": "Zugehörige Stelle öffnen"
+          }
+        }
+      ]
+    },
+    {
+      "id": "hardening-winters",
+      "order": 40,
+      "visibility": {
+        "mode": "completed-chapter",
+        "story": "dragon-knight",
+        "book": "volume-01",
+        "chapter": "dk-v01-ch07"
+      },
+      "labels": {
+        "en": {
+          "period": "Over several difficult seasons",
+          "title": "The hardening winters",
+          "summary": "A long winter and several difficult seasons strain the village. Alden becomes ill, Calist remains home to keep the forge running, harvests shrink and game moves farther from home."
+        },
+        "de": {
+          "period": "Über mehrere schwierige Jahreszeiten",
+          "title": "Die härteren Winter",
+          "summary": "Ein langer Winter und mehrere schwierige Jahreszeiten belasten das Dorf. Alden wird krank, Calist bleibt zu Hause und hält die Schmiede am Laufen, die Ernten werden kleiner und das Wild zieht weiter fort."
+        }
+      },
+      "readerLinks": [
+        {
+          "id": "hardening-winters-reader-1",
+          "story": "dragon-knight",
+          "book": "volume-01",
+          "anchor": "dk-v01-ch07-alden-illness",
+          "labels": {
+            "en": "Open the related passage",
+            "de": "Zugehörige Stelle öffnen"
+          }
+        },
+        {
+          "id": "hardening-winters-reader-2",
+          "story": "dragon-knight",
+          "book": "volume-01",
+          "anchor": "dk-v01-ch07-calist-runs-forge",
+          "labels": {
+            "en": "Open the related passage",
+            "de": "Zugehörige Stelle öffnen"
+          }
+        }
+      ]
+    },
+    {
+      "id": "nessas-death",
+      "order": 50,
+      "visibility": {
+        "mode": "completed-chapter",
+        "story": "dragon-knight",
+        "book": "volume-01",
+        "chapter": "dk-v01-ch08"
+      },
+      "labels": {
+        "en": {
+          "period": "First week of spring",
+          "title": "Nessa dies",
+          "summary": "Nessa dies during the first week of spring, leaving her knowledge and memory woven through village life."
+        },
+        "de": {
+          "period": "Erste Frühlingswoche",
+          "title": "Nessa stirbt",
+          "summary": "Nessa stirbt in der ersten Frühlingswoche; ihr Wissen und ihre Erinnerungen bleiben mit dem Dorf verbunden."
+        }
+      },
+      "readerLinks": [
+        {
+          "id": "nessas-death-reader-1",
+          "story": "dragon-knight",
+          "book": "volume-01",
+          "anchor": "dk-v01-ch08-nessa-dies",
+          "labels": {
+            "en": "Open the related passage",
+            "de": "Zugehörige Stelle öffnen"
+          }
+        }
+      ]
+    },
+    {
+      "id": "hunting-party-ambush",
+      "order": 60,
+      "visibility": {
+        "mode": "completed-chapter",
+        "story": "dragon-knight",
+        "book": "volume-01",
+        "chapter": "dk-v01-ch08"
+      },
+      "labels": {
+        "en": {
+          "period": "Late summer",
+          "title": "The hunting-party ambush",
+          "summary": "A party ranging farther for game is ambushed. Three hunters return injured; Bren and Eryn do not. The later search does not establish Eryn's fate."
+        },
+        "de": {
+          "period": "Spätsommer",
+          "title": "Der Hinterhalt auf die Jagdgruppe",
+          "summary": "Eine Jagdgruppe, die wegen des Wildes weiter hinauszieht, gerät in einen Hinterhalt. Drei Jäger kehren verletzt zurück; Bren und Eryn nicht. Die spätere Suche klärt Eryns Schicksal nicht."
+        }
+      },
+      "readerLinks": [
+        {
+          "id": "hunting-party-ambush-reader-1",
+          "story": "dragon-knight",
+          "book": "volume-01",
+          "anchor": "dk-v01-ch08-hunters-depart",
+          "labels": {
+            "en": "Open the related passage",
+            "de": "Zugehörige Stelle öffnen"
+          }
+        },
+        {
+          "id": "hunting-party-ambush-reader-2",
+          "story": "dragon-knight",
+          "book": "volume-01",
+          "anchor": "dk-v01-ch08-ambush-return",
+          "labels": {
+            "en": "Open the related passage",
+            "de": "Zugehörige Stelle öffnen"
+          }
+        },
+        {
+          "id": "hunting-party-ambush-reader-3",
+          "story": "dragon-knight",
+          "book": "volume-01",
+          "anchor": "dk-v01-ch08-search-ends",
+          "labels": {
+            "en": "Open the related passage",
+            "de": "Zugehörige Stelle öffnen"
+          }
+        }
+      ]
+    },
+    {
+      "id": "calist-enlistment",
+      "order": 70,
       "visibility": {
         "mode": "completed-chapter",
         "story": "dragon-knight",
@@ -39,48 +252,28 @@
       },
       "labels": {
         "en": {
-          "period": "After Volume 1",
-          "title": "Volume 1 timeline marker — prototype",
-          "summary": "This non-canon marker appears after Chapter 9 of Volume 1 is marked complete and contains no manuscript event."
+          "period": "After harvest",
+          "title": "Calist decides to enlist",
+          "summary": "Calist voluntarily chooses military service because he wants the ordinary life of his home to remain possible."
         },
         "de": {
-          "period": "Nach Band 1",
-          "title": "Zeitleisten-Marker für Band 1 — Prototyp",
-          "summary": "Dieser nicht-kanonische Marker erscheint, nachdem Kapitel 9 von Band 1 als abgeschlossen markiert wurde, und enthält kein Manuskriptereignis."
+          "period": "Nach der Ernte",
+          "title": "Calist entscheidet sich für den Militärdienst",
+          "summary": "Calist entscheidet sich freiwillig für den Militärdienst, weil er möchte, dass das gewöhnliche Leben seiner Heimat weiter möglich bleibt."
         }
       },
       "readerLinks": [
         {
-          "id": "timeline-volume-one-reader-reference",
+          "id": "calist-enlistment-reader-1",
           "story": "dragon-knight",
           "book": "volume-01",
-          "anchor": "dk-v01-ch01",
+          "anchor": "dk-v01-ch09-enlist-decision",
           "labels": {
-            "en": "Open the prototype reader reference",
-            "de": "Prototypische Reader-Stelle öffnen"
+            "en": "Open the related passage",
+            "de": "Zugehörige Stelle öffnen"
           }
         }
       ]
-    },
-    {
-      "id": "timeline-future-placeholder",
-      "order": 30,
-      "prototypeOnly": true,
-      "visibility": {
-        "mode": "full-spoilers"
-      },
-      "labels": {
-        "en": {
-          "period": "Future knowledge",
-          "title": "Future timeline placeholder",
-          "summary": "A neutral development marker visible only with Full Spoilers enabled. It describes no future Telanas canon."
-        },
-        "de": {
-          "period": "Späteres Wissen",
-          "title": "Platzhalter für spätere Zeitleisten-Einträge",
-          "summary": "Ein neutraler Entwicklungsmarker, der nur mit vollständigen Spoilern sichtbar ist. Er beschreibt keinen zukünftigen Telanas-Kanon."
-        }
-      }
     }
   ]
 }
