@@ -43,6 +43,7 @@
 
 - Browse cards stay compact: a familiar title, a short spoiler-safe overview, and a clear way to open the detailed entry.
 - Detailed Lexicon views are curated reference profiles, not mention-by-mention story manifests. Prefer durable descriptive knowledge, identity, traits, roles, relationships, and only genuinely significant story connections.
+- General Lexicon descriptions are world-facing and encyclopedic rather than framed through the protagonist's viewpoint. Character-specific encounters or observations belong in spoiler-aware detail sections when relevant.
 - The dedicated Lexicon and contextual Reader card use the same curated entry fields and spoiler gates.
 - Reader passage links are exceptional. Keep them for defining revelations or major events where returning to the source passage is genuinely useful, not for every minor fact.
 - Default Lexicon ordering follows first appearance. Readers may switch to localized alphabetical or in-world chronological ordering; entries without a distinct chronology fall back deterministically to appearance order.

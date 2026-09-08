@@ -104,11 +104,11 @@
       "labels": {
         "en": {
           "title": "Telanas",
-          "summary": "The world in which Calist's story begins."
+          "summary": "The world where the story of The Dragon Knight starts."
         },
         "de": {
           "title": "Telanas",
-          "summary": "Die Welt, in der Calists Geschichte beginnt."
+          "summary": "Die Welt, in der die Geschichte des Drachenritters beginnt."
         }
       },
       "fragments": [],
@@ -411,12 +411,12 @@
       "labels": {
         "en": {
           "title": "Alden",
-          "summary": "Calist's father and the blacksmith of their village.",
+          "summary": "The village blacksmith, husband of Mara Griffith, and father of Calist.",
           "fullName": "Alden Griffith"
         },
         "de": {
           "title": "Alden",
-          "summary": "Calists Vater und der Schmied ihres Dorfes.",
+          "summary": "Der Dorfschmied, Ehemann von Mara Griffith und Vater von Calist.",
           "fullName": "Alden Griffith"
         }
       },
@@ -533,6 +533,14 @@
           "labels": {
             "en": "Son",
             "de": "Sohn"
+          }
+        },
+        {
+          "id": "wife",
+          "target": "mara",
+          "labels": {
+            "en": "Wife",
+            "de": "Ehefrau"
           }
         }
       ],
@@ -1139,11 +1147,11 @@
       "labels": {
         "en": {
           "title": "Calist's village",
-          "summary": "The small roadside village where Calist grows up."
+          "summary": "A small roadside village whose people rely on farming, craft, hunting, and mutual aid."
         },
         "de": {
           "title": "Calists Dorf",
-          "summary": "Das kleine Dorf an der Straße, in dem Calist aufwächst."
+          "summary": "Ein kleines Dorf an der Straße, dessen Bewohner von Landwirtschaft, Handwerk, Jagd und gegenseitiger Hilfe leben."
         }
       },
       "fragments": [
@@ -1212,11 +1220,11 @@
       "labels": {
         "en": {
           "title": "Alden's smithy",
-          "summary": "The village smithy where Alden works and Calist grows up around the forge."
+          "summary": "The village smithy operated by Alden Griffith."
         },
         "de": {
           "title": "Aldens Schmiede",
-          "summary": "Die Dorfschmiede, in der Alden arbeitet und Calist rund um das Schmiedefeuer aufwächst."
+          "summary": "Die Dorfschmiede von Alden Griffith."
         }
       },
       "fragments": [
@@ -1311,11 +1319,11 @@
       "labels": {
         "en": {
           "title": "The Old Woods",
-          "summary": "The woods beyond the far side of Calist's village."
+          "summary": "The forest beyond the village fields, used by local hunters in search of game."
         },
         "de": {
           "title": "Der alte Wald",
-          "summary": "Der Wald auf der anderen Seite von Calists Dorf."
+          "summary": "Der Wald jenseits der Dorffelder, in dem die örtlichen Jäger nach Wild suchen."
         }
       },
       "fragments": [
@@ -1394,11 +1402,11 @@
       "labels": {
         "en": {
           "title": "The border fort",
-          "summary": "A small fort along the road from Calist's village that watches the border."
+          "summary": "A small fort along the road that watches the border and supports patrols through the surrounding region."
         },
         "de": {
           "title": "Das Grenzfort",
-          "summary": "Ein kleines Fort an der Straße von Calists Dorf, das die Grenze überwacht."
+          "summary": "Ein kleines Fort an der Straße, das die Grenze überwacht und Patrouillen in der umliegenden Region unterstützt."
         }
       },
       "fragments": [
@@ -1503,11 +1511,11 @@
       "labels": {
         "en": {
           "title": "The town",
-          "summary": "A town south along the road from Calist's village, larger and busier than anything he knows at home."
+          "summary": "A larger market town south of the village, with shops, workshops, inns, and regular trade."
         },
         "de": {
           "title": "Die Stadt",
-          "summary": "Eine Stadt südlich an der Straße von Calists Dorf, größer und geschäftiger als alles, was er von zu Hause kennt."
+          "summary": "Eine größere Marktstadt südlich des Dorfes mit Läden, Werkstätten, Gasthäusern und regelmäßigem Handel."
         }
       },
       "fragments": [
@@ -1594,11 +1602,11 @@
       "labels": {
         "en": {
           "title": "Bram's workshop",
-          "summary": "A fine-metalwork workshop in town where Bram makes precise chains, clasps, pendants and other small pieces."
+          "summary": "A fine-metalwork workshop operated by Bram Ordek in the market town."
         },
         "de": {
           "title": "Brams Werkstatt",
-          "summary": "Eine Feinmetallwerkstatt in der Stadt, in der Bram präzise Ketten, Verschlüsse, Anhänger und andere kleine Stücke anfertigt."
+          "summary": "Eine Feinmetallwerkstatt von Bram Ordek in der Marktstadt."
         }
       },
       "fragments": [
@@ -3264,12 +3272,12 @@
       "labels": {
         "en": {
           "title": "Mara",
-          "summary": "Calist's mother and one of the village's main sources of practical healing knowledge.",
+          "summary": "A village healer, wife of Alden Griffith, and mother of Calist.",
           "fullName": "Mara Griffith"
         },
         "de": {
           "title": "Mara",
-          "summary": "Calists Mutter und eine der wichtigsten Quellen für praktisches Heilwissen im Dorf.",
+          "summary": "Eine Heilerin des Dorfes, Ehefrau von Alden Griffith und Mutter von Calist.",
           "fullName": "Mara Griffith"
         }
       },
@@ -3384,6 +3392,14 @@
           "labels": {
             "en": "Son",
             "de": "Sohn"
+          }
+        },
+        {
+          "id": "husband",
+          "target": "alden",
+          "labels": {
+            "en": "Husband",
+            "de": "Ehemann"
           }
         }
       ],
@@ -4078,11 +4094,11 @@
       "labels": {
         "en": {
           "title": "Humans",
-          "summary": "A sapient humanoid people. Human villages, towns, soldiers, craftspeople, and hunters form the society Calist knows in Volume 1."
+          "summary": "A sapient humanoid people whose societies include villages, towns, farming, craft, hunting, trade, and military service."
         },
         "de": {
           "title": "Menschen",
-          "summary": "Ein vernunftbegabtes humanoides Volk. Menschliche Dörfer, Städte, Soldaten, Handwerker und Jäger prägen die Gesellschaft, die Calist in Band 1 kennt."
+          "summary": "Ein vernunftbegabtes humanoides Volk, dessen Gesellschaften Dörfer, Städte, Landwirtschaft, Handwerk, Jagd, Handel und Militärdienst umfassen."
         }
       },
       "fragments": [],
@@ -4099,11 +4115,11 @@
       "labels": {
         "en": {
           "title": "Dwarves",
-          "summary": "A sapient humanoid people known to Calist through stories before he meets one himself."
+          "summary": "A sapient humanoid people."
         },
         "de": {
           "title": "Zwerge",
-          "summary": "Ein vernunftbegabtes humanoides Volk, das Calist aus Erzählungen kennt, bevor er selbst einem Zwerg begegnet."
+          "summary": "Ein vernunftbegabtes humanoides Volk."
         }
       },
       "sections": [
@@ -4140,11 +4156,11 @@
       "labels": {
         "en": {
           "title": "Orcs",
-          "summary": "A sapient humanoid people known in the region around Calist’s village through tracks and occasional sightings."
+          "summary": "A sapient humanoid people."
         },
         "de": {
           "title": "Orks",
-          "summary": "Ein vernunftbegabtes humanoides Volk, das in der Gegend um Calists Dorf durch Spuren und vereinzelte Sichtungen bekannt ist."
+          "summary": "Ein vernunftbegabtes humanoides Volk."
         }
       },
       "sections": [
