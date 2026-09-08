@@ -408,6 +408,38 @@ for (const worldRef of library.worlds) {
         assert(labels && typeof labels === "object", `Lexicon entry ${entry.id} is missing ${locale} labels`);
         assertLocalizedString(labels.title, `Lexicon entry ${entry.id} ${locale} title`);
         assertLocalizedString(labels.summary, `Lexicon entry ${entry.id} ${locale} summary`);
+        if (labels.fullName !== undefined) {
+          assertLocalizedString(labels.fullName, `Lexicon entry ${entry.id} ${locale} fullName`);
+        }
+      }
+
+      if (entry.appearanceOrder !== undefined) {
+        assert(Number.isInteger(entry.appearanceOrder) && entry.appearanceOrder >= 0, `Lexicon entry ${entry.id} appearanceOrder must be a non-negative integer`);
+      }
+      if (entry.chronologyOrder !== undefined) {
+        assert(Number.isInteger(entry.chronologyOrder) && entry.chronologyOrder >= 0, `Lexicon entry ${entry.id} chronologyOrder must be a non-negative integer`);
+      }
+
+      const sections = entry.sections ?? [];
+      assert(Array.isArray(sections), `Lexicon entry ${entry.id} sections must be an array`);
+      const sectionIds = new Set();
+      for (const section of sections) {
+        assertId(section.id, `Lexicon section id in ${entry.id}`);
+        assert(!sectionIds.has(section.id), `Duplicate Lexicon section id in ${entry.id}: ${section.id}`);
+        sectionIds.add(section.id);
+        validateVisibility(section.visibility, `Lexicon section ${entry.id}/${section.id}`, storyBooks);
+        assert(section.labels && typeof section.labels === "object", `Lexicon section ${entry.id}/${section.id} labels are missing`);
+        assert(section.text && typeof section.text === "object", `Lexicon section ${entry.id}/${section.id} text is missing`);
+        for (const locale of lexicon.locales) {
+          assertLocalizedString(section.labels[locale], `Lexicon section ${entry.id}/${section.id} ${locale} label`);
+          assertLocalizedString(section.text[locale], `Lexicon section ${entry.id}/${section.id} ${locale} text`);
+        }
+      }
+
+      for (const relationship of entry.relationships ?? []) {
+        if (relationship.visibility !== undefined) {
+          validateVisibility(relationship.visibility, `Lexicon relationship ${entry.id}/${relationship.id}`, storyBooks);
+        }
       }
 
       assert(Array.isArray(entry.fragments), `Lexicon entry ${entry.id} fragments must be an array`);

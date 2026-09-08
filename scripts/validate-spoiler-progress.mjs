@@ -159,11 +159,27 @@ for (const entry of lexicon.entries || []) {
     `Lexicon entry ${entry.id}`
   );
 
+  for (const section of entry.sections || []) {
+    validateVisibility(
+      section.visibility,
+      `Lexicon section ${entry.id}/${section.id}`
+    );
+  }
+
   for (const fragment of entry.fragments || []) {
     validateVisibility(
       fragment.visibility,
       `Lexicon fragment ${entry.id}/${fragment.id}`
     );
+  }
+
+  for (const relationship of entry.relationships || []) {
+    if (relationship.visibility) {
+      validateVisibility(
+        relationship.visibility,
+        `Lexicon relationship ${entry.id}/${relationship.id}`
+      );
+    }
   }
 }
 

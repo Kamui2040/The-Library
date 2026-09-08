@@ -121,3 +121,58 @@
     padding: 24px 22px 26px;
   }
 }
+
+
+/* Curated contextual Lexicon profile */
+.reader-lexicon-card {
+  width: min(100%, 560px);
+}
+
+.reader-lexicon-full-name {
+  margin: 7px 0 0;
+  color: var(--metal, var(--muted, inherit));
+  font-size: .8rem;
+}
+
+.reader-lexicon-sections,
+.reader-lexicon-relationships {
+  display: grid;
+  gap: 14px;
+  margin-top: 20px;
+  padding-top: 18px;
+  border-top: 1px solid var(--border-soft, currentColor);
+}
+
+.reader-lexicon-sections h3,
+.reader-lexicon-relationships h3 {
+  margin: 0 0 4px;
+  color: var(--muted, inherit);
+  font-size: .72rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.reader-lexicon-sections p,
+.reader-lexicon-relationships p {
+  margin: 0;
+  line-height: 1.6;
+}
+
+.reader-lexicon-relationships p {
+  display: grid;
+  grid-template-columns: minmax(0, auto) minmax(0, 1fr);
+  gap: 10px;
+}
+
+.reader-lexicon-relationships span {
+  color: var(--muted, inherit);
+  font-size: .82rem;
+}
+
+.reader-lexicon-relationships strong {
+  font-weight: 500;
+}
+
+.reader-lexicon-fragments {
+  display: none;
+}

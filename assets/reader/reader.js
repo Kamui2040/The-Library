@@ -52,7 +52,6 @@
       continuous: "Continuous",
       previous: "Previous page",
       next: "Next page",
-      contentsIntro: "Contents and reader navigation come from the same public book structure.",
       loadError: "The reader content could not be loaded.",
       loadHint: "Serve the repository through a local web server or normal website host so the reader can load its public manifests and edition files.",
       page: (current, total) => `Page ${current} of ${total}`,
@@ -64,7 +63,6 @@
       continuous: "Fortlaufend",
       previous: "Vorherige Seite",
       next: "Nächste Seite",
-      contentsIntro: "Inhaltsseite und Reader-Navigation stammen aus derselben öffentlichen Buchstruktur.",
       loadError: "Der Reader-Inhalt konnte nicht geladen werden.",
       loadHint: "Stelle das Repository über einen lokalen Webserver oder einen normalen Website-Host bereit, damit der Reader seine öffentlichen Manifeste und Ausgabedateien laden kann.",
       page: (current, total) => `Seite ${current} von ${total}`,
@@ -290,8 +288,11 @@
   const renderBlock = (block) => {
     if (block.type === "illustration") return makeIllustration(block);
 
-    if (block.type === "scene-break") {
-      const separator = createAnchorElement("div", block.id, block.chapterId, "reader-scene-break");
+    if (block.type === "scene-break" || block.type === "section-separator") {
+      const separator = block.id
+        ? createAnchorElement("div", block.id, block.chapterId, "reader-scene-break")
+        : document.createElement("div");
+      separator.classList.add("reader-scene-break");
       separator.setAttribute("role", "separator");
       const mark = document.createElement("span");
       mark.setAttribute("aria-hidden", "true");
@@ -305,7 +306,7 @@
     return paragraph;
   };
 
-  const makeContents = ({ compact = false } = {}) => {
+  const makeContents = ({ compact = false, chapterIds = null, continued = false } = {}) => {
     const labels = bookLabels();
     const wrapper = createAnchorElement(
       "section",
@@ -313,16 +314,26 @@
       null,
       compact ? "reader-contents reader-contents--compact" : "reader-contents",
     );
-    const heading = document.createElement("h1");
-    heading.textContent = labels?.contents || "Contents";
-    const subheading = document.createElement("h2");
-    subheading.textContent = `${labels?.world || "Telanas"} · ${labels?.series || ""}`;
-    const intro = document.createElement("p");
-    intro.textContent = table().contentsIntro;
+    const selectedChapters = Array.isArray(chapterIds)
+      ? model.chapters.filter((chapter) => chapterIds.includes(chapter.id))
+      : model.chapters;
+
+    if (!continued) {
+      const heading = document.createElement("h1");
+      heading.textContent = labels?.contents || "Contents";
+      const subheading = document.createElement("h2");
+      subheading.textContent = `${labels?.world || "Telanas"} · ${labels?.series || ""}`;
+      wrapper.append(heading, subheading);
+    } else {
+      const continuedHeading = document.createElement("h2");
+      continuedHeading.className = "contents-continued-heading";
+      continuedHeading.textContent = labels?.contents || "Contents";
+      wrapper.append(continuedHeading);
+    }
+
     const list = document.createElement("div");
     list.className = "contents-list";
-
-    for (const chapter of model.chapters) {
+    for (const chapter of selectedChapters) {
       const button = document.createElement("button");
       button.type = "button";
       button.dataset.inlineTarget = chapter.id;
@@ -335,7 +346,7 @@
       list.append(button);
     }
 
-    wrapper.append(heading, subheading, intro, list);
+    wrapper.append(list);
     return wrapper;
   };
 
@@ -367,11 +378,14 @@
     const pageStyle = getComputedStyle(leftPage);
     const rect = leftPage.getBoundingClientRect();
     const width = Math.max(260, rect.width || Number.parseFloat(pageStyle.width) || 480);
-    const minimumHeight = Number.parseFloat(pageStyle.minHeight) || 650;
+    const pageHeight = Math.max(
+      420,
+      rect.height || Number.parseFloat(pageStyle.height) || Number.parseFloat(pageStyle.minHeight) || 650,
+    );
     probe.style.width = `${width}px`;
-    probe.style.height = `${minimumHeight}px`;
-    probe.style.minHeight = `${minimumHeight}px`;
-    probe.style.maxHeight = `${minimumHeight}px`;
+    probe.style.height = `${pageHeight}px`;
+    probe.style.minHeight = `${pageHeight}px`;
+    probe.style.maxHeight = `${pageHeight}px`;
   };
 
   const blocksFitPage = (blocks) => {
@@ -387,29 +401,115 @@
     (block) => !(block.type === "illustration" && block.placement === "before-title"),
   );
 
+  const syntheticSeparator = (chapterId) => ({
+    id: null,
+    type: "section-separator",
+    chapterId,
+    keepWithNext: false,
+    forceOwnPage: false
+  });
+
+  const chapterSections = (chapter) => {
+    const sections = [];
+    let current = [];
+    const startSection = () => {
+      if (current.length === 0) current.push(syntheticSeparator(chapter.id));
+    };
+
+    for (const block of chapterBodyBlocks(chapter)) {
+      if (block.type === "scene-break") {
+        if (current.some((item) => item.type !== "section-separator")) {
+          current.push({ ...block, type: "section-separator", keepWithNext: false });
+          sections.push(current);
+          current = [];
+        }
+        continue;
+      }
+      startSection();
+      current.push(block);
+    }
+
+    if (current.some((item) => item.type !== "section-separator")) {
+      if (current[current.length - 1]?.type !== "section-separator") current.push(syntheticSeparator(chapter.id));
+      sections.push(current);
+    }
+    return sections;
+  };
+
+  const contentsFits = (chapterIds, continued = false) => {
+    probe.replaceChildren(makeContents({ chapterIds, continued }));
+    return probe.scrollHeight <= probe.clientHeight + 1;
+  };
+
+  const buildContentsPages = () => {
+    const ids = model.chapters.map((chapter) => chapter.id);
+    if (contentsFits(ids, false)) {
+      return [
+        { kind: "contents", anchor: "contents", chapterId: null, blocks: [], chapterIds: ids, continued: false },
+        { kind: "blank", anchor: "contents", chapterId: null, blocks: [] }
+      ];
+    }
+
+    const middle = Math.ceil(ids.length / 2);
+    let first = ids.slice(0, middle);
+    let second = ids.slice(middle);
+    for (let split = middle; split >= 1; split -= 1) {
+      const candidateFirst = ids.slice(0, split);
+      const candidateSecond = ids.slice(split);
+      if (candidateSecond.length > 0 && contentsFits(candidateFirst, false) && contentsFits(candidateSecond, true)) {
+        first = candidateFirst;
+        second = candidateSecond;
+        break;
+      }
+    }
+    return [
+      { kind: "contents", anchor: "contents", chapterId: null, blocks: [], chapterIds: first, continued: false },
+      { kind: "contents", anchor: "contents", chapterId: null, blocks: [], chapterIds: second, continued: true }
+    ];
+  };
+
   const buildPages = () => {
     prepareProbe();
-    const built = [{ kind: "contents", anchor: "contents", chapterId: null, blocks: [] }];
+    const built = [...buildContentsPages()];
 
     for (const chapter of model.chapters) {
-      for (const illustration of beforeTitleBlocks(chapter)) {
+      const illustrations = beforeTitleBlocks(chapter);
+      built.push({ kind: "chapter-title", anchor: chapter.id, chapterId: chapter.id, blocks: [] });
+      if (illustrations.length > 0) {
         built.push({
           kind: "body",
-          anchor: illustration.id,
+          anchor: illustrations[0].id,
           chapterId: chapter.id,
-          blocks: [illustration],
+          blocks: [illustrations[0]],
+        });
+      } else {
+        built.push({ kind: "blank", anchor: chapter.id, chapterId: chapter.id, blocks: [] });
+      }
+
+      for (const extraIllustration of illustrations.slice(1)) {
+        built.push({
+          kind: "body",
+          anchor: extraIllustration.id,
+          chapterId: chapter.id,
+          blocks: [extraIllustration],
         });
       }
 
-      built.push({ kind: "chapter-title", anchor: chapter.id, chapterId: chapter.id, blocks: [] });
-      const bodyPages = engine.paginateBlocks(chapterBodyBlocks(chapter), blocksFitPage);
-      for (const blocks of bodyPages) {
-        built.push({
-          kind: "body",
-          anchor: blocks[0]?.id || chapter.id,
-          chapterId: chapter.id,
-          blocks,
-        });
+      for (const section of chapterSections(chapter)) {
+        const sectionPages = engine.paginateBlocks(section, blocksFitPage);
+        for (const blocks of sectionPages) {
+          const firstAnchored = blocks.find((block) => block.id);
+          built.push({
+            kind: "body",
+            anchor: firstAnchored?.id || chapter.id,
+            chapterId: chapter.id,
+            blocks,
+          });
+        }
+      }
+
+      if (built.length % 2 !== 0) {
+        built.push({ kind: "blank", anchor: chapter.id, chapterId: chapter.id, blocks: [] });
       }
     }
 
@@ -433,9 +533,14 @@
       return;
     }
 
+    if (page.kind === "blank") {
+      node.classList.add("is-empty");
+      return;
+    }
+
     if (page.kind === "contents") {
       node.classList.add("contents-page");
-      node.append(makeContents());
+      node.append(makeContents({ chapterIds: page.chapterIds, continued: page.continued }));
       return;
     }
 
@@ -472,7 +577,8 @@
 
   const renderPagedAt = (index, { updateHash = true, persist = true } = {}) => {
     if (!pages.length) return;
-    currentPageIndex = Math.max(0, Math.min(index, pages.length - 1));
+    const requestedIndex = Math.max(0, Math.min(index, pages.length - 1));
+    currentPageIndex = effectiveSpread() ? requestedIndex - (requestedIndex % 2) : requestedIndex;
     renderPage(pages[currentPageIndex], leftPage);
     renderPage(effectiveSpread() ? pages[currentPageIndex + 1] : null, rightPage);
     updateCurrentAnchor(pages[currentPageIndex].anchor, { updateHash, persist });
@@ -565,8 +671,8 @@
       const section = document.createElement("section");
       section.className = "reader-continuous-chapter";
       section.append(
-        ...beforeTitleBlocks(chapter).map(renderBlock),
         makeChapterTitle(chapter),
+        ...beforeTitleBlocks(chapter).map(renderBlock),
         ...chapterBodyBlocks(chapter).map(renderBlock),
       );
       leftPage.append(section);

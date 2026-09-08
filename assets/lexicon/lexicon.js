@@ -37,7 +37,14 @@
       loading: "Loading Lexicon…",
       error: "The Lexicon could not be loaded.",
       prototype: "Prototype",
-      related: "Related"
+      related: "Related",
+      readMore: "Read more",
+      close: "Close",
+      fullName: "Full name",
+      sortLabel: "Sort entries",
+      sortAppearance: "Appearance",
+      sortAlphabetical: "Alphabetical",
+      sortChronological: "Chronological"
     },
     de: {
       title: "Lexikon",
@@ -59,7 +66,14 @@
       loading: "Lexikon wird geladen…",
       error: "Das Lexikon konnte nicht geladen werden.",
       prototype: "Prototyp",
-      related: "Verwandt"
+      related: "Verwandt",
+      readMore: "Mehr lesen",
+      close: "Schließen",
+      fullName: "Vollständiger Name",
+      sortLabel: "Einträge sortieren",
+      sortAppearance: "Auftreten",
+      sortAlphabetical: "Alphabetisch",
+      sortChronological: "Chronologisch"
     }
   };
 
@@ -68,9 +82,43 @@
   let world = null;
   let activeCategory = initialParameters.get("entry") ? "all" : (initialParameters.get("category") || "all");
   let requestedEntry = initialParameters.get("entry");
-  let linkedEntryFocused = false;
   let query = "";
-  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const sortStorageKey = "library-lexicon-sort-v1";
+  let sortMode = "appearance";
+  try {
+    const savedSort = localStorage.getItem(sortStorageKey);
+    if (["appearance", "alphabetical", "chronological"].includes(savedSort)) sortMode = savedSort;
+  } catch {
+    // Local persistence is optional.
+  }
+
+  const searchRow = searchInput.closest(".lexicon-search-row");
+  if (!searchRow) return;
+  const sortField = document.createElement("label");
+  sortField.className = "lexicon-sort";
+  const sortLabel = document.createElement("span");
+  const sortSelect = document.createElement("select");
+  sortSelect.dataset.lexiconSort = "";
+  sortField.append(sortLabel, sortSelect);
+  searchRow.append(sortField);
+
+  const detailOverlay = document.createElement("div");
+  detailOverlay.className = "lexicon-detail-overlay";
+  detailOverlay.hidden = true;
+  detailOverlay.setAttribute("role", "presentation");
+  const detailPanel = document.createElement("article");
+  detailPanel.className = "lexicon-detail framed-panel";
+  detailPanel.setAttribute("role", "dialog");
+  detailPanel.setAttribute("aria-modal", "true");
+  detailPanel.setAttribute("aria-labelledby", "lexicon-detail-title");
+  detailPanel.tabIndex = -1;
+  const detailClose = document.createElement("button");
+  detailClose.type = "button";
+  detailClose.className = "lexicon-detail-close";
+  detailClose.textContent = "×";
+  detailPanel.append(detailClose);
+  detailOverlay.append(detailPanel);
+  document.body.append(detailOverlay);
 
   const language = () => document.documentElement.lang === "de" ? "de" : "en";
 
@@ -81,6 +129,21 @@
       if (table[key]) node.textContent = table[key];
     });
     searchInput.placeholder = table.searchPlaceholder;
+    sortLabel.textContent = table.sortLabel;
+    sortSelect.setAttribute("aria-label", table.sortLabel);
+    sortSelect.replaceChildren(...[
+      ["appearance", table.sortAppearance],
+      ["alphabetical", table.sortAlphabetical],
+      ["chronological", table.sortChronological]
+    ].map(([value, label]) => {
+      const option = document.createElement("option");
+      option.value = value;
+      option.textContent = label;
+      option.selected = value === sortMode;
+      return option;
+    }));
+    detailClose.setAttribute("aria-label", table.close);
+    detailClose.title = table.close;
   };
 
   const volumeIndex = (storyId, volumeId) => {
@@ -112,6 +175,7 @@
   };
 
   const localizedRelationship = (relationship, profile, lang) => {
+    if (!visibilityAllowed(relationship?.visibility || { mode: "always" }, profile)) return null;
     const target = rawEntry(relationship?.target);
     if (!target || !visibilityAllowed(target.visibility, profile)) return null;
 
@@ -134,6 +198,16 @@
     const lang = language();
     const labels = entry.labels?.[lang];
     if (!labels) return null;
+
+    const sections = (entry.sections || [])
+      .filter((section) => visibilityAllowed(section.visibility, profile))
+      .map((section) => {
+        const title = section.labels?.[lang];
+        const text = section.text?.[lang];
+        if (typeof title !== "string" || !title.trim() || typeof text !== "string" || !text.trim()) return null;
+        return { id: section.id, title, text };
+      })
+      .filter(Boolean);
 
     const fragments = (entry.fragments || [])
       .filter((fragment) => visibilityAllowed(fragment.visibility, profile))
@@ -160,9 +234,13 @@
       categories: entry.categories || [],
       prototypeOnly: entry.prototypeOnly === true,
       title: labels.title,
+      fullName: typeof labels.fullName === "string" ? labels.fullName : "",
       summary: labels.summary,
+      sections,
       fragments,
-      relationships
+      relationships,
+      appearanceOrder: Number.isFinite(entry.appearanceOrder) ? entry.appearanceOrder : Number.MAX_SAFE_INTEGER,
+      chronologyOrder: Number.isFinite(entry.chronologyOrder) ? entry.chronologyOrder : (Number.isFinite(entry.appearanceOrder) ? entry.appearanceOrder : Number.MAX_SAFE_INTEGER)
     };
   };
 
@@ -187,8 +265,9 @@
 
     const haystack = [
       entry.title,
+      entry.fullName,
       entry.summary,
-      ...entry.fragments.map((fragment) => fragment.text),
+      ...entry.sections.flatMap((section) => [section.title, section.text]),
       ...entry.relationships.flatMap((relationship) => [relationship.label, relationship.targetTitle])
     ]
       .join(" ")
@@ -227,7 +306,6 @@
       button.addEventListener("click", () => {
         activeCategory = id;
         requestedEntry = null;
-        linkedEntryFocused = true;
         updateRouteState({ category: id, entry: null });
         render();
       });
@@ -313,7 +391,6 @@
       query = "";
       searchInput.value = "";
       requestedEntry = relationship.target;
-      linkedEntryFocused = false;
       updateRouteState({ category: "all", entry: relationship.target });
       render();
     });
@@ -337,15 +414,74 @@
     return section;
   };
 
+  const closeDetail = (clearRoute = true) => {
+    detailOverlay.hidden = true;
+    if (clearRoute && requestedEntry) {
+      requestedEntry = null;
+      updateRouteState({ entry: null });
+    }
+  };
+
+  const renderDetail = (entry) => {
+    detailPanel.replaceChildren(detailClose);
+
+    const title = document.createElement("h2");
+    title.id = "lexicon-detail-title";
+    title.textContent = entry.title;
+    detailPanel.append(title);
+
+    if (entry.fullName && entry.fullName !== entry.title) {
+      const fullName = document.createElement("p");
+      fullName.className = "lexicon-detail-full-name";
+      fullName.textContent = `${ui[language()].fullName}: ${entry.fullName}`;
+      detailPanel.append(fullName);
+    }
+
+    const summary = document.createElement("p");
+    summary.className = "lexicon-detail-summary";
+    summary.textContent = entry.summary;
+    detailPanel.append(summary);
+
+    if (entry.sections.length > 0) {
+      const sections = document.createElement("div");
+      sections.className = "lexicon-detail-sections";
+      for (const item of entry.sections) {
+        const section = document.createElement("section");
+        const heading = document.createElement("h3");
+        heading.textContent = item.title;
+        const paragraph = document.createElement("p");
+        paragraph.textContent = item.text;
+        section.append(heading, paragraph);
+        sections.append(section);
+      }
+      detailPanel.append(sections);
+    }
+
+    const relationships = renderRelationships(entry.relationships);
+    if (relationships) detailPanel.append(relationships);
+
+    const showSource = entry.categories.some((category) => ["events", "history"].includes(category)) || entry.id === "shard";
+    if (showSource) {
+      const link = entry.fragments.flatMap((fragment) => fragment.readerLinks).find(Boolean);
+      if (link) {
+        const sources = document.createElement("div");
+        sources.className = "lexicon-detail-sources";
+        sources.append(renderReaderLink(link));
+        detailPanel.append(sources);
+      }
+    }
+
+    detailOverlay.hidden = false;
+    detailPanel.focus({ preventScroll: true });
+  };
+
   const renderEntry = (entry) => {
     const article = document.createElement("article");
     article.className = "lexicon-entry framed-panel";
     article.dataset.lexiconEntry = entry.id;
-    article.tabIndex = -1;
 
     const headingRow = document.createElement("div");
     headingRow.className = "lexicon-entry-heading";
-
     const title = document.createElement("h3");
     title.textContent = entry.title;
     headingRow.append(title);
@@ -361,26 +497,37 @@
     summary.className = "lexicon-entry-summary";
     summary.textContent = entry.summary;
 
-    article.append(headingRow, summary, ...entry.fragments.map(renderFragment));
-    const relationships = renderRelationships(entry.relationships);
-    if (relationships) article.append(relationships);
+    const readMore = document.createElement("button");
+    readMore.type = "button";
+    readMore.className = "lexicon-read-more";
+    readMore.textContent = ui[language()].readMore;
+    readMore.addEventListener("click", () => {
+      requestedEntry = entry.id;
+      updateRouteState({ category: activeCategory, entry: entry.id });
+      render();
+    });
+
+    article.append(headingRow, summary, readMore);
     return article;
   };
 
-  const focusLinkedEntry = () => {
-    if (!requestedEntry || linkedEntryFocused) return;
-    const target = [...resultsNode.querySelectorAll("[data-lexicon-entry]")]
-      .find((node) => node.dataset.lexiconEntry === requestedEntry);
-    if (!target) return;
+  const compareEntries = (left, right) => {
+    if (sortMode === "alphabetical") return left.title.localeCompare(right.title, language());
+    const key = sortMode === "chronological" ? "chronologyOrder" : "appearanceOrder";
+    return (left[key] - right[key]) || left.title.localeCompare(right.title, language());
+  };
 
-    linkedEntryFocused = true;
-    requestAnimationFrame(() => {
-      target.scrollIntoView({
-        block: "center",
-        behavior: reducedMotion.matches ? "auto" : "smooth"
-      });
-      target.focus({ preventScroll: true });
-    });
+  const openRequestedDetail = (eligible) => {
+    if (!requestedEntry) {
+      detailOverlay.hidden = true;
+      return;
+    }
+    const entry = eligible.find((item) => item.id === requestedEntry);
+    if (!entry) {
+      closeDetail(true);
+      return;
+    }
+    renderDetail(entry);
   };
 
   const render = () => {
@@ -394,21 +541,41 @@
 
     const filtered = eligible
       .filter(searchEligible)
-      .sort((left, right) => left.title.localeCompare(right.title, language()));
+      .sort(compareEntries);
 
     resultsNode.replaceChildren(...filtered.map(renderEntry));
     stateNode.textContent = filtered.length === 0 ? ui[language()].empty : "";
-    focusLinkedEntry();
+    openRequestedDetail(eligible);
   };
 
   searchInput.addEventListener("input", () => {
     query = searchInput.value.trim().toLocaleLowerCase(language());
     if (requestedEntry) {
       requestedEntry = null;
-      linkedEntryFocused = true;
       updateRouteState({ entry: null });
     }
     render();
+  });
+
+  sortSelect.addEventListener("change", () => {
+    sortMode = ["appearance", "alphabetical", "chronological"].includes(sortSelect.value) ? sortSelect.value : "appearance";
+    try {
+      localStorage.setItem(sortStorageKey, sortMode);
+    } catch {
+      // Local persistence is optional.
+    }
+    render();
+  });
+
+  detailClose.addEventListener("click", () => closeDetail(true));
+  detailOverlay.addEventListener("click", (event) => {
+    if (event.target === detailOverlay) closeDetail(true);
+  });
+  document.addEventListener("keydown", (event) => {
+    if (!detailOverlay.hidden && event.key === "Escape") {
+      event.preventDefault();
+      closeDetail(true);
+    }
   });
 
   window.addEventListener(profileApi.eventName, render);
