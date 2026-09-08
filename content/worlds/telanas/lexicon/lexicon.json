@@ -338,6 +338,38 @@
             "en": "Childhood friend",
             "de": "Kindheitsfreundin"
           }
+        },
+        {
+          "id": "mother",
+          "target": "mara",
+          "labels": {
+            "en": "Mother",
+            "de": "Mutter"
+          }
+        },
+        {
+          "id": "childhood-friend-tarin",
+          "target": "tarin",
+          "labels": {
+            "en": "Childhood friend",
+            "de": "Kindheitsfreund"
+          }
+        },
+        {
+          "id": "childhood-friend-joric",
+          "target": "joric",
+          "labels": {
+            "en": "Childhood friend",
+            "de": "Kindheitsfreund"
+          }
+        },
+        {
+          "id": "childhood-friend-nalia",
+          "target": "nalia",
+          "labels": {
+            "en": "Childhood friend",
+            "de": "Kindheitsfreundin"
+          }
         }
       ]
     },
@@ -684,6 +716,22 @@
           "labels": {
             "en": "Grandmother",
             "de": "Großmutter"
+          }
+        },
+        {
+          "id": "father-garran",
+          "target": "garran",
+          "labels": {
+            "en": "Father",
+            "de": "Vater"
+          }
+        },
+        {
+          "id": "hunter-mentor-harlan",
+          "target": "harlan",
+          "labels": {
+            "en": "Hunter she learns from",
+            "de": "Jäger, von dem sie lernt"
           }
         }
       ]
@@ -2844,6 +2892,892 @@
           "labels": {
             "en": "Initial destination",
             "de": "Erstes Ziel"
+          }
+        }
+      ]
+    },
+    {
+      "id": "tarin",
+      "categories": [
+        "characters"
+      ],
+      "visibility": {
+        "mode": "completed-chapter",
+        "story": "dragon-knight",
+        "book": "volume-01",
+        "chapter": "dk-v01-ch01"
+      },
+      "labels": {
+        "en": {
+          "title": "Tarin Vale",
+          "summary": "One of Calist's childhood friends from the village."
+        },
+        "de": {
+          "title": "Tarin Vale",
+          "summary": "Einer von Calists Kindheitsfreunden aus dem Dorf."
+        }
+      },
+      "fragments": [
+        {
+          "id": "tarin-practical-knowledge",
+          "visibility": {
+            "mode": "completed-chapter",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch02"
+          },
+          "text": {
+            "en": "Tarin already knows enough about local plants and mushrooms to catch Calist putting the wrong kind into a gathering basket.",
+            "de": "Tarin kennt sich bereits gut genug mit heimischen Pflanzen und Pilzen aus, um zu bemerken, dass Calist die falsche Sorte in einen Sammelkorb legt."
+          },
+          "readerLinks": [
+            {
+              "id": "tarin-practical-knowledge-reader",
+              "story": "dragon-knight",
+              "book": "volume-01",
+              "anchor": "dk-v01-ch02",
+              "labels": {
+                "en": "Open the related passage",
+                "de": "Zugehörige Stelle öffnen"
+              }
+            }
+          ]
+        },
+        {
+          "id": "tarin-healing-work",
+          "visibility": {
+            "mode": "completed-chapter",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch04"
+          },
+          "text": {
+            "en": "Tarin spends so much time working beside Mara that he stops feeling like a visitor at the Griffith house. He gathers plants, prepares dried herbs and already passes simple knowledge to younger children.",
+            "de": "Tarin arbeitet so oft an Maras Seite, dass er im Haus der Griffiths kaum noch wie ein Besucher wirkt. Er sammelt Pflanzen, bereitet getrocknete Kräuter vor und gibt einfaches Wissen bereits an jüngere Kinder weiter."
+          },
+          "readerLinks": [
+            {
+              "id": "tarin-healing-work-reader",
+              "story": "dragon-knight",
+              "book": "volume-01",
+              "anchor": "dk-v01-ch04",
+              "labels": {
+                "en": "Open the related passage",
+                "de": "Zugehörige Stelle öffnen"
+              }
+            }
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "id": "childhood-friend",
+          "target": "calist",
+          "labels": {
+            "en": "Childhood friend",
+            "de": "Kindheitsfreund"
+          }
+        }
+      ]
+    },
+    {
+      "id": "joric",
+      "categories": [
+        "characters"
+      ],
+      "visibility": {
+        "mode": "completed-chapter",
+        "story": "dragon-knight",
+        "book": "volume-01",
+        "chapter": "dk-v01-ch01"
+      },
+      "labels": {
+        "en": {
+          "title": "Joric Fenner",
+          "summary": "One of Calist's childhood friends from the village."
+        },
+        "de": {
+          "title": "Joric Fenner",
+          "summary": "Einer von Calists Kindheitsfreunden aus dem Dorf."
+        }
+      },
+      "fragments": [
+        {
+          "id": "joric-town-fight",
+          "visibility": {
+            "mode": "reached-anchor",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch03",
+            "anchor": "dk-v01-ch03-town-fight"
+          },
+          "text": {
+            "en": "Joric joins Calist, Eryn and Nalia in the town street fight and is just as unwilling as the others to abandon his friends once it begins.",
+            "de": "Joric gerät zusammen mit Calist, Eryn und Nalia in die Schlägerei in der Stadt und weigert sich ebenso wie die anderen, seine Freunde im Stich zu lassen."
+          },
+          "readerLinks": [
+            {
+              "id": "joric-town-fight-reader",
+              "story": "dragon-knight",
+              "book": "volume-01",
+              "anchor": "dk-v01-ch03-town-fight",
+              "labels": {
+                "en": "Open the related passage",
+                "de": "Zugehörige Stelle öffnen"
+              }
+            }
+          ]
+        },
+        {
+          "id": "joric-many-jobs",
+          "visibility": {
+            "mode": "completed-chapter",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch04"
+          },
+          "text": {
+            "en": "Joric never settles into one trade. He becomes useful with animals, fields, fences, drainage, wagons and whatever other work needs hands, and younger children increasingly listen to him.",
+            "de": "Joric legt sich auf kein einzelnes Handwerk fest. Er wird bei Tieren, Feldern, Zäunen, Entwässerung, Wagen und jeder anderen Arbeit nützlich, die Hände braucht, und jüngere Kinder hören zunehmend auf ihn."
+          },
+          "readerLinks": [
+            {
+              "id": "joric-many-jobs-reader",
+              "story": "dragon-knight",
+              "book": "volume-01",
+              "anchor": "dk-v01-ch04",
+              "labels": {
+                "en": "Open the related passage",
+                "de": "Zugehörige Stelle öffnen"
+              }
+            }
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "id": "childhood-friend",
+          "target": "calist",
+          "labels": {
+            "en": "Childhood friend",
+            "de": "Kindheitsfreund"
+          }
+        },
+        {
+          "id": "town-fight",
+          "target": "town-market-fight",
+          "labels": {
+            "en": "Participant in the town fight",
+            "de": "Beteiligt an der Schlägerei"
+          }
+        }
+      ]
+    },
+    {
+      "id": "nalia",
+      "categories": [
+        "characters"
+      ],
+      "visibility": {
+        "mode": "completed-chapter",
+        "story": "dragon-knight",
+        "book": "volume-01",
+        "chapter": "dk-v01-ch01"
+      },
+      "labels": {
+        "en": {
+          "title": "Nalia Reed",
+          "summary": "One of Calist's childhood friends from the village."
+        },
+        "de": {
+          "title": "Nalia Reed",
+          "summary": "Eine von Calists Kindheitsfreundinnen aus dem Dorf."
+        }
+      },
+      "fragments": [
+        {
+          "id": "nalia-town-fight",
+          "visibility": {
+            "mode": "reached-anchor",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch03",
+            "anchor": "dk-v01-ch03-town-fight"
+          },
+          "text": {
+            "en": "Nalia joins the others in the town fight, using her folded market bag as an improvised weapon.",
+            "de": "Nalia beteiligt sich an der Schlägerei in der Stadt und benutzt ihre gefaltete Markttasche als improvisierte Waffe."
+          },
+          "readerLinks": [
+            {
+              "id": "nalia-town-fight-reader",
+              "story": "dragon-knight",
+              "book": "volume-01",
+              "anchor": "dk-v01-ch03-town-fight",
+              "labels": {
+                "en": "Open the related passage",
+                "de": "Zugehörige Stelle öffnen"
+              }
+            }
+          ]
+        },
+        {
+          "id": "nalia-craft-curiosity",
+          "visibility": {
+            "mode": "completed-chapter",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch04"
+          },
+          "text": {
+            "en": "Nalia begins asking why repaired pieces fail and how tools are restored rather than merely carrying them between households.",
+            "de": "Nalia beginnt zu fragen, warum reparierte Teile brechen und wie Werkzeuge instand gesetzt werden, anstatt sie nur zwischen den Haushalten zu tragen."
+          },
+          "readerLinks": [
+            {
+              "id": "nalia-craft-curiosity-reader",
+              "story": "dragon-knight",
+              "book": "volume-01",
+              "anchor": "dk-v01-ch04",
+              "labels": {
+                "en": "Open the related passage",
+                "de": "Zugehörige Stelle öffnen"
+              }
+            }
+          ]
+        },
+        {
+          "id": "nalia-woodworking",
+          "visibility": {
+            "mode": "completed-chapter",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch04"
+          },
+          "text": {
+            "en": "Her first sewing work with Tessa is useful but does not hold her interest. Wood does: Nalia keeps finding reasons to carve and work with it.",
+            "de": "Ihre ersten Näharbeiten mit Tessa sind brauchbar, fesseln sie aber nicht. Holz tut es: Nalia findet immer wieder Gründe, daran zu schnitzen und damit zu arbeiten."
+          },
+          "readerLinks": [
+            {
+              "id": "nalia-woodworking-reader",
+              "story": "dragon-knight",
+              "book": "volume-01",
+              "anchor": "dk-v01-ch04",
+              "labels": {
+                "en": "Open the related passage",
+                "de": "Zugehörige Stelle öffnen"
+              }
+            }
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "id": "childhood-friend",
+          "target": "calist",
+          "labels": {
+            "en": "Childhood friend",
+            "de": "Kindheitsfreundin"
+          }
+        },
+        {
+          "id": "town-fight",
+          "target": "town-market-fight",
+          "labels": {
+            "en": "Participant in the town fight",
+            "de": "Beteiligt an der Schlägerei"
+          }
+        }
+      ]
+    },
+    {
+      "id": "mara",
+      "categories": [
+        "characters"
+      ],
+      "visibility": {
+        "mode": "completed-chapter",
+        "story": "dragon-knight",
+        "book": "volume-01",
+        "chapter": "dk-v01-ch02"
+      },
+      "labels": {
+        "en": {
+          "title": "Mara Griffith",
+          "summary": "Calist's mother and one of the village's main sources of practical healing knowledge."
+        },
+        "de": {
+          "title": "Mara Griffith",
+          "summary": "Calists Mutter und eine der wichtigsten Quellen für praktisches Heilwissen im Dorf."
+        }
+      },
+      "fragments": [
+        {
+          "id": "mara-healing-work",
+          "visibility": {
+            "mode": "completed-chapter",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch02"
+          },
+          "text": {
+            "en": "Mara treats injuries and illness, prepares herbs and remedies, and is trusted enough to order even stubborn villagers to rest when necessary.",
+            "de": "Mara behandelt Verletzungen und Krankheiten, bereitet Kräuter und Heilmittel zu und genießt genug Vertrauen, um selbst sture Dorfbewohner bei Bedarf zur Ruhe zu zwingen."
+          },
+          "readerLinks": [
+            {
+              "id": "mara-healing-work-reader",
+              "story": "dragon-knight",
+              "book": "volume-01",
+              "anchor": "dk-v01-ch02",
+              "labels": {
+                "en": "Open the related passage",
+                "de": "Zugehörige Stelle öffnen"
+              }
+            }
+          ]
+        },
+        {
+          "id": "mara-teaches-tarin",
+          "visibility": {
+            "mode": "completed-chapter",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch04"
+          },
+          "text": {
+            "en": "Tarin increasingly works beside Mara, learning how to gather, sort and prepare useful plants so the village's healing knowledge does not remain with one person.",
+            "de": "Tarin arbeitet zunehmend an Maras Seite und lernt, nützliche Pflanzen zu sammeln, zu sortieren und vorzubereiten, damit das Heilwissen des Dorfes nicht bei einer einzigen Person bleibt."
+          },
+          "readerLinks": [
+            {
+              "id": "mara-teaches-tarin-reader",
+              "story": "dragon-knight",
+              "book": "volume-01",
+              "anchor": "dk-v01-ch04",
+              "labels": {
+                "en": "Open the related passage",
+                "de": "Zugehörige Stelle öffnen"
+              }
+            }
+          ]
+        },
+        {
+          "id": "mara-alden-illness",
+          "visibility": {
+            "mode": "reached-anchor",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch07",
+            "anchor": "dk-v01-ch07-alden-illness"
+          },
+          "text": {
+            "en": "When Alden's winter cough refuses to clear, Mara stops accepting his excuses and orders him to bed.",
+            "de": "Als Aldens Husten im Winter nicht verschwindet, akzeptiert Mara seine Ausreden nicht länger und schickt ihn ins Bett."
+          },
+          "readerLinks": [
+            {
+              "id": "mara-alden-illness-reader",
+              "story": "dragon-knight",
+              "book": "volume-01",
+              "anchor": "dk-v01-ch07-alden-illness",
+              "labels": {
+                "en": "Open the related passage",
+                "de": "Zugehörige Stelle öffnen"
+              }
+            }
+          ]
+        },
+        {
+          "id": "mara-nessa-final-night",
+          "visibility": {
+            "mode": "reached-anchor",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch08",
+            "anchor": "dk-v01-ch08-nessa-dies"
+          },
+          "text": {
+            "en": "Mara is with Nessa during her final night, together with Tessa.",
+            "de": "Mara ist in Nessas letzter Nacht bei ihr, gemeinsam mit Tessa."
+          },
+          "readerLinks": [
+            {
+              "id": "mara-nessa-final-night-reader",
+              "story": "dragon-knight",
+              "book": "volume-01",
+              "anchor": "dk-v01-ch08-nessa-dies",
+              "labels": {
+                "en": "Open the related passage",
+                "de": "Zugehörige Stelle öffnen"
+              }
+            }
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "id": "son",
+          "target": "calist",
+          "labels": {
+            "en": "Son",
+            "de": "Sohn"
+          }
+        }
+      ]
+    },
+    {
+      "id": "garran",
+      "categories": [
+        "characters"
+      ],
+      "visibility": {
+        "mode": "reached-anchor",
+        "story": "dragon-knight",
+        "book": "volume-01",
+        "chapter": "dk-v01-ch03",
+        "anchor": "dk-v01-ch03-town-arrival"
+      },
+      "labels": {
+        "en": {
+          "title": "Garran Venn",
+          "summary": "Eryn's father, a village leatherworker who trades hides and finished leather in town."
+        },
+        "de": {
+          "title": "Garran Venn",
+          "summary": "Eryns Vater, ein Lederarbeiter aus dem Dorf, der Felle und fertige Lederwaren in der Stadt handelt."
+        }
+      },
+      "fragments": [
+        {
+          "id": "garran-town-trade",
+          "visibility": {
+            "mode": "reached-anchor",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch03",
+            "anchor": "dk-v01-ch03-town-arrival"
+          },
+          "text": {
+            "en": "Garran travels to town with Alden carrying hides and finished leather, handling trade and wagon work as part of the village's regular exchange.",
+            "de": "Garran fährt mit Alden in die Stadt und nimmt Felle und fertige Lederwaren mit. Handel und Wagenarbeit gehören dabei zum regelmäßigen Austausch des Dorfes."
+          },
+          "readerLinks": [
+            {
+              "id": "garran-town-trade-reader",
+              "story": "dragon-knight",
+              "book": "volume-01",
+              "anchor": "dk-v01-ch03-town-arrival",
+              "labels": {
+                "en": "Open the related passage",
+                "de": "Zugehörige Stelle öffnen"
+              }
+            }
+          ]
+        },
+        {
+          "id": "garran-hunting-knowledge",
+          "visibility": {
+            "mode": "completed-chapter",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch04"
+          },
+          "text": {
+            "en": "Garran is also one of the experienced people Eryn learns from beyond the fields as she grows into a capable hunter.",
+            "de": "Garran gehört außerdem zu den erfahrenen Menschen, von denen Eryn jenseits der Felder lernt, während sie zu einer fähigen Jägerin heranwächst."
+          },
+          "readerLinks": [
+            {
+              "id": "garran-hunting-knowledge-reader",
+              "story": "dragon-knight",
+              "book": "volume-01",
+              "anchor": "dk-v01-ch04",
+              "labels": {
+                "en": "Open the related passage",
+                "de": "Zugehörige Stelle öffnen"
+              }
+            }
+          ]
+        },
+        {
+          "id": "garran-game-shift",
+          "visibility": {
+            "mode": "completed-chapter",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch07"
+          },
+          "text": {
+            "en": "As hunting becomes less reliable near the village, Garran is among those trying to understand why the game has moved deeper into the woods.",
+            "de": "Als die Jagd in Dorfnähe unzuverlässiger wird, gehört Garran zu denen, die zu verstehen versuchen, warum das Wild tiefer in den Wald gezogen ist."
+          },
+          "readerLinks": [
+            {
+              "id": "garran-game-shift-reader",
+              "story": "dragon-knight",
+              "book": "volume-01",
+              "anchor": "dk-v01-ch07",
+              "labels": {
+                "en": "Open the related passage",
+                "de": "Zugehörige Stelle öffnen"
+              }
+            }
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "id": "daughter",
+          "target": "eryn",
+          "labels": {
+            "en": "Daughter",
+            "de": "Tochter"
+          }
+        }
+      ]
+    },
+    {
+      "id": "tessa",
+      "categories": [
+        "characters"
+      ],
+      "visibility": {
+        "mode": "reached-anchor",
+        "story": "dragon-knight",
+        "book": "volume-01",
+        "chapter": "dk-v01-ch03",
+        "anchor": "dk-v01-ch03-town-arrival"
+      },
+      "labels": {
+        "en": {
+          "title": "Tessa",
+          "summary": "A village clothworker whose goods and supplies form part of the regular trade with town."
+        },
+        "de": {
+          "title": "Tessa",
+          "summary": "Eine Textilarbeiterin aus dem Dorf, deren Waren und Materialien Teil des regelmäßigen Handels mit der Stadt sind."
+        }
+      },
+      "fragments": [
+        {
+          "id": "tessa-clothwork",
+          "visibility": {
+            "mode": "reached-anchor",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch03",
+            "anchor": "dk-v01-ch03-town-arrival"
+          },
+          "text": {
+            "en": "Tessa sends finished clothwork into town and receives sewing needles, buttons and other supplies through the village wagon.",
+            "de": "Tessa schickt fertige Textilarbeiten in die Stadt und erhält über den Dorfwagen Nähnadeln, Knöpfe und andere Materialien."
+          },
+          "readerLinks": [
+            {
+              "id": "tessa-clothwork-reader",
+              "story": "dragon-knight",
+              "book": "volume-01",
+              "anchor": "dk-v01-ch03-town-arrival",
+              "labels": {
+                "en": "Open the related passage",
+                "de": "Zugehörige Stelle öffnen"
+              }
+            }
+          ]
+        },
+        {
+          "id": "tessa-winter-repairs",
+          "visibility": {
+            "mode": "completed-chapter",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch07"
+          },
+          "text": {
+            "en": "During the difficult seasons, Tessa repeatedly repairs blankets that have already been mended before rather than replacing them.",
+            "de": "Während der schwierigen Jahreszeiten repariert Tessa immer wieder Decken, die bereits zuvor geflickt wurden, anstatt sie zu ersetzen."
+          },
+          "readerLinks": [
+            {
+              "id": "tessa-winter-repairs-reader",
+              "story": "dragon-knight",
+              "book": "volume-01",
+              "anchor": "dk-v01-ch07",
+              "labels": {
+                "en": "Open the related passage",
+                "de": "Zugehörige Stelle öffnen"
+              }
+            }
+          ]
+        },
+        {
+          "id": "tessa-nessa-final-night",
+          "visibility": {
+            "mode": "reached-anchor",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch08",
+            "anchor": "dk-v01-ch08-nessa-dies"
+          },
+          "text": {
+            "en": "Tessa is with Nessa and Mara during Nessa's final night and later asks that Nessa's chair remain on the porch.",
+            "de": "Tessa ist in Nessas letzter Nacht gemeinsam mit Nessa und Mara dort und bittet später darum, Nessas Stuhl auf der Veranda stehen zu lassen."
+          },
+          "readerLinks": [
+            {
+              "id": "tessa-nessa-final-night-reader",
+              "story": "dragon-knight",
+              "book": "volume-01",
+              "anchor": "dk-v01-ch08-nessa-dies",
+              "labels": {
+                "en": "Open the related passage",
+                "de": "Zugehörige Stelle öffnen"
+              }
+            }
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "id": "village",
+          "target": "calists-village",
+          "labels": {
+            "en": "Village",
+            "de": "Dorf"
+          }
+        }
+      ]
+    },
+    {
+      "id": "harlan",
+      "categories": [
+        "characters"
+      ],
+      "visibility": {
+        "mode": "completed-chapter",
+        "story": "dragon-knight",
+        "book": "volume-01",
+        "chapter": "dk-v01-ch04"
+      },
+      "labels": {
+        "en": {
+          "title": "Harlan",
+          "summary": "An experienced village hunter and tracker who is one of the people Eryn learns from."
+        },
+        "de": {
+          "title": "Harlan",
+          "summary": "Ein erfahrener Jäger und Fährtenleser des Dorfes, von dem Eryn unter anderem lernt."
+        }
+      },
+      "fragments": [
+        {
+          "id": "harlan-first-hunt",
+          "visibility": {
+            "mode": "reached-anchor",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch05",
+            "anchor": "dk-v01-ch05-camp"
+          },
+          "text": {
+            "en": "Harlan brings Calist on his first multi-night hunting trip as an extra pair of dependable hands and leads the group into the Old Woods.",
+            "de": "Harlan nimmt Calist auf dessen ersten mehrtägigen Jagdzug als zusätzliches verlässliches Paar Hände mit und führt die Gruppe in den alten Wald."
+          },
+          "readerLinks": [
+            {
+              "id": "harlan-first-hunt-reader",
+              "story": "dragon-knight",
+              "book": "volume-01",
+              "anchor": "dk-v01-ch05-camp",
+              "labels": {
+                "en": "Open the related passage",
+                "de": "Zugehörige Stelle öffnen"
+              }
+            }
+          ]
+        },
+        {
+          "id": "harlan-goblin-restraint",
+          "visibility": {
+            "mode": "reached-anchor",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch05",
+            "anchor": "dk-v01-ch05-goblins"
+          },
+          "text": {
+            "en": "During the goblin encounter, Harlan prevents the hunters from turning a tense meeting into an unnecessary pursuit.",
+            "de": "Bei der Begegnung mit den Goblins verhindert Harlan, dass aus der angespannten Situation eine unnötige Verfolgung wird."
+          },
+          "readerLinks": [
+            {
+              "id": "harlan-goblin-restraint-reader",
+              "story": "dragon-knight",
+              "book": "volume-01",
+              "anchor": "dk-v01-ch05-goblins",
+              "labels": {
+                "en": "Open the related passage",
+                "de": "Zugehörige Stelle öffnen"
+              }
+            }
+          ]
+        },
+        {
+          "id": "harlan-ambush-return",
+          "visibility": {
+            "mode": "reached-anchor",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch08",
+            "anchor": "dk-v01-ch08-ambush-return"
+          },
+          "text": {
+            "en": "Harlan is one of the three injured hunters who return after the later ambush and helps explain what happened to the party.",
+            "de": "Harlan gehört zu den drei verletzten Jägern, die nach dem späteren Hinterhalt zurückkehren, und hilft zu erklären, was mit der Gruppe geschehen ist."
+          },
+          "readerLinks": [
+            {
+              "id": "harlan-ambush-return-reader",
+              "story": "dragon-knight",
+              "book": "volume-01",
+              "anchor": "dk-v01-ch08-ambush-return",
+              "labels": {
+                "en": "Open the related passage",
+                "de": "Zugehörige Stelle öffnen"
+              }
+            }
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "id": "trains",
+          "target": "eryn",
+          "labels": {
+            "en": "Helps train",
+            "de": "Hilft bei der Ausbildung"
+          }
+        },
+        {
+          "id": "ambush",
+          "target": "hunting-party-ambush",
+          "labels": {
+            "en": "Hunting-party ambush",
+            "de": "Hinterhalt auf die Jagdgruppe"
+          }
+        }
+      ]
+    },
+    {
+      "id": "bren",
+      "categories": [
+        "characters"
+      ],
+      "visibility": {
+        "mode": "completed-chapter",
+        "story": "dragon-knight",
+        "book": "volume-01",
+        "chapter": "dk-v01-ch04"
+      },
+      "labels": {
+        "en": {
+          "title": "Bren",
+          "summary": "A village hunter who works with Harlan, Eryn and the other hunters beyond the fields."
+        },
+        "de": {
+          "title": "Bren",
+          "summary": "Ein Jäger des Dorfes, der mit Harlan, Eryn und den anderen Jägern jenseits der Felder arbeitet."
+        }
+      },
+      "fragments": [
+        {
+          "id": "bren-first-hunt",
+          "visibility": {
+            "mode": "reached-anchor",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch05",
+            "anchor": "dk-v01-ch05-camp"
+          },
+          "text": {
+            "en": "Bren joins Calist's first multi-night hunt and handles ordinary camp work alongside the others.",
+            "de": "Bren nimmt an Calists erstem mehrtägigen Jagdzug teil und erledigt gemeinsam mit den anderen die gewöhnliche Lagerarbeit."
+          },
+          "readerLinks": [
+            {
+              "id": "bren-first-hunt-reader",
+              "story": "dragon-knight",
+              "book": "volume-01",
+              "anchor": "dk-v01-ch05-camp",
+              "labels": {
+                "en": "Open the related passage",
+                "de": "Zugehörige Stelle öffnen"
+              }
+            }
+          ]
+        },
+        {
+          "id": "bren-goblin-encounter",
+          "visibility": {
+            "mode": "reached-anchor",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch05",
+            "anchor": "dk-v01-ch05-goblins"
+          },
+          "text": {
+            "en": "Bren stands with Harlan during the goblin encounter while the group avoids escalating it.",
+            "de": "Bren steht bei der Begegnung mit den Goblins an Harlans Seite, während die Gruppe eine Eskalation vermeidet."
+          },
+          "readerLinks": [
+            {
+              "id": "bren-goblin-encounter-reader",
+              "story": "dragon-knight",
+              "book": "volume-01",
+              "anchor": "dk-v01-ch05-goblins",
+              "labels": {
+                "en": "Open the related passage",
+                "de": "Zugehörige Stelle öffnen"
+              }
+            }
+          ]
+        },
+        {
+          "id": "bren-ambush-stand",
+          "visibility": {
+            "mode": "reached-anchor",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch08",
+            "anchor": "dk-v01-ch08-ambush-return"
+          },
+          "text": {
+            "en": "During the later ambush, Bren stays behind to hold the attackers while the others retreat. Eryn turns back toward him.",
+            "de": "Während des späteren Hinterhalts bleibt Bren zurück, um die Angreifer aufzuhalten, während die anderen sich zurückziehen. Eryn kehrt zu ihm um."
+          },
+          "readerLinks": [
+            {
+              "id": "bren-ambush-stand-reader",
+              "story": "dragon-knight",
+              "book": "volume-01",
+              "anchor": "dk-v01-ch08-ambush-return",
+              "labels": {
+                "en": "Open the related passage",
+                "de": "Zugehörige Stelle öffnen"
+              }
+            }
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "id": "ambush",
+          "target": "hunting-party-ambush",
+          "labels": {
+            "en": "Hunting-party ambush",
+            "de": "Hinterhalt auf die Jagdgruppe"
           }
         }
       ]
