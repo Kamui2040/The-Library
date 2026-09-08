@@ -44,6 +44,12 @@
         "entry": "nessa",
         "text": "Nessa",
         "occurrence": 1
+      },
+      {
+        "anchor": "dk-v01-p-first-shard",
+        "entry": "shard",
+        "text": "first shard",
+        "occurrence": 1
       }
     ],
     "de": [
@@ -81,6 +87,12 @@
         "anchor": "dk-v01-ch04-de-p339",
         "entry": "nessa",
         "text": "Nessa",
+        "occurrence": 1
+      },
+      {
+        "anchor": "dk-v01-p-first-shard",
+        "entry": "shard",
+        "text": "erste Scherbe",
         "occurrence": 1
       }
     ]

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "world": "telanas",
-  "state": "prototype",
+  "state": "approved",
   "locales": [
     "en",
     "de"
@@ -12,6 +12,13 @@
       "labels": {
         "en": "Characters",
         "de": "Charaktere"
+      }
+    },
+    {
+      "id": "peoples",
+      "labels": {
+        "en": "Peoples",
+        "de": "Völker"
       }
     },
     {
@@ -1673,7 +1680,7 @@
     {
       "id": "twin-dragons",
       "categories": [
-        "creatures"
+        "characters"
       ],
       "visibility": {
         "mode": "reached-anchor",
@@ -1750,7 +1757,7 @@
     {
       "id": "goblins",
       "categories": [
-        "creatures"
+        "peoples"
       ],
       "visibility": {
         "mode": "reached-anchor",
@@ -1762,11 +1769,11 @@
       "labels": {
         "en": {
           "title": "Goblins",
-          "summary": "Small humanoid creatures Calist encounters in the Old Woods during his first trip with the hunters."
+          "summary": "A sapient humanoid people Calist encounters in the Old Woods during his first trip with the hunters."
         },
         "de": {
           "title": "Goblins",
-          "summary": "Kleine menschenähnliche Wesen, denen Calist im alten Wald während seiner ersten Jagd mit den Jägern begegnet."
+          "summary": "Ein vernunftbegabtes humanoides Volk, dem Calist im alten Wald während seiner ersten Jagd mit den Jägern begegnet."
         }
       },
       "fragments": [
@@ -3778,6 +3785,235 @@
           "labels": {
             "en": "Hunting-party ambush",
             "de": "Hinterhalt auf die Jagdgruppe"
+          }
+        }
+      ]
+    },
+    {
+      "id": "shard",
+      "categories": [
+        "terminology"
+      ],
+      "visibility": {
+        "mode": "reached-anchor",
+        "story": "dragon-knight",
+        "book": "volume-01",
+        "chapter": "dk-v01-prologue",
+        "anchor": "dk-v01-p-first-shard"
+      },
+      "labels": {
+        "en": {
+          "title": "Shard",
+          "summary": "The term used in the prologue for the world formed unintentionally by the twin dragons."
+        },
+        "de": {
+          "title": "Scherbe",
+          "summary": "Der im Prolog verwendete Begriff für die Welt, die die Zwillingsdrachen unbeabsichtigt entstehen lassen."
+        }
+      },
+      "fragments": [
+        {
+          "id": "shard-first-world",
+          "visibility": {
+            "mode": "reached-anchor",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-prologue",
+            "anchor": "dk-v01-p-first-shard"
+          },
+          "text": {
+            "en": "The sphere created during the twins' play becomes a world. The prologue names that sphere the first shard.",
+            "de": "Die Kugel, die während des Spiels der Zwillinge entsteht, wird zu einer Welt. Der Prolog nennt diese Kugel die erste Scherbe."
+          },
+          "readerLinks": [
+            {
+              "id": "shard-first-world-reader",
+              "story": "dragon-knight",
+              "book": "volume-01",
+              "anchor": "dk-v01-p-first-shard",
+              "labels": {
+                "en": "Open the related passage",
+                "de": "Zugehörige Stelle öffnen"
+              }
+            }
+          ]
+        },
+        {
+          "id": "shard-more-exist",
+          "visibility": {
+            "mode": "reached-anchor",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-prologue",
+            "anchor": "dk-v01-p-first-shard"
+          },
+          "text": {
+            "en": "The prologue states that the first shard will not be the last, but Volume 1 gives no further definition or catalogue of other shards.",
+            "de": "Der Prolog stellt fest, dass die erste Scherbe nicht die letzte bleiben wird. Band 1 liefert jedoch keine weitere Definition oder Übersicht anderer Scherben."
+          },
+          "readerLinks": [
+            {
+              "id": "shard-more-exist-reader",
+              "story": "dragon-knight",
+              "book": "volume-01",
+              "anchor": "dk-v01-p-first-shard",
+              "labels": {
+                "en": "Open the related passage",
+                "de": "Zugehörige Stelle öffnen"
+              }
+            }
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "id": "formed-in",
+          "target": "first-shard-formation",
+          "labels": {
+            "en": "First formation",
+            "de": "Erste Entstehung"
+          }
+        },
+        {
+          "id": "formed-by",
+          "target": "twin-dragons",
+          "labels": {
+            "en": "Formed unintentionally by",
+            "de": "Unbeabsichtigt geformt von"
+          }
+        }
+      ]
+    },
+    {
+      "id": "village-mutual-aid",
+      "categories": [
+        "cultures"
+      ],
+      "visibility": {
+        "mode": "completed-chapter",
+        "story": "dragon-knight",
+        "book": "volume-01",
+        "chapter": "dk-v01-ch02"
+      },
+      "labels": {
+        "en": {
+          "title": "Village mutual aid",
+          "summary": "The village's everyday practice of sharing work, practical knowledge and responsibility across households."
+        },
+        "de": {
+          "title": "Gegenseitige Hilfe im Dorf",
+          "summary": "Die alltägliche Praxis des Dorfes, Arbeit, praktisches Wissen und Verantwortung zwischen Haushalten zu teilen."
+        }
+      },
+      "fragments": [
+        {
+          "id": "village-mutual-aid-learning",
+          "visibility": {
+            "mode": "completed-chapter",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch02"
+          },
+          "text": {
+            "en": "Children learn from whichever adults around them know something useful. Calist learns not only from Alden, but also from Tessa, Garran, farmers and others.",
+            "de": "Kinder lernen von den Erwachsenen um sie herum, die etwas Nützliches wissen. Calist lernt nicht nur von Alden, sondern auch von Tessa, Garran, Bauern und anderen."
+          },
+          "readerLinks": [
+            {
+              "id": "village-mutual-aid-learning-reader",
+              "story": "dragon-knight",
+              "book": "volume-01",
+              "anchor": "dk-v01-ch01",
+              "labels": {
+                "en": "Open the related passage",
+                "de": "Zugehörige Stelle öffnen"
+              }
+            }
+          ]
+        },
+        {
+          "id": "village-mutual-aid-work-moves",
+          "visibility": {
+            "mode": "completed-chapter",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch02"
+          },
+          "text": {
+            "en": "When someone cannot do their normal work, duties shift without a formal meeting: repairs, care, fields and animals are simply taken up by other hands.",
+            "de": "Wenn jemand seine gewöhnliche Arbeit nicht erledigen kann, wandern die Aufgaben ohne formelle Versammlung weiter: Reparaturen, Versorgung, Felder und Tiere werden einfach von anderen Händen übernommen."
+          },
+          "readerLinks": [
+            {
+              "id": "village-mutual-aid-work-moves-reader",
+              "story": "dragon-knight",
+              "book": "volume-01",
+              "anchor": "dk-v01-ch02",
+              "labels": {
+                "en": "Open the related passage",
+                "de": "Zugehörige Stelle öffnen"
+              }
+            }
+          ]
+        },
+        {
+          "id": "village-mutual-aid-exchange",
+          "visibility": {
+            "mode": "completed-chapter",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch02"
+          },
+          "text": {
+            "en": "Help and goods often move without exact accounting. Food, treatment and labor are returned through ordinary reciprocity rather than every favor being priced.",
+            "de": "Hilfe und Güter wechseln oft ohne genaue Abrechnung den Besitzer. Essen, Behandlung und Arbeit werden durch alltägliche Gegenseitigkeit erwidert, statt jede Hilfe mit einem Preis zu versehen."
+          },
+          "readerLinks": [
+            {
+              "id": "village-mutual-aid-exchange-reader",
+              "story": "dragon-knight",
+              "book": "volume-01",
+              "anchor": "dk-v01-ch02",
+              "labels": {
+                "en": "Open the related passage",
+                "de": "Zugehörige Stelle öffnen"
+              }
+            }
+          ]
+        },
+        {
+          "id": "village-mutual-aid-shared-knowledge",
+          "visibility": {
+            "mode": "completed-chapter",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch04"
+          },
+          "text": {
+            "en": "Nessa puts the principle plainly: one skilled person is useful, but knowledge held by only one person is dangerous. The village deliberately spreads practical skills so illness, injury or absence does not stop essential work.",
+            "de": "Nessa formuliert das Prinzip deutlich: Eine Person, die etwas kann, ist nützlich; wenn nur eine Person es kann, ist das gefährlich. Das Dorf verteilt praktisches Wissen bewusst weiter, damit Krankheit, Verletzung oder Abwesenheit notwendige Arbeit nicht zum Stillstand bringt."
+          },
+          "readerLinks": [
+            {
+              "id": "village-mutual-aid-shared-knowledge-reader",
+              "story": "dragon-knight",
+              "book": "volume-01",
+              "anchor": "dk-v01-ch04",
+              "labels": {
+                "en": "Open the related passage",
+                "de": "Zugehörige Stelle öffnen"
+              }
+            }
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "id": "practiced-in",
+          "target": "calists-village",
+          "labels": {
+            "en": "Practiced throughout",
+            "de": "Im ganzen Dorf praktiziert"
           }
         }
       ]

@@ -29,6 +29,13 @@
 - The integrated book contents page and reader-side table of contents must derive from the same ordered structure.
 - Contextual Reader Lexicon references must use explicit semantic annotations tied to stable Reader anchors and localized source text. Do not automatically link arbitrary matching words or names.
 
+## Lexicon taxonomy
+
+- Sapient peoples or species belong under `peoples`, not `creatures`, regardless of appearance, origin, or hostility.
+- `creatures` is reserved for non-sapient beings.
+- Individual sapient characters or character groups belong under `characters` when that is the more accurate entry type.
+- `cultures` describes customs, practices, traditions, and social structures; it is separate from people/species classification.
+
 ## Spoilers
 
 - Spoiler filtering happens before normal rendering/search presentation.
