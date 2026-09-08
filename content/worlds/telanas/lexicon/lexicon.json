@@ -15,6 +15,13 @@
       }
     },
     {
+      "id": "peoples",
+      "labels": {
+        "en": "Peoples",
+        "de": "Völker"
+      }
+    },
+    {
       "id": "places",
       "labels": {
         "en": "Places",
@@ -1673,7 +1680,7 @@
     {
       "id": "twin-dragons",
       "categories": [
-        "creatures"
+        "characters"
       ],
       "visibility": {
         "mode": "reached-anchor",
@@ -1750,7 +1757,7 @@
     {
       "id": "goblins",
       "categories": [
-        "creatures"
+        "peoples"
       ],
       "visibility": {
         "mode": "reached-anchor",
@@ -1762,11 +1769,11 @@
       "labels": {
         "en": {
           "title": "Goblins",
-          "summary": "Small humanoid creatures Calist encounters in the Old Woods during his first trip with the hunters."
+          "summary": "A sapient humanoid people Calist encounters in the Old Woods during his first trip with the hunters."
         },
         "de": {
           "title": "Goblins",
-          "summary": "Kleine menschenähnliche Wesen, denen Calist im alten Wald während seiner ersten Jagd mit den Jägern begegnet."
+          "summary": "Ein vernunftbegabtes humanoides Volk, dem Calist im alten Wald während seiner ersten Jagd mit den Jägern begegnet."
         }
       },
       "fragments": [
