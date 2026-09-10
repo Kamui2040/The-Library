@@ -104,11 +104,11 @@
       "labels": {
         "en": {
           "title": "Telanas",
-          "summary": "The world in which Calist's story begins."
+          "summary": "The world where the story of The Dragon Knight starts."
         },
         "de": {
           "title": "Telanas",
-          "summary": "Die Welt, in der Calists Geschichte beginnt."
+          "summary": "Die Welt, in der die Geschichte des Drachenritters beginnt."
         }
       },
       "fragments": [],
@@ -121,7 +121,8 @@
             "de": "Geschichte"
           }
         }
-      ]
+      ],
+      "appearanceOrder": 0
     },
     {
       "id": "dragon-knight",
@@ -151,7 +152,8 @@
             "de": "Hauptfigur"
           }
         }
-      ]
+      ],
+      "appearanceOrder": 1
     },
     {
       "id": "calist",
@@ -164,11 +166,13 @@
       "labels": {
         "en": {
           "title": "Calist",
-          "summary": "A young villager who grows up around his father's forge, fascinated by stories from the roads beyond home."
+          "summary": "A young villager who grows up around his father's forge, fascinated by stories from the roads beyond home.",
+          "fullName": "Calist Griffith"
         },
         "de": {
           "title": "Calist",
-          "summary": "Ein junger Dorfbewohner, der rund um die Schmiede seines Vaters aufwächst und von Geschichten über die Welt jenseits seines Zuhauses fasziniert ist."
+          "summary": "Ein junger Dorfbewohner, der rund um die Schmiede seines Vaters aufwächst und von Geschichten über die Welt jenseits seines Zuhauses fasziniert ist.",
+          "fullName": "Calist Griffith"
         }
       },
       "fragments": [
@@ -377,8 +381,24 @@
             "en": "Childhood friend",
             "de": "Kindheitsfreundin"
           }
+        },
+        {
+          "id": "fine-metalwork-master",
+          "target": "bram",
+          "visibility": {
+            "mode": "reached-anchor",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch06",
+            "anchor": "dk-v01-ch06-apprentice-moves"
+          },
+          "labels": {
+            "en": "Fine-metalwork master",
+            "de": "Meister der Feinmetallarbeit"
+          }
         }
-      ]
+      ],
+      "appearanceOrder": 8
     },
     {
       "id": "alden",
@@ -386,20 +406,18 @@
         "characters"
       ],
       "visibility": {
-        "mode": "reached-anchor",
-        "story": "dragon-knight",
-        "book": "volume-01",
-        "anchor": "dk-v01-ch01-corvin-arrives",
-        "chapter": "dk-v01-ch01"
+        "mode": "always"
       },
       "labels": {
         "en": {
           "title": "Alden",
-          "summary": "Calist's father and the blacksmith of their village."
+          "summary": "The village blacksmith, husband of Mara Griffith, and father of Calist.",
+          "fullName": "Alden Griffith"
         },
         "de": {
           "title": "Alden",
-          "summary": "Calists Vater und der Schmied ihres Dorfes."
+          "summary": "Der Dorfschmied, Ehemann von Mara Griffith und Vater von Calist.",
+          "fullName": "Alden Griffith"
         }
       },
       "fragments": [
@@ -516,8 +534,17 @@
             "en": "Son",
             "de": "Sohn"
           }
+        },
+        {
+          "id": "wife",
+          "target": "mara",
+          "labels": {
+            "en": "Wife",
+            "de": "Ehefrau"
+          }
         }
-      ]
+      ],
+      "appearanceOrder": 10
     },
     {
       "id": "nessa",
@@ -525,20 +552,18 @@
         "characters"
       ],
       "visibility": {
-        "mode": "reached-anchor",
-        "story": "dragon-knight",
-        "book": "volume-01",
-        "anchor": "dk-v01-ch04-first-independent-work",
-        "chapter": "dk-v01-ch04"
+        "mode": "always"
       },
       "labels": {
         "en": {
           "title": "Nessa",
-          "summary": "Eryn's grandmother, the village's oldest resident, and an outspoken elder deeply woven into village life."
+          "summary": "Eryn's grandmother, the village's oldest resident, and an outspoken elder deeply woven into village life.",
+          "fullName": "Nessa Venn"
         },
         "de": {
           "title": "Nessa",
-          "summary": "Eryns Großmutter, die älteste Bewohnerin des Dorfes und eine scharfzüngige Älteste, die tief zum Dorfleben gehört."
+          "summary": "Eryns Großmutter, die älteste Bewohnerin des Dorfes und eine scharfzüngige Älteste, die tief zum Dorfleben gehört.",
+          "fullName": "Nessa Venn"
         }
       },
       "fragments": [
@@ -578,7 +603,8 @@
             "de": "Enkelin"
           }
         }
-      ]
+      ],
+      "appearanceOrder": 29
     },
     {
       "id": "eryn",
@@ -586,20 +612,18 @@
         "characters"
       ],
       "visibility": {
-        "mode": "reached-anchor",
-        "story": "dragon-knight",
-        "book": "volume-01",
-        "anchor": "dk-v01-ch01-alden-war-gear",
-        "chapter": "dk-v01-ch01"
+        "mode": "always"
       },
       "labels": {
         "en": {
           "title": "Eryn",
-          "summary": "Calist's close childhood friend, at home with bows, hunting gear, and the practical work of the village."
+          "summary": "Calist's close childhood friend, at home with bows, hunting gear, and the practical work of the village.",
+          "fullName": "Eryn Venn"
         },
         "de": {
           "title": "Eryn",
-          "summary": "Calists enge Freundin aus Kindertagen, die mit Bögen, Jagdausrüstung und der praktischen Arbeit des Dorfes vertraut ist."
+          "summary": "Calists enge Freundin aus Kindertagen, die mit Bögen, Jagdausrüstung und der praktischen Arbeit des Dorfes vertraut ist.",
+          "fullName": "Eryn Venn"
         }
       },
       "fragments": [
@@ -741,7 +765,8 @@
             "de": "Jäger, von dem sie lernt"
           }
         }
-      ]
+      ],
+      "appearanceOrder": 13
     },
     {
       "id": "corvin",
@@ -749,11 +774,7 @@
         "characters"
       ],
       "visibility": {
-        "mode": "reached-anchor",
-        "story": "dragon-knight",
-        "book": "volume-01",
-        "anchor": "dk-v01-ch01-corvin-arrives",
-        "chapter": "dk-v01-ch01"
+        "mode": "always"
       },
       "labels": {
         "en": {
@@ -854,8 +875,8 @@
             "chapter": "dk-v01-ch09"
           },
           "text": {
-            "en": "When Calist decides to enlist, Corvin offers to take him to the fort and tells Alden he will teach him what he can without giving him special treatment.",
-            "de": "Als Calist sich zum Militär meldet, bietet Corvin an, ihn zum Fort mitzunehmen, und verspricht Alden, ihm beizubringen, was er kann, ohne ihn besonders zu behandeln."
+            "en": "When Calist decides to enlist, Corvin offers to take him to Caerbreyn's military office and recommend him. Corvin cannot choose Calist's posting or promise that he will serve at Dunbreyn, and he makes clear there will be no special treatment.",
+            "de": "Als Calist sich zum Militär meldet, bietet Corvin an, ihn zum Militärbüro in Caerbreyn mitzunehmen und ihn zu empfehlen. Corvin kann weder über Calists Einsatzort entscheiden noch versprechen, dass er in Dunbreyn dienen wird, und stellt klar, dass es keine Sonderbehandlung geben wird."
           },
           "readerLinks": [
             {
@@ -870,7 +891,8 @@
             }
           ]
         }
-      ]
+      ],
+      "appearanceOrder": 11
     },
     {
       "id": "bram",
@@ -878,20 +900,18 @@
         "characters"
       ],
       "visibility": {
-        "mode": "reached-anchor",
-        "story": "dragon-knight",
-        "book": "volume-01",
-        "anchor": "dk-v01-ch03-bram",
-        "chapter": "dk-v01-ch03"
+        "mode": "always"
       },
       "labels": {
         "en": {
           "title": "Bram",
-          "summary": "A dwarven fine-metalworker near the town market whose precise chains, clasps, and pendants catch Calist's attention."
+          "summary": "A dwarven fine-metalworker near the town market whose precise chains, clasps, and pendants catch Calist's attention.",
+          "fullName": "Bram Ordek"
         },
         "de": {
           "title": "Bram",
-          "summary": "Ein zwergischer Feinmetallarbeiter nahe dem Stadtmarkt, dessen präzise Ketten, Verschlüsse und Anhänger Calists Aufmerksamkeit wecken."
+          "summary": "Ein zwergischer Feinmetallarbeiter nahe dem Stadtmarkt, dessen präzise Ketten, Verschlüsse und Anhänger Calists Aufmerksamkeit wecken.",
+          "fullName": "Bram Ordek"
         }
       },
       "fragments": [
@@ -1025,7 +1045,8 @@
             }
           ]
         }
-      ]
+      ],
+      "appearanceOrder": 23
     },
     {
       "id": "eryn-disappearance",
@@ -1112,7 +1133,8 @@
             "de": "Vermisste Jägerin"
           }
         }
-      ]
+      ],
+      "appearanceOrder": 36
     },
     {
       "id": "calists-village",
@@ -1125,11 +1147,11 @@
       "labels": {
         "en": {
           "title": "Calist's village",
-          "summary": "The small roadside village where Calist grows up."
+          "summary": "A small roadside village whose people rely on farming, craft, hunting, and mutual aid."
         },
         "de": {
           "title": "Calists Dorf",
-          "summary": "Das kleine Dorf an der Straße, in dem Calist aufwächst."
+          "summary": "Ein kleines Dorf an der Straße, dessen Bewohner von Landwirtschaft, Handwerk, Jagd und gegenseitiger Hilfe leben."
         }
       },
       "fragments": [
@@ -1184,7 +1206,8 @@
             "de": "Straße zum Grenzfort"
           }
         }
-      ]
+      ],
+      "appearanceOrder": 6
     },
     {
       "id": "aldens-smithy",
@@ -1197,11 +1220,11 @@
       "labels": {
         "en": {
           "title": "Alden's smithy",
-          "summary": "The village smithy where Alden works and Calist grows up around the forge."
+          "summary": "The village smithy operated by Alden Griffith."
         },
         "de": {
           "title": "Aldens Schmiede",
-          "summary": "Die Dorfschmiede, in der Alden arbeitet und Calist rund um das Schmiedefeuer aufwächst."
+          "summary": "Die Dorfschmiede von Alden Griffith."
         }
       },
       "fragments": [
@@ -1282,7 +1305,8 @@
             "de": "Ort"
           }
         }
-      ]
+      ],
+      "appearanceOrder": 9
     },
     {
       "id": "old-woods",
@@ -1290,19 +1314,16 @@
         "places"
       ],
       "visibility": {
-        "mode": "completed-chapter",
-        "story": "dragon-knight",
-        "book": "volume-01",
-        "chapter": "dk-v01-ch01"
+        "mode": "always"
       },
       "labels": {
         "en": {
           "title": "The Old Woods",
-          "summary": "The woods beyond the far side of Calist's village."
+          "summary": "The forest beyond the village fields, used by local hunters in search of game."
         },
         "de": {
           "title": "Der alte Wald",
-          "summary": "Der Wald auf der anderen Seite von Calists Dorf."
+          "summary": "Der Wald jenseits der Dorffelder, in dem die örtlichen Jäger nach Wild suchen."
         }
       },
       "fragments": [
@@ -1367,7 +1388,8 @@
             "de": "Nahegelegenes Dorf"
           }
         }
-      ]
+      ],
+      "appearanceOrder": 7
     },
     {
       "id": "border-fort",
@@ -1375,19 +1397,16 @@
         "places"
       ],
       "visibility": {
-        "mode": "completed-chapter",
-        "story": "dragon-knight",
-        "book": "volume-01",
-        "chapter": "dk-v01-ch01"
+        "mode": "always"
       },
       "labels": {
         "en": {
           "title": "The border fort",
-          "summary": "A small fort along the road from Calist's village that watches the border."
+          "summary": "A small fort along the road that watches the border and supports patrols through the surrounding region."
         },
         "de": {
           "title": "Das Grenzfort",
-          "summary": "Ein kleines Fort an der Straße von Calists Dorf, das die Grenze überwacht."
+          "summary": "Ein kleines Fort an der Straße, das die Grenze überwacht und Patrouillen in der umliegenden Region unterstützt."
         }
       },
       "fragments": [
@@ -1452,8 +1471,8 @@
             "anchor": "dk-v01-ch09-enlist-decision"
           },
           "text": {
-            "en": "After Calist decides to enlist, the fort becomes the next destination on the road away from home.",
-            "de": "Nachdem Calist sich zum Militärdienst entscheidet, wird das Fort zum nächsten Ziel auf seinem Weg fort von zu Hause."
+            "en": "Dunbreyn may become Calist's posting after he enlists, but Corvin cannot promise it. Calist must first report to the military office in Caerbreyn, which handles volunteers from this part of Breynach.",
+            "de": "Dunbreyn könnte nach Calists Meldung sein Einsatzort werden, doch Corvin kann das nicht versprechen. Calist muss sich zunächst beim Militärbüro in Caerbreyn melden, das die Freiwilligen aus diesem Teil von Breynach aufnimmt."
           },
           "readerLinks": [
             {
@@ -1478,7 +1497,8 @@
             "de": "Straßenverbindung"
           }
         }
-      ]
+      ],
+      "appearanceOrder": 5
     },
     {
       "id": "south-road-town",
@@ -1486,20 +1506,16 @@
         "places"
       ],
       "visibility": {
-        "mode": "reached-anchor",
-        "story": "dragon-knight",
-        "book": "volume-01",
-        "chapter": "dk-v01-ch03",
-        "anchor": "dk-v01-ch03-town-arrival"
+        "mode": "always"
       },
       "labels": {
         "en": {
           "title": "The town",
-          "summary": "A town south along the road from Calist's village, larger and busier than anything he knows at home."
+          "summary": "A larger market town south of the village, with shops, workshops, inns, and regular trade."
         },
         "de": {
           "title": "Die Stadt",
-          "summary": "Eine Stadt südlich an der Straße von Calists Dorf, größer und geschäftiger als alles, was er von zu Hause kennt."
+          "summary": "Eine größere Marktstadt südlich des Dorfes mit Läden, Werkstätten, Gasthäusern und regelmäßigem Handel."
         }
       },
       "fragments": [
@@ -1572,7 +1588,8 @@
             "de": "Feinmetallwerkstatt"
           }
         }
-      ]
+      ],
+      "appearanceOrder": 25
     },
     {
       "id": "brams-workshop",
@@ -1580,20 +1597,16 @@
         "places"
       ],
       "visibility": {
-        "mode": "reached-anchor",
-        "story": "dragon-knight",
-        "book": "volume-01",
-        "chapter": "dk-v01-ch03",
-        "anchor": "dk-v01-ch03-bram"
+        "mode": "always"
       },
       "labels": {
         "en": {
           "title": "Bram's workshop",
-          "summary": "A fine-metalwork workshop in town where Bram makes precise chains, clasps, pendants and other small pieces."
+          "summary": "A fine-metalwork workshop operated by Bram Ordek in the market town."
         },
         "de": {
           "title": "Brams Werkstatt",
-          "summary": "Eine Feinmetallwerkstatt in der Stadt, in der Bram präzise Ketten, Verschlüsse, Anhänger und andere kleine Stücke anfertigt."
+          "summary": "Eine Feinmetallwerkstatt von Bram Ordek in der Marktstadt."
         }
       },
       "fragments": [
@@ -1673,9 +1686,17 @@
           "labels": {
             "en": "Apprentice",
             "de": "Lehrling"
+          },
+          "visibility": {
+            "mode": "reached-anchor",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch06",
+            "anchor": "dk-v01-ch06-apprentice-moves"
           }
         }
-      ]
+      ],
+      "appearanceOrder": 24
     },
     {
       "id": "twin-dragons",
@@ -1752,7 +1773,8 @@
             }
           ]
         }
-      ]
+      ],
+      "appearanceOrder": 2
     },
     {
       "id": "goblins",
@@ -1760,20 +1782,16 @@
         "peoples"
       ],
       "visibility": {
-        "mode": "reached-anchor",
-        "story": "dragon-knight",
-        "book": "volume-01",
-        "chapter": "dk-v01-ch05",
-        "anchor": "dk-v01-ch05-goblins"
+        "mode": "always"
       },
       "labels": {
         "en": {
           "title": "Goblins",
-          "summary": "A sapient humanoid people Calist encounters in the Old Woods during his first trip with the hunters."
+          "summary": "A sapient humanoid people described as dangerous but not eager to fight without reason. They usually avoid humans, yet may steal traps, food, tools or livestock when they can."
         },
         "de": {
           "title": "Goblins",
-          "summary": "Ein vernunftbegabtes humanoides Volk, dem Calist im alten Wald während seiner ersten Jagd mit den Jägern begegnet."
+          "summary": "Ein vernunftbegabtes humanoides Volk, das als gefährlich gilt, aber nicht ohne Grund den Kampf sucht. Meist meiden Goblins Menschen, können jedoch Fallen, Nahrung, Werkzeuge oder Vieh stehlen, wenn sich die Gelegenheit bietet."
         }
       },
       "fragments": [
@@ -1836,9 +1854,37 @@
           "labels": {
             "en": "Seen in the Old Woods",
             "de": "Im alten Wald gesehen"
+          },
+          "visibility": {
+            "mode": "reached-anchor",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch05",
+            "anchor": "dk-v01-ch05-goblins"
           }
         }
-      ]
+      ],
+      "sections": [
+        {
+          "id": "first-direct-encounter",
+          "visibility": {
+            "mode": "reached-anchor",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch05",
+            "anchor": "dk-v01-ch05-goblins"
+          },
+          "labels": {
+            "en": "First encountered",
+            "de": "Erste Begegnung"
+          },
+          "text": {
+            "en": "Calist first directly encounters goblins in the Old Woods while travelling with the hunters.",
+            "de": "Calist begegnet Goblins zum ersten Mal direkt in den Alten Wäldern, als er mit den Jägern unterwegs ist."
+          }
+        }
+      ],
+      "appearanceOrder": 12
     },
     {
       "id": "leaf-arrow-pendant",
@@ -1957,9 +2003,17 @@
           "labels": {
             "en": "Made during Bram's apprenticeship",
             "de": "Während der Lehre bei Bram gefertigt"
+          },
+          "visibility": {
+            "mode": "reached-anchor",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch06",
+            "anchor": "dk-v01-ch06-apprentice-moves"
           }
         }
-      ]
+      ],
+      "appearanceOrder": 30
     },
     {
       "id": "alden-chainmail",
@@ -2046,7 +2100,8 @@
             "de": "Aufbewahrt von"
           }
         }
-      ]
+      ],
+      "appearanceOrder": 20
     },
     {
       "id": "alden-sword",
@@ -2115,7 +2170,8 @@
             "de": "Übergeben an"
           }
         }
-      ]
+      ],
+      "appearanceOrder": 39
     },
     {
       "id": "first-shard-formation",
@@ -2177,7 +2233,8 @@
             "de": "Unbeabsichtigte Schöpfer"
           }
         }
-      ]
+      ],
+      "appearanceOrder": 3
     },
     {
       "id": "town-market-fight",
@@ -2288,7 +2345,8 @@
             "de": "Ort"
           }
         }
-      ]
+      ],
+      "appearanceOrder": 28
     },
     {
       "id": "border-tension",
@@ -2408,7 +2466,8 @@
             "de": "Örtliche Militärpräsenz"
           }
         }
-      ]
+      ],
+      "appearanceOrder": 26
     },
     {
       "id": "hardening-winters",
@@ -2576,7 +2635,8 @@
             "de": "Längere Jagdzüge gehen dem Hinterhalt voraus"
           }
         }
-      ]
+      ],
+      "appearanceOrder": 34
     },
     {
       "id": "nessas-death",
@@ -2670,7 +2730,8 @@
             "de": "Gemeinschaft"
           }
         }
-      ]
+      ],
+      "appearanceOrder": 35
     },
     {
       "id": "hunting-party-ambush",
@@ -2791,7 +2852,8 @@
             "de": "Suchgebiet"
           }
         }
-      ]
+      ],
+      "appearanceOrder": 37
     },
     {
       "id": "calist-enlistment",
@@ -2851,8 +2913,8 @@
             "chapter": "dk-v01-ch09"
           },
           "text": {
-            "en": "When Corvin returns, he confirms that the fort accepts volunteers and offers to bring Calist with the soldiers when Calist is ready to leave.",
-            "de": "Als Corvin zurückkehrt, bestätigt er, dass das Fort Freiwillige annimmt, und bietet an, Calist mit den Soldaten mitzunehmen, sobald er bereit ist aufzubrechen."
+            "en": "When Corvin returns, he tells Calist that Caerbreyn's military office handles local volunteers and offers to take him there and recommend him. The army will decide where Calist is posted.",
+            "de": "Als Corvin zurückkehrt, erklärt er Calist, dass das Militärbüro in Caerbreyn die Freiwilligen aus der Region aufnimmt, und bietet an, ihn dorthin mitzunehmen und zu empfehlen. Das Militär entscheidet über Calists Einsatzort."
           },
           "readerLinks": [
             {
@@ -2895,13 +2957,14 @@
         },
         {
           "id": "destination",
-          "target": "border-fort",
+          "target": "south-road-town",
           "labels": {
-            "en": "Initial destination",
-            "de": "Erstes Ziel"
+            "en": "Enlistment destination",
+            "de": "Ort der Meldung"
           }
         }
-      ]
+      ],
+      "appearanceOrder": 38
     },
     {
       "id": "tarin",
@@ -2909,19 +2972,18 @@
         "characters"
       ],
       "visibility": {
-        "mode": "completed-chapter",
-        "story": "dragon-knight",
-        "book": "volume-01",
-        "chapter": "dk-v01-ch01"
+        "mode": "always"
       },
       "labels": {
         "en": {
-          "title": "Tarin Vale",
-          "summary": "One of Calist's childhood friends from the village."
+          "title": "Tarin",
+          "summary": "One of Calist's childhood friends from the village.",
+          "fullName": "Tarin Vale"
         },
         "de": {
-          "title": "Tarin Vale",
-          "summary": "Einer von Calists Kindheitsfreunden aus dem Dorf."
+          "title": "Tarin",
+          "summary": "Einer von Calists Kindheitsfreunden aus dem Dorf.",
+          "fullName": "Tarin Vale"
         }
       },
       "fragments": [
@@ -2985,7 +3047,8 @@
             "de": "Kindheitsfreund"
           }
         }
-      ]
+      ],
+      "appearanceOrder": 14
     },
     {
       "id": "joric",
@@ -2993,19 +3056,18 @@
         "characters"
       ],
       "visibility": {
-        "mode": "completed-chapter",
-        "story": "dragon-knight",
-        "book": "volume-01",
-        "chapter": "dk-v01-ch01"
+        "mode": "always"
       },
       "labels": {
         "en": {
-          "title": "Joric Fenner",
-          "summary": "One of Calist's childhood friends from the village."
+          "title": "Joric",
+          "summary": "One of Calist's childhood friends from the village.",
+          "fullName": "Joric Fenner"
         },
         "de": {
-          "title": "Joric Fenner",
-          "summary": "Einer von Calists Kindheitsfreunden aus dem Dorf."
+          "title": "Joric",
+          "summary": "Einer von Calists Kindheitsfreunden aus dem Dorf.",
+          "fullName": "Joric Fenner"
         }
       },
       "fragments": [
@@ -3078,7 +3140,8 @@
             "de": "Beteiligt an der Schlägerei"
           }
         }
-      ]
+      ],
+      "appearanceOrder": 15
     },
     {
       "id": "nalia",
@@ -3086,19 +3149,18 @@
         "characters"
       ],
       "visibility": {
-        "mode": "completed-chapter",
-        "story": "dragon-knight",
-        "book": "volume-01",
-        "chapter": "dk-v01-ch01"
+        "mode": "always"
       },
       "labels": {
         "en": {
-          "title": "Nalia Reed",
-          "summary": "One of Calist's childhood friends from the village."
+          "title": "Nalia",
+          "summary": "One of Calist's childhood friends from the village.",
+          "fullName": "Nalia Reed"
         },
         "de": {
-          "title": "Nalia Reed",
-          "summary": "Eine von Calists Kindheitsfreundinnen aus dem Dorf."
+          "title": "Nalia",
+          "summary": "Eine von Calists Kindheitsfreundinnen aus dem Dorf.",
+          "fullName": "Nalia Reed"
         }
       },
       "fragments": [
@@ -3196,7 +3258,8 @@
             "de": "Beteiligt an der Schlägerei"
           }
         }
-      ]
+      ],
+      "appearanceOrder": 16
     },
     {
       "id": "mara",
@@ -3204,19 +3267,18 @@
         "characters"
       ],
       "visibility": {
-        "mode": "completed-chapter",
-        "story": "dragon-knight",
-        "book": "volume-01",
-        "chapter": "dk-v01-ch02"
+        "mode": "always"
       },
       "labels": {
         "en": {
-          "title": "Mara Griffith",
-          "summary": "Calist's mother and one of the village's main sources of practical healing knowledge."
+          "title": "Mara",
+          "summary": "A village healer, wife of Alden Griffith, and mother of Calist.",
+          "fullName": "Mara Griffith"
         },
         "de": {
-          "title": "Mara Griffith",
-          "summary": "Calists Mutter und eine der wichtigsten Quellen für praktisches Heilwissen im Dorf."
+          "title": "Mara",
+          "summary": "Eine Heilerin des Dorfes, Ehefrau von Alden Griffith und Mutter von Calist.",
+          "fullName": "Mara Griffith"
         }
       },
       "fragments": [
@@ -3331,8 +3393,17 @@
             "en": "Son",
             "de": "Sohn"
           }
+        },
+        {
+          "id": "husband",
+          "target": "alden",
+          "labels": {
+            "en": "Husband",
+            "de": "Ehemann"
+          }
         }
-      ]
+      ],
+      "appearanceOrder": 18
     },
     {
       "id": "garran",
@@ -3340,20 +3411,18 @@
         "characters"
       ],
       "visibility": {
-        "mode": "reached-anchor",
-        "story": "dragon-knight",
-        "book": "volume-01",
-        "chapter": "dk-v01-ch03",
-        "anchor": "dk-v01-ch03-town-arrival"
+        "mode": "always"
       },
       "labels": {
         "en": {
-          "title": "Garran Venn",
-          "summary": "Eryn's father, a village leatherworker who trades hides and finished leather in town."
+          "title": "Garran",
+          "summary": "Eryn's father, a village leatherworker who trades hides and finished leather in town.",
+          "fullName": "Garran Venn"
         },
         "de": {
-          "title": "Garran Venn",
-          "summary": "Eryns Vater, ein Lederarbeiter aus dem Dorf, der Felle und fertige Lederwaren in der Stadt handelt."
+          "title": "Garran",
+          "summary": "Eryns Vater, ein Lederarbeiter aus dem Dorf, der Felle und fertige Lederwaren in der Stadt handelt.",
+          "fullName": "Garran Venn"
         }
       },
       "fragments": [
@@ -3443,7 +3512,8 @@
             "de": "Tochter"
           }
         }
-      ]
+      ],
+      "appearanceOrder": 17
     },
     {
       "id": "tessa",
@@ -3451,11 +3521,7 @@
         "characters"
       ],
       "visibility": {
-        "mode": "reached-anchor",
-        "story": "dragon-knight",
-        "book": "volume-01",
-        "chapter": "dk-v01-ch03",
-        "anchor": "dk-v01-ch03-town-arrival"
+        "mode": "always"
       },
       "labels": {
         "en": {
@@ -3555,7 +3621,8 @@
             "de": "Dorf"
           }
         }
-      ]
+      ],
+      "appearanceOrder": 19
     },
     {
       "id": "harlan",
@@ -3563,10 +3630,7 @@
         "characters"
       ],
       "visibility": {
-        "mode": "completed-chapter",
-        "story": "dragon-knight",
-        "book": "volume-01",
-        "chapter": "dk-v01-ch04"
+        "mode": "always"
       },
       "labels": {
         "en": {
@@ -3675,7 +3739,8 @@
             "de": "Hinterhalt auf die Jagdgruppe"
           }
         }
-      ]
+      ],
+      "appearanceOrder": 31
     },
     {
       "id": "bren",
@@ -3683,10 +3748,7 @@
         "characters"
       ],
       "visibility": {
-        "mode": "completed-chapter",
-        "story": "dragon-knight",
-        "book": "volume-01",
-        "chapter": "dk-v01-ch04"
+        "mode": "always"
       },
       "labels": {
         "en": {
@@ -3787,7 +3849,8 @@
             "de": "Hinterhalt auf die Jagdgruppe"
           }
         }
-      ]
+      ],
+      "appearanceOrder": 32
     },
     {
       "id": "shard",
@@ -3848,8 +3911,8 @@
             "anchor": "dk-v01-p-first-shard"
           },
           "text": {
-            "en": "The prologue states that the first shard will not be the last, but Volume 1 gives no further definition or catalogue of other shards.",
-            "de": "Der Prolog stellt fest, dass die erste Scherbe nicht die letzte bleiben wird. Band 1 liefert jedoch keine weitere Definition oder Übersicht anderer Scherben."
+            "en": "The prologue states that the first shard will not be the last.",
+            "de": "Der Prolog stellt fest, dass die erste Scherbe nicht die letzte bleiben wird."
           },
           "readerLinks": [
             {
@@ -3882,7 +3945,8 @@
             "de": "Unbeabsichtigt geformt von"
           }
         }
-      ]
+      ],
+      "appearanceOrder": 4
     },
     {
       "id": "village-mutual-aid",
@@ -4016,7 +4080,110 @@
             "de": "Im ganzen Dorf praktiziert"
           }
         }
-      ]
+      ],
+      "appearanceOrder": 21
+    },
+    {
+      "id": "humans",
+      "categories": [
+        "peoples"
+      ],
+      "visibility": {
+        "mode": "always"
+      },
+      "labels": {
+        "en": {
+          "title": "Humans",
+          "summary": "A sapient humanoid people whose societies include villages, towns, farming, craft, hunting, trade, and military service."
+        },
+        "de": {
+          "title": "Menschen",
+          "summary": "Ein vernunftbegabtes humanoides Volk, dessen Gesellschaften Dörfer, Städte, Landwirtschaft, Handwerk, Jagd, Handel und Militärdienst umfassen."
+        }
+      },
+      "fragments": [],
+      "appearanceOrder": 33
+    },
+    {
+      "id": "dwarves",
+      "categories": [
+        "peoples"
+      ],
+      "visibility": {
+        "mode": "always"
+      },
+      "labels": {
+        "en": {
+          "title": "Dwarves",
+          "summary": "A sapient humanoid people."
+        },
+        "de": {
+          "title": "Zwerge",
+          "summary": "Ein vernunftbegabtes humanoides Volk."
+        }
+      },
+      "sections": [
+        {
+          "id": "first-encounter",
+          "visibility": {
+            "mode": "reached-anchor",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch03",
+            "anchor": "dk-v01-ch03-bram"
+          },
+          "labels": {
+            "en": "First encountered",
+            "de": "Erste Begegnung"
+          },
+          "text": {
+            "en": "Calist first meets a dwarf when he encounters Bram Ordek at a metalwork stall in the town market.",
+            "de": "Calist begegnet zum ersten Mal einem Zwerg, als er Bram Ordek an einem Metallwarenstand auf dem Stadtmarkt trifft."
+          }
+        }
+      ],
+      "fragments": [],
+      "appearanceOrder": 27
+    },
+    {
+      "id": "orcs",
+      "categories": [
+        "peoples"
+      ],
+      "visibility": {
+        "mode": "always"
+      },
+      "labels": {
+        "en": {
+          "title": "Orcs",
+          "summary": "A sapient humanoid people."
+        },
+        "de": {
+          "title": "Orks",
+          "summary": "Ein vernunftbegabtes humanoides Volk."
+        }
+      },
+      "sections": [
+        {
+          "id": "presence-near-village",
+          "visibility": {
+            "mode": "completed-chapter",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch07"
+          },
+          "labels": {
+            "en": "Presence near the village",
+            "de": "Präsenz nahe dem Dorf"
+          },
+          "text": {
+            "en": "During the Long Winter, tracks confirm that orcs have been moving near the northern path.",
+            "de": "Während des langen Winters bestätigen Spuren, dass Orks nahe dem nördlichen Pfad unterwegs waren."
+          }
+        }
+      ],
+      "fragments": [],
+      "appearanceOrder": 22
     }
   ]
 }

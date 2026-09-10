@@ -5,7 +5,7 @@ import { fileURLToPath } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const sourceRepository = "Kamui2040/Telanas";
-const sourceCommit = "6b654b0a3b1d7b5ebcd8e507d2ca1acaa3d33bc1";
+const sourceCommit = "3cb25c53b01c4ff1ce1aa274ab48683b60441df9";
 const expectedBranch = "release/telanas-volume-01";
 const bookDirectory = "content/worlds/telanas/books/dragon-knight/volume-01";
 const illustrationsDirectory = path.join(root, bookDirectory, "illustrations");
@@ -17,9 +17,9 @@ const git = (...args) => execFileSync("git", ["-C", root, ...args], { encoding: 
 const ghJson = (endpoint) => JSON.parse(execFileSync("gh", ["api", endpoint], { encoding: "utf8", maxBuffer: 16 * 1024 * 1024 }));
 
 const sourceFiles = {
-  "manuscript/en/band-01.md": "95acfe62ddeeb7a99a287c63dcd079187a171758",
-  "manuscript/de/band-01.md": "96fcf7850f305ec5ac8aec2c7f19cb9bdbe063a6",
-  "docs/story/illustration-reference.md": "9257d20d2adc169741f3bf129560c44fc8c8c378",
+  "manuscript/en/band-01.md": "a70e81a3afcef2d7dcef228409f9ea1ff5d23595",
+  "manuscript/de/band-01.md": "34248c431ddad02f63e6c8a52c4c60cd42336eef",
+  "docs/story/illustration-reference.md": "5ff915f60582823de481074cef0586a70eb077a1",
 };
 
 const chapters = [
@@ -148,6 +148,27 @@ const chapters = [
 const metadata = {
   en: ["# TELANAS", "## The Dragon Knight", "### Volume 1 — Home"],
   de: ["# TELANAS", "## Der Drachenritter", "### Band 1 — Zuhause"],
+};
+
+const contextualReferences = {
+  en: [
+    { anchor: "dk-v01-ch01-calist", entry: "calist", text: "Calist", occurrence: 1 },
+    { anchor: "dk-v01-ch01-corvin", entry: "corvin", text: "Corvin", occurrence: 1 },
+    { anchor: "dk-v01-ch01-alden", entry: "alden", text: "Alden", occurrence: 1 },
+    { anchor: "dk-v01-ch02-eryn", entry: "eryn", text: "Eryn", occurrence: 1 },
+    { anchor: "dk-v01-ch03-bram", entry: "bram", text: "Bram", occurrence: 1 },
+    { anchor: "dk-v01-ch04-nessa", entry: "nessa", text: "Nessa", occurrence: 1 },
+    { anchor: "dk-v01-p-first-shard", entry: "shard", text: "first shard", occurrence: 1 },
+  ],
+  de: [
+    { anchor: "dk-v01-ch01-calist", entry: "calist", text: "Calist", occurrence: 1 },
+    { anchor: "dk-v01-ch01-corvin", entry: "corvin", text: "Corvin", occurrence: 1 },
+    { anchor: "dk-v01-ch01-alden", entry: "alden", text: "Alden", occurrence: 1 },
+    { anchor: "dk-v01-ch02-eryn", entry: "eryn", text: "Eryn", occurrence: 1 },
+    { anchor: "dk-v01-ch03-bram", entry: "bram", text: "Bram", occurrence: 1 },
+    { anchor: "dk-v01-ch04-nessa", entry: "nessa", text: "Nessa", occurrence: 1 },
+    { anchor: "dk-v01-p-first-shard", entry: "shard", text: "erste Scherbe", occurrence: 1 },
+  ],
 };
 
 const gcd = (a, b) => b === 0 ? a : gcd(b, a % b);
@@ -383,12 +404,12 @@ try {
   const deSemanticAnchorSequence = semanticAnchorSequence(deParsed);
 
   assert(
-    enSemanticAnchorSequence.length === 27,
-    `English manuscript must contain exactly 27 semantic anchors; found ${enSemanticAnchorSequence.length}`,
+    enSemanticAnchorSequence.length === 32,
+    `English manuscript must contain exactly 32 semantic anchors; found ${enSemanticAnchorSequence.length}`,
   );
   assert(
-    deSemanticAnchorSequence.length === 27,
-    `German manuscript must contain exactly 27 semantic anchors; found ${deSemanticAnchorSequence.length}`,
+    deSemanticAnchorSequence.length === 32,
+    `German manuscript must contain exactly 32 semantic anchors; found ${deSemanticAnchorSequence.length}`,
   );
   assert(
     JSON.stringify(enSemanticAnchorSequence) === JSON.stringify(deSemanticAnchorSequence),
@@ -473,7 +494,7 @@ try {
     story: "dragon-knight",
     book: "volume-01",
     locales: ["en", "de"],
-    references: { en: [], de: [] },
+    references: contextualReferences,
   });
 
   const worldPath = path.join(root, "content/worlds/telanas/world.json");
@@ -484,7 +505,7 @@ try {
   bookRef.state = "approved";
   await writeJson("content/worlds/telanas/world.json", world);
 
-  console.log(`PASS: imported exact EN/DE Band 1 manuscripts from ${sourceCommit} with 27 shared semantic anchors and 10 authoritative lead illustrations`);
+  console.log(`PASS: imported exact EN/DE Band 1 manuscripts from ${sourceCommit} with 32 shared semantic anchors and 10 authoritative lead illustrations`);
 } catch (error) {
   console.error(`FAIL: ${error.message}`);
   process.exitCode = 1;

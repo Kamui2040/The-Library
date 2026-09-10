@@ -68,13 +68,19 @@
   title.id = "reader-lexicon-card-title";
   title.className = "reader-lexicon-title";
 
+  const fullName = document.createElement("p");
+  fullName.className = "reader-lexicon-full-name";
+
   const summary = document.createElement("p");
   summary.className = "reader-lexicon-summary";
 
-  const fragments = document.createElement("div");
-  fragments.className = "reader-lexicon-fragments";
+  const sections = document.createElement("div");
+  sections.className = "reader-lexicon-sections";
 
-  card.append(closeButton, kicker, title, summary, fragments);
+  const relationships = document.createElement("div");
+  relationships.className = "reader-lexicon-relationships";
+
+  card.append(closeButton, kicker, title, fullName, summary, sections, relationships);
   overlay.append(card);
   document.body.append(overlay);
 
@@ -104,14 +110,34 @@
     const labels = entry.labels?.[language()];
     if (!labels?.title || !labels?.summary) return null;
 
+    const curatedSections = (entry.sections || [])
+      .filter((section) => profileApi.visibilityAllowed(world, section.visibility, profile))
+      .map((section) => ({
+        id: section.id,
+        title: section.labels?.[language()],
+        text: section.text?.[language()]
+      }))
+      .filter((section) => typeof section.title === "string" && section.title.trim() && typeof section.text === "string" && section.text.trim());
+
+    const related = (entry.relationships || [])
+      .filter((relationship) => profileApi.visibilityAllowed(world, relationship.visibility || { mode: "always" }, profile))
+      .map((relationship) => {
+        const target = entryById(relationship.target);
+        if (!target || !profileApi.visibilityAllowed(world, target.visibility, profile)) return null;
+        const label = relationship.labels?.[language()];
+        const targetTitle = target.labels?.[language()]?.title;
+        if (!label || !targetTitle) return null;
+        return { label, targetTitle };
+      })
+      .filter(Boolean);
+
     return {
       id: entry.id,
       title: labels.title,
+      fullName: typeof labels.fullName === "string" ? labels.fullName : "",
       summary: labels.summary,
-      fragments: (entry.fragments || [])
-        .filter((fragment) => profileApi.visibilityAllowed(world, fragment.visibility, profile))
-        .map((fragment) => fragment.text?.[language()])
-        .filter((text) => typeof text === "string" && text.trim())
+      sections: curatedSections,
+      relationships: related
     };
   };
 
@@ -125,14 +151,38 @@
 
     localizeOverlay();
     title.textContent = entry.title;
+    fullName.textContent = entry.fullName && entry.fullName !== entry.title
+      ? `${language() === "de" ? "Vollständiger Name" : "Full name"}: ${entry.fullName}`
+      : "";
+    fullName.hidden = !fullName.textContent;
     summary.textContent = entry.summary;
-    fragments.replaceChildren(...entry.fragments.map((text) => {
+
+    sections.replaceChildren(...entry.sections.map((item) => {
+      const section = document.createElement("section");
+      const heading = document.createElement("h3");
+      heading.textContent = item.title;
       const paragraph = document.createElement("p");
-      paragraph.className = "reader-lexicon-fragment";
-      paragraph.textContent = text;
-      return paragraph;
+      paragraph.textContent = item.text;
+      section.append(heading, paragraph);
+      return section;
     }));
-    fragments.hidden = entry.fragments.length === 0;
+    sections.hidden = entry.sections.length === 0;
+
+    relationships.replaceChildren();
+    if (entry.relationships.length > 0) {
+      const heading = document.createElement("h3");
+      heading.textContent = language() === "de" ? "Verwandt" : "Related";
+      relationships.append(heading, ...entry.relationships.map((item) => {
+        const row = document.createElement("p");
+        const label = document.createElement("span");
+        label.textContent = item.label;
+        const target = document.createElement("strong");
+        target.textContent = item.targetTitle;
+        row.append(label, target);
+        return row;
+      }));
+    }
+    relationships.hidden = entry.relationships.length === 0;
   };
 
   const openOverlay = (entryId, trigger) => {

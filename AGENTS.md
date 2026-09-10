@@ -28,6 +28,9 @@
 - Reader navigation, bookmarks, spoiler references, and cross-links use stable semantic IDs rather than rendered page numbers.
 - The integrated book contents page and reader-side table of contents must derive from the same ordered structure.
 - Contextual Reader Lexicon references must use explicit semantic annotations tied to stable Reader anchors and localized source text. Do not automatically link arbitrary matching words or names.
+- Paged chapters open with the chapter title on the left and that chapter's illustration on the facing right page when one exists; otherwise the facing page remains blank.
+- Paged Reader spreads keep stable geometry for a given viewport. Content pagination adapts to the page, not the page size to the content.
+- Reader scene breaks are structural section boundaries in paged mode: each prose section starts on a new page and is visually bounded by the standard separator.
 
 ## Lexicon taxonomy
 
@@ -35,6 +38,15 @@
 - `creatures` is reserved for non-sapient beings.
 - Individual sapient characters or character groups belong under `characters` when that is the more accurate entry type.
 - `cultures` describes customs, practices, traditions, and social structures; it is separate from people/species classification.
+
+## Lexicon presentation
+
+- Browse cards stay compact: a familiar title, a short spoiler-safe overview, and a clear way to open the detailed entry.
+- Detailed Lexicon views are curated reference profiles, not mention-by-mention story manifests. Prefer durable descriptive knowledge, identity, traits, roles, relationships, and only genuinely significant story connections.
+- General Lexicon descriptions are world-facing and encyclopedic rather than framed through the protagonist's viewpoint. Character-specific encounters or observations belong in spoiler-aware detail sections when relevant.
+- The dedicated Lexicon and contextual Reader card use the same curated entry fields and spoiler gates.
+- Reader passage links are exceptional. Keep them for defining revelations or major events where returning to the source passage is genuinely useful, not for every minor fact.
+- Default Lexicon ordering follows first appearance. Readers may switch to localized alphabetical or in-world chronological ordering; entries without a distinct chronology fall back deterministically to appearance order.
 
 ## Spoilers
 

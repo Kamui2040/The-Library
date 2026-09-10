@@ -10,25 +10,25 @@
   "references": {
     "en": [
       {
-        "anchor": "dk-v01-ch01-en-p005",
+        "anchor": "dk-v01-ch01-calist",
         "entry": "calist",
         "text": "Calist",
         "occurrence": 1
       },
       {
-        "anchor": "dk-v01-ch01-en-p021",
+        "anchor": "dk-v01-ch01-corvin",
         "entry": "corvin",
         "text": "Corvin",
         "occurrence": 1
       },
       {
-        "anchor": "dk-v01-ch01-en-p022",
+        "anchor": "dk-v01-ch01-alden",
         "entry": "alden",
         "text": "Alden",
         "occurrence": 1
       },
       {
-        "anchor": "dk-v01-ch02-en-p128",
+        "anchor": "dk-v01-ch02-eryn",
         "entry": "eryn",
         "text": "Eryn",
         "occurrence": 1
@@ -40,7 +40,7 @@
         "occurrence": 1
       },
       {
-        "anchor": "dk-v01-ch04-en-p339",
+        "anchor": "dk-v01-ch04-nessa",
         "entry": "nessa",
         "text": "Nessa",
         "occurrence": 1
@@ -54,25 +54,25 @@
     ],
     "de": [
       {
-        "anchor": "dk-v01-ch01-de-p005",
+        "anchor": "dk-v01-ch01-calist",
         "entry": "calist",
         "text": "Calist",
         "occurrence": 1
       },
       {
-        "anchor": "dk-v01-ch01-de-p021",
+        "anchor": "dk-v01-ch01-corvin",
         "entry": "corvin",
         "text": "Corvin",
         "occurrence": 1
       },
       {
-        "anchor": "dk-v01-ch01-de-p022",
+        "anchor": "dk-v01-ch01-alden",
         "entry": "alden",
         "text": "Alden",
         "occurrence": 1
       },
       {
-        "anchor": "dk-v01-ch02-de-p128",
+        "anchor": "dk-v01-ch02-eryn",
         "entry": "eryn",
         "text": "Eryn",
         "occurrence": 1
@@ -84,7 +84,7 @@
         "occurrence": 1
       },
       {
-        "anchor": "dk-v01-ch04-de-p339",
+        "anchor": "dk-v01-ch04-nessa",
         "entry": "nessa",
         "text": "Nessa",
         "occurrence": 1
