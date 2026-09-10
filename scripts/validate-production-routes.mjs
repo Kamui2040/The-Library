@@ -252,6 +252,8 @@ assert(pageTurnController.includes("prepared.commit();"), "Page-turn controller 
 assert(pageTurnController.includes("turn.rollback();"), "Page-turn controller must restore the current spread when a turn is cancelled");
 assert(pageTurnController.includes('{ offset: 1, filter: "brightness(.88)", opacity: 0 }'), "Page-turn controller must hide the old front after it crosses the spine");
 assert(pageTurnController.includes('{ offset: 1, filter: "brightness(1)", opacity: 1 }'), "Page-turn controller must keep the correctly oriented reverse visible until it settles");
+assert(pageTurnController.includes('boxShadow: "0 17px 24px rgba(0,0,0,.21)"'), "Page-turn controller must keep the lifted-sheet shadow without flattening its two faces");
+assert(!pageTurnController.includes('filter: "drop-shadow'), "Page-turn controller must not flatten the two-sided sheet with a parent filter");
 assert(!pageTurnController.includes("is-page-turn-source"), "Page-turn controller must reveal the destination underlay instead of hiding it with the source page");
 assert(!pageTurnController.includes('stage.addEventListener("click"'), "Page-turn controller must not duplicate Reader navigation listeners");
 
