@@ -313,83 +313,13 @@ svg {
 }
 
 .hero-landscape {
-  overflow: hidden;
-  background:
-    radial-gradient(circle at 78% 44%, rgba(222, 152, 111, .23), transparent 19rem),
-    linear-gradient(180deg, #192436 0%, #34334a 42%, #8c6558 70%, #25292b 100%);
-}
-
-.hero-sun {
-  position: absolute;
-  width: 84px;
-  height: 84px;
-  border-radius: 50%;
-  right: 17%;
-  top: 37%;
-  background: #e1ad82;
-  box-shadow: 0 0 72px rgba(223, 149, 103, .32);
-  opacity: .76;
-}
-
-.hero-mountain-horizon,
-.hero-lowlands {
-  position: absolute;
-  left: -5%;
-  width: 110%;
-  transform-origin: center bottom;
-}
-
-.hero-mountain-horizon {
-  height: 22%;
-  bottom: 31%;
-  background: #333b4b;
-  clip-path: polygon(0 89%, 7% 78%, 13% 84%, 20% 68%, 25% 80%, 32% 61%, 38% 79%, 46% 67%, 52% 82%, 60% 58%, 67% 77%, 73% 65%, 80% 81%, 87% 70%, 93% 84%, 100% 74%, 100% 100%, 0 100%);
-  opacity: .7;
-}
-
-.hero-haze {
-  position: absolute;
-  inset: auto 0 24%;
-  height: 24%;
-  background: linear-gradient(180deg, transparent, rgba(190, 157, 142, .22) 48%, transparent);
-}
-
-.hero-lowlands--far {
-  height: 30%;
-  bottom: 17%;
-  background: #273139;
-  clip-path: polygon(0 60%, 10% 51%, 20% 57%, 31% 44%, 43% 56%, 54% 47%, 67% 59%, 79% 48%, 90% 57%, 100% 50%, 100% 100%, 0 100%);
-}
-
-.hero-lowlands--mid {
-  height: 29%;
-  bottom: 5%;
-  background: #192329;
-  clip-path: polygon(0 57%, 9% 45%, 18% 54%, 29% 39%, 40% 56%, 52% 43%, 64% 58%, 76% 42%, 87% 55%, 100% 44%, 100% 100%, 0 100%);
-}
-
-.hero-lowlands--near {
-  height: 24%;
-  bottom: 0;
-  background: #0d1519;
-  clip-path: polygon(0 48%, 13% 34%, 27% 52%, 41% 38%, 55% 59%, 70% 35%, 84% 55%, 100% 39%, 100% 100%, 0 100%);
-}
-
-.hero-road {
-  position: absolute;
-  left: 55%;
-  bottom: -4%;
-  width: 17%;
-  height: 45%;
-  background: linear-gradient(180deg, rgba(177, 156, 137, .08), rgba(144, 123, 105, .28));
-  clip-path: polygon(47% 0, 54% 0, 100% 100%, 0 100%);
-  transform: rotate(-4deg);
+  background: #111722 url("images/hero-dusk-v1.webp") center 48% / cover no-repeat;
 }
 
 .hero-shade {
   background:
-    linear-gradient(90deg, rgba(7, 10, 15, .88) 0%, rgba(7, 10, 15, .62) 35%, rgba(7, 10, 15, .08) 70%),
-    linear-gradient(0deg, rgba(7, 10, 15, .92), transparent 50%);
+    linear-gradient(90deg, rgba(7, 10, 15, .9) 0%, rgba(7, 10, 15, .66) 36%, rgba(7, 10, 15, .16) 66%, transparent 80%),
+    linear-gradient(0deg, rgba(7, 10, 15, .58), transparent 48%);
 }
 
 html[data-theme="light"] .hero {
@@ -397,47 +327,13 @@ html[data-theme="light"] .hero {
 }
 
 html[data-theme="light"] .hero-landscape {
-  background:
-    radial-gradient(circle at 78% 24%, rgba(255, 246, 204, .72), transparent 18rem),
-    linear-gradient(180deg, #91bdcf 0%, #c9d9d9 47%, #ddceb0 73%, #99a58d 100%);
-}
-
-html[data-theme="light"] .hero-sun {
-  top: 16%;
-  background: #fff1bd;
-  box-shadow: 0 0 78px rgba(255, 240, 178, .72);
-  opacity: .9;
-}
-
-html[data-theme="light"] .hero-mountain-horizon {
-  background: #718692;
-  opacity: .63;
-}
-
-html[data-theme="light"] .hero-haze {
-  background: linear-gradient(180deg, transparent, rgba(230, 225, 206, .55) 48%, transparent);
-}
-
-html[data-theme="light"] .hero-lowlands--far {
-  background: #879989;
-}
-
-html[data-theme="light"] .hero-lowlands--mid {
-  background: #64796d;
-}
-
-html[data-theme="light"] .hero-lowlands--near {
-  background: #3e554d;
-}
-
-html[data-theme="light"] .hero-road {
-  background: linear-gradient(180deg, rgba(224, 210, 177, .22), rgba(180, 157, 119, .62));
+  background-image: url("images/hero-daylight-v1.webp");
 }
 
 html[data-theme="light"] .hero-shade {
   background:
-    linear-gradient(90deg, rgba(239, 239, 228, .94) 0%, rgba(239, 239, 228, .7) 36%, rgba(239, 239, 228, .08) 70%),
-    linear-gradient(0deg, rgba(239, 239, 228, .82), transparent 52%);
+    linear-gradient(90deg, rgba(244, 244, 237, .94) 0%, rgba(244, 244, 237, .76) 36%, rgba(244, 244, 237, .18) 66%, transparent 80%),
+    linear-gradient(0deg, rgba(244, 244, 237, .36), transparent 48%);
 }
 
 .hero-inner {
@@ -1106,10 +1002,6 @@ html[data-theme="light"] .hero .button--ghost {
 
   .hero {
     min-height: 520px;
-  }
-
-  .hero-sun {
-    right: 8%;
   }
 
   .hero-shade {
