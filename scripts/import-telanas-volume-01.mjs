@@ -5,7 +5,7 @@ import { fileURLToPath } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const sourceRepository = "Kamui2040/Telanas";
-const sourceCommit = "3cb25c53b01c4ff1ce1aa274ab48683b60441df9";
+const sourceCommit = "67b0b9aa17c01972879eaafef79441fee4226e4e";
 const expectedBranch = "release/telanas-volume-01";
 const bookDirectory = "content/worlds/telanas/books/dragon-knight/volume-01";
 const illustrationsDirectory = path.join(root, bookDirectory, "illustrations");
@@ -17,9 +17,9 @@ const git = (...args) => execFileSync("git", ["-C", root, ...args], { encoding: 
 const ghJson = (endpoint) => JSON.parse(execFileSync("gh", ["api", endpoint], { encoding: "utf8", maxBuffer: 16 * 1024 * 1024 }));
 
 const sourceFiles = {
-  "manuscript/en/band-01.md": "a70e81a3afcef2d7dcef228409f9ea1ff5d23595",
-  "manuscript/de/band-01.md": "34248c431ddad02f63e6c8a52c4c60cd42336eef",
-  "docs/story/illustration-reference.md": "5ff915f60582823de481074cef0586a70eb077a1",
+  "manuscript/en/band-01.md": "ad766b1d91489974343d8195cdd3a28d41ca33f0",
+  "manuscript/de/band-01.md": "1740cfc2efe254dbad06429ea3b163869af37bf4",
+  "docs/story/illustration-reference.md": "b09d6c0a4b0969293960c9944ba7dd73f67244f9",
 };
 
 const chapters = [
@@ -53,7 +53,7 @@ const chapters = [
     headings: { en: "Chapter 2 — The Old Woods", de: "Kapitel 2 — Der alte Wald" },
     assetId: "dk-v01-ill-ch02",
     filename: "Band 1 - Approved Old Forest Entrance.png",
-    sourceBlob: "5ad8fe990b9000159712cd8d064c6a08fea2fbc8",
+    sourceBlob: "b4257fe8202a8a9c239cbe4f8581245c9d2396a7",
     alt: {
       en: "Watercolor view of a quiet, misty path entering the Old Forest beneath large old trees.",
       de: "Aquarellansicht eines ruhigen, nebligen Pfades, der unter großen alten Bäumen in den alten Wald führt.",
@@ -77,7 +77,7 @@ const chapters = [
     headings: { en: "Chapter 4 — Useful Hands", de: "Kapitel 4 — Nützliche Hände" },
     assetId: "dk-v01-ill-ch04",
     filename: "Band 1 - Approved Alden Smithy.png",
-    sourceBlob: "4f077b39f3e9f167749e9d4a0574c5e866158b8d",
+    sourceBlob: "08b2ea034e9cb4f481bc661b5cb16f7df011b2bc",
     alt: {
       en: "Watercolor view inside a practical open-front village smithy with forge, anvil, tools, and everyday metalwork.",
       de: "Aquarellansicht einer praktischen offenen Dorfschmiede mit Esse, Amboss, Werkzeugen und alltäglichen Metallarbeiten.",
@@ -125,7 +125,7 @@ const chapters = [
     headings: { en: "Chapter 8 — What Remains", de: "Kapitel 8 — Was bleibt" },
     assetId: "dk-v01-ill-ch08",
     filename: "Band 1 - Approved What Remains.png",
-    sourceBlob: "6928b4c6fc820adbe5c68dce19e989f82ee5fcf4",
+    sourceBlob: "d288b8d2f0f9b7f9e742f76d8d23d3386ff1fef5",
     alt: {
       en: "Watercolor view of an empty porch chair with a draped blanket, a simple bow nearby, and a small silver leaf pendant.",
       de: "Aquarellansicht eines leeren Verandastuhls mit darübergelegter Decke, einem einfachen Bogen in der Nähe und einem kleinen silbernen Blattanhänger.",
@@ -137,7 +137,7 @@ const chapters = [
     headings: { en: "Chapter 9 — The Choice", de: "Kapitel 9 — Die Entscheidung" },
     assetId: "dk-v01-ill-ch09",
     filename: "Band 1 - Approved The Choice.png",
-    sourceBlob: "f65b214954b70f4530a4ccfef62f32aad8ff0b76",
+    sourceBlob: "d86067bc2573a5d64ccab33c013672a642e05473",
     alt: {
       en: "Watercolor view of old chainmail and a sword laid out quietly on a wooden chest at home.",
       de: "Aquarellansicht eines alten Kettenhemds und eines Schwertes, die ruhig auf einer Holztruhe im Haus liegen.",

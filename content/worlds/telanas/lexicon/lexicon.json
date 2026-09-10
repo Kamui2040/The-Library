@@ -135,11 +135,11 @@
       "labels": {
         "en": {
           "title": "The Dragon Knight",
-          "summary": "The story following Calist, beginning with his life in a small village on Telanas."
+          "summary": "Calist's story, beginning with his life in a small village on Telanas."
         },
         "de": {
           "title": "Der Drachenritter",
-          "summary": "Die Geschichte um Calist, beginnend mit seinem Leben in einem kleinen Dorf auf Telanas."
+          "summary": "Calists Geschichte, die mit seinem Leben in einem kleinen Dorf auf Telanas beginnt."
         }
       },
       "fragments": [],
@@ -171,7 +171,7 @@
         },
         "de": {
           "title": "Calist",
-          "summary": "Ein junger Dorfbewohner, der rund um die Schmiede seines Vaters aufwächst und von Geschichten über die Welt jenseits seines Zuhauses fasziniert ist.",
+          "summary": "Ein junger Dorfbewohner, der in und um die Schmiede seines Vaters aufwächst und von Geschichten über die Welt jenseits seines Zuhauses fasziniert ist.",
           "fullName": "Calist Griffith"
         }
       },
@@ -457,8 +457,8 @@
             "chapter": "dk-v01-ch04"
           },
           "text": {
-            "en": "Alden teaches practically: work must hold, mistakes are done again, and usefulness matters more than making something impressive.",
-            "de": "Alden unterrichtet praktisch: Arbeit muss halten, Fehler werden noch einmal gemacht, und Brauchbarkeit zählt mehr als Eindruck."
+            "en": "Alden teaches through practice: work must hold, flawed pieces are made again, and usefulness matters more than making something impressive.",
+            "de": "Alden unterrichtet durch praktische Arbeit: Sie muss halten, fehlerhafte Stücke werden neu gemacht, und Brauchbarkeit zählt mehr als Eindruck."
           },
           "readerLinks": [
             {
@@ -484,7 +484,7 @@
           },
           "text": {
             "en": "A winter illness keeps Alden away from the forge longer than he wants, leaving Calist to keep the village's repair work moving.",
-            "de": "Eine Winterkrankheit hält Alden länger von der Schmiede fern, als er akzeptieren will. Calist übernimmt in dieser Zeit die Reparaturen des Dorfes."
+            "de": "Eine Winterkrankheit hält Alden länger von der Schmiede fern, als ihm lieb ist. Calist übernimmt in dieser Zeit die Reparaturen des Dorfes."
           },
           "readerLinks": [
             {
@@ -1402,11 +1402,11 @@
       "labels": {
         "en": {
           "title": "The border fort",
-          "summary": "A small fort along the road that watches the border and supports patrols through the surrounding region."
+          "summary": "A small fort near the road and river that watches the border and supports patrols through the surrounding region."
         },
         "de": {
           "title": "Das Grenzfort",
-          "summary": "Ein kleines Fort an der Straße, das die Grenze überwacht und Patrouillen in der umliegenden Region unterstützt."
+          "summary": "Ein kleines Fort nahe der Straße und am Fluss, das die Grenze überwacht und Patrouillen in der umliegenden Region unterstützt."
         }
       },
       "fragments": [
@@ -1511,11 +1511,11 @@
       "labels": {
         "en": {
           "title": "The town",
-          "summary": "A larger market town south of the village, with shops, workshops, inns, and regular trade."
+          "summary": "A larger market town farther inland, with shops, workshops, inns, and regular trade."
         },
         "de": {
           "title": "Die Stadt",
-          "summary": "Eine größere Marktstadt südlich des Dorfes mit Läden, Werkstätten, Gasthäusern und regelmäßigem Handel."
+          "summary": "Eine größere Marktstadt weiter im Landesinneren mit Läden, Werkstätten, Gasthäusern und regelmäßigem Handel."
         }
       },
       "fragments": [
@@ -2432,8 +2432,8 @@
             "chapter": "dk-v01-ch08"
           },
           "text": {
-            "en": "As the western conflict demands more soldiers, fewer remain near Calist's village. Patrols pass less often and the fort has less manpower to answer local threats.",
-            "de": "Als der Konflikt im Westen immer mehr Soldaten bindet, bleiben weniger in der Nähe von Calists Dorf. Patrouillen kommen seltener vorbei und dem Fort fehlen Männer für örtliche Gefahren."
+            "en": "As the eastern conflict demands more soldiers, fewer remain near Calist's village. Patrols pass less often and the fort has less manpower to answer local threats.",
+            "de": "Als der Konflikt im Osten immer mehr Soldaten bindet, bleiben weniger in der Nähe von Calists Dorf. Patrouillen kommen seltener vorbei und dem Fort fehlen Männer für örtliche Gefahren."
           },
           "readerLinks": [
             {
@@ -2752,7 +2752,7 @@
         },
         "de": {
           "title": "Der Hinterhalt auf die Jagdgruppe",
-          "summary": "Eine Jagdgruppe, die wegen des weiter entfernten Wildes weiter hinauszieht, gerät im Wald in einen Hinterhalt. Drei Jäger kehren verletzt zurück; Bren und Eryn nicht."
+          "summary": "Eine Jagdgruppe, die auf der Suche nach Wild weiter hinauszieht, gerät im Wald in einen Hinterhalt. Drei Jäger kehren verletzt zurück; Bren und Eryn nicht."
         }
       },
       "fragments": [
@@ -3107,7 +3107,7 @@
           },
           "text": {
             "en": "Joric never settles into one trade. He becomes useful with animals, fields, fences, drainage, wagons and whatever other work needs hands, and younger children increasingly listen to him.",
-            "de": "Joric legt sich auf kein einzelnes Handwerk fest. Er wird bei Tieren, Feldern, Zäunen, Entwässerung, Wagen und jeder anderen Arbeit nützlich, die Hände braucht, und jüngere Kinder hören zunehmend auf ihn."
+            "de": "Joric legt sich auf kein einzelnes Handwerk fest. Er wird bei Tieren, Feldern, Zäunen, Entwässerung, Wagen und jeder anderen Arbeit nützlich, bei der helfende Hände gebraucht werden, und jüngere Kinder hören zunehmend auf ihn."
           },
           "readerLinks": [
             {
@@ -3596,7 +3596,7 @@
           },
           "text": {
             "en": "Tessa is with Nessa and Mara during Nessa's final night and later asks that Nessa's chair remain on the porch.",
-            "de": "Tessa ist in Nessas letzter Nacht gemeinsam mit Nessa und Mara dort und bittet später darum, Nessas Stuhl auf der Veranda stehen zu lassen."
+            "de": "Tessa verbringt Nessas letzte Nacht gemeinsam mit Mara an ihrer Seite und bittet später darum, Nessas Stuhl auf der Veranda stehen zu lassen."
           },
           "readerLinks": [
             {
