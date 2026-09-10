@@ -31,8 +31,12 @@ Locations do not depend on a map. A Telanas map is not exposed until the geograp
 - `assets/reader/` — canonical Reader engine, presentation, page-turn, progress, bookmarks, and contextual Lexicon behavior
 - `assets/lexicon/` — canonical spoiler-aware Lexicon browsing, relationships, built-in search, and Reader references
 - `assets/timeline/` — retained spoiler-aware chronology module, not exposed in the current reader-facing navigation
+- `output/pdf/` — downloadable illustrated English and German editions of the released volume
+- `scripts/build-volume-pdfs.py` — deterministic A5 PDF builder for the released editions
 - `fixtures/release-bundles/` — neutral deterministic bundle fixtures used to verify the import boundary
 
 `npm run validate` checks public content manifests, semantic links and relationships, contextual Reader Lexicon references and milestones, retained chronology/map data, canonical production routes, illustration contracts, and the neutral release-bundle fixture.
+
+`npm run build:pdfs` rebuilds both downloadable editions from the released Reader content. The builder requires ReportLab and the Noto Serif and Noto Sans font families.
 
 `npm run import:bundle -- <bundle-directory>` performs a non-mutating dry run. Actual file writes require explicit import flags as described in `docs/publication-pipeline.md`.
