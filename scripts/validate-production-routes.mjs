@@ -39,6 +39,8 @@ const required = [
   "assets/spoiler-profile.js",
   "assets/spoiler-controls.js",
   "assets/telanas/styles.css",
+  "assets/telanas/images/lexicon-library-daylight-v1.webp",
+  "assets/telanas/images/lexicon-library-dusk-v1.webp",
   ...readerAssets,
   ...lexiconAssets,
   ...timelineAssets,
@@ -86,11 +88,13 @@ const revisionFor = async (relativePath) => createHash("sha256")
 
 const [
   telanasStylesheetRevision,
+  lexiconStylesheetRevision,
   readerControllerRevision,
   pageTurnControllerRevision,
   pageTurnStylesRevision,
 ] = await Promise.all([
   revisionFor("assets/telanas/styles.css"),
+  revisionFor("assets/lexicon/lexicon.css"),
   revisionFor("assets/reader/reader.js"),
   revisionFor("assets/reader/reader-page-turn.js"),
   revisionFor("assets/reader/reader-page-turn.css"),
@@ -212,7 +216,10 @@ for (const locale of ["en", "de"]) {
   assert(lexiconHtml.includes('href="../../../de/telanas/lexicon/"'), `${lexiconPath} must expose the German Lexicon route`);
   assertTelanasStylesheet(lexiconPath, lexiconHtml, "../../../assets/telanas/styles.css");
   assertK2040EcosystemShell(lexiconPath, lexiconHtml);
-  assert(lexiconHtml.includes('href="../../../assets/lexicon/lexicon.css"'), `${lexiconPath} must use the production Lexicon stylesheet`);
+  assert(
+    lexiconHtml.includes(`href="../../../assets/lexicon/lexicon.css?v=${lexiconStylesheetRevision}"`),
+    `${lexiconPath} must use the current production Lexicon stylesheet revision`,
+  );
   assert(lexiconHtml.includes('src="../../../assets/library-shell.js"'), `${lexiconPath} must use the production Library shell`);
   assert(lexiconHtml.includes('src="../../../assets/spoiler-profile.js"'), `${lexiconPath} must use the production spoiler profile`);
   assert(lexiconHtml.includes('src="../../../assets/spoiler-controls.js"'), `${lexiconPath} must use the production spoiler controls`);
@@ -290,6 +297,10 @@ assert(lexiconController.includes("visibilityAllowed(target.visibility"), "Produ
 assert(lexiconController.includes('source: "lexicon"'), "Production Lexicon Reader links must carry their semantic source context");
 assert(lexiconController.includes('get("entry")'), "Production Lexicon must accept semantic entry targets without using page numbers");
 assert(lexiconController.includes('get("category")'), "Production Lexicon must accept public category navigation state");
+
+const lexiconStylesheet = await readFile(path.join(root, "assets/lexicon/lexicon.css"), "utf8");
+assert(lexiconStylesheet.includes('url("../telanas/images/lexicon-library-dusk-v1.webp")'), "Lexicon dark theme must use the dusk library hero");
+assert(lexiconStylesheet.includes('url("../telanas/images/lexicon-library-daylight-v1.webp")'), "Lexicon light theme must use the daylight library hero");
 
 const timelineController = await readFile(path.join(root, "assets/timeline/timeline.js"), "utf8");
 assert(timelineController.includes("dataset.worldManifest"), "Retained Timeline must resolve its world manifest from the page contract");
