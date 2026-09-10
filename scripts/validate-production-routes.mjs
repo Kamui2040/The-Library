@@ -4,6 +4,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+const k2040ChromeRevision = "20260910library1";
 const readerAssets = [
   "reader-content.css",
   "reader-presentation.css",
@@ -29,6 +30,7 @@ const timelineAssets = [
 ].map((name) => `assets/timeline/${name}`);
 
 const required = [
+  "index.html",
   "assets/library-shell.js",
   "assets/spoiler-profile.js",
   "assets/spoiler-controls.js",
@@ -78,6 +80,17 @@ const assertTelanasStylesheet = (filePath, html, relativeHref) => {
   );
 };
 
+const assertK2040EcosystemShell = (filePath, html) => {
+  assert(html.includes('data-k2040-site="library"'), `${filePath} must identify the Library site family`);
+  assert(html.includes("data-k2040-site-home"), `${filePath} must expose the Library home link`);
+  assert(html.includes('href="https://kamui2040.github.io/The-Library/"'), `${filePath} must expose The Library in K2040 navigation`);
+  assert(
+    html.includes(`src="https://kamui2040.github.io/shared/k2040-chrome.js?v=${k2040ChromeRevision}"`),
+    `${filePath} must use the shared K2040 footer controller`,
+  );
+  assert(html.includes("data-k2040-footer"), `${filePath} must expose the shared K2040 footer`);
+};
+
 const validateLocalReferences = async (filePath, html) => {
   const tags = html.match(/<(?:a|link|script)\b[^>]*(?:href|src)="[^"]+"[^>]*>/g) || [];
   for (const tag of tags) {
@@ -105,6 +118,11 @@ const assertReaderFacingNavigation = (filePath, html) => {
   assert(!html.includes("prototype/telanas/world-search.html"), `${filePath} must not expose standalone Search`);
 };
 
+const libraryRootHtml = await readFile(path.join(root, "index.html"), "utf8");
+assert(libraryRootHtml.includes('content="0; url=en/telanas/"'), "Library root must preserve its English fallback route");
+assert(libraryRootHtml.includes('localStorage.getItem("k2040-language")'), "Library root must honor the shared language preference");
+assert(libraryRootHtml.includes("window.location.replace(`${locale}/telanas/`)"), "Library root must route into the localized Telanas landing page");
+
 for (const locale of ["en", "de"]) {
   const rootPath = `${locale}/index.html`;
   const landingPath = `${locale}/telanas/index.html`;
@@ -127,6 +145,7 @@ for (const locale of ["en", "de"]) {
   assert(landingHtml.includes('src="../../assets/spoiler-profile.js"'), `${landingPath} must use the production spoiler profile`);
   assert(landingHtml.includes('src="../../assets/spoiler-controls.js"'), `${landingPath} must use the production spoiler controls`);
   assertTelanasStylesheet(landingPath, landingHtml, "../../assets/telanas/styles.css");
+  assertK2040EcosystemShell(landingPath, landingHtml);
   assert(landingHtml.includes('data-spoiler-progress-select'), `${landingPath} must preserve the shared spoiler-progress control`);
   assert(landingHtml.includes('href="read/dragon-knight/volume-01/"'), `${landingPath} must link to the canonical Reader`);
   assert(landingHtml.includes('href="lexicon/"'), `${landingPath} must link to the canonical Lexicon`);
@@ -156,6 +175,7 @@ for (const locale of ["en", "de"]) {
   assert(lexiconHtml.includes('href="../../../en/telanas/lexicon/"'), `${lexiconPath} must expose the English Lexicon route`);
   assert(lexiconHtml.includes('href="../../../de/telanas/lexicon/"'), `${lexiconPath} must expose the German Lexicon route`);
   assertTelanasStylesheet(lexiconPath, lexiconHtml, "../../../assets/telanas/styles.css");
+  assertK2040EcosystemShell(lexiconPath, lexiconHtml);
   assert(lexiconHtml.includes('href="../../../assets/lexicon/lexicon.css"'), `${lexiconPath} must use the production Lexicon stylesheet`);
   assert(lexiconHtml.includes('src="../../../assets/library-shell.js"'), `${lexiconPath} must use the production Library shell`);
   assert(lexiconHtml.includes('src="../../../assets/spoiler-profile.js"'), `${lexiconPath} must use the production spoiler profile`);
@@ -178,6 +198,7 @@ for (const locale of ["en", "de"]) {
   assert(timelineHtml.includes('href="../../../en/telanas/timeline/"'), `${timelinePath} must expose the English Timeline equivalent`);
   assert(timelineHtml.includes('href="../../../de/telanas/timeline/"'), `${timelinePath} must expose the German Timeline equivalent`);
   assertTelanasStylesheet(timelinePath, timelineHtml, "../../../assets/telanas/styles.css");
+  assertK2040EcosystemShell(timelinePath, timelineHtml);
   assert(timelineHtml.includes('src="../../../assets/timeline/timeline.js"'), `${timelinePath} must use the retained Timeline controller`);
   assert(timelineHtml.includes('data-timeline-results'), `${timelinePath} must preserve the spoiler-filtered chronology`);
   assert(!timelineHtml.includes("prototype/telanas/map.html"), `${timelinePath} must not expose the Map`);

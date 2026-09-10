@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "telanas",
-  "state": "development",
+  "state": "published",
   "theme": "telanas",
   "locales": [
     "en",
@@ -17,7 +17,7 @@
         {
           "id": "volume-01",
           "manifest": "books/dragon-knight/volume-01/book.json",
-          "state": "approved"
+          "state": "published"
         }
       ]
     }

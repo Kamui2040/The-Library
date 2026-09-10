@@ -436,7 +436,7 @@ try {
     world: "telanas",
     story: "dragon-knight",
     id: "volume-01",
-    state: "approved",
+    state: "published",
     contentMode: "released",
     editionAlignment: "chapter",
     locales: ["en", "de"],
@@ -497,7 +497,7 @@ try {
     world: "telanas",
     story: "dragon-knight",
     book: "volume-01",
-    state: "approved",
+    state: "published",
     contentMode: "released",
   };
 
@@ -518,7 +518,7 @@ try {
   const story = world.stories?.find((candidate) => candidate.id === "dragon-knight");
   const bookRef = story?.books?.find((candidate) => candidate.id === "volume-01");
   assert(bookRef, "Telanas world manifest is missing dragon-knight/volume-01");
-  bookRef.state = "approved";
+  bookRef.state = "published";
   await writeJson("content/worlds/telanas/world.json", world);
 
   console.log(`PASS: imported exact EN/DE Band 1 manuscripts from ${sourceCommit} with the approved cover, 32 shared semantic anchors, and 10 authoritative lead illustrations`);
