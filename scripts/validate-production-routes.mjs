@@ -68,10 +68,22 @@ for (const relativePath of required) {
   assert(await exists(relativePath), `Missing production route file: ${relativePath}`);
 }
 
-const telanasStylesheetRevision = createHash("sha256")
-  .update(await readFile(path.join(root, "assets/telanas/styles.css")))
+const revisionFor = async (relativePath) => createHash("sha256")
+  .update(await readFile(path.join(root, relativePath)))
   .digest("hex")
   .slice(0, 12);
+
+const [
+  telanasStylesheetRevision,
+  readerControllerRevision,
+  pageTurnControllerRevision,
+  pageTurnStylesRevision,
+] = await Promise.all([
+  revisionFor("assets/telanas/styles.css"),
+  revisionFor("assets/reader/reader.js"),
+  revisionFor("assets/reader/reader-page-turn.js"),
+  revisionFor("assets/reader/reader-page-turn.css"),
+]);
 
 const assertTelanasStylesheet = (filePath, html, relativeHref) => {
   assert(
@@ -162,7 +174,18 @@ for (const locale of ["en", "de"]) {
   assert(readerHtml.includes('href="../../../../../de/telanas/read/dragon-knight/volume-01/"'), `${readerPath} must expose the German Reader route`);
   assert(readerHtml.includes('src="../../../../../assets/library-shell.js"'), `${readerPath} must use the production Library shell`);
   assertTelanasStylesheet(readerPath, readerHtml, "../../../../../assets/telanas/styles.css");
-  assert(readerHtml.includes('src="../../../../../assets/reader/reader.js"'), `${readerPath} must use the production Reader controller`);
+  assert(
+    readerHtml.includes(`href="../../../../../assets/reader/reader-page-turn.css?v=${pageTurnStylesRevision}"`),
+    `${readerPath} must use the current page-turn stylesheet revision`,
+  );
+  assert(
+    readerHtml.includes(`src="../../../../../assets/reader/reader-page-turn.js?v=${pageTurnControllerRevision}"`),
+    `${readerPath} must use the current page-turn controller revision`,
+  );
+  assert(
+    readerHtml.includes(`src="../../../../../assets/reader/reader.js?v=${readerControllerRevision}"`),
+    `${readerPath} must use the current production Reader controller revision`,
+  );
   assert(readerHtml.includes('data-reader-book-manifest="../../../../../content/worlds/telanas/books/dragon-knight/volume-01/book.json"'), `${readerPath} must resolve the public book manifest from the canonical route`);
   assert(readerHtml.includes('data-reader-bookmark-toggle'), `${readerPath} must preserve semantic bookmarks`);
   assert(readerHtml.includes('data-reader-progress-mode'), `${readerPath} must preserve Reader completion/spoiler controls`);
@@ -219,6 +242,16 @@ assert(
 
 const readerController = await readFile(path.join(root, "assets/reader/reader.js"), "utf8");
 assert(readerController.includes("dataset.readerBookManifest"), "Production Reader must resolve its book manifest from the page contract");
+assert(readerController.includes('new CustomEvent("reader-page-turn-request"'), "Reader navigation must request an animated page turn before committing the destination spread");
+
+const pageTurnController = await readFile(path.join(root, "assets/reader/reader-page-turn.js"), "utf8");
+assert(pageTurnController.includes('document.addEventListener("reader-page-turn-request"'), "Page-turn controller must own the deferred navigation request");
+assert(pageTurnController.includes("prepared.commit();"), "Page-turn controller must commit the destination spread after animation completion");
+assert(pageTurnController.includes('source.classList.add("is-page-turn-source")'), "Page-turn controller must hide the stationary source beneath its animated clone");
+assert(!pageTurnController.includes('stage.addEventListener("click"'), "Page-turn controller must not duplicate Reader navigation listeners");
+
+const pageTurnStyles = await readFile(path.join(root, "assets/reader/reader-page-turn.css"), "utf8");
+assert(pageTurnStyles.includes(".book-page.is-page-turn-source"), "Page-turn stylesheet must keep the source page hidden beneath the animated sheet");
 
 const spoilerProfile = await readFile(path.join(root, "assets/spoiler-profile.js"), "utf8");
 assert(

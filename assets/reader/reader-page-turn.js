@@ -1,14 +1,13 @@
 (() => {
   "use strict";
 
-  const stage = document.querySelector(".book-stage");
   const spread = document.querySelector("[data-book-spread]");
   const leftPage = document.querySelector("[data-book-page='left']");
   const rightPage = document.querySelector("[data-book-page='right']");
   const previousButton = document.querySelector("[data-page-previous]");
   const nextButton = document.querySelector("[data-page-next]");
 
-  if (!stage || !spread || !leftPage || !rightPage || !previousButton || !nextButton) return;
+  if (!spread || !leftPage || !rightPage || !previousButton || !nextButton) return;
 
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   const wideSpread = window.matchMedia("(min-width: 981px)");
@@ -38,8 +37,20 @@
     turnToken += 1;
     if (!activeTurn) return;
     activeTurn.animations.forEach((animation) => animation.cancel());
+    activeTurn.source.classList.remove("is-page-turn-source");
     activeTurn.layer.remove();
     activeTurn = null;
+  };
+
+  const finishTurn = (prepared) => {
+    if (prepared.token !== turnToken || activeTurn?.layer !== prepared.layer) return;
+    activeTurn = null;
+    try {
+      prepared.commit();
+    } finally {
+      prepared.source.classList.remove("is-page-turn-source");
+      prepared.layer.remove();
+    }
   };
 
   const sourceForDirection = (direction) => {
@@ -48,7 +59,7 @@
   };
 
   const playPreparedTurn = (prepared) => {
-    if (!prepared.layer.isConnected || prepared.token !== turnToken) return;
+    if (!prepared.layer.isConnected || prepared.token !== turnToken || activeTurn?.layer !== prepared.layer) return;
 
     const directionSign = prepared.direction < 0 ? 1 : -1;
     const duration = 1020;
@@ -142,29 +153,27 @@
     });
 
     const animations = [sheetAnimation, frontAnimation, backAnimation, edgeAnimation];
-    activeTurn = { layer: prepared.layer, animations };
+    activeTurn.animations = animations;
 
-    Promise.allSettled(animations.map((animation) => animation.finished)).finally(() => {
-      if (activeTurn?.layer === prepared.layer) activeTurn = null;
-      prepared.layer.remove();
-    });
+    Promise.all(animations.map((animation) => animation.finished))
+      .then(() => finishTurn(prepared))
+      .catch(() => {});
 
     window.setTimeout(() => {
-      if (prepared.layer.isConnected) prepared.layer.remove();
-      if (activeTurn?.layer === prepared.layer) activeTurn = null;
+      finishTurn(prepared);
     }, duration + 180);
   };
 
-  const prepareTurn = (direction) => {
-    if (reducedMotion.matches || spread.classList.contains("continuous")) return;
-    if (direction < 0 && previousButton.disabled) return;
-    if (direction > 0 && nextButton.disabled) return;
+  const prepareTurn = (direction, commit) => {
+    if (reducedMotion.matches || spread.classList.contains("continuous")) return false;
+    if (direction < 0 && previousButton.disabled) return false;
+    if (direction > 0 && nextButton.disabled) return false;
 
     const source = sourceForDirection(direction);
-    if (!source || source.classList.contains("is-empty")) return;
+    if (!source || source.classList.contains("is-empty")) return false;
+    if (typeof source.animate !== "function") return false;
 
-    clearTurn();
-    const token = turnToken;
+    const token = ++turnToken;
     const sourceRect = source.getBoundingClientRect();
     const spreadRect = spread.getBoundingClientRect();
     const side = direction < 0 ? "left" : "right";
@@ -185,6 +194,7 @@
     sheet.style.transformOrigin = direction < 0 ? "right center" : "left center";
 
     const front = clonePage(source);
+    source.classList.add("is-page-turn-source");
     const back = document.createElement("div");
     back.className = "reader-page-turn-back";
     const edge = document.createElement("span");
@@ -194,64 +204,37 @@
     layer.append(sheet);
     spread.append(layer);
 
-    queueMicrotask(() => playPreparedTurn({
-      token,
-      direction,
-      side,
-      layer,
-      sheet,
-      front,
-      back,
-      edge
-    }));
+    activeTurn = { layer, source, animations: [] };
+
+    queueMicrotask(() => {
+      try {
+        playPreparedTurn({
+          token,
+          direction,
+          commit,
+          source,
+          layer,
+          sheet,
+          front,
+          back,
+          edge
+        });
+      } catch {
+        clearTurn();
+        commit();
+      }
+    });
+    return true;
   };
 
-  const isInteractiveTarget = (target) => (
-    target instanceof Element && Boolean(
-      target.closest("button, a, input, select, textarea, summary, label, [contenteditable='true']")
-    )
-  );
+  document.addEventListener("reader-page-turn-request", (event) => {
+    const { direction, commit } = event.detail || {};
+    if (![-1, 1].includes(direction) || typeof commit !== "function") return;
+    if (activeTurn || prepareTurn(direction, commit)) event.preventDefault();
+  });
 
-  const directionForPageClick = (event) => {
-    if (spread.classList.contains("continuous") || event.button !== 0 || isInteractiveTarget(event.target)) return 0;
-
-    const selection = window.getSelection();
-    if (selection && !selection.isCollapsed && selection.toString().trim()) return 0;
-
-    if (effectiveSpread()) {
-      if (leftPage.contains(event.target)) return -1;
-      if (rightPage.contains(event.target)) return 1;
-      return 0;
-    }
-
-    const rect = leftPage.getBoundingClientRect();
-    if (event.clientY < rect.top || event.clientY > rect.bottom) return 0;
-    return event.clientX < rect.left + rect.width / 2 ? -1 : 1;
-  };
-
-  stage.addEventListener("click", (event) => {
-    const direction = directionForPageClick(event);
-    if (direction) prepareTurn(direction);
-  }, true);
-
-  previousButton.addEventListener("click", () => prepareTurn(-1), true);
-  nextButton.addEventListener("click", () => prepareTurn(1), true);
-
-  document.addEventListener("keydown", (event) => {
-    if (spread.classList.contains("continuous") || event.altKey || event.ctrlKey || event.metaKey) return;
-    const tag = document.activeElement?.tagName;
-    if (["INPUT", "SELECT", "TEXTAREA"].includes(tag)) return;
-    if (event.key === "ArrowLeft") prepareTurn(-1);
-    if (event.key === "ArrowRight") prepareTurn(1);
-  }, true);
-
-  document.addEventListener("click", (event) => {
-    if (event.target instanceof Element && event.target.closest("[data-layout-button], [data-language-select]")) {
-      clearTurn();
-    }
-  }, true);
-
+  document.addEventListener("reader-page-turn-cancel", clearTurn);
   window.addEventListener("resize", clearTurn);
-  window.addEventListener("library-language-change", clearTurn);
+  wideSpread.addEventListener("change", clearTurn);
   reducedMotion.addEventListener("change", clearTurn);
 })();

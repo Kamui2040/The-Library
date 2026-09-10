@@ -592,11 +592,21 @@
 
   const turnPage = (direction) => {
     if (layoutPreference === "continuous") return;
-    if (direction < 0) {
-      if (!previousButton.disabled) renderPagedAt(currentPageIndex - pageStep());
-      return;
-    }
-    if (!nextButton.disabled) renderPagedAt(currentPageIndex + pageStep());
+    const targetIndex = currentPageIndex + (direction < 0 ? -pageStep() : pageStep());
+    if (targetIndex < 0 || targetIndex >= pages.length) return;
+
+    let committed = false;
+    const commit = () => {
+      if (committed) return;
+      committed = true;
+      renderPagedAt(targetIndex);
+    };
+    const request = new CustomEvent("reader-page-turn-request", {
+      cancelable: true,
+      detail: { direction, commit },
+    });
+
+    if (document.dispatchEvent(request)) commit();
   };
 
   const isInteractiveTarget = (target) => (
@@ -695,6 +705,7 @@
 
   const navigate = (requested, { updateHash = true, persist = true } = {}) => {
     if (!model) return;
+    document.dispatchEvent(new Event("reader-page-turn-cancel"));
     const resolved = engine.resolveAnchor(model, requested);
 
     if (layoutPreference === "continuous") {
@@ -743,6 +754,7 @@
   };
 
   const setLayout = async (layout) => {
+    document.dispatchEvent(new Event("reader-page-turn-cancel"));
     const restoreAnchor = currentAnchor;
     applyLayoutClasses(layout);
     titleLabel.textContent = currentTitle();
@@ -772,6 +784,7 @@
   };
 
   const loadSelectedEdition = async (restoreAnchor) => {
+    document.dispatchEvent(new Event("reader-page-turn-cancel"));
     const token = ++editionLoadToken;
     const locale = language();
     const loadedEdition = await loadEdition(locale);
