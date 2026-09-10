@@ -16,6 +16,10 @@
   transform-style: preserve-3d;
 }
 
+.book-page.is-page-turn-source {
+  visibility: hidden;
+}
+
 .reader-page-turn-sheet {
   position: absolute;
   inset: 0;
