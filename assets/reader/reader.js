@@ -843,6 +843,11 @@
     if (button) navigate(button.dataset.inlineTarget);
   });
 
+  rightPage.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-inline-target]");
+    if (button) navigate(button.dataset.inlineTarget);
+  });
+
   bookStage.addEventListener("click", handlePageClick);
 
   previousButton.addEventListener("click", () => {
