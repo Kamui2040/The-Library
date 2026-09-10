@@ -14,6 +14,14 @@
     "en": "editions/en.json",
     "de": "editions/de.json"
   },
+  "cover": {
+    "src": "cover.png",
+    "aspectRatio": "2:3",
+    "alt": {
+      "en": "The pearlescent white and iridescent black primordial twin dragons sleeping together among the broken pieces of their enormous egg.",
+      "de": "Die perlmuttweißen und schillernd schwarzen urzeitlichen Zwillingsdrachen schlafen eng umschlungen zwischen den Bruchstücken ihres gewaltigen Eis."
+    }
+  },
   "contextualLexicon": "contextual-lexicon.json",
   "spoilerMilestones": [
     "dk-v01-p-twins-hatch",
@@ -60,6 +68,8 @@
       "en": "ad766b1d91489974343d8195cdd3a28d41ca33f0",
       "de": "1740cfc2efe254dbad06429ea3b163869af37bf4"
     },
+    "cover": "assets/covers/volume-01/cover.png",
+    "coverBlob": "b2ad8fe2bd63e2540223fd322e3aa9f36cb6adc1",
     "illustrationReference": "docs/story/illustration-reference.md",
     "illustrationsDirectory": "assets/illustrations/band-01/"
   },

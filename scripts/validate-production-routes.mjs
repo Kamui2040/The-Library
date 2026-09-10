@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 import { access, readFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -65,6 +66,18 @@ for (const relativePath of required) {
   assert(await exists(relativePath), `Missing production route file: ${relativePath}`);
 }
 
+const telanasStylesheetRevision = createHash("sha256")
+  .update(await readFile(path.join(root, "assets/telanas/styles.css")))
+  .digest("hex")
+  .slice(0, 12);
+
+const assertTelanasStylesheet = (filePath, html, relativeHref) => {
+  assert(
+    html.includes(`href="${relativeHref}?v=${telanasStylesheetRevision}"`),
+    `${filePath} must use the current production Telanas stylesheet revision`,
+  );
+};
+
 const validateLocalReferences = async (filePath, html) => {
   const tags = html.match(/<(?:a|link|script)\b[^>]*(?:href|src)="[^"]+"[^>]*>/g) || [];
   for (const tag of tags) {
@@ -113,7 +126,7 @@ for (const locale of ["en", "de"]) {
   assert(landingHtml.includes('src="../../assets/library-shell.js"'), `${landingPath} must use the production Library shell`);
   assert(landingHtml.includes('src="../../assets/spoiler-profile.js"'), `${landingPath} must use the production spoiler profile`);
   assert(landingHtml.includes('src="../../assets/spoiler-controls.js"'), `${landingPath} must use the production spoiler controls`);
-  assert(landingHtml.includes('href="../../assets/telanas/styles.css"'), `${landingPath} must use the production Telanas stylesheet`);
+  assertTelanasStylesheet(landingPath, landingHtml, "../../assets/telanas/styles.css");
   assert(landingHtml.includes('data-spoiler-progress-select'), `${landingPath} must preserve the shared spoiler-progress control`);
   assert(landingHtml.includes('href="read/dragon-knight/volume-01/"'), `${landingPath} must link to the canonical Reader`);
   assert(landingHtml.includes('href="lexicon/"'), `${landingPath} must link to the canonical Lexicon`);
@@ -129,6 +142,7 @@ for (const locale of ["en", "de"]) {
   assert(readerHtml.includes('href="../../../../../en/telanas/read/dragon-knight/volume-01/"'), `${readerPath} must expose the English Reader route`);
   assert(readerHtml.includes('href="../../../../../de/telanas/read/dragon-knight/volume-01/"'), `${readerPath} must expose the German Reader route`);
   assert(readerHtml.includes('src="../../../../../assets/library-shell.js"'), `${readerPath} must use the production Library shell`);
+  assertTelanasStylesheet(readerPath, readerHtml, "../../../../../assets/telanas/styles.css");
   assert(readerHtml.includes('src="../../../../../assets/reader/reader.js"'), `${readerPath} must use the production Reader controller`);
   assert(readerHtml.includes('data-reader-book-manifest="../../../../../content/worlds/telanas/books/dragon-knight/volume-01/book.json"'), `${readerPath} must resolve the public book manifest from the canonical route`);
   assert(readerHtml.includes('data-reader-bookmark-toggle'), `${readerPath} must preserve semantic bookmarks`);
@@ -141,7 +155,7 @@ for (const locale of ["en", "de"]) {
   assert(lexiconHtml.includes(`<html lang="${locale}" data-route-locale="${locale}"`), `${lexiconPath} must declare its route locale`);
   assert(lexiconHtml.includes('href="../../../en/telanas/lexicon/"'), `${lexiconPath} must expose the English Lexicon route`);
   assert(lexiconHtml.includes('href="../../../de/telanas/lexicon/"'), `${lexiconPath} must expose the German Lexicon route`);
-  assert(lexiconHtml.includes('href="../../../assets/telanas/styles.css"'), `${lexiconPath} must use the production Telanas stylesheet`);
+  assertTelanasStylesheet(lexiconPath, lexiconHtml, "../../../assets/telanas/styles.css");
   assert(lexiconHtml.includes('href="../../../assets/lexicon/lexicon.css"'), `${lexiconPath} must use the production Lexicon stylesheet`);
   assert(lexiconHtml.includes('src="../../../assets/library-shell.js"'), `${lexiconPath} must use the production Library shell`);
   assert(lexiconHtml.includes('src="../../../assets/spoiler-profile.js"'), `${lexiconPath} must use the production spoiler profile`);
@@ -163,6 +177,7 @@ for (const locale of ["en", "de"]) {
   assert(timelineHtml.includes('<meta name="robots" content="noindex,nofollow">'), `${timelinePath} must remain non-indexed while outside reader-facing navigation`);
   assert(timelineHtml.includes('href="../../../en/telanas/timeline/"'), `${timelinePath} must expose the English Timeline equivalent`);
   assert(timelineHtml.includes('href="../../../de/telanas/timeline/"'), `${timelinePath} must expose the German Timeline equivalent`);
+  assertTelanasStylesheet(timelinePath, timelineHtml, "../../../assets/telanas/styles.css");
   assert(timelineHtml.includes('src="../../../assets/timeline/timeline.js"'), `${timelinePath} must use the retained Timeline controller`);
   assert(timelineHtml.includes('data-timeline-results'), `${timelinePath} must preserve the spoiler-filtered chronology`);
   assert(!timelineHtml.includes("prototype/telanas/map.html"), `${timelinePath} must not expose the Map`);

@@ -110,6 +110,7 @@ let worldCount = 0;
 let bookCount = 0;
 let chapterCount = 0;
 let readerEditionCount = 0;
+let coverAssetCount = 0;
 let illustrationAssetCount = 0;
 let illustrationBlockCount = 0;
 let lexiconEntryCount = 0;
@@ -173,6 +174,7 @@ for (const worldRef of library.worlds) {
         allowedEditionAlignments.has(editionAlignment),
         `${bookPath} has unsupported editionAlignment: ${editionAlignment}`,
       );
+      const bookDirectory = path.posix.dirname(bookPath);
 
       for (const locale of Object.keys(book.editions)) {
         assert(book.locales.includes(locale), `${bookPath} registers an edition for unknown locale: ${locale}`);
@@ -188,10 +190,31 @@ for (const worldRef of library.worlds) {
         assertRelativeManifest(book.editions[locale], `${bookPath} ${locale} reader edition`);
       }
 
+      assert(book.cover && typeof book.cover === "object" && !Array.isArray(book.cover), `${bookPath} cover is missing`);
+      assertRelativeManifest(book.cover.src, `${bookPath} cover source`);
+      assert(
+        typeof book.cover.aspectRatio === "string" && aspectRatio.test(book.cover.aspectRatio),
+        `${bookPath} cover has invalid aspectRatio`,
+      );
+      assert(book.cover.alt && typeof book.cover.alt === "object" && !Array.isArray(book.cover.alt), `${bookPath} cover alt text is missing`);
+      for (const locale of book.locales) {
+        assertLocalizedString(book.cover.alt[locale], `${bookPath} ${locale} cover alt text`);
+      }
+
+      const coverPath = path.join(root, bookDirectory, book.cover.src);
+      let coverAssetStat;
+      try {
+        coverAssetStat = await lstat(coverPath);
+      } catch (error) {
+        fail(`Cannot read cover asset ${coverPath}: ${error.message}`);
+      }
+      assert(!coverAssetStat.isSymbolicLink(), `${bookPath} cover source must not be a symbolic link`);
+      assert(coverAssetStat.isFile(), `${bookPath} cover source must be a regular file`);
+      coverAssetCount += 1;
+
       const illustrationDefinitions = book.illustrations ?? [];
       assert(Array.isArray(illustrationDefinitions), `${bookPath} illustrations must be an array`);
       const illustrationAssets = new Map();
-      const bookDirectory = path.posix.dirname(bookPath);
 
       for (const asset of illustrationDefinitions) {
         assert(asset && typeof asset === "object" && !Array.isArray(asset), `${bookPath} has an invalid illustration asset`);
@@ -461,6 +484,6 @@ for (const worldRef of library.worlds) {
 assert(worldIds.has(library.defaultWorld), `Default world does not exist: ${library.defaultWorld}`);
 console.log(
   `PASS: validated ${worldCount} world(s), ${bookCount} book(s), ${chapterCount} chapter(s), ` +
-  `${readerEditionCount} reader edition(s), ${illustrationAssetCount} illustration asset(s), ` +
+  `${readerEditionCount} reader edition(s), ${coverAssetCount} cover asset(s), ${illustrationAssetCount} illustration asset(s), ` +
   `${illustrationBlockCount} illustration block(s), ${lexiconEntryCount} Lexicon entry/entries`,
 );

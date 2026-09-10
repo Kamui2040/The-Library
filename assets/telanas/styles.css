@@ -516,29 +516,19 @@ html[data-theme="light"] .hero .button--ghost {
 
 .book-cover {
   aspect-ratio: 2 / 3;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 18px;
-  padding: 28px 24px;
+  margin: 0;
+  overflow: hidden;
   border: 1px solid var(--metal);
-  background:
-    radial-gradient(circle at 70% 22%, rgba(204,216,222,.16), transparent 30%),
-    linear-gradient(160deg, #1a242c, #090d10 68%);
-  color: #e8eef1;
-  font-family: Georgia, "Times New Roman", serif;
+  background: #05070b;
   box-shadow: 16px 18px 35px rgba(0,0,0,.2);
 }
 
-.book-cover-kicker {
-  font-size: .72rem;
-  letter-spacing: .2em;
-}
-
-.book-cover strong {
-  margin-top: auto;
-  font-size: clamp(1.6rem, 4vw, 2.5rem);
-  font-weight: 400;
+.book-cover img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
 }
 
 .feature-book-copy h3,

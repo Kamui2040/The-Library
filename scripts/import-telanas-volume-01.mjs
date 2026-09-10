@@ -9,6 +9,7 @@ const sourceCommit = "64fc412ba7dc99bf41eac10823b4eb38708632b9";
 const expectedBranch = "release/telanas-volume-01";
 const bookDirectory = "content/worlds/telanas/books/dragon-knight/volume-01";
 const illustrationsDirectory = path.join(root, bookDirectory, "illustrations");
+const coverPath = path.join(root, bookDirectory, "cover.png");
 
 const fail = (message) => { throw new Error(message); };
 const assert = (condition, message) => { if (!condition) fail(message); };
@@ -20,6 +21,7 @@ const sourceFiles = {
   "manuscript/en/band-01.md": "ad766b1d91489974343d8195cdd3a28d41ca33f0",
   "manuscript/de/band-01.md": "1740cfc2efe254dbad06429ea3b163869af37bf4",
   "docs/story/illustration-reference.md": "046b1349cbcd839475e09b6a2e06950332962117",
+  "assets/covers/volume-01/cover.png": "b2ad8fe2bd63e2540223fd322e3aa9f36cb6adc1",
 };
 
 const chapters = [
@@ -369,6 +371,10 @@ try {
   assert(localIllustrationNames.length === 10, `The-Library must contain exactly 10 Band 1 illustration PNGs; found ${localIllustrationNames.length}`);
   assert(localIllustrationNames.every((name) => expectedIllustrationNames.has(name)), "The-Library contains an unexpected Band 1 illustration PNG");
 
+  const coverBlob = sourceFiles["assets/covers/volume-01/cover.png"];
+  const localCoverBlob = execFileSync("git", ["hash-object", coverPath], { encoding: "utf8" }).trim();
+  assert(localCoverBlob === coverBlob, "Wrong approved Volume 1 cover version");
+
   const illustrationDefinitions = [];
   for (const chapter of chapters) {
     const localPath = path.join(illustrationsDirectory, chapter.filename);
@@ -438,6 +444,14 @@ try {
       en: "editions/en.json",
       de: "editions/de.json",
     },
+    cover: {
+      src: "cover.png",
+      aspectRatio: "2:3",
+      alt: {
+        en: "The pearlescent white and iridescent black primordial twin dragons sleeping together among the broken pieces of their enormous egg.",
+        de: "Die perlmuttweißen und schillernd schwarzen urzeitlichen Zwillingsdrachen schlafen eng umschlungen zwischen den Bruchstücken ihres gewaltigen Eis.",
+      },
+    },
     contextualLexicon: "contextual-lexicon.json",
     spoilerMilestones: semanticAnchors,
     source: {
@@ -451,6 +465,8 @@ try {
         en: sourceFiles["manuscript/en/band-01.md"],
         de: sourceFiles["manuscript/de/band-01.md"],
       },
+      cover: "assets/covers/volume-01/cover.png",
+      coverBlob,
       illustrationReference: "docs/story/illustration-reference.md",
       illustrationsDirectory: "assets/illustrations/band-01/",
     },
@@ -505,7 +521,7 @@ try {
   bookRef.state = "approved";
   await writeJson("content/worlds/telanas/world.json", world);
 
-  console.log(`PASS: imported exact EN/DE Band 1 manuscripts from ${sourceCommit} with 32 shared semantic anchors and 10 authoritative lead illustrations`);
+  console.log(`PASS: imported exact EN/DE Band 1 manuscripts from ${sourceCommit} with the approved cover, 32 shared semantic anchors, and 10 authoritative lead illustrations`);
 } catch (error) {
   console.error(`FAIL: ${error.message}`);
   process.exitCode = 1;

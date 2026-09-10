@@ -194,7 +194,7 @@ The prototype now proves substantially more than the original landing/reader she
 The production visual pass should therefore focus on replacement and refinement rather than inventing another prototype layer:
 
 - final licensed web fonts;
-- final responsive hero cropping and cover treatment;
+- responsive polish for the hero and approved cover placement;
 - approved production illustrations;
 - final public map artwork/geography when available;
 - production route shell and world/locale navigation polish;
