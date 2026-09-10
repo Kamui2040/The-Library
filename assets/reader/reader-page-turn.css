@@ -24,7 +24,7 @@
   position: absolute;
   inset: 0;
   transform-style: preserve-3d;
-  will-change: transform, filter;
+  will-change: transform, box-shadow;
 }
 
 .reader-page-turn-front,

@@ -68,51 +68,52 @@
 
     const directionSign = prepared.direction < 0 ? 1 : -1;
     const duration = 1020;
+    const turnEasing = "cubic-bezier(.22,.08,.18,1)";
 
     const sheetAnimation = prepared.sheet.animate([
       {
         offset: 0,
         transform: "translateZ(0) rotateY(0deg) skewY(0deg) scaleX(1)",
-        filter: "drop-shadow(0 0 0 rgba(0,0,0,0))"
+        boxShadow: "0 0 0 rgba(0,0,0,0)"
       },
       {
         offset: 0.12,
         transform: `translateZ(4px) rotateY(${directionSign * 5}deg) skewY(${directionSign * .5}deg) scaleX(.999)`,
-        filter: "drop-shadow(0 4px 6px rgba(0,0,0,.06))"
+        boxShadow: "0 4px 6px rgba(0,0,0,.06)"
       },
       {
         offset: 0.28,
         transform: `translateZ(12px) rotateY(${directionSign * 20}deg) skewY(${directionSign * 1.1}deg) scaleX(.994)`,
-        filter: "drop-shadow(0 8px 12px rgba(0,0,0,.11))"
+        boxShadow: "0 8px 12px rgba(0,0,0,.11)"
       },
       {
         offset: 0.47,
         transform: `translateZ(24px) rotateY(${directionSign * 54}deg) skewY(${directionSign * 1.5}deg) scaleX(.986)`,
-        filter: "drop-shadow(0 14px 20px rgba(0,0,0,.18))"
+        boxShadow: "0 14px 20px rgba(0,0,0,.18)"
       },
       {
         offset: 0.63,
         transform: `translateZ(32px) rotateY(${directionSign * 92}deg) skewY(${directionSign * .7}deg) scaleX(.98)`,
-        filter: "drop-shadow(0 17px 24px rgba(0,0,0,.21))"
+        boxShadow: "0 17px 24px rgba(0,0,0,.21)"
       },
       {
         offset: 0.79,
         transform: `translateZ(23px) rotateY(${directionSign * 130}deg) skewY(${directionSign * -.45}deg) scaleX(.987)`,
-        filter: "drop-shadow(0 12px 17px rgba(0,0,0,.15))"
+        boxShadow: "0 12px 17px rgba(0,0,0,.15)"
       },
       {
         offset: 0.92,
         transform: `translateZ(10px) rotateY(${directionSign * 160}deg) skewY(${directionSign * -.2}deg) scaleX(.996)`,
-        filter: "drop-shadow(0 6px 9px rgba(0,0,0,.08))"
+        boxShadow: "0 6px 9px rgba(0,0,0,.08)"
       },
       {
         offset: 1,
         transform: `translateZ(0) rotateY(${directionSign * 180}deg) skewY(0deg) scaleX(1)`,
-        filter: "drop-shadow(0 0 0 rgba(0,0,0,0))"
+        boxShadow: "0 0 0 rgba(0,0,0,0)"
       }
     ], {
       duration,
-      easing: "cubic-bezier(.22,.08,.18,1)",
+      easing: turnEasing,
       fill: "forwards"
     });
 
@@ -120,23 +121,25 @@
       { offset: 0, filter: "brightness(1)", opacity: 1 },
       { offset: 0.25, filter: "brightness(1.025)", opacity: 1 },
       { offset: 0.58, filter: "brightness(.97)", opacity: 1 },
-      { offset: 0.64, filter: "brightness(.9)", opacity: 0 },
+      { offset: 0.621, filter: "brightness(.9)", opacity: 1 },
+      { offset: 0.622, filter: "brightness(.9)", opacity: 0 },
       { offset: 1, filter: "brightness(.88)", opacity: 0 }
     ], {
       duration,
-      easing: "ease-out",
+      easing: turnEasing,
       fill: "forwards"
     });
 
     const backAnimation = prepared.back.animate([
       { offset: 0, filter: "brightness(.8)", opacity: 0 },
       { offset: 0.58, filter: "brightness(.83)", opacity: 0 },
-      { offset: 0.64, filter: "brightness(.86)", opacity: 1 },
+      { offset: 0.621, filter: "brightness(.86)", opacity: 0 },
+      { offset: 0.622, filter: "brightness(.86)", opacity: 1 },
       { offset: 0.82, filter: "brightness(.94)", opacity: 1 },
       { offset: 1, filter: "brightness(1)", opacity: 1 }
     ], {
       duration,
-      easing: "ease-out",
+      easing: turnEasing,
       fill: "forwards"
     });
 
