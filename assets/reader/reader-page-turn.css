@@ -16,8 +16,8 @@
   transform-style: preserve-3d;
 }
 
-.book-page.is-page-turn-source {
-  visibility: hidden;
+.book-spread.is-page-turning > .book-page {
+  pointer-events: none;
 }
 
 .reader-page-turn-sheet {
@@ -44,11 +44,11 @@
 
 .reader-page-turn-front {
   transform: translateZ(.6px);
-  will-change: filter, opacity;
+  will-change: filter;
 }
 
-/* Use a clean paper back instead of mirrored page text. The real destination
-   remains underneath and is revealed when the transient sheet settles. */
+/* The reverse carries the destination page that lands across the spine. The
+   destination page beneath the lifted sheet is revealed at the same time. */
 .reader-page-turn-back {
   transform: rotateY(180deg) translateZ(.6px);
   background:
