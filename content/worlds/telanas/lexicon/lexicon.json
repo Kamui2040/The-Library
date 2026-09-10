@@ -875,8 +875,8 @@
             "chapter": "dk-v01-ch09"
           },
           "text": {
-            "en": "When Calist decides to enlist, Corvin offers to take him to the fort and tells Alden he will teach him what he can without giving him special treatment.",
-            "de": "Als Calist sich zum Militär meldet, bietet Corvin an, ihn zum Fort mitzunehmen, und verspricht Alden, ihm beizubringen, was er kann, ohne ihn besonders zu behandeln."
+            "en": "When Calist decides to enlist, Corvin offers to take him to Caerbreyn's military office and recommend him. Corvin cannot choose Calist's posting or promise that he will serve at Dunbreyn, and he makes clear there will be no special treatment.",
+            "de": "Als Calist sich zum Militär meldet, bietet Corvin an, ihn zum Militärbüro in Caerbreyn mitzunehmen und ihn zu empfehlen. Corvin kann weder über Calists Einsatzort entscheiden noch versprechen, dass er in Dunbreyn dienen wird, und stellt klar, dass es keine Sonderbehandlung geben wird."
           },
           "readerLinks": [
             {
@@ -1471,8 +1471,8 @@
             "anchor": "dk-v01-ch09-enlist-decision"
           },
           "text": {
-            "en": "After Calist decides to enlist, the fort becomes the next destination on the road away from home.",
-            "de": "Nachdem Calist sich zum Militärdienst entscheidet, wird das Fort zum nächsten Ziel auf seinem Weg fort von zu Hause."
+            "en": "Dunbreyn may become Calist's posting after he enlists, but Corvin cannot promise it. Calist must first report to the military office in Caerbreyn, which handles volunteers from this part of Breynach.",
+            "de": "Dunbreyn könnte nach Calists Meldung sein Einsatzort werden, doch Corvin kann das nicht versprechen. Calist muss sich zunächst beim Militärbüro in Caerbreyn melden, das die Freiwilligen aus diesem Teil von Breynach aufnimmt."
           },
           "readerLinks": [
             {
@@ -2913,8 +2913,8 @@
             "chapter": "dk-v01-ch09"
           },
           "text": {
-            "en": "When Corvin returns, he confirms that the fort accepts volunteers and offers to bring Calist with the soldiers when Calist is ready to leave.",
-            "de": "Als Corvin zurückkehrt, bestätigt er, dass das Fort Freiwillige annimmt, und bietet an, Calist mit den Soldaten mitzunehmen, sobald er bereit ist aufzubrechen."
+            "en": "When Corvin returns, he tells Calist that Caerbreyn's military office handles local volunteers and offers to take him there and recommend him. The army will decide where Calist is posted.",
+            "de": "Als Corvin zurückkehrt, erklärt er Calist, dass das Militärbüro in Caerbreyn die Freiwilligen aus der Region aufnimmt, und bietet an, ihn dorthin mitzunehmen und zu empfehlen. Das Militär entscheidet über Calists Einsatzort."
           },
           "readerLinks": [
             {
@@ -2957,10 +2957,10 @@
         },
         {
           "id": "destination",
-          "target": "border-fort",
+          "target": "south-road-town",
           "labels": {
-            "en": "Initial destination",
-            "de": "Erstes Ziel"
+            "en": "Enlistment destination",
+            "de": "Ort der Meldung"
           }
         }
       ],

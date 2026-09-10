@@ -18,14 +18,19 @@
   "spoilerMilestones": [
     "dk-v01-p-twins-hatch",
     "dk-v01-p-first-shard",
+    "dk-v01-ch01-calist",
     "dk-v01-ch01-corvin-arrives",
+    "dk-v01-ch01-corvin",
+    "dk-v01-ch01-alden",
     "dk-v01-ch01-alden-war-gear",
     "dk-v01-ch02-old-woods-pull",
+    "dk-v01-ch02-eryn",
     "dk-v01-ch03-town-arrival",
     "dk-v01-ch03-border-warning",
     "dk-v01-ch03-bram",
     "dk-v01-ch03-town-fight",
     "dk-v01-ch04-first-independent-work",
+    "dk-v01-ch04-nessa",
     "dk-v01-ch05-camp",
     "dk-v01-ch05-goblins",
     "dk-v01-ch05-pull-confession",
@@ -46,14 +51,14 @@
   ],
   "source": {
     "repository": "Kamui2040/Telanas",
-    "commit": "6b654b0a3b1d7b5ebcd8e507d2ca1acaa3d33bc1",
+    "commit": "3cb25c53b01c4ff1ce1aa274ab48683b60441df9",
     "manuscripts": {
       "en": "manuscript/en/band-01.md",
       "de": "manuscript/de/band-01.md"
     },
     "manuscriptBlobs": {
-      "en": "95acfe62ddeeb7a99a287c63dcd079187a171758",
-      "de": "96fcf7850f305ec5ac8aec2c7f19cb9bdbe063a6"
+      "en": "a70e81a3afcef2d7dcef228409f9ea1ff5d23595",
+      "de": "34248c431ddad02f63e6c8a52c4c60cd42336eef"
     },
     "illustrationReference": "docs/story/illustration-reference.md",
     "illustrationsDirectory": "assets/illustrations/band-01/"
