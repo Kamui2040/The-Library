@@ -1,39 +1,40 @@
 .lexicon-hero {
   position: relative;
+  isolation: isolate;
+  min-height: clamp(430px, 48vw, 590px);
+  display: grid;
+  align-items: end;
   overflow: hidden;
   border-bottom: 1px solid var(--border-soft);
-  background:
-    linear-gradient(180deg, color-mix(in srgb, var(--surface-raised) 78%, transparent), var(--page)),
-    radial-gradient(circle at 72% 25%, color-mix(in srgb, var(--accent) 18%, transparent), transparent 24rem);
-}
-
-.lexicon-hero::before,
-.lexicon-hero::after {
-  content: "";
-  position: absolute;
-  pointer-events: none;
+  background: #111317 url("../telanas/images/lexicon-library-dusk-v1.webp") center 48% / cover no-repeat;
 }
 
 .lexicon-hero::before {
-  inset: 18% 8% auto auto;
-  width: min(38vw, 420px);
-  aspect-ratio: 1;
-  border: 1px solid color-mix(in srgb, var(--metal) 16%, transparent);
-  transform: rotate(45deg);
+  content: "";
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(6, 8, 11, .94) 0%, rgba(6, 8, 11, .76) 35%, rgba(6, 8, 11, .24) 67%, rgba(6, 8, 11, .04) 86%),
+    linear-gradient(0deg, rgba(6, 8, 11, .62), transparent 54%);
 }
 
-.lexicon-hero::after {
-  inset: auto auto -90px 10%;
-  width: 340px;
-  height: 180px;
-  border-top: 1px solid color-mix(in srgb, var(--border) 45%, transparent);
-  border-radius: 50%;
+html[data-theme="light"] .lexicon-hero {
+  background-color: #e8ddc8;
+  background-image: url("../telanas/images/lexicon-library-daylight-v1.webp");
+}
+
+html[data-theme="light"] .lexicon-hero::before {
+  background:
+    linear-gradient(90deg, rgba(246, 242, 231, .96) 0%, rgba(246, 242, 231, .84) 35%, rgba(246, 242, 231, .3) 67%, rgba(246, 242, 231, .04) 86%),
+    linear-gradient(0deg, rgba(246, 242, 231, .68), transparent 54%);
 }
 
 .lexicon-hero-inner {
   position: relative;
   z-index: 1;
-  padding-block: clamp(70px, 10vw, 130px);
+  padding-block: clamp(82px, 10vw, 122px);
 }
 
 .lexicon-hero h1 {
@@ -276,8 +277,21 @@
 }
 
 @media (max-width: 560px) {
+  .lexicon-hero {
+    min-height: 470px;
+    background-position: 54% center;
+  }
+
+  .lexicon-hero::before {
+    background: linear-gradient(0deg, rgba(6, 8, 11, .96) 0%, rgba(6, 8, 11, .72) 42%, rgba(6, 8, 11, .12) 78%);
+  }
+
+  html[data-theme="light"] .lexicon-hero::before {
+    background: linear-gradient(0deg, rgba(246, 242, 231, .97) 0%, rgba(246, 242, 231, .78) 42%, rgba(246, 242, 231, .1) 78%);
+  }
+
   .lexicon-hero-inner {
-    padding-block: 58px 68px;
+    padding-block: 180px 54px;
   }
 
   .lexicon-controls,
