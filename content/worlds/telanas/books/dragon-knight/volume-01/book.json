@@ -80,7 +80,7 @@
       "id": "dk-v01-ill-ch02",
       "mode": "image",
       "src": "illustrations/Band 1 - Approved Old Forest Entrance.png",
-      "aspectRatio": "1055:1491"
+      "aspectRatio": "2:3"
     },
     {
       "id": "dk-v01-ill-ch03",
@@ -92,7 +92,7 @@
       "id": "dk-v01-ill-ch04",
       "mode": "image",
       "src": "illustrations/Band 1 - Approved Alden Smithy.png",
-      "aspectRatio": "1055:1491"
+      "aspectRatio": "2:3"
     },
     {
       "id": "dk-v01-ill-ch05",
@@ -116,13 +116,13 @@
       "id": "dk-v01-ill-ch08",
       "mode": "image",
       "src": "illustrations/Band 1 - Approved What Remains.png",
-      "aspectRatio": "1055:1491"
+      "aspectRatio": "2:3"
     },
     {
       "id": "dk-v01-ill-ch09",
       "mode": "image",
       "src": "illustrations/Band 1 - Approved The Choice.png",
-      "aspectRatio": "1055:1491"
+      "aspectRatio": "2:3"
     }
   ],
   "labels": {
