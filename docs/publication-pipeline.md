@@ -136,7 +136,12 @@ illustration page → chapter title page → chapter text
 
 Illustration blocks are ordinary semantic anchors. Bookmarks, Lexicon links, Timeline links, Map links, language changes, layout changes, and repagination may resolve directly to them.
 
-Chapter IDs and block IDs are canonical semantic positions. Localized editions must use the same chapter IDs, block IDs, block types, and order. Illustration asset references and placements must also match. Only localized text differs.
+Chapter IDs are canonical across localized editions. Two edition-alignment modes are supported:
+
+- `block` — every block ID, type, and position matches across locales;
+- `chapter` — chapter order, shared spoiler milestones, and illustration positions match, while ordinary paragraph and scene-break anchors are locale-specific.
+
+Telanas Volume 1 uses `chapter` alignment so German can keep natural paragraph boundaries instead of being forced into English sentence and paragraph shapes. Shared milestone anchors remain in the same chapter in every locale, and illustration asset references and placements remain aligned.
 
 The current prototype editions are explicitly `prototypeOnly` and contain neutral implementation text and neutral illustration placeholders rather than Telanas manuscript or story artwork.
 
@@ -315,7 +320,8 @@ The validators check, among other things:
 - enabled locales are known to the Library/world;
 - every book locale has a registered reader-edition file;
 - reader-edition identity matches its book manifest;
-- localized editions contain the same chapters, semantic block IDs, block types, and order;
+- localized editions contain the same ordered chapters and obey the declared `block` or `chapter` alignment contract;
+- in chapter alignment, ordinary body anchors are locale-specific while registered shared milestones remain in the same chapter;
 - paragraph blocks contain text and scene breaks do not contain prose;
 - illustration assets use valid IDs, modes, aspect ratios, and safe paths;
 - prototype illustration placeholders are explicitly marked and excluded from approved/published books;

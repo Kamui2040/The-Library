@@ -2,7 +2,7 @@
 
 The Library is a fiction website and web reader designed to host independent worlds and story series under one shared reading platform.
 
-The repository remains private while the site and publication workflow are prepared. Public deployment and repository visibility are separate approval-gated steps.
+The repository remains private. The published site is available at <https://kamui2040.github.io/The-Library/>; repository visibility remains a separate approval-gated step.
 
 The repository contains only publication-safe website material and neutral development placeholders. Private manuscripts, canon planning, unreleased lore, and private creative assets remain in their source repositories until an explicit release/export step approves them for The Library.
 

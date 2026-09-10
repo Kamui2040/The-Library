@@ -25,7 +25,7 @@ The root Library landing page, once more than one world exists, should be visual
 
 # 2. Telanas theme
 
-Telanas uses a dark cinematic fantasy presentation.
+Telanas uses a cinematic fantasy presentation that shifts from clear daylight in the light theme to dusk in the dark theme.
 
 ## 2.1 Palette direction
 
@@ -68,13 +68,11 @@ Do not use ornate display typography for long paragraphs or reader controls.
 
 ## 2.4 Hero direction
 
-The Telanas landing hero should use a cinematic landscape rather than canon-specific character art.
+The Telanas landing hero uses the same broad landscape composition in two theme variants: daylight for the light theme and dusk for the dark theme.
 
-Useful subjects include roads through broad terrain, distant settlements, forests, mountains, rivers, ruins, old stonework, weather, and atmospheric light.
+An open path leads through broad terrain toward **Rhymscair far in the distance**. The range must remain a remote horizon landmark rather than a nearby mountain wall; this hero is a wider invitation into Telanas, not a literal view from Elwendun or Caerbreyn.
 
-The image should leave deliberate negative space for title/copy placement and must not introduce visual canon that conflicts with established manuscript locations.
-
-A temporary neutral placeholder is appropriate during implementation. Final hero artwork is a separate approval step.
+Both variants retain deliberate negative space for title and copy, preserve the established watercolor/painterly illustration language, and avoid canon-specific character art. Responsive cropping must keep the path readable and the distant range subordinate to the landscape.
 
 ## 2.5 Knowledge and editorial views
 
@@ -182,7 +180,7 @@ Telanas supplies its own values for those tokens. A future world may supply a di
 The prototype now proves substantially more than the original landing/reader shell. It includes:
 
 - Telanas landing page and responsive shared navigation;
-- neutral hero treatment and featured Volume 1 area;
+- paired daylight/dusk Rhymscair hero treatment and featured Volume 1 area;
 - Downloads and Updates placeholders;
 - semantic reader with spread/single/continuous layouts;
 - reader appearance controls, persistent semantic position, bookmarks, and completion/spoiler synchronization;
@@ -196,7 +194,7 @@ The prototype now proves substantially more than the original landing/reader she
 The production visual pass should therefore focus on replacement and refinement rather than inventing another prototype layer:
 
 - final licensed web fonts;
-- final hero and cover assets;
+- responsive polish for the hero and approved cover placement;
 - approved production illustrations;
 - final public map artwork/geography when available;
 - production route shell and world/locale navigation polish;

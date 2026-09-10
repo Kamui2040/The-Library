@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "the-library",
-  "state": "development",
+  "state": "published",
   "defaultWorld": "telanas",
   "locales": {
     "en": {

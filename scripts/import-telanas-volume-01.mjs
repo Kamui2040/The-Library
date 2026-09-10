@@ -5,10 +5,11 @@ import { fileURLToPath } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const sourceRepository = "Kamui2040/Telanas";
-const sourceCommit = "3cb25c53b01c4ff1ce1aa274ab48683b60441df9";
+const sourceCommit = "64fc412ba7dc99bf41eac10823b4eb38708632b9";
 const expectedBranch = "release/telanas-volume-01";
 const bookDirectory = "content/worlds/telanas/books/dragon-knight/volume-01";
 const illustrationsDirectory = path.join(root, bookDirectory, "illustrations");
+const coverPath = path.join(root, bookDirectory, "cover.png");
 
 const fail = (message) => { throw new Error(message); };
 const assert = (condition, message) => { if (!condition) fail(message); };
@@ -17,9 +18,10 @@ const git = (...args) => execFileSync("git", ["-C", root, ...args], { encoding: 
 const ghJson = (endpoint) => JSON.parse(execFileSync("gh", ["api", endpoint], { encoding: "utf8", maxBuffer: 16 * 1024 * 1024 }));
 
 const sourceFiles = {
-  "manuscript/en/band-01.md": "a70e81a3afcef2d7dcef228409f9ea1ff5d23595",
-  "manuscript/de/band-01.md": "34248c431ddad02f63e6c8a52c4c60cd42336eef",
-  "docs/story/illustration-reference.md": "5ff915f60582823de481074cef0586a70eb077a1",
+  "manuscript/en/band-01.md": "ad766b1d91489974343d8195cdd3a28d41ca33f0",
+  "manuscript/de/band-01.md": "1740cfc2efe254dbad06429ea3b163869af37bf4",
+  "docs/story/illustration-reference.md": "046b1349cbcd839475e09b6a2e06950332962117",
+  "assets/covers/volume-01/cover.png": "b2ad8fe2bd63e2540223fd322e3aa9f36cb6adc1",
 };
 
 const chapters = [
@@ -41,7 +43,7 @@ const chapters = [
     headings: { en: "Chapter 1 — The Road", de: "Kapitel 1 — Die Straße" },
     assetId: "dk-v01-ill-ch01",
     filename: "Band 1 - Approved Village Illustration Reference.png",
-    sourceBlob: "3dd09843fc3c6396102b3d31029229d212adf63f",
+    sourceBlob: "e8e52cf73d3e2e9a2ed2950e1e40aba05b3cb22f",
     alt: {
       en: "Watercolor view of an open rural village, its road, working buildings, fields, and the Old Forest.",
       de: "Aquarellansicht eines offenen ländlichen Dorfes mit Straße, Arbeitsgebäuden, Feldern und dem alten Wald.",
@@ -53,7 +55,7 @@ const chapters = [
     headings: { en: "Chapter 2 — The Old Woods", de: "Kapitel 2 — Der alte Wald" },
     assetId: "dk-v01-ill-ch02",
     filename: "Band 1 - Approved Old Forest Entrance.png",
-    sourceBlob: "5ad8fe990b9000159712cd8d064c6a08fea2fbc8",
+    sourceBlob: "b4257fe8202a8a9c239cbe4f8581245c9d2396a7",
     alt: {
       en: "Watercolor view of a quiet, misty path entering the Old Forest beneath large old trees.",
       de: "Aquarellansicht eines ruhigen, nebligen Pfades, der unter großen alten Bäumen in den alten Wald führt.",
@@ -65,7 +67,7 @@ const chapters = [
     headings: { en: "Chapter 3 — Beyond Home", de: "Kapitel 3 — Jenseits des Dorfes" },
     assetId: "dk-v01-ill-ch03",
     filename: "Band 1 - Approved Town Entrance.png",
-    sourceBlob: "b239689816cbbd7564b0d3cf458a7312f6b1c328",
+    sourceBlob: "9c3b0e58a4fa3c34f4a6d7065e741499ecf1c0ea",
     alt: {
       en: "Watercolor view of a road approaching a modest walled regional town through surrounding countryside.",
       de: "Aquarellansicht einer Straße, die durch das Umland auf eine bescheidene ummauerte Regionalstadt zuführt.",
@@ -77,7 +79,7 @@ const chapters = [
     headings: { en: "Chapter 4 — Useful Hands", de: "Kapitel 4 — Nützliche Hände" },
     assetId: "dk-v01-ill-ch04",
     filename: "Band 1 - Approved Alden Smithy.png",
-    sourceBlob: "4f077b39f3e9f167749e9d4a0574c5e866158b8d",
+    sourceBlob: "08b2ea034e9cb4f481bc661b5cb16f7df011b2bc",
     alt: {
       en: "Watercolor view inside a practical open-front village smithy with forge, anvil, tools, and everyday metalwork.",
       de: "Aquarellansicht einer praktischen offenen Dorfschmiede mit Esse, Amboss, Werkzeugen und alltäglichen Metallarbeiten.",
@@ -113,7 +115,7 @@ const chapters = [
     headings: { en: "Chapter 7 — The Long Winter", de: "Kapitel 7 — Der lange Winter" },
     assetId: "dk-v01-ill-ch07",
     filename: "Band 1 - Approved Long Winter.png",
-    sourceBlob: "ba343be21782a33c623d52a1fd3b88b54dddd92d",
+    sourceBlob: "1647515c88a938d48091a61ec374a4325ed69308",
     alt: {
       en: "Watercolor view of a village home and attached smithy under heavy winter snow, with warm light inside.",
       de: "Aquarellansicht eines Dorfhauses mit angebauter Schmiede unter schwerem Winterschnee und warmem Licht im Inneren.",
@@ -125,7 +127,7 @@ const chapters = [
     headings: { en: "Chapter 8 — What Remains", de: "Kapitel 8 — Was bleibt" },
     assetId: "dk-v01-ill-ch08",
     filename: "Band 1 - Approved What Remains.png",
-    sourceBlob: "6928b4c6fc820adbe5c68dce19e989f82ee5fcf4",
+    sourceBlob: "d288b8d2f0f9b7f9e742f76d8d23d3386ff1fef5",
     alt: {
       en: "Watercolor view of an empty porch chair with a draped blanket, a simple bow nearby, and a small silver leaf pendant.",
       de: "Aquarellansicht eines leeren Verandastuhls mit darübergelegter Decke, einem einfachen Bogen in der Nähe und einem kleinen silbernen Blattanhänger.",
@@ -137,7 +139,7 @@ const chapters = [
     headings: { en: "Chapter 9 — The Choice", de: "Kapitel 9 — Die Entscheidung" },
     assetId: "dk-v01-ill-ch09",
     filename: "Band 1 - Approved The Choice.png",
-    sourceBlob: "f65b214954b70f4530a4ccfef62f32aad8ff0b76",
+    sourceBlob: "d86067bc2573a5d64ccab33c013672a642e05473",
     alt: {
       en: "Watercolor view of old chainmail and a sword laid out quietly on a wooden chest at home.",
       de: "Aquarellansicht eines alten Kettenhemds und eines Schwertes, die ruhig auf einer Holztruhe im Haus liegen.",
@@ -369,6 +371,10 @@ try {
   assert(localIllustrationNames.length === 10, `The-Library must contain exactly 10 Band 1 illustration PNGs; found ${localIllustrationNames.length}`);
   assert(localIllustrationNames.every((name) => expectedIllustrationNames.has(name)), "The-Library contains an unexpected Band 1 illustration PNG");
 
+  const coverBlob = sourceFiles["assets/covers/volume-01/cover.png"];
+  const localCoverBlob = execFileSync("git", ["hash-object", coverPath], { encoding: "utf8" }).trim();
+  assert(localCoverBlob === coverBlob, "Wrong approved Volume 1 cover version");
+
   const illustrationDefinitions = [];
   for (const chapter of chapters) {
     const localPath = path.join(illustrationsDirectory, chapter.filename);
@@ -430,13 +436,21 @@ try {
     world: "telanas",
     story: "dragon-knight",
     id: "volume-01",
-    state: "approved",
+    state: "published",
     contentMode: "released",
     editionAlignment: "chapter",
     locales: ["en", "de"],
     editions: {
       en: "editions/en.json",
       de: "editions/de.json",
+    },
+    cover: {
+      src: "cover.png",
+      aspectRatio: "2:3",
+      alt: {
+        en: "The pearlescent white and iridescent black primordial twin dragons sleeping together among the broken pieces of their enormous egg.",
+        de: "Die perlmuttweißen und schillernd schwarzen urzeitlichen Zwillingsdrachen schlafen eng umschlungen zwischen den Bruchstücken ihres gewaltigen Eis.",
+      },
     },
     contextualLexicon: "contextual-lexicon.json",
     spoilerMilestones: semanticAnchors,
@@ -451,6 +465,8 @@ try {
         en: sourceFiles["manuscript/en/band-01.md"],
         de: sourceFiles["manuscript/de/band-01.md"],
       },
+      cover: "assets/covers/volume-01/cover.png",
+      coverBlob,
       illustrationReference: "docs/story/illustration-reference.md",
       illustrationsDirectory: "assets/illustrations/band-01/",
     },
@@ -481,7 +497,7 @@ try {
     world: "telanas",
     story: "dragon-knight",
     book: "volume-01",
-    state: "approved",
+    state: "published",
     contentMode: "released",
   };
 
@@ -502,10 +518,10 @@ try {
   const story = world.stories?.find((candidate) => candidate.id === "dragon-knight");
   const bookRef = story?.books?.find((candidate) => candidate.id === "volume-01");
   assert(bookRef, "Telanas world manifest is missing dragon-knight/volume-01");
-  bookRef.state = "approved";
+  bookRef.state = "published";
   await writeJson("content/worlds/telanas/world.json", world);
 
-  console.log(`PASS: imported exact EN/DE Band 1 manuscripts from ${sourceCommit} with 32 shared semantic anchors and 10 authoritative lead illustrations`);
+  console.log(`PASS: imported exact EN/DE Band 1 manuscripts from ${sourceCommit} with the approved cover, 32 shared semantic anchors, and 10 authoritative lead illustrations`);
 } catch (error) {
   console.error(`FAIL: ${error.message}`);
   process.exitCode = 1;

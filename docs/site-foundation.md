@@ -212,7 +212,7 @@ anchor: dk-v01-ch01-p001
 illustration: dk-v01-prototype-full-page
 ```
 
-IDs remain stable across localized editions.
+Chapter IDs remain stable across localized editions. A book may require either exact block alignment or chapter alignment. In chapter alignment, ordinary prose and scene-break IDs are locale-specific so a translation can use natural paragraph boundaries; declared spoiler milestones and illustration positions remain shared semantic points.
 
 A book may also declare a sparse ordered set of `spoilerMilestones`. Every declared milestone must resolve to a semantic anchor in every released locale edition for that book.
 
@@ -288,7 +288,7 @@ A release exporter that supplies contextual Lexicon behavior must preserve stabl
 Before released book/world data is accepted, validation should establish at least:
 
 - stable IDs are unique;
-- localized editions contain matching required structure and order;
+- localized editions contain matching chapter order and obey the book's declared block- or chapter-alignment contract;
 - semantic references resolve in every relevant locale;
 - illustration references resolve and obey placement/path rules;
 - Lexicon relationships resolve without hidden-target leakage;

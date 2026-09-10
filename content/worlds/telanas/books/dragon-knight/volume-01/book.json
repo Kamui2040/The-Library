@@ -3,7 +3,7 @@
   "world": "telanas",
   "story": "dragon-knight",
   "id": "volume-01",
-  "state": "approved",
+  "state": "published",
   "contentMode": "released",
   "editionAlignment": "chapter",
   "locales": [
@@ -13,6 +13,14 @@
   "editions": {
     "en": "editions/en.json",
     "de": "editions/de.json"
+  },
+  "cover": {
+    "src": "cover.png",
+    "aspectRatio": "2:3",
+    "alt": {
+      "en": "The pearlescent white and iridescent black primordial twin dragons sleeping together among the broken pieces of their enormous egg.",
+      "de": "Die perlmuttweißen und schillernd schwarzen urzeitlichen Zwillingsdrachen schlafen eng umschlungen zwischen den Bruchstücken ihres gewaltigen Eis."
+    }
   },
   "contextualLexicon": "contextual-lexicon.json",
   "spoilerMilestones": [
@@ -51,15 +59,17 @@
   ],
   "source": {
     "repository": "Kamui2040/Telanas",
-    "commit": "3cb25c53b01c4ff1ce1aa274ab48683b60441df9",
+    "commit": "64fc412ba7dc99bf41eac10823b4eb38708632b9",
     "manuscripts": {
       "en": "manuscript/en/band-01.md",
       "de": "manuscript/de/band-01.md"
     },
     "manuscriptBlobs": {
-      "en": "a70e81a3afcef2d7dcef228409f9ea1ff5d23595",
-      "de": "34248c431ddad02f63e6c8a52c4c60cd42336eef"
+      "en": "ad766b1d91489974343d8195cdd3a28d41ca33f0",
+      "de": "1740cfc2efe254dbad06429ea3b163869af37bf4"
     },
+    "cover": "assets/covers/volume-01/cover.png",
+    "coverBlob": "b2ad8fe2bd63e2540223fd322e3aa9f36cb6adc1",
     "illustrationReference": "docs/story/illustration-reference.md",
     "illustrationsDirectory": "assets/illustrations/band-01/"
   },
@@ -74,25 +84,25 @@
       "id": "dk-v01-ill-ch01",
       "mode": "image",
       "src": "illustrations/Band 1 - Approved Village Illustration Reference.png",
-      "aspectRatio": "5:6"
+      "aspectRatio": "2:3"
     },
     {
       "id": "dk-v01-ill-ch02",
       "mode": "image",
       "src": "illustrations/Band 1 - Approved Old Forest Entrance.png",
-      "aspectRatio": "1055:1491"
+      "aspectRatio": "2:3"
     },
     {
       "id": "dk-v01-ill-ch03",
       "mode": "image",
       "src": "illustrations/Band 1 - Approved Town Entrance.png",
-      "aspectRatio": "1055:1491"
+      "aspectRatio": "2:3"
     },
     {
       "id": "dk-v01-ill-ch04",
       "mode": "image",
       "src": "illustrations/Band 1 - Approved Alden Smithy.png",
-      "aspectRatio": "1055:1491"
+      "aspectRatio": "2:3"
     },
     {
       "id": "dk-v01-ill-ch05",
@@ -110,19 +120,19 @@
       "id": "dk-v01-ill-ch07",
       "mode": "image",
       "src": "illustrations/Band 1 - Approved Long Winter.png",
-      "aspectRatio": "3:4"
+      "aspectRatio": "2:3"
     },
     {
       "id": "dk-v01-ill-ch08",
       "mode": "image",
       "src": "illustrations/Band 1 - Approved What Remains.png",
-      "aspectRatio": "1055:1491"
+      "aspectRatio": "2:3"
     },
     {
       "id": "dk-v01-ill-ch09",
       "mode": "image",
       "src": "illustrations/Band 1 - Approved The Choice.png",
-      "aspectRatio": "1055:1491"
+      "aspectRatio": "2:3"
     }
   ],
   "labels": {

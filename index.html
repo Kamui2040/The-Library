@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark light">
+  <meta name="description" content="The Library — released fiction worlds, readers, and reference collections.">
+  <meta http-equiv="refresh" content="0; url=en/telanas/">
+  <title>The Library</title>
+  <script>
+    (() => {
+      let language = "";
+      try { language = localStorage.getItem("k2040-language") || ""; } catch {}
+      const preferred = language || navigator.languages?.[0] || navigator.language || "en";
+      const locale = preferred.toLowerCase().startsWith("de") ? "de" : "en";
+      window.location.replace(`${locale}/telanas/`);
+    })();
+  </script>
+</head>
+<body>
+  <p><a href="en/telanas/">Enter The Library</a></p>
+</body>
+</html>
