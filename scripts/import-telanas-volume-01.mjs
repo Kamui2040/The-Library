@@ -5,7 +5,7 @@ import { fileURLToPath } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const sourceRepository = "Kamui2040/Telanas";
-const sourceCommit = "67b0b9aa17c01972879eaafef79441fee4226e4e";
+const sourceCommit = "64fc412ba7dc99bf41eac10823b4eb38708632b9";
 const expectedBranch = "release/telanas-volume-01";
 const bookDirectory = "content/worlds/telanas/books/dragon-knight/volume-01";
 const illustrationsDirectory = path.join(root, bookDirectory, "illustrations");
@@ -19,7 +19,7 @@ const ghJson = (endpoint) => JSON.parse(execFileSync("gh", ["api", endpoint], { 
 const sourceFiles = {
   "manuscript/en/band-01.md": "ad766b1d91489974343d8195cdd3a28d41ca33f0",
   "manuscript/de/band-01.md": "1740cfc2efe254dbad06429ea3b163869af37bf4",
-  "docs/story/illustration-reference.md": "b09d6c0a4b0969293960c9944ba7dd73f67244f9",
+  "docs/story/illustration-reference.md": "046b1349cbcd839475e09b6a2e06950332962117",
 };
 
 const chapters = [
@@ -41,7 +41,7 @@ const chapters = [
     headings: { en: "Chapter 1 — The Road", de: "Kapitel 1 — Die Straße" },
     assetId: "dk-v01-ill-ch01",
     filename: "Band 1 - Approved Village Illustration Reference.png",
-    sourceBlob: "3dd09843fc3c6396102b3d31029229d212adf63f",
+    sourceBlob: "e8e52cf73d3e2e9a2ed2950e1e40aba05b3cb22f",
     alt: {
       en: "Watercolor view of an open rural village, its road, working buildings, fields, and the Old Forest.",
       de: "Aquarellansicht eines offenen ländlichen Dorfes mit Straße, Arbeitsgebäuden, Feldern und dem alten Wald.",
@@ -65,7 +65,7 @@ const chapters = [
     headings: { en: "Chapter 3 — Beyond Home", de: "Kapitel 3 — Jenseits des Dorfes" },
     assetId: "dk-v01-ill-ch03",
     filename: "Band 1 - Approved Town Entrance.png",
-    sourceBlob: "b239689816cbbd7564b0d3cf458a7312f6b1c328",
+    sourceBlob: "9c3b0e58a4fa3c34f4a6d7065e741499ecf1c0ea",
     alt: {
       en: "Watercolor view of a road approaching a modest walled regional town through surrounding countryside.",
       de: "Aquarellansicht einer Straße, die durch das Umland auf eine bescheidene ummauerte Regionalstadt zuführt.",
@@ -113,7 +113,7 @@ const chapters = [
     headings: { en: "Chapter 7 — The Long Winter", de: "Kapitel 7 — Der lange Winter" },
     assetId: "dk-v01-ill-ch07",
     filename: "Band 1 - Approved Long Winter.png",
-    sourceBlob: "ba343be21782a33c623d52a1fd3b88b54dddd92d",
+    sourceBlob: "1647515c88a938d48091a61ec374a4325ed69308",
     alt: {
       en: "Watercolor view of a village home and attached smithy under heavy winter snow, with warm light inside.",
       de: "Aquarellansicht eines Dorfhauses mit angebauter Schmiede unter schwerem Winterschnee und warmem Licht im Inneren.",

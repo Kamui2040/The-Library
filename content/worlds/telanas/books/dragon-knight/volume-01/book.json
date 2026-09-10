@@ -51,7 +51,7 @@
   ],
   "source": {
     "repository": "Kamui2040/Telanas",
-    "commit": "67b0b9aa17c01972879eaafef79441fee4226e4e",
+    "commit": "64fc412ba7dc99bf41eac10823b4eb38708632b9",
     "manuscripts": {
       "en": "manuscript/en/band-01.md",
       "de": "manuscript/de/band-01.md"
@@ -74,7 +74,7 @@
       "id": "dk-v01-ill-ch01",
       "mode": "image",
       "src": "illustrations/Band 1 - Approved Village Illustration Reference.png",
-      "aspectRatio": "5:6"
+      "aspectRatio": "2:3"
     },
     {
       "id": "dk-v01-ill-ch02",
@@ -86,7 +86,7 @@
       "id": "dk-v01-ill-ch03",
       "mode": "image",
       "src": "illustrations/Band 1 - Approved Town Entrance.png",
-      "aspectRatio": "1055:1491"
+      "aspectRatio": "2:3"
     },
     {
       "id": "dk-v01-ill-ch04",
@@ -110,7 +110,7 @@
       "id": "dk-v01-ill-ch07",
       "mode": "image",
       "src": "illustrations/Band 1 - Approved Long Winter.png",
-      "aspectRatio": "3:4"
+      "aspectRatio": "2:3"
     },
     {
       "id": "dk-v01-ill-ch08",
