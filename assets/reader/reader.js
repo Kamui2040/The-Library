@@ -561,6 +561,13 @@
     node.append(...page.blocks.map(renderBlock));
   };
 
+  const renderDetachedPage = (page) => {
+    const node = document.createElement("article");
+    node.className = "book-page";
+    renderPage(page, node);
+    return node;
+  };
+
   const effectiveSpread = () => layoutPreference === "spread" && wideSpread.matches;
   const pageStep = () => effectiveSpread() ? 2 : 1;
 
@@ -590,20 +597,58 @@
     updatePagedStatus();
   };
 
+  const clearPageTurnUnderlay = () => {
+    leftPage.removeAttribute("aria-hidden");
+    rightPage.removeAttribute("aria-hidden");
+  };
+
+  const restoreCurrentSpread = () => {
+    clearPageTurnUnderlay();
+    renderPage(pages[currentPageIndex], leftPage);
+    renderPage(effectiveSpread() ? pages[currentPageIndex + 1] : null, rightPage);
+  };
+
   const turnPage = (direction) => {
     if (layoutPreference === "continuous") return;
+    const spreadMode = effectiveSpread();
     const targetIndex = currentPageIndex + (direction < 0 ? -pageStep() : pageStep());
     if (targetIndex < 0 || targetIndex >= pages.length) return;
 
+    const destinationLeft = pages[targetIndex];
+    const destinationRight = spreadMode ? pages[targetIndex + 1] : null;
+    const underlayNode = spreadMode
+      ? (direction < 0 ? leftPage : rightPage)
+      : leftPage;
+    const underlayPage = spreadMode
+      ? (direction < 0 ? destinationLeft : destinationRight)
+      : destinationLeft;
+    const reversePage = spreadMode
+      ? (direction < 0 ? destinationRight : destinationLeft)
+      : destinationLeft;
+
+    let prepared = false;
     let committed = false;
+    const prepare = () => {
+      if (prepared || committed) return null;
+      prepared = true;
+      renderPage(underlayPage, underlayNode);
+      underlayNode.setAttribute("aria-hidden", "true");
+      return renderDetachedPage(reversePage);
+    };
+    const rollback = () => {
+      if (!prepared || committed) return;
+      prepared = false;
+      restoreCurrentSpread();
+    };
     const commit = () => {
       if (committed) return;
       committed = true;
+      clearPageTurnUnderlay();
       renderPagedAt(targetIndex);
     };
     const request = new CustomEvent("reader-page-turn-request", {
       cancelable: true,
-      detail: { direction, commit },
+      detail: { direction, prepare, rollback, commit },
     });
 
     if (document.dispatchEvent(request)) commit();

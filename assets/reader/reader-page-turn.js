@@ -36,10 +36,15 @@
   const clearTurn = () => {
     turnToken += 1;
     if (!activeTurn) return;
-    activeTurn.animations.forEach((animation) => animation.cancel());
-    activeTurn.source.classList.remove("is-page-turn-source");
-    activeTurn.layer.remove();
+    const turn = activeTurn;
     activeTurn = null;
+    turn.animations.forEach((animation) => animation.cancel());
+    try {
+      turn.rollback();
+    } finally {
+      spread.classList.remove("is-page-turning");
+      turn.layer.remove();
+    }
   };
 
   const finishTurn = (prepared) => {
@@ -48,7 +53,7 @@
     try {
       prepared.commit();
     } finally {
-      prepared.source.classList.remove("is-page-turn-source");
+      spread.classList.remove("is-page-turning");
       prepared.layer.remove();
     }
   };
@@ -102,7 +107,7 @@
       },
       {
         offset: 1,
-        transform: `translateZ(0) rotateY(${directionSign * 178}deg) skewY(0deg) scaleX(1)`,
+        transform: `translateZ(0) rotateY(${directionSign * 180}deg) skewY(0deg) scaleX(1)`,
         filter: "drop-shadow(0 0 0 rgba(0,0,0,0))"
       }
     ], {
@@ -112,12 +117,11 @@
     });
 
     const frontAnimation = prepared.front.animate([
-      { offset: 0, filter: "brightness(1)", opacity: 1 },
-      { offset: 0.25, filter: "brightness(1.025)", opacity: 1 },
-      { offset: 0.52, filter: "brightness(.99)", opacity: 1 },
-      { offset: 0.61, filter: "brightness(.93)", opacity: .98 },
-      { offset: 0.66, filter: "brightness(.9)", opacity: .12 },
-      { offset: 1, filter: "brightness(.9)", opacity: 0 }
+      { offset: 0, filter: "brightness(1)" },
+      { offset: 0.25, filter: "brightness(1.025)" },
+      { offset: 0.52, filter: "brightness(.99)" },
+      { offset: 0.68, filter: "brightness(.9)" },
+      { offset: 1, filter: "brightness(.88)" }
     ], {
       duration,
       easing: "ease-out",
@@ -125,12 +129,11 @@
     });
 
     const backAnimation = prepared.back.animate([
-      { offset: 0, opacity: 0, filter: "brightness(.84)" },
-      { offset: 0.57, opacity: 0, filter: "brightness(.84)" },
-      { offset: 0.64, opacity: .92, filter: "brightness(.87)" },
-      { offset: 0.82, opacity: 1, filter: "brightness(.95)" },
-      { offset: 0.96, opacity: .96, filter: "brightness(1)" },
-      { offset: 1, opacity: 0, filter: "brightness(1)" }
+      { offset: 0, filter: "brightness(.8)" },
+      { offset: 0.55, filter: "brightness(.84)" },
+      { offset: 0.72, filter: "brightness(.91)" },
+      { offset: 0.9, filter: "brightness(.98)" },
+      { offset: 1, filter: "brightness(1)" }
     ], {
       duration,
       easing: "ease-out",
@@ -164,7 +167,7 @@
     }, duration + 180);
   };
 
-  const prepareTurn = (direction, commit) => {
+  const prepareTurn = ({ direction, prepare, rollback, commit }) => {
     if (reducedMotion.matches || spread.classList.contains("continuous")) return false;
     if (direction < 0 && previousButton.disabled) return false;
     if (direction > 0 && nextButton.disabled) return false;
@@ -178,33 +181,49 @@
     const spreadRect = spread.getBoundingClientRect();
     const side = direction < 0 ? "left" : "right";
 
-    const layer = document.createElement("div");
-    layer.className = "reader-page-turn-layer";
-    layer.dataset.turnSide = side;
-    layer.setAttribute("aria-hidden", "true");
-    Object.assign(layer.style, {
-      left: `${sourceRect.left - spreadRect.left}px`,
-      top: `${sourceRect.top - spreadRect.top}px`,
-      width: `${sourceRect.width}px`,
-      height: `${sourceRect.height}px`
-    });
-
-    const sheet = document.createElement("div");
-    sheet.className = "reader-page-turn-sheet";
-    sheet.style.transformOrigin = direction < 0 ? "right center" : "left center";
-
     const front = clonePage(source);
-    source.classList.add("is-page-turn-source");
-    const back = document.createElement("div");
-    back.className = "reader-page-turn-back";
-    const edge = document.createElement("span");
-    edge.className = "reader-page-turn-edge";
+    let layer;
+    let sheet;
+    let back;
+    let edge;
 
-    sheet.append(front, back, edge);
-    layer.append(sheet);
-    spread.append(layer);
+    try {
+      back = prepare();
+      if (!(back instanceof Element)) throw new TypeError("Page-turn reverse must be an element");
+      back.removeAttribute("data-book-page");
+      stripIds(back);
+      back.classList.add("reader-page-turn-back");
 
-    activeTurn = { layer, source, animations: [] };
+      layer = document.createElement("div");
+      layer.className = "reader-page-turn-layer";
+      layer.dataset.turnSide = side;
+      layer.setAttribute("aria-hidden", "true");
+      Object.assign(layer.style, {
+        left: `${sourceRect.left - spreadRect.left}px`,
+        top: `${sourceRect.top - spreadRect.top}px`,
+        width: `${sourceRect.width}px`,
+        height: `${sourceRect.height}px`
+      });
+
+      sheet = document.createElement("div");
+      sheet.className = "reader-page-turn-sheet";
+      sheet.style.transformOrigin = direction < 0 ? "right center" : "left center";
+
+      edge = document.createElement("span");
+      edge.className = "reader-page-turn-edge";
+
+      sheet.append(front, back, edge);
+      layer.append(sheet);
+      spread.append(layer);
+      spread.classList.add("is-page-turning");
+    } catch {
+      layer?.remove();
+      spread.classList.remove("is-page-turning");
+      rollback();
+      return false;
+    }
+
+    activeTurn = { layer, animations: [], rollback };
 
     queueMicrotask(() => {
       try {
@@ -212,7 +231,6 @@
           token,
           direction,
           commit,
-          source,
           layer,
           sheet,
           front,
@@ -220,17 +238,18 @@
           edge
         });
       } catch {
-        clearTurn();
-        commit();
+        finishTurn({ token, commit, layer });
       }
     });
     return true;
   };
 
   document.addEventListener("reader-page-turn-request", (event) => {
-    const { direction, commit } = event.detail || {};
-    if (![-1, 1].includes(direction) || typeof commit !== "function") return;
-    if (activeTurn || prepareTurn(direction, commit)) event.preventDefault();
+    const detail = event.detail || {};
+    const valid = [-1, 1].includes(detail.direction) &&
+      [detail.prepare, detail.rollback, detail.commit].every((callback) => typeof callback === "function");
+    if (!valid) return;
+    if (activeTurn || prepareTurn(detail)) event.preventDefault();
   });
 
   document.addEventListener("reader-page-turn-cancel", clearTurn);
