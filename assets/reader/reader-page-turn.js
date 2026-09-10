@@ -117,11 +117,11 @@
     });
 
     const frontAnimation = prepared.front.animate([
-      { offset: 0, filter: "brightness(1)" },
-      { offset: 0.25, filter: "brightness(1.025)" },
-      { offset: 0.52, filter: "brightness(.99)" },
-      { offset: 0.68, filter: "brightness(.9)" },
-      { offset: 1, filter: "brightness(.88)" }
+      { offset: 0, filter: "brightness(1)", opacity: 1 },
+      { offset: 0.25, filter: "brightness(1.025)", opacity: 1 },
+      { offset: 0.58, filter: "brightness(.97)", opacity: 1 },
+      { offset: 0.64, filter: "brightness(.9)", opacity: 0 },
+      { offset: 1, filter: "brightness(.88)", opacity: 0 }
     ], {
       duration,
       easing: "ease-out",
@@ -129,11 +129,11 @@
     });
 
     const backAnimation = prepared.back.animate([
-      { offset: 0, filter: "brightness(.8)" },
-      { offset: 0.55, filter: "brightness(.84)" },
-      { offset: 0.72, filter: "brightness(.91)" },
-      { offset: 0.9, filter: "brightness(.98)" },
-      { offset: 1, filter: "brightness(1)" }
+      { offset: 0, filter: "brightness(.8)", opacity: 0 },
+      { offset: 0.58, filter: "brightness(.83)", opacity: 0 },
+      { offset: 0.64, filter: "brightness(.86)", opacity: 1 },
+      { offset: 0.82, filter: "brightness(.94)", opacity: 1 },
+      { offset: 1, filter: "brightness(1)", opacity: 1 }
     ], {
       duration,
       easing: "ease-out",

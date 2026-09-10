@@ -44,13 +44,15 @@
 
 .reader-page-turn-front {
   transform: translateZ(.6px);
-  will-change: filter;
+  will-change: filter, opacity;
 }
 
 /* The reverse carries the destination page that lands across the spine. The
    destination page beneath the lifted sheet is revealed at the same time. */
 .reader-page-turn-back {
   transform: rotateY(180deg) translateZ(.6px);
+  opacity: 0;
+  will-change: filter, opacity;
   background:
     linear-gradient(90deg, rgba(255,255,255,.012), transparent 8%, transparent 92%, rgba(0,0,0,.06)),
     var(--page-surface);
