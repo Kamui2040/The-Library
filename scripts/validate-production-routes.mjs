@@ -28,6 +28,10 @@ const timelineAssets = [
   "timeline.css",
   "timeline.js"
 ].map((name) => `assets/timeline/${name}`);
+const pdfRoutes = [
+  "output/pdf/the-dragon-knight-volume-01-home-en.pdf",
+  "output/pdf/der-drachenritter-band-01-zuhause-de.pdf"
+];
 
 const required = [
   "index.html",
@@ -49,7 +53,8 @@ const required = [
   "en/telanas/lexicon/index.html",
   "de/telanas/lexicon/index.html",
   "en/telanas/timeline/index.html",
-  "de/telanas/timeline/index.html"
+  "de/telanas/timeline/index.html",
+  ...pdfRoutes
 ];
 
 const fail = (message) => { throw new Error(message); };
@@ -66,6 +71,12 @@ const exists = async (relativePath) => {
 
 for (const relativePath of required) {
   assert(await exists(relativePath), `Missing production route file: ${relativePath}`);
+}
+
+for (const relativePath of pdfRoutes) {
+  const contents = await readFile(path.join(root, relativePath));
+  assert(contents.length > 1_000_000, `${relativePath} must contain the complete illustrated edition`);
+  assert(contents.subarray(0, 5).toString("ascii") === "%PDF-", `${relativePath} must be a PDF document`);
 }
 
 const revisionFor = async (relativePath) => createHash("sha256")
@@ -160,6 +171,8 @@ for (const locale of ["en", "de"]) {
   assertK2040EcosystemShell(landingPath, landingHtml);
   assert(landingHtml.includes('data-spoiler-progress-select'), `${landingPath} must preserve the shared spoiler-progress control`);
   assert(landingHtml.includes('href="read/dragon-knight/volume-01/"'), `${landingPath} must link to the canonical Reader`);
+  assert(landingHtml.includes('href="../../output/pdf/the-dragon-knight-volume-01-home-en.pdf" download'), `${landingPath} must expose the English PDF download`);
+  assert(landingHtml.includes('href="../../output/pdf/der-drachenritter-band-01-zuhause-de.pdf" download'), `${landingPath} must expose the German PDF download`);
   assert(landingHtml.includes('href="lexicon/"'), `${landingPath} must link to the canonical Lexicon`);
   assert(landingHtml.includes('lexicon/?category=characters'), `${landingPath} must preserve the Characters category entry point`);
   assert(landingHtml.includes('lexicon/?category=places'), `${landingPath} must preserve the Places category entry point`);
