@@ -61,14 +61,14 @@ LOCALES = {
         "filename": "the-dragon-knight-volume-01-home-en.pdf",
         "cover_volume": "VOLUME ONE",
         "edition": "English edition",
-        "website": "Read online at kamui2040.github.io/The-Library/en/telanas/",
+        "website": "kamui2040.github.io/The-Library",
         "url": "https://kamui2040.github.io/The-Library/en/telanas/",
     },
     "de": {
         "filename": "der-drachenritter-band-01-zuhause-de.pdf",
         "cover_volume": "BAND EINS",
         "edition": "Deutsche Ausgabe",
-        "website": "Online lesen unter kamui2040.github.io/The-Library/de/telanas/",
+        "website": "kamui2040.github.io/The-Library",
         "url": "https://kamui2040.github.io/The-Library/de/telanas/",
     },
 }
@@ -97,6 +97,7 @@ def publication_labels(book: dict, locale: str) -> dict[str, str]:
 
 
 def draw_tracking_text(canvas: Canvas, text: str, x: float, y: float, font: str, size: float, tracking: float) -> None:
+    canvas.saveState()
     text_object = canvas.beginText()
     text_object.setTextOrigin(x, y)
     text_object.setFont(font, size)
@@ -105,6 +106,7 @@ def draw_tracking_text(canvas: Canvas, text: str, x: float, y: float, font: str,
     text_object.setTextOrigin(x - text_width / 2, y)
     text_object.textLine(text)
     canvas.drawText(text_object)
+    canvas.restoreState()
 
 
 def draw_cover_image(canvas: Canvas, image_path: Path) -> None:
@@ -152,7 +154,9 @@ class CoverPage(FullPageFlowable):
         canvas.saveState()
         canvas.setFillColor(colors.black)
         canvas.setFillAlpha(0.52)
-        canvas.rect(0, PAGE_HEIGHT - 53 * mm, PAGE_WIDTH, 53 * mm, fill=1, stroke=0)
+        canvas.rect(0, PAGE_HEIGHT - 38 * mm, PAGE_WIDTH, 38 * mm, fill=1, stroke=0)
+        canvas.setFillAlpha(0.62)
+        canvas.rect(0, 0, PAGE_WIDTH, 34 * mm, fill=1, stroke=0)
         canvas.setFillAlpha(1)
         canvas.setFillColor(colors.HexColor("#F5F0E5"))
         draw_tracking_text(canvas, "TELANAS", PAGE_WIDTH / 2, PAGE_HEIGHT - 15 * mm, SANS, 8.5, 2.0)
@@ -161,9 +165,9 @@ class CoverPage(FullPageFlowable):
         canvas.setStrokeColor(colors.HexColor("#C5ADB8"))
         canvas.setLineWidth(0.7)
         canvas.line(40 * mm, PAGE_HEIGHT - 34 * mm, PAGE_WIDTH - 40 * mm, PAGE_HEIGHT - 34 * mm)
-        draw_tracking_text(canvas, self.labels["cover_volume"], PAGE_WIDTH / 2, PAGE_HEIGHT - 42 * mm, SANS, 8, 1.25)
-        canvas.setFont(SERIF, 14)
-        canvas.drawCentredString(PAGE_WIDTH / 2, PAGE_HEIGHT - 49 * mm, self.labels["cover_title"])
+        draw_tracking_text(canvas, self.labels["cover_volume"], PAGE_WIDTH / 2, 19 * mm, SANS, 8, 1.25)
+        canvas.setFont(SERIF, 16)
+        canvas.drawCentredString(PAGE_WIDTH / 2, 8 * mm, self.labels["cover_title"])
         canvas.restoreState()
 
 
