@@ -575,13 +575,18 @@
     nextButton.disabled = currentPageIndex + pageStep() >= total;
   };
 
-  const renderPagedAt = (index, { updateHash = true, persist = true } = {}) => {
+  const renderPagedAt = (index, { updateHash = true, persist = true, positionAnchor = null } = {}) => {
     if (!pages.length) return;
     const requestedIndex = Math.max(0, Math.min(index, pages.length - 1));
     currentPageIndex = effectiveSpread() ? requestedIndex - (requestedIndex % 2) : requestedIndex;
     renderPage(pages[currentPageIndex], leftPage);
     renderPage(effectiveSpread() ? pages[currentPageIndex + 1] : null, rightPage);
-    updateCurrentAnchor(pages[currentPageIndex].anchor, { updateHash, persist });
+    const displayedEnd = Math.min(pages.length - 1, currentPageIndex + pageStep() - 1);
+    const preservedPage = typeof positionAnchor === "string" ? pageForAnchor(positionAnchor) : -1;
+    const nextAnchor = preservedPage >= currentPageIndex && preservedPage <= displayedEnd
+      ? positionAnchor
+      : pages[currentPageIndex].anchor;
+    updateCurrentAnchor(nextAnchor, { updateHash, persist });
     updatePagedStatus();
   };
 
@@ -703,7 +708,7 @@
         });
       }
     } else {
-      renderPagedAt(pageForAnchor(resolved), { updateHash, persist });
+      renderPagedAt(pageForAnchor(resolved), { updateHash, persist, positionAnchor: resolved });
     }
 
     if (!pointerHover.matches && !pinned) setOpen(false);
@@ -734,7 +739,7 @@
     rightPage.classList.remove("continuous-page");
     await nextFrame();
     buildPages();
-    renderPagedAt(pageForAnchor(restoreAnchor));
+    renderPagedAt(pageForAnchor(restoreAnchor), { positionAnchor: restoreAnchor });
   };
 
   const setLayout = async (layout) => {

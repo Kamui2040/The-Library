@@ -268,6 +268,7 @@
       entry.fullName,
       entry.summary,
       ...entry.sections.flatMap((section) => [section.title, section.text]),
+      ...entry.fragments.map((fragment) => fragment.text),
       ...entry.relationships.flatMap((relationship) => [relationship.label, relationship.targetTitle])
     ]
       .join(" ")
@@ -457,19 +458,15 @@
       detailPanel.append(sections);
     }
 
+    if (entry.fragments.length > 0) {
+      const fragments = document.createElement("div");
+      fragments.className = "lexicon-detail-fragments";
+      fragments.append(...entry.fragments.map(renderFragment));
+      detailPanel.append(fragments);
+    }
+
     const relationships = renderRelationships(entry.relationships);
     if (relationships) detailPanel.append(relationships);
-
-    const showSource = entry.categories.some((category) => ["events", "history"].includes(category)) || entry.id === "shard";
-    if (showSource) {
-      const link = entry.fragments.flatMap((fragment) => fragment.readerLinks).find(Boolean);
-      if (link) {
-        const sources = document.createElement("div");
-        sources.className = "lexicon-detail-sources";
-        sources.append(renderReaderLink(link));
-        detailPanel.append(sources);
-      }
-    }
 
     detailOverlay.hidden = false;
     detailPanel.focus({ preventScroll: true });

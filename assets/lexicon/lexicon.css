@@ -436,10 +436,14 @@
   margin: 0;
 }
 
-.lexicon-detail-sources {
-  margin-top: 24px;
-  padding-top: 18px;
+.lexicon-detail-fragments {
+  margin-top: 28px;
+  padding-top: 24px;
   border-top: 1px solid var(--border-soft);
+}
+
+.lexicon-detail-fragments .lexicon-fragment:first-child > p {
+  margin-top: 0;
 }
 
 @media (max-width: 1100px) {
