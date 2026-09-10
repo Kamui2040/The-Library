@@ -3,7 +3,7 @@
 ## Project role
 
 - The Library is the publication-safe website and reader for released fiction projects.
-- This repository is FUTURE PUBLIC. Treat every tracked file as if it may later be visible publicly.
+- This repository is PUBLIC. Keep every tracked file safe for public access.
 - The site is an umbrella library. Telanas currently uses its own world/series area; it is not the permanent identity of the whole site.
 
 ## Source boundary
