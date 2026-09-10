@@ -303,7 +303,7 @@ svg {
   align-items: end;
   overflow: hidden;
   border-bottom: 1px solid var(--border-soft);
-  background: linear-gradient(180deg, #10171d, #070a0d);
+  background: #111722;
 }
 
 .hero-landscape,
@@ -315,77 +315,64 @@ svg {
 .hero-landscape {
   overflow: hidden;
   background:
-    radial-gradient(circle at 73% 20%, rgba(190,205,214,.16), transparent 18rem),
-    linear-gradient(180deg, #151f27 0%, #0a1015 60%, #06080a 100%);
+    radial-gradient(circle at 78% 44%, rgba(222, 152, 111, .23), transparent 19rem),
+    linear-gradient(180deg, #192436 0%, #34334a 42%, #8c6558 70%, #25292b 100%);
 }
 
-.hero-moon {
+.hero-sun {
   position: absolute;
-  width: 120px;
-  height: 120px;
+  width: 84px;
+  height: 84px;
   border-radius: 50%;
-  right: 18%;
-  top: 12%;
-  background: radial-gradient(circle at 35% 30%, #e9eef0, #9aa6ad 70%, #5b6670);
-  box-shadow: 0 0 60px rgba(210,220,225,.11);
-  opacity: .75;
+  right: 17%;
+  top: 37%;
+  background: #e1ad82;
+  box-shadow: 0 0 72px rgba(223, 149, 103, .32);
+  opacity: .76;
 }
 
-.hero-ridge {
+.hero-mountain-horizon,
+.hero-lowlands {
   position: absolute;
-  left: -10%;
-  width: 120%;
+  left: -5%;
+  width: 110%;
   transform-origin: center bottom;
 }
 
-.hero-ridge--far {
-  height: 42%;
-  bottom: 25%;
-  background: #172129;
-  clip-path: polygon(0 82%, 12% 55%, 22% 66%, 33% 40%, 42% 63%, 53% 46%, 65% 68%, 76% 42%, 86% 61%, 100% 38%, 100% 100%, 0 100%);
-  opacity: .8;
+.hero-mountain-horizon {
+  height: 22%;
+  bottom: 31%;
+  background: #333b4b;
+  clip-path: polygon(0 89%, 7% 78%, 13% 84%, 20% 68%, 25% 80%, 32% 61%, 38% 79%, 46% 67%, 52% 82%, 60% 58%, 67% 77%, 73% 65%, 80% 81%, 87% 70%, 93% 84%, 100% 74%, 100% 100%, 0 100%);
+  opacity: .7;
 }
 
-.hero-ridge--mid {
-  height: 38%;
-  bottom: 13%;
-  background: #0e151a;
-  clip-path: polygon(0 62%, 10% 44%, 20% 60%, 31% 37%, 43% 59%, 56% 43%, 70% 63%, 82% 47%, 100% 70%, 100% 100%, 0 100%);
+.hero-haze {
+  position: absolute;
+  inset: auto 0 24%;
+  height: 24%;
+  background: linear-gradient(180deg, transparent, rgba(190, 157, 142, .22) 48%, transparent);
 }
 
-.hero-ridge--near {
+.hero-lowlands--far {
   height: 30%;
+  bottom: 17%;
+  background: #273139;
+  clip-path: polygon(0 60%, 10% 51%, 20% 57%, 31% 44%, 43% 56%, 54% 47%, 67% 59%, 79% 48%, 90% 57%, 100% 50%, 100% 100%, 0 100%);
+}
+
+.hero-lowlands--mid {
+  height: 29%;
+  bottom: 5%;
+  background: #192329;
+  clip-path: polygon(0 57%, 9% 45%, 18% 54%, 29% 39%, 40% 56%, 52% 43%, 64% 58%, 76% 42%, 87% 55%, 100% 44%, 100% 100%, 0 100%);
+}
+
+.hero-lowlands--near {
+  height: 24%;
   bottom: 0;
-  background: #080b0e;
-  clip-path: polygon(0 46%, 14% 32%, 28% 55%, 42% 38%, 56% 61%, 71% 35%, 86% 56%, 100% 40%, 100% 100%, 0 100%);
-}
-
-.hero-tower {
-  position: absolute;
-  bottom: 27%;
-  width: 22px;
-  background: #0a0f13;
-  border-top: 5px solid #27333b;
-  box-shadow: 0 0 0 1px rgba(180,195,205,.05);
-}
-
-.hero-tower::before {
-  content: "";
-  position: absolute;
-  inset: -13px 4px auto;
-  height: 13px;
-  background: inherit;
-  clip-path: polygon(50% 0, 100% 100%, 0 100%);
-}
-
-.hero-tower--one {
-  height: 92px;
-  right: 31%;
-}
-
-.hero-tower--two {
-  height: 64px;
-  right: 27%;
+  background: #0d1519;
+  clip-path: polygon(0 48%, 13% 34%, 27% 52%, 41% 38%, 55% 59%, 70% 35%, 84% 55%, 100% 39%, 100% 100%, 0 100%);
 }
 
 .hero-road {
@@ -394,15 +381,63 @@ svg {
   bottom: -4%;
   width: 17%;
   height: 45%;
-  background: linear-gradient(180deg, rgba(138,154,163,.12), rgba(126,117,103,.18));
+  background: linear-gradient(180deg, rgba(177, 156, 137, .08), rgba(144, 123, 105, .28));
   clip-path: polygon(47% 0, 54% 0, 100% 100%, 0 100%);
   transform: rotate(-4deg);
 }
 
 .hero-shade {
   background:
-    linear-gradient(90deg, rgba(5,7,9,.86) 0%, rgba(5,7,9,.6) 35%, rgba(5,7,9,.08) 69%),
-    linear-gradient(0deg, rgba(5,7,9,.9), transparent 48%);
+    linear-gradient(90deg, rgba(7, 10, 15, .88) 0%, rgba(7, 10, 15, .62) 35%, rgba(7, 10, 15, .08) 70%),
+    linear-gradient(0deg, rgba(7, 10, 15, .92), transparent 50%);
+}
+
+html[data-theme="light"] .hero {
+  background: #b7cfda;
+}
+
+html[data-theme="light"] .hero-landscape {
+  background:
+    radial-gradient(circle at 78% 24%, rgba(255, 246, 204, .72), transparent 18rem),
+    linear-gradient(180deg, #91bdcf 0%, #c9d9d9 47%, #ddceb0 73%, #99a58d 100%);
+}
+
+html[data-theme="light"] .hero-sun {
+  top: 16%;
+  background: #fff1bd;
+  box-shadow: 0 0 78px rgba(255, 240, 178, .72);
+  opacity: .9;
+}
+
+html[data-theme="light"] .hero-mountain-horizon {
+  background: #718692;
+  opacity: .63;
+}
+
+html[data-theme="light"] .hero-haze {
+  background: linear-gradient(180deg, transparent, rgba(230, 225, 206, .55) 48%, transparent);
+}
+
+html[data-theme="light"] .hero-lowlands--far {
+  background: #879989;
+}
+
+html[data-theme="light"] .hero-lowlands--mid {
+  background: #64796d;
+}
+
+html[data-theme="light"] .hero-lowlands--near {
+  background: #3e554d;
+}
+
+html[data-theme="light"] .hero-road {
+  background: linear-gradient(180deg, rgba(224, 210, 177, .22), rgba(180, 157, 119, .62));
+}
+
+html[data-theme="light"] .hero-shade {
+  background:
+    linear-gradient(90deg, rgba(239, 239, 228, .94) 0%, rgba(239, 239, 228, .7) 36%, rgba(239, 239, 228, .08) 70%),
+    linear-gradient(0deg, rgba(239, 239, 228, .82), transparent 52%);
 }
 
 .hero-inner {
@@ -440,7 +475,11 @@ svg {
 }
 
 html[data-theme="light"] .hero-description {
-  color: #d6dde0;
+  color: #34454d;
+}
+
+html[data-theme="light"] .hero-subtitle {
+  color: #2f3f47;
 }
 
 .hero-actions,
@@ -484,6 +523,16 @@ html[data-theme="light"] .hero-description {
 
 .button--ghost {
   background: rgba(8,12,15,.3);
+}
+
+html[data-theme="light"] .button--primary {
+  color: #f4f6f6;
+}
+
+html[data-theme="light"] .hero .button--ghost {
+  background: rgba(239, 239, 228, .74);
+  color: #34454d;
+  border-color: #687780;
 }
 
 .text-link {
@@ -1059,7 +1108,7 @@ html[data-theme="light"] .hero-description {
     min-height: 520px;
   }
 
-  .hero-moon {
+  .hero-sun {
     right: 8%;
   }
 
