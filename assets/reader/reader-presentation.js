@@ -2,6 +2,7 @@
   "use strict";
 
   const body = document.body;
+  const header = document.querySelector(".reader-header");
   const settings = document.querySelector("[data-reader-settings]");
   const settingsToggle = document.querySelector("[data-reader-settings-toggle]");
   const themeSelect = document.querySelector("select[data-reader-theme]");
@@ -93,6 +94,21 @@
   };
 
   let preferences = readPreferences();
+
+  const syncHeaderHeight = () => {
+    if (!header) return;
+    body.style.setProperty("--reader-header-height", `${Math.ceil(header.getBoundingClientRect().height)}px`);
+  };
+
+  if (header) {
+    syncHeaderHeight();
+    if ("ResizeObserver" in window) {
+      const headerObserver = new ResizeObserver(syncHeaderHeight);
+      headerObserver.observe(header);
+    } else {
+      window.addEventListener("resize", syncHeaderHeight);
+    }
+  }
 
   const savePreferences = () => {
     try {
@@ -187,7 +203,10 @@
     if (event.key === "Escape") settings.open = false;
   });
 
-  window.addEventListener("library-language-change", localize);
+  window.addEventListener("library-language-change", () => {
+    localize();
+    requestAnimationFrame(syncHeaderHeight);
+  });
 
   applyPreferences();
   localize();
