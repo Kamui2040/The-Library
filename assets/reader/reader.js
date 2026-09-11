@@ -37,6 +37,7 @@
   let resizeTimer = null;
   let scrollObserver = null;
   let editionLoadToken = 0;
+  let renderRequestToken = 0;
   let book = null;
   let model = null;
   let pages = [];
@@ -717,7 +718,8 @@
     continuousAnchorElements().forEach((node) => scrollObserver.observe(node));
   };
 
-  const renderContinuous = (restoreAnchor = currentAnchor) => {
+  const renderContinuous = (restoreAnchor = currentAnchor, token = ++renderRequestToken) => {
+    if (token !== renderRequestToken || layoutPreference !== "continuous") return;
     disconnectScrollTracking();
     leftPage.replaceChildren();
     rightPage.replaceChildren();
@@ -743,6 +745,7 @@
     startScrollTracking();
 
     requestAnimationFrame(() => {
+      if (token !== renderRequestToken || layoutPreference !== "continuous") return;
       const target = findContinuousAnchor(currentAnchor);
       if (target) target.scrollIntoView({ block: "start", behavior: "auto" });
     });
@@ -788,27 +791,30 @@
     saveLayout(layoutPreference);
   };
 
-  const repaginate = async (restoreAnchor = currentAnchor) => {
-    if (!model || layoutPreference === "continuous") return;
+  const repaginate = async (restoreAnchor = currentAnchor, token = ++renderRequestToken) => {
+    if (!model || layoutPreference === "continuous" || token !== renderRequestToken) return;
     disconnectScrollTracking();
     leftPage.classList.remove("continuous-page");
     rightPage.classList.remove("continuous-page");
     await nextFrame();
+    if (layoutPreference === "continuous" || token !== renderRequestToken) return;
     buildPages();
+    if (layoutPreference === "continuous" || token !== renderRequestToken) return;
     renderPagedAt(pageForAnchor(restoreAnchor), { positionAnchor: restoreAnchor });
   };
 
   const setLayout = async (layout) => {
     document.dispatchEvent(new Event("reader-page-turn-cancel"));
+    const token = ++renderRequestToken;
     const restoreAnchor = currentAnchor;
     applyLayoutClasses(layout);
     titleLabel.textContent = currentTitle();
 
     if (!model) return;
     if (layoutPreference === "continuous") {
-      renderContinuous(restoreAnchor);
+      renderContinuous(restoreAnchor, token);
     } else {
-      await repaginate(restoreAnchor);
+      await repaginate(restoreAnchor, token);
     }
   };
 
@@ -839,11 +845,12 @@
     titleLabel.textContent = currentTitle();
     currentAnchor = restoreAnchorForModel(restoreAnchor);
     renderToc();
+    const renderToken = ++renderRequestToken;
 
     if (layoutPreference === "continuous") {
-      renderContinuous(currentAnchor);
+      renderContinuous(currentAnchor, renderToken);
     } else {
-      await repaginate(currentAnchor);
+      await repaginate(currentAnchor, renderToken);
     }
     return true;
   };
