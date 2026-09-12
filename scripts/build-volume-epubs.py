@@ -80,6 +80,10 @@ a {
   margin: 0 auto;
 }
 
+.chapter-illustration {
+  break-before: page;
+}
+
 .title-page,
 .chapter-title-page,
 .contents-page,
@@ -128,13 +132,13 @@ a {
   text-align: left;
 }
 
-.chapter-body p {
-  margin: 0;
-  text-indent: 1.25em;
+.chapter-body,
+.back-matter {
+  hyphens: none;
 }
 
-.chapter-body p.first,
-.chapter-body p.after-break {
+.chapter-body p {
+  margin: 0 0 1em;
   text-indent: 0;
 }
 
@@ -301,13 +305,17 @@ def split_chapter_label(label: str) -> tuple[str, str]:
     return "", label
 
 
-def chapter_title_html(label: str, series: str) -> str:
+def chapter_opening_html(label: str, series: str, image_href: str, image_alt: str) -> str:
     kicker, title = split_chapter_label(label)
     kicker_html = f'<p class="kicker">{html.escape(kicker)}</p>' if kicker else ""
     return (
-        '<main class="chapter-title-page">'
+        '<main class="chapter-opening" epub:type="chapter">'
+        '<section class="chapter-title-page">'
         f'{kicker_html}<hr class="rule"/><h1>{html.escape(title)}</h1>'
-        f'<p class="series">{html.escape(series)}</p></main>'
+        f'<p class="series">{html.escape(series)}</p></section>'
+        '<section class="illustration-page chapter-illustration">'
+        f'<img src="{html.escape(image_href, quote=True)}" alt="{html.escape(image_alt, quote=True)}"/>'
+        '</section></main>'
     )
 
 
@@ -357,7 +365,7 @@ def afterword_html(locale: str, definition: dict, afterword: dict) -> str:
 
 def nav_html(locale: str, config: dict, book: dict, definition: dict) -> str:
     chapter_links = [
-        f'<li><a href="chapter-title-{c["id"]}.xhtml">{html.escape(c["labels"][locale])}</a></li>'
+        f'<li><a href="chapter-opening-{c["id"]}.xhtml">{html.escape(c["labels"][locale])}</a></li>'
         for c in book["chapters"]
     ]
     chapter_links.append(
@@ -371,7 +379,7 @@ def nav_html(locale: str, config: dict, book: dict, definition: dict) -> str:
         '<nav epub:type="landmarks" hidden="hidden"><ol>'
         '<li><a epub:type="cover" href="cover.xhtml">Cover</a></li>'
         '<li><a epub:type="titlepage" href="title.xhtml">Title page</a></li>'
-        f'<li><a epub:type="bodymatter" href="chapter-title-{book["chapters"][0]["id"]}.xhtml">Story</a></li>'
+        f'<li><a epub:type="bodymatter" href="chapter-opening-{book["chapters"][0]["id"]}.xhtml">Story</a></li>'
         f'<li><a epub:type="afterword" href="afterword.xhtml">{html.escape(definition["labels"][locale])}</a></li>'
         '</ol></nav>'
     )
@@ -384,7 +392,7 @@ def ncx_html(locale: str, config: dict, book: dict, definition: dict) -> str:
     entries = [
         (config["contents"], "text/nav.xhtml"),
         *[
-            (chapter["labels"][locale], f'text/chapter-title-{chapter["id"]}.xhtml')
+            (chapter["labels"][locale], f'text/chapter-opening-{chapter["id"]}.xhtml')
             for chapter in book["chapters"]
         ],
         (definition["labels"][locale], "text/afterword.xhtml"),
@@ -428,13 +436,11 @@ def package_xml(locale: str, book: dict, modified: datetime, images: list[tuple[
     for chapter in book["chapters"]:
         cid = chapter["id"]
         manifest += [
-            f'<item id="ill-{cid}" href="text/illustration-{cid}.xhtml" media-type="application/xhtml+xml"/>',
-            f'<item id="title-{cid}" href="text/chapter-title-{cid}.xhtml" media-type="application/xhtml+xml"/>',
+            f'<item id="opening-{cid}" href="text/chapter-opening-{cid}.xhtml" media-type="application/xhtml+xml"/>',
             f'<item id="body-{cid}" href="text/chapter-{cid}.xhtml" media-type="application/xhtml+xml"/>',
         ]
         spine += [
-            f'<itemref idref="ill-{cid}"/>',
-            f'<itemref idref="title-{cid}"/>',
+            f'<itemref idref="opening-{cid}" properties="page-spread-left"/>',
             f'<itemref idref="body-{cid}"/>',
         ]
     spine.append('<itemref idref="afterword"/>')
@@ -499,14 +505,42 @@ def validate(path: Path) -> None:
             raise ValueError(f"Missing EPUB files: {sorted(required - names)}")
         package = ET.fromstring(archive.read("EPUB/package.opf"))
         namespace = {"opf": "http://www.idpf.org/2007/opf"}
-        spine_ids = [item.get("idref") for item in package.findall("opf:spine/opf:itemref", namespace)]
+        spine_items = package.findall("opf:spine/opf:itemref", namespace)
+        spine_ids = [item.get("idref") for item in spine_items]
         if spine_ids[:3] != ["cover-page", "title-page", "nav"] or spine_ids[-1:] != ["afterword"]:
             raise ValueError("EPUB reading order must be cover, title, contents, story, afterword")
+        story_ids = spine_ids[3:-1]
+        if len(story_ids) % 2:
+            raise ValueError("EPUB story reading order must use complete chapter sections")
+        xhtml_namespace = {"xhtml": "http://www.w3.org/1999/xhtml"}
+        for offset in range(0, len(story_ids), 2):
+            opening_id, body_id = story_ids[offset : offset + 2]
+            if not opening_id.startswith("opening-"):
+                raise ValueError("EPUB chapter opening must precede its text")
+            chapter_id = opening_id.removeprefix("opening-")
+            if body_id != f"body-{chapter_id}":
+                raise ValueError("EPUB chapter order must be opening spread, chapter text")
+            opening_item, body_item = spine_items[offset + 3 : offset + 5]
+            if opening_item.get("properties") != "page-spread-left":
+                raise ValueError("EPUB chapter opening must request the left side of its spread")
+            if body_item.get("properties") is not None:
+                raise ValueError("EPUB chapter text must remain normally reflowable")
+            opening = ET.fromstring(archive.read(f"EPUB/text/chapter-opening-{chapter_id}.xhtml"))
+            classes = [section.get("class") for section in opening.findall(".//xhtml:section", xhtml_namespace)]
+            if classes != ["chapter-title-page", "illustration-page chapter-illustration"]:
+                raise ValueError("EPUB chapter opening must contain title then illustration")
 
         stylesheet = archive.read("EPUB/styles/book.css").decode("utf-8")
         for forbidden in ("vh", "display: flex", "min-height", "max-height", "page-break", "break-after", "@page"):
             if forbidden in stylesheet:
                 raise ValueError(f"EPUB stylesheet contains physical-page behavior: {forbidden}")
+        for forbidden in ("text-align: justify", "hyphens: auto"):
+            if forbidden in stylesheet:
+                raise ValueError(f"EPUB stylesheet contains forced paragraph formatting: {forbidden}")
+        if "text-indent: 0;" not in stylesheet or "margin: 0 0 1em;" not in stylesheet:
+            raise ValueError("EPUB chapter paragraphs must use block spacing without first-line indentation")
+        if stylesheet.count("break-before: page;") != 1:
+            raise ValueError("EPUB chapter opening must use one standard page break before its illustration")
         for name in names:
             if name.endswith((".xml", ".opf", ".xhtml", ".ncx")):
                 source = archive.read(name)
@@ -593,18 +627,18 @@ def build(
             if asset_id not in illustration_assets or asset_id not in image_href:
                 raise ValueError(f"Unknown illustration: {asset_id}")
 
-            illustration = (
-                '<main class="illustration-page">'
-                f'<img src="{image_href[asset_id]}" alt="{html.escape(lead[0].get("alt", ""), quote=True)}"/>'
-                '</main>'
-            )
             write(
-                stage / f"EPUB/text/illustration-{cid}.xhtml",
-                xml_doc(locale, label, illustration, "illustration-body"),
-            )
-            write(
-                stage / f"EPUB/text/chapter-title-{cid}.xhtml",
-                xml_doc(locale, label, chapter_title_html(label, labels["series"])),
+                stage / f"EPUB/text/chapter-opening-{cid}.xhtml",
+                xml_doc(
+                    locale,
+                    label,
+                    chapter_opening_html(
+                        label,
+                        labels["series"],
+                        image_href[asset_id],
+                        lead[0].get("alt", ""),
+                    ),
+                ),
             )
             write(
                 stage / f"EPUB/text/chapter-{cid}.xhtml",

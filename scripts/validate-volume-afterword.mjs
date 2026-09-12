@@ -111,10 +111,35 @@ const epubCss = epubBuilder.slice(cssStart, cssEnd);
 for (const forbidden of ["vh", "display: flex", "min-height", "max-height", "page-break", "break-after", "@page"]) {
   assert(!epubCss.includes(forbidden), `EPUB stylesheet contains forbidden physical-page behavior: ${forbidden}`);
 }
+for (const forbidden of ["text-align: justify", "hyphens: auto"]) {
+  assert(!epubCss.includes(forbidden), `EPUB stylesheet contains forced paragraph formatting: ${forbidden}`);
+}
+assert(epubCss.includes("hyphens: none;"), "EPUB paragraphs must default to natural, unhyphenated wrapping");
+assert(
+  epubCss.includes("text-indent: 0;") && epubCss.includes("margin: 0 0 1em;"),
+  "EPUB chapter paragraphs must match the Reader's block spacing without first-line indentation",
+);
 assert(epubBuilder.includes('book.get("backMatter")'), "EPUB builder must consume manifest-declared back matter");
 assert(epubBuilder.includes('epub:type="afterword"'), "EPUB builder must expose semantic afterword back matter");
 assert(epubBuilder.includes("'<itemref idref=\"nav\"/>'"), "EPUB Contents must appear in reading order");
 assert(epubBuilder.includes('toc="ncx"'), "EPUB must expose the compatibility navigation fallback");
+const chapterOpeningRef = epubBuilder.indexOf(
+  'f\'<itemref idref="opening-{cid}" properties="page-spread-left"/>\'',
+);
+const chapterBodyRef = epubBuilder.indexOf('f\'<itemref idref="body-{cid}"/>\'', chapterOpeningRef);
+assert(
+  chapterOpeningRef >= 0 && chapterOpeningRef < chapterBodyRef,
+  "EPUB reading order must place each chapter-opening spread before its text",
+);
+const openingTitle = epubBuilder.indexOf("'<section class=\"chapter-title-page\">'");
+const openingIllustration = epubBuilder.indexOf(
+  "'<section class=\"illustration-page chapter-illustration\">'",
+  openingTitle,
+);
+assert(
+  openingTitle >= 0 && openingTitle < openingIllustration && epubCss.includes("break-before: page;"),
+  "EPUB chapter openings must place the title on the first page and illustration on the next page",
+);
 
 const packageJson = readJson("package.json");
 assert(
