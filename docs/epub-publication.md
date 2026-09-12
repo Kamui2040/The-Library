@@ -20,17 +20,18 @@ The builder targets reflowable EPUB 3.3-compatible packaging with:
 - one deterministic non-ISBN UUID identifier per language edition;
 - the approved Volume 1 cover;
 - all ten approved interior illustrations in story order;
+- dedicated illustration, chapter-title, and chapter-body documents so chapter openings remain visually deliberate;
 - the released chapter order and localized chapter labels;
 - semantic paragraph and scene-break IDs retained in XHTML;
-- EPUB navigation derived from the canonical book manifest;
-- a localized afterword after Chapter 9 and before the final Telanas exploration page;
-- the official localized Telanas website link on the title, afterword, and final back-matter pages;
+- styled EPUB navigation derived from the canonical book manifest;
+- a localized afterword immediately after Chapter 9 as the final back-matter section;
+- the official localized Telanas website link on the title page and in the afterword;
 - the visible hyperlink label `The Library - Telanas` for the official site;
 - no direct third-party donation/store link inside the EPUB.
 
-The localized afterword text is stored in `content/worlds/telanas/books/dragon-knight/volume-01/afterword.json`. It records the origin of Telanas as an Ultima Online character background more than twenty years ago, thanks the Ultima Online creators and communities, J.R.R. Tolkien, Bernhard Hennen, the author's best friend and girlfriend, and directs readers to the official Telanas website and its Reader, illustrated edition, spoiler-aware Lexicon, project updates, and future-volume information.
+The EPUB remains reflowable rather than imitating a fixed A5 PDF. Reader-controlled font size and device layout remain available, while the cover, illustrations, title pages, contents, chapter openers, prose spacing, scene breaks, and afterword receive consistent book-oriented styling.
 
-The final website page points readers to the integrated Reader, Lexicon, illustrations, updates, and ways to support the project without binding the ebook permanently to one support provider.
+The localized afterword text is stored in `content/worlds/telanas/books/dragon-knight/volume-01/afterword.json`. It records the origin of Telanas as an Ultima Online character background more than twenty years ago, thanks the Ultima Online creators and communities, J.R.R. Tolkien, Bernhard Hennen, the author's best friend and girlfriend, and directs readers to the official Telanas website and its Reader, illustrated edition, spoiler-aware Lexicon, project updates, and future-volume information.
 
 ## Image handling
 
