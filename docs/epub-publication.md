@@ -15,21 +15,19 @@ The editions remain separate rather than combining English and German into one b
 
 ## Format
 
-The builder targets reflowable EPUB 3.3-compatible packaging with:
+The builder targets polished reflowable EPUB 3.3-compatible packaging with:
 
 - one deterministic non-ISBN UUID identifier per language edition;
 - the approved Volume 1 cover;
 - all ten approved interior illustrations in story order;
-- dedicated illustration, chapter-title, and chapter-body documents so chapter openings remain visually deliberate;
+- dedicated illustration pages, chapter-title pages, and reflowable chapter-body documents;
 - the released chapter order and localized chapter labels;
 - semantic paragraph and scene-break IDs retained in XHTML;
-- styled EPUB navigation derived from the canonical book manifest;
-- a localized afterword immediately after Chapter 9 as the final back-matter section;
-- the official localized Telanas website link on the title page and in the afterword;
+- EPUB navigation derived from the canonical book manifest;
+- a localized afterword after Chapter 9 as the final back-matter section;
+- the official localized Telanas website link on the title and afterword pages;
 - the visible hyperlink label `The Library - Telanas` for the official site;
 - no direct third-party donation/store link inside the EPUB.
-
-The EPUB remains reflowable rather than imitating a fixed A5 PDF. Reader-controlled font size and device layout remain available, while the cover, illustrations, title pages, contents, chapter openers, prose spacing, scene breaks, and afterword receive consistent book-oriented styling.
 
 The localized afterword text is stored in `content/worlds/telanas/books/dragon-knight/volume-01/afterword.json`. It records the origin of Telanas as an Ultima Online character background more than twenty years ago, thanks the Ultima Online creators and communities, J.R.R. Tolkien, Bernhard Hennen, the author's best friend and girlfriend, and directs readers to the official Telanas website and its Reader, illustrated edition, spoiler-aware Lexicon, project updates, and future-volume information.
 
@@ -61,9 +59,11 @@ A distribution candidate must additionally pass the official EPUBCheck validator
 npm run build:epubs:release
 ```
 
+The release builder stages both localized books under their real `.epub` filenames, runs official EPUBCheck against both staged files, and promotes them to `output/epub/` only after both validators succeed. This avoids treating temporary non-`.epub` filenames as generic expansion packages and prevents failed candidates from being promoted as release outputs.
+
 The release command accepts either an `epubcheck` executable on `PATH` or an `EPUBCHECK_JAR` environment variable pointing to the official validator JAR.
 
-Pillow is required for store-safe image derivatives. EPUBCheck is required only for final distribution acceptance.
+Pillow is required for store-safe image derivatives. EPUBCheck is required for final distribution acceptance.
 
 ## Publication gate
 
