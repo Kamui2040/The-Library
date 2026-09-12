@@ -32,6 +32,10 @@ const pdfRoutes = [
   "output/pdf/the-dragon-knight-volume-01-home-en.pdf",
   "output/pdf/der-drachenritter-band-01-zuhause-de.pdf"
 ];
+const epubRoutes = [
+  "output/epub/the-dragon-knight-volume-01-home-en.epub",
+  "output/epub/der-drachenritter-band-01-zuhause-de.epub"
+];
 
 const required = [
   "index.html",
@@ -56,7 +60,8 @@ const required = [
   "de/telanas/lexicon/index.html",
   "en/telanas/timeline/index.html",
   "de/telanas/timeline/index.html",
-  ...pdfRoutes
+  ...pdfRoutes,
+  ...epubRoutes
 ];
 
 const fail = (message) => { throw new Error(message); };
@@ -79,6 +84,12 @@ for (const relativePath of pdfRoutes) {
   const contents = await readFile(path.join(root, relativePath));
   assert(contents.length > 1_000_000, `${relativePath} must contain the complete illustrated edition`);
   assert(contents.subarray(0, 5).toString("ascii") === "%PDF-", `${relativePath} must be a PDF document`);
+}
+
+for (const relativePath of epubRoutes) {
+  const contents = await readFile(path.join(root, relativePath));
+  assert(contents.length > 1_000_000, `${relativePath} must contain the complete illustrated edition`);
+  assert(contents.subarray(0, 4).equals(Buffer.from([0x50, 0x4b, 0x03, 0x04])), `${relativePath} must be an EPUB ZIP document`);
 }
 
 const revisionFor = async (relativePath) => createHash("sha256")
@@ -185,6 +196,8 @@ for (const locale of ["en", "de"]) {
   assert(landingHtml.includes('href="read/dragon-knight/volume-01/"'), `${landingPath} must link to the canonical Reader`);
   assert(landingHtml.includes('href="../../output/pdf/the-dragon-knight-volume-01-home-en.pdf" download'), `${landingPath} must expose the English PDF download`);
   assert(landingHtml.includes('href="../../output/pdf/der-drachenritter-band-01-zuhause-de.pdf" download'), `${landingPath} must expose the German PDF download`);
+  assert(landingHtml.includes('href="../../output/epub/the-dragon-knight-volume-01-home-en.epub" download'), `${landingPath} must expose the English EPUB download`);
+  assert(landingHtml.includes('href="../../output/epub/der-drachenritter-band-01-zuhause-de.epub" download'), `${landingPath} must expose the German EPUB download`);
   assert(landingHtml.includes('href="lexicon/"'), `${landingPath} must link to the canonical Lexicon`);
   assert(landingHtml.includes('lexicon/?category=characters'), `${landingPath} must preserve the Characters category entry point`);
   assert(landingHtml.includes('lexicon/?category=places'), `${landingPath} must preserve the Places category entry point`);

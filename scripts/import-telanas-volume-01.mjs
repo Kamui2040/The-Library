@@ -5,7 +5,7 @@ import { fileURLToPath } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const sourceRepository = "Kamui2040/Telanas";
-const sourceCommit = "64fc412ba7dc99bf41eac10823b4eb38708632b9";
+const sourceCommit = "59e27b4d8f693da9140d47cace9db4ab6869d726";
 const expectedBranch = "release/telanas-volume-01";
 const bookDirectory = "content/worlds/telanas/books/dragon-knight/volume-01";
 const illustrationsDirectory = path.join(root, bookDirectory, "illustrations");
@@ -31,7 +31,7 @@ const chapters = [
     headings: { en: "Prologue — Before the Sky", de: "Prolog — Vor dem Himmel" },
     assetId: "dk-v01-ill-prologue",
     filename: "Band 1 - Approved Primordial Cosmos.png",
-    sourceBlob: "5c499b2b778d205ca34e2a56eabbab497174f921",
+    sourceBlob: "20c79021046c561be1b290a1adec1d6af03773cc",
     alt: {
       en: "Watercolor view of two distant young dragons leaving luminous trails through a forming primordial cosmos.",
       de: "Aquarellansicht zweier ferner junger Drachen, deren leuchtende Spuren sich durch einen entstehenden ursprünglichen Kosmos ziehen.",
