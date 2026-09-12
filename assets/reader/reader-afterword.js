@@ -3,10 +3,11 @@
 
   const body = document.body;
   const section = document.querySelector("[data-reader-afterword-section]");
+  const bookStage = document.querySelector(".book-stage");
   const tocList = document.querySelector("[data-reader-toc-list]");
   const reference = body?.dataset.readerAfterword;
 
-  if (!body || !section || !tocList || !reference) return;
+  if (!body || !section || !bookStage || !tocList || !reference) return;
 
   let payload = null;
 
@@ -15,6 +16,42 @@
   const localized = () => {
     const locale = language();
     return payload?.locales?.[locale] || payload?.locales?.en || null;
+  };
+
+  const openAfterword = () => {
+    section.scrollIntoView({ behavior: "smooth", block: "start" });
+    history.replaceState(null, "", "#reader-afterword");
+  };
+
+  const makeContentsButton = (labelText) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.dataset.readerAfterwordInlineTarget = "";
+
+    const label = document.createElement("span");
+    label.textContent = labelText;
+    const arrow = document.createElement("span");
+    arrow.setAttribute("aria-hidden", "true");
+    arrow.textContent = "→";
+    button.append(label, arrow);
+    button.addEventListener("click", openAfterword);
+    return button;
+  };
+
+  const ensureBookContentsEntries = () => {
+    const data = localized();
+    if (!data) return;
+
+    bookStage.querySelectorAll(".reader-contents .contents-list").forEach((list) => {
+      let button = list.querySelector("[data-reader-afterword-inline-target]");
+      if (!button) {
+        button = makeContentsButton(data.heading);
+        list.append(button);
+      } else {
+        const label = button.querySelector("span");
+        if (label) label.textContent = data.heading;
+      }
+    });
   };
 
   const ensureTocButton = () => {
@@ -26,10 +63,7 @@
       tocButton = document.createElement("button");
       tocButton.type = "button";
       tocButton.dataset.readerAfterwordTarget = "";
-      tocButton.addEventListener("click", () => {
-        section.scrollIntoView({ behavior: "smooth", block: "start" });
-        history.replaceState(null, "", "#reader-afterword");
-      });
+      tocButton.addEventListener("click", openAfterword);
       tocList.append(tocButton);
     }
     tocButton.textContent = data.heading;
@@ -39,8 +73,12 @@
     const data = localized();
     if (!data) return;
 
+    if (section.parentElement !== bookStage) bookStage.append(section);
     section.replaceChildren();
     section.hidden = false;
+
+    const page = document.createElement("article");
+    page.className = "reader-afterword-page book-page body-page";
 
     const inner = document.createElement("div");
     inner.className = "reader-afterword-inner";
@@ -79,8 +117,10 @@
       inner.append(signature);
     }
 
-    section.append(inner);
+    page.append(inner);
+    section.append(page);
     ensureTocButton();
+    ensureBookContentsEntries();
   };
 
   const load = async () => {
@@ -92,12 +132,21 @@
     }
     payload = loaded;
     render();
+
+    if (location.hash === "#reader-afterword") {
+      requestAnimationFrame(() => section.scrollIntoView({ block: "start", behavior: "auto" }));
+    }
   };
 
-  new MutationObserver(() => ensureTocButton()).observe(tocList, { childList: true });
+  new MutationObserver(() => {
+    ensureTocButton();
+    ensureBookContentsEntries();
+  }).observe(bookStage, { childList: true, subtree: true });
+
   window.addEventListener("library-language-change", render);
 
-  load().catch(() => {
+  load().catch((error) => {
+    console.error("Reader afterword load failed", error);
     section.hidden = true;
   });
 })();
