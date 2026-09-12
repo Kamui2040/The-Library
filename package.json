@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build:pdfs": "python3 scripts/build-volume-pdfs.py",
+    "build:pdfs": "python3 scripts/build-volume-pdfs-release.py",
     "build:epubs": "python3 scripts/build-volume-epubs.py",
     "build:epubs:release": "python3 scripts/build-volume-epubs.py --require-epubcheck",
     "validate:content": "node scripts/validate-content.mjs",
