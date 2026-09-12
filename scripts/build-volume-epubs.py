@@ -1,0 +1,550 @@
+#!/usr/bin/env python3
+"""Build polished distributable EPUB 3.3 editions for released Telanas Volume 1 content."""
+
+from __future__ import annotations
+
+import argparse
+import html
+import json
+import os
+import shutil
+import subprocess
+import tempfile
+import uuid
+import zipfile
+from datetime import datetime, timezone
+from pathlib import Path, PurePosixPath
+from xml.etree import ElementTree as ET
+
+try:
+    from PIL import Image, ImageOps
+except ImportError as error:
+    raise SystemExit("EPUB build requires Pillow.") from error
+
+ROOT = Path(__file__).resolve().parents[1]
+BOOK_DIR = ROOT / "content/worlds/telanas/books/dragon-knight/volume-01"
+OUTPUT_DIR = ROOT / "output/epub"
+TMP_DIR = ROOT / "tmp/epubs"
+MIMETYPE = b"application/epub+zip"
+MAX_BYTES = 100 * 1024 * 1024
+MAX_PIXELS = 5_600_000
+MAX_IMAGE_SIZE = (1800, 2700)
+JPEG_QUALITY = 85
+
+LOCALES = {
+    "en": {
+        "filename": "the-dragon-knight-volume-01-home-en.epub",
+        "edition": "English edition",
+        "contents": "Contents",
+        "website": "https://kamui2040.github.io/The-Library/en/telanas/",
+    },
+    "de": {
+        "filename": "der-drachenritter-band-01-zuhause-de.epub",
+        "edition": "Deutsche Ausgabe",
+        "contents": "Inhalt",
+        "website": "https://kamui2040.github.io/The-Library/de/telanas/",
+    },
+}
+
+CSS = '''@charset "UTF-8";
+@page { margin: 5%; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  line-height: 1.55;
+  text-rendering: optimizeLegibility;
+  hyphens: auto;
+  orphans: 2;
+  widows: 2;
+}
+main { max-width: 42em; margin: 0 auto; padding: 0 4%; }
+h1, h2, p { margin-top: 0; }
+a { color: inherit; text-decoration-thickness: .08em; text-underline-offset: .18em; }
+
+.cover-body, .illustration-body { margin: 0; padding: 0; }
+.cover-page, .illustration-page {
+  width: 100%;
+  min-height: 94vh;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.cover-page img, .illustration-page img {
+  display: block;
+  max-width: 100%;
+  max-height: 94vh;
+  width: auto;
+  height: auto;
+  margin: auto;
+}
+
+.title-page, .chapter-title-page {
+  min-height: 82vh;
+  box-sizing: border-box;
+  padding-top: 20vh;
+  text-align: center;
+  page-break-after: always;
+  break-after: page;
+}
+.title-page .world {
+  margin-bottom: 2.4em;
+  font-size: .78em;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+}
+.title-page .series { margin: 0; font-size: 1.55em; font-weight: normal; }
+.title-page .rule, .chapter-title-page .rule {
+  width: 4.5em;
+  margin: 1.4em auto;
+  border: 0;
+  border-top: .08em solid currentColor;
+  opacity: .45;
+}
+.title-page .volume { margin: 0; font-size: 2em; font-weight: bold; }
+.title-page .edition { margin-top: 1.4em; font-size: .88em; opacity: .75; }
+.title-page .website { margin-top: 11em; font-size: .84em; }
+
+.contents-page { padding-top: 8vh; }
+.contents-page h1 { margin-bottom: 2em; text-align: center; font-size: 1.65em; }
+.contents-page ol { margin: 0; padding: 0; list-style: none; }
+.contents-page li { margin: 0; padding: .68em 0; border-bottom: .04em solid rgba(127,127,127,.28); }
+.contents-page a { display: block; text-decoration: none; }
+
+.chapter-title-page .kicker {
+  margin-bottom: 1.1em;
+  font-size: .76em;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  opacity: .72;
+}
+.chapter-title-page h1 { margin: 0; font-size: 1.85em; font-weight: bold; }
+.chapter-title-page .series { margin-top: 1.4em; font-size: .82em; opacity: .65; }
+
+.chapter-body { padding-top: 1.5em; }
+.chapter-body p {
+  margin: 0;
+  text-indent: 1.25em;
+}
+.chapter-body p.first,
+.chapter-body p.after-break { text-indent: 0; }
+.scene-break {
+  margin: 1.8em 0;
+  text-align: center;
+  text-indent: 0 !important;
+  letter-spacing: .25em;
+  opacity: .72;
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
+.back-matter { padding-top: 7vh; }
+.back-matter h1 { margin-bottom: 2em; text-align: center; font-size: 1.65em; }
+.back-matter p { margin: 0 0 1em; text-indent: 0; }
+.back-matter .website-link { margin: 1.8em 0 2em; text-align: center; }
+.back-matter .website-link a { font-weight: bold; }
+.back-matter .signature { margin-top: 2.4em; text-align: right; font-style: italic; }
+'''
+
+CONTAINER = '''<?xml version="1.0" encoding="UTF-8"?>
+<container version="1.0" xmlns="urn:oasis:names:tc:opendocument:xmlns:container">
+<rootfiles><rootfile full-path="EPUB/package.opf" media-type="application/oebps-package+xml"/></rootfiles>
+</container>
+'''
+
+
+def read_json(path: Path) -> dict:
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def safe_path(value: str) -> str:
+    path = PurePosixPath(value)
+    if path.is_absolute() or ".." in path.parts or not path.parts:
+        raise ValueError(f"Unsafe EPUB path: {value}")
+    return path.as_posix()
+
+
+def xml_doc(locale: str, title: str, body: str, body_class: str = "") -> str:
+    class_attr = f' class="{html.escape(body_class, quote=True)}"' if body_class else ""
+    return f'''<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" xml:lang="{locale}" lang="{locale}">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>{html.escape(title)}</title>
+  <link rel="stylesheet" href="../styles/book.css" type="text/css"/>
+</head>
+<body{class_attr}>{body}</body>
+</html>
+'''
+
+
+def modified_time() -> datetime:
+    if os.environ.get("SOURCE_DATE_EPOCH"):
+        return datetime.fromtimestamp(int(os.environ["SOURCE_DATE_EPOCH"]), timezone.utc).replace(microsecond=0)
+    rel = BOOK_DIR.relative_to(ROOT)
+    result = subprocess.run(
+        ["git", "log", "-1", "--format=%cI", "--", str(rel)],
+        cwd=ROOT,
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+    if result.returncode or not result.stdout.strip():
+        raise RuntimeError("Build from the Git checkout or set SOURCE_DATE_EPOCH.")
+    return datetime.fromisoformat(result.stdout.strip().replace("Z", "+00:00")).astimezone(timezone.utc).replace(microsecond=0)
+
+
+def identifier(locale: str) -> str:
+    value = uuid.uuid5(
+        uuid.NAMESPACE_URL,
+        f"https://kamui2040.github.io/The-Library/{locale}/telanas/#dragon-knight-volume-01",
+    )
+    return f"urn:uuid:{value}"
+
+
+def optimize(source: Path, destination: Path) -> None:
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    with Image.open(source) as opened:
+        image = ImageOps.exif_transpose(opened)
+        if image.mode != "RGB":
+            if "A" in image.getbands():
+                background = Image.new("RGB", image.size, "white")
+                background.paste(image, mask=image.getchannel("A"))
+                image = background
+            else:
+                image = image.convert("RGB")
+        image.thumbnail(MAX_IMAGE_SIZE, Image.Resampling.LANCZOS)
+        if image.width * image.height > MAX_PIXELS:
+            ratio = (MAX_PIXELS / float(image.width * image.height)) ** 0.5
+            image = image.resize(
+                (max(1, int(image.width * ratio)), max(1, int(image.height * ratio))),
+                Image.Resampling.LANCZOS,
+            )
+        image.save(destination, "JPEG", quality=JPEG_QUALITY, optimize=True, progressive=False)
+
+
+def write(path: Path, value: str) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(value, encoding="utf-8", newline="\n")
+
+
+def check_release(book: dict, edition: dict, afterword: dict, locale: str) -> None:
+    for name, item in (("book", book), ("edition", edition), ("afterword", afterword)):
+        if item.get("state") != "published" or item.get("contentMode") != "released":
+            raise ValueError(f"{name} is not released publication content")
+    if edition.get("locale") != locale:
+        raise ValueError(f"Edition locale mismatch: {locale}")
+    if [x["id"] for x in edition["chapters"]] != [x["id"] for x in book["chapters"]]:
+        raise ValueError(f"Chapter order mismatch: {locale}")
+    data = afterword.get("locales", {}).get(locale)
+    if not isinstance(data, dict):
+        raise ValueError(f"Missing afterword locale: {locale}")
+    if not data.get("websiteLabel") or not data.get("websiteUrl"):
+        raise ValueError(f"Incomplete afterword website link: {locale}")
+
+
+def split_chapter_label(label: str) -> tuple[str, str]:
+    parts = label.split(" — ", 1)
+    if len(parts) == 2:
+        return parts[0], parts[1]
+    return "", label
+
+
+def chapter_title_html(label: str, series: str) -> str:
+    kicker, title = split_chapter_label(label)
+    kicker_html = f'<p class="kicker">{html.escape(kicker)}</p>' if kicker else ""
+    return (
+        '<main class="chapter-title-page" epub:type="titlepage">'
+        f'{kicker_html}<hr class="rule"/><h1>{html.escape(title)}</h1>'
+        f'<p class="series">{html.escape(series)}</p></main>'
+    )
+
+
+def chapter_body_html(chapter: dict) -> str:
+    out = ['<main class="chapter-body" epub:type="chapter">']
+    first, after_break = True, False
+    for block in chapter["blocks"]:
+        kind = block["type"]
+        if kind == "illustration":
+            continue
+        block_id = html.escape(block["id"], quote=True)
+        if kind == "scene-break":
+            out.append(f'<p id="{block_id}" class="scene-break" aria-hidden="true">* * *</p>')
+            after_break = True
+            continue
+        if kind != "paragraph":
+            raise ValueError(f"Unsupported block type: {kind}")
+        classes = " ".join(x for x, active in (("first", first), ("after-break", after_break)) if active)
+        attr = f' class="{classes}"' if classes else ""
+        out.append(f'<p id="{block_id}"{attr}>{html.escape(block["text"])}</p>')
+        first, after_break = False, False
+    out.append("</main>")
+    return "\n".join(out)
+
+
+def afterword_html(locale: str, afterword: dict) -> str:
+    data = afterword["locales"][locale]
+    website = data["websiteUrl"]
+    out = [f'<main class="back-matter" epub:type="afterword"><h1>{html.escape(data["heading"])}</h1>']
+    out.extend(f"<p>{html.escape(value)}</p>" for value in data["paragraphs"])
+    out.append(
+        f'<p class="website-link"><a href="{html.escape(website, quote=True)}">'
+        f'{html.escape(data["websiteLabel"])}</a></p>'
+    )
+    out.extend(f"<p>{html.escape(value)}</p>" for value in data["closingParagraphs"])
+    out.append(f'<p class="signature">{html.escape(data["signature"])}</p></main>')
+    return "\n".join(out)
+
+
+def nav_html(locale: str, config: dict, book: dict, afterword: dict) -> str:
+    chapter_links = [
+        f'<li><a href="chapter-title-{c["id"]}.xhtml">{html.escape(c["labels"][locale])}</a></li>'
+        for c in book["chapters"]
+    ]
+    chapter_links.append(
+        f'<li><a href="afterword.xhtml">{html.escape(afterword["locales"][locale]["heading"])}</a></li>'
+    )
+    toc = (
+        f'<nav epub:type="toc" id="toc" class="contents-page"><h1>{html.escape(config["contents"])}</h1>'
+        f'<ol>{"".join(chapter_links)}</ol></nav>'
+    )
+    landmarks = (
+        '<nav epub:type="landmarks" hidden="hidden"><ol>'
+        '<li><a epub:type="cover" href="cover.xhtml">Cover</a></li>'
+        '<li><a epub:type="titlepage" href="title.xhtml">Title page</a></li>'
+        f'<li><a epub:type="bodymatter" href="chapter-title-{book["chapters"][0]["id"]}.xhtml">Story</a></li>'
+        f'<li><a epub:type="afterword" href="afterword.xhtml">{html.escape(afterword["locales"][locale]["heading"])}</a></li>'
+        '</ol></nav>'
+    )
+    return xml_doc(locale, config["contents"], toc + landmarks)
+
+
+def package_xml(locale: str, book: dict, modified: datetime, images: list[tuple[str, str, bool]]) -> str:
+    labels = book["labels"][locale]
+    title = f'{labels["series"]}: {labels["volume"]}'
+    manifest = [
+        '<item id="nav" href="text/nav.xhtml" media-type="application/xhtml+xml" properties="nav"/>',
+        '<item id="css" href="styles/book.css" media-type="text/css"/>',
+        '<item id="cover-page" href="text/cover.xhtml" media-type="application/xhtml+xml"/>',
+        '<item id="title-page" href="text/title.xhtml" media-type="application/xhtml+xml"/>',
+        '<item id="afterword" href="text/afterword.xhtml" media-type="application/xhtml+xml"/>',
+    ]
+    spine = ['<itemref idref="cover-page"/>', '<itemref idref="title-page"/>']
+    for chapter in book["chapters"]:
+        cid = chapter["id"]
+        manifest += [
+            f'<item id="ill-{cid}" href="text/illustration-{cid}.xhtml" media-type="application/xhtml+xml"/>',
+            f'<item id="title-{cid}" href="text/chapter-title-{cid}.xhtml" media-type="application/xhtml+xml"/>',
+            f'<item id="body-{cid}" href="text/chapter-{cid}.xhtml" media-type="application/xhtml+xml"/>',
+        ]
+        spine += [
+            f'<itemref idref="ill-{cid}"/>',
+            f'<itemref idref="title-{cid}"/>',
+            f'<itemref idref="body-{cid}"/>',
+        ]
+    spine.append('<itemref idref="afterword"/>')
+    for item_id, href, cover in images:
+        prop = ' properties="cover-image"' if cover else ""
+        manifest.append(f'<item id="{item_id}" href="{href}" media-type="image/jpeg"{prop}/>')
+    return f'''<?xml version="1.0" encoding="UTF-8"?>
+<package xmlns="http://www.idpf.org/2007/opf" version="3.0" unique-identifier="pub-id" xml:lang="{locale}">
+<metadata xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <dc:identifier id="pub-id">{identifier(locale)}</dc:identifier>
+  <dc:title>{html.escape(title)}</dc:title>
+  <dc:creator>K2040</dc:creator>
+  <dc:publisher>The Library</dc:publisher>
+  <dc:language>{locale}</dc:language>
+  <meta property="dcterms:modified">{modified.strftime("%Y-%m-%dT%H:%M:%SZ")}</meta>
+  <meta property="rendition:layout">reflowable</meta>
+  <meta property="rendition:orientation">auto</meta>
+  <meta property="rendition:spread">auto</meta>
+</metadata>
+<manifest>{''.join(manifest)}</manifest>
+<spine page-progression-direction="ltr">{''.join(spine)}</spine>
+</package>
+'''
+
+
+def zip_time(value: datetime) -> tuple[int, int, int, int, int, int]:
+    return (max(1980, value.year), value.month, value.day, value.hour, value.minute, value.second)
+
+
+def make_epub(stage: Path, destination: Path, modified: datetime) -> None:
+    with zipfile.ZipFile(destination, "w") as archive:
+        info = zipfile.ZipInfo("mimetype", zip_time(modified))
+        info.compress_type = zipfile.ZIP_STORED
+        archive.writestr(info, MIMETYPE)
+        for source in sorted(stage.rglob("*")):
+            if not source.is_file():
+                continue
+            arcname = safe_path(source.relative_to(stage).as_posix())
+            info = zipfile.ZipInfo(arcname, zip_time(modified))
+            info.compress_type = zipfile.ZIP_DEFLATED
+            archive.writestr(info, source.read_bytes())
+
+
+def validate(path: Path) -> None:
+    if path.stat().st_size >= MAX_BYTES:
+        raise ValueError(f"EPUB exceeds 100 MiB: {path.name}")
+    with zipfile.ZipFile(path) as archive:
+        infos = archive.infolist()
+        if not infos or infos[0].filename != "mimetype" or infos[0].compress_type != zipfile.ZIP_STORED:
+            raise ValueError("Invalid EPUB mimetype placement/compression")
+        if archive.read("mimetype") != MIMETYPE:
+            raise ValueError("Invalid EPUB mimetype")
+        names = {x.filename for x in infos}
+        required = {
+            "META-INF/container.xml",
+            "EPUB/package.opf",
+            "EPUB/text/nav.xhtml",
+            "EPUB/text/afterword.xhtml",
+        }
+        if required - names:
+            raise ValueError(f"Missing EPUB files: {sorted(required - names)}")
+        for name in names:
+            if name.endswith((".xml", ".opf", ".xhtml")):
+                ET.fromstring(archive.read(name))
+            if name.startswith("EPUB/images/") and name.endswith(".jpg"):
+                with Image.open(archive.open(name)) as image:
+                    if image.width * image.height > MAX_PIXELS:
+                        raise ValueError(f"Image exceeds 5.6 MP: {name}")
+
+
+def run_epubcheck(path: Path, required: bool) -> None:
+    executable = shutil.which("epubcheck")
+    jar = os.environ.get("EPUBCHECK_JAR")
+    command = [executable, str(path)] if executable else (["java", "-jar", jar, str(path)] if jar else None)
+    if not command:
+        if required:
+            raise RuntimeError("Official EPUBCheck is required. Install epubcheck or set EPUBCHECK_JAR.")
+        print(f"EPUBCheck unavailable; internal validation only: {path.name}")
+        return
+    subprocess.run(command, cwd=ROOT, check=True)
+
+
+def build(book: dict, afterword: dict, locale: str, modified: datetime, destination: Path, require_epubcheck: bool) -> None:
+    config = LOCALES[locale]
+    edition = read_json(BOOK_DIR / book["editions"][locale])
+    check_release(book, edition, afterword, locale)
+    illustration_assets = {x["id"]: x for x in book["illustrations"]}
+
+    with tempfile.TemporaryDirectory(dir=TMP_DIR) as temp:
+        stage = Path(temp)
+        write(stage / "META-INF/container.xml", CONTAINER)
+        write(stage / "EPUB/styles/book.css", CSS)
+
+        images = [("cover-image", "images/cover.jpg", True)]
+        optimize(BOOK_DIR / safe_path(book["cover"]["src"]), stage / "EPUB/images/cover.jpg")
+
+        image_href: dict[str, str] = {}
+        for number, asset in enumerate(book["illustrations"], 1):
+            name = f"illustration-{number:02d}.jpg"
+            optimize(BOOK_DIR / safe_path(asset["src"]), stage / "EPUB/images" / name)
+            image_href[asset["id"]] = f"../images/{name}"
+            images.append((f"image-{number:02d}", f"images/{name}", False))
+
+        labels = book["labels"][locale]
+        title = f'{labels["series"]}: {labels["volume"]}'
+        cover_alt = book.get("cover", {}).get("alt", {}).get(locale, "")
+        cover = (
+            '<main class="cover-page" epub:type="cover">'
+            f'<img src="../images/cover.jpg" alt="{html.escape(cover_alt, quote=True)}"/>'
+            '</main>'
+        )
+        write(stage / "EPUB/text/cover.xhtml", xml_doc(locale, title, cover, "cover-body"))
+
+        title_body = (
+            '<main class="title-page" epub:type="titlepage">'
+            f'<p class="world">{html.escape(labels["world"])}</p>'
+            f'<p class="series">{html.escape(labels["series"])}</p>'
+            '<hr class="rule"/>'
+            f'<h1 class="volume">{html.escape(labels["volume"])}</h1>'
+            f'<p class="edition">{html.escape(config["edition"])}</p>'
+            f'<p class="website"><a href="{html.escape(config["website"], quote=True)}">The Library - Telanas</a></p>'
+            '</main>'
+        )
+        write(stage / "EPUB/text/title.xhtml", xml_doc(locale, title, title_body))
+
+        chapter_labels = {c["id"]: c["labels"][locale] for c in book["chapters"]}
+        for chapter in edition["chapters"]:
+            cid = chapter["id"]
+            label = chapter_labels[cid]
+            lead = [block for block in chapter["blocks"] if block["type"] == "illustration"]
+            if len(lead) != 1 or lead[0].get("placement") != "before-title":
+                raise ValueError(f"{locale} {cid}: expected one before-title illustration")
+            asset_id = lead[0]["asset"]
+            if asset_id not in illustration_assets or asset_id not in image_href:
+                raise ValueError(f"Unknown illustration: {asset_id}")
+
+            illustration = (
+                '<main class="illustration-page">'
+                f'<img src="{image_href[asset_id]}" alt="{html.escape(lead[0].get("alt", ""), quote=True)}"/>'
+                '</main>'
+            )
+            write(
+                stage / f"EPUB/text/illustration-{cid}.xhtml",
+                xml_doc(locale, label, illustration, "illustration-body"),
+            )
+            write(
+                stage / f"EPUB/text/chapter-title-{cid}.xhtml",
+                xml_doc(locale, label, chapter_title_html(label, labels["series"])),
+            )
+            write(
+                stage / f"EPUB/text/chapter-{cid}.xhtml",
+                xml_doc(locale, label, chapter_body_html(chapter)),
+            )
+
+        write(
+            stage / "EPUB/text/afterword.xhtml",
+            xml_doc(
+                locale,
+                afterword["locales"][locale]["heading"],
+                afterword_html(locale, afterword),
+            ),
+        )
+        write(stage / "EPUB/text/nav.xhtml", nav_html(locale, config, book, afterword))
+        write(stage / "EPUB/package.opf", package_xml(locale, book, modified, images))
+        make_epub(stage, destination, modified)
+
+    validate(destination)
+    run_epubcheck(destination, require_epubcheck)
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--require-epubcheck", action="store_true")
+    args = parser.parse_args()
+
+    book = read_json(BOOK_DIR / "book.json")
+    afterword = read_json(BOOK_DIR / "afterword.json")
+    if set(book.get("locales", [])) != set(LOCALES):
+        raise ValueError("EPUB locales must match released book locales")
+
+    modified = modified_time()
+    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    TMP_DIR.mkdir(parents=True, exist_ok=True)
+
+    staged: list[tuple[Path, Path]] = []
+    try:
+        for locale, config in LOCALES.items():
+            temporary = TMP_DIR / f'.{config["filename"]}.tmp'
+            final = OUTPUT_DIR / config["filename"]
+            build(book, afterword, locale, modified, temporary, args.require_epubcheck)
+            staged.append((temporary, final))
+
+        for temporary, final in staged:
+            os.replace(temporary, final)
+            print(f"Built {final.relative_to(ROOT)}")
+    finally:
+        for temporary, _ in staged:
+            temporary.unlink(missing_ok=True)
+
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,81 @@
+.reader-afterword {
+  width: 100%;
+  margin: 2rem auto 5rem;
+  scroll-margin-top: calc(var(--reader-header-height, 58px) + 24px);
+}
+
+.reader-afterword[hidden] {
+  display: none;
+}
+
+.reader-afterword-page {
+  width: min(50%, 600px);
+  min-height: clamp(675px, 75vh, 900px);
+  height: auto !important;
+  margin: 0 auto;
+  box-sizing: border-box;
+  overflow: visible !important;
+  padding: clamp(3rem, 7vw, 5rem) clamp(2rem, 5vw, 4rem);
+  background: var(--page-surface);
+  color: var(--text);
+  border: 1px solid var(--border-soft);
+  box-shadow: 0 22px 60px rgba(0, 0, 0, .28);
+  font-family: var(--reader-font-family);
+  font-size: calc(1rem * var(--reader-font-scale));
+  line-height: var(--reader-line-height);
+}
+
+.reader-afterword-inner {
+  max-width: 36rem;
+  margin: 0 auto;
+}
+
+.reader-afterword h2 {
+  margin: 0 0 2.3rem;
+  text-align: center;
+  font-family: var(--reader-font-family);
+  font-size: clamp(1.7rem, 3vw, 2.2rem);
+  font-weight: 650;
+}
+
+.reader-afterword p {
+  margin: 0 0 1.05rem;
+  line-height: inherit;
+  text-wrap: pretty;
+}
+
+.reader-afterword-link {
+  padding: .75rem 0 1.1rem;
+  text-align: center;
+}
+
+.reader-afterword-link a {
+  color: var(--text);
+  font-weight: 700;
+  text-decoration-thickness: .08em;
+  text-underline-offset: .2em;
+}
+
+.reader-afterword-signature {
+  margin-top: 2.25rem !important;
+  text-align: right;
+  font-style: italic;
+}
+
+@media (max-width: 980px) {
+  .reader-afterword-page {
+    width: min(100%, 460px);
+  }
+}
+
+@media (max-width: 700px) {
+  .reader-afterword {
+    margin-top: 1.5rem;
+  }
+
+  .reader-afterword-page {
+    width: min(100%, 430px);
+    min-height: min(675px, 78vh);
+    padding: 2rem 1.35rem 2.5rem;
+  }
+}
