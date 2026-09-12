@@ -471,6 +471,18 @@ try {
       illustrationsDirectory: "assets/illustrations/band-01/",
     },
     illustrations: illustrationDefinitions,
+    backMatter: [
+      {
+        id: "afterword",
+        type: "afterword",
+        slug: "afterword",
+        source: "afterword.json",
+        labels: {
+          en: "Afterword",
+          de: "Nachwort",
+        },
+      },
+    ],
     labels: {
       en: {
         world: "Telanas",
