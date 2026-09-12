@@ -353,7 +353,7 @@ def package_xml(locale: str, book: dict, modified: datetime, images: list[tuple[
         prop = ' properties="cover-image"' if cover else ""
         manifest.append(f'<item id="{item_id}" href="{href}" media-type="image/jpeg"{prop}/>')
     return f'''<?xml version="1.0" encoding="UTF-8"?>
-<package xmlns="http://www.idpf.org/2007/opf" version="3.0" unique-identifier="pub-id" xml:lang="{locale}" page-progression-direction="ltr">
+<package xmlns="http://www.idpf.org/2007/opf" version="3.0" unique-identifier="pub-id" xml:lang="{locale}">
 <metadata xmlns:dc="http://purl.org/dc/elements/1.1/">
   <dc:identifier id="pub-id">{identifier(locale)}</dc:identifier>
   <dc:title>{html.escape(title)}</dc:title>
@@ -366,7 +366,7 @@ def package_xml(locale: str, book: dict, modified: datetime, images: list[tuple[
   <meta property="rendition:spread">auto</meta>
 </metadata>
 <manifest>{''.join(manifest)}</manifest>
-<spine>{''.join(spine)}</spine>
+<spine page-progression-direction="ltr">{''.join(spine)}</spine>
 </package>
 '''
 
