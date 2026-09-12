@@ -23,8 +23,12 @@ The builder targets reflowable EPUB 3.3-compatible packaging with:
 - the released chapter order and localized chapter labels;
 - semantic paragraph and scene-break IDs retained in XHTML;
 - EPUB navigation derived from the canonical book manifest;
-- the official localized Telanas website link on the title/back-matter pages;
+- a localized afterword after Chapter 9 and before the final Telanas exploration page;
+- the official localized Telanas website link on the title, afterword, and final back-matter pages;
+- the visible hyperlink label `The Library - Telanas` for the official site;
 - no direct third-party donation/store link inside the EPUB.
+
+The localized afterword text is stored in `content/worlds/telanas/books/dragon-knight/volume-01/afterword.json`. It records the origin of Telanas as an Ultima Online character background more than twenty years ago, thanks the Ultima Online creators and communities, J.R.R. Tolkien, Bernhard Hennen, the author's best friend and girlfriend, and directs readers to the official Telanas website and its Reader, illustrated edition, spoiler-aware Lexicon, project updates, and future-volume information.
 
 The final website page points readers to the integrated Reader, Lexicon, illustrations, updates, and ways to support the project without binding the ebook permanently to one support provider.
 
@@ -48,7 +52,7 @@ Build both editions with:
 npm run build:epubs
 ```
 
-This performs internal validation of the EPUB ZIP structure, required package files, XML parsing, manifest targets, image pixel limits, and the 100 MiB size ceiling.
+This performs internal validation of the EPUB ZIP structure, required package files, XML parsing, image pixel limits, and the 100 MiB size ceiling.
 
 A distribution candidate must additionally pass the official EPUBCheck validator:
 
