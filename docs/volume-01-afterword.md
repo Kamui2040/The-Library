@@ -12,7 +12,7 @@ That file is the content source for:
 - the illustrated English and German PDF editions;
 - the English and German EPUB editions.
 
-The website keeps the afterword outside the canonical story chapter list so it does not change chapter-based spoiler progress or Volume 1 completion semantics. It is rendered inside the Reader's book stage as publication back matter and is exposed from both the Reader table of contents and the in-book Contents page.
+The website keeps the afterword outside the canonical story chapter list so it does not change chapter-based spoiler progress or Volume 1 completion semantics. It is rendered inside the Reader's book stage as publication back matter, uses the same book-page visual language as the Reader, and is exposed from both the Reader table of contents and the in-book Contents page.
 
 The PDF build appends the localized afterword after Chapter 9, includes it in PDF navigation, and preserves the clickable `The Library - Telanas` website link.
 
