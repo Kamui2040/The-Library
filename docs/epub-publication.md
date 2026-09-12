@@ -1,0 +1,65 @@
+# EPUB Publication Preparation
+
+**Status:** Distribution-preparation contract
+
+Telanas Volume 1 EPUBs are generated from the already released, publication-safe Reader content in The Library. The builder does not read the private Telanas repository directly and does not publish or upload anything to an external storefront.
+
+## Outputs
+
+The EPUB build produces separate localized editions:
+
+- `output/epub/the-dragon-knight-volume-01-home-en.epub`
+- `output/epub/der-drachenritter-band-01-zuhause-de.epub`
+
+The editions remain separate rather than combining English and German into one bilingual file.
+
+## Format
+
+The builder targets reflowable EPUB 3.3-compatible packaging with:
+
+- one deterministic non-ISBN UUID identifier per language edition;
+- the approved Volume 1 cover;
+- all ten approved interior illustrations in story order;
+- the released chapter order and localized chapter labels;
+- semantic paragraph and scene-break IDs retained in XHTML;
+- EPUB navigation derived from the canonical book manifest;
+- the official localized Telanas website link on the title/back-matter pages;
+- no direct third-party donation/store link inside the EPUB.
+
+The final website page points readers to the integrated Reader, Lexicon, illustrations, updates, and ways to support the project without binding the ebook permanently to one support provider.
+
+## Image handling
+
+Original publication assets remain untouched. EPUB builds create temporary JPEG derivatives only inside the generated ebook:
+
+- maximum dimensions: 1800 × 2700 px;
+- maximum image area: 5.6 megapixels;
+- JPEG quality: 85;
+- non-progressive JPEG;
+- transparent source images are flattened onto white only in the EPUB derivative.
+
+This keeps the EPUB below the 100 MiB safety target while preserving the approved source artwork in the repository.
+
+## Build and validation
+
+Build both editions with:
+
+```text
+npm run build:epubs
+```
+
+This performs internal validation of the EPUB ZIP structure, required package files, XML parsing, manifest targets, image pixel limits, and the 100 MiB size ceiling.
+
+A distribution candidate must additionally pass the official EPUBCheck validator:
+
+```text
+npm run build:epubs:release
+```
+
+The release command accepts either an `epubcheck` executable on `PATH` or an `EPUBCHECK_JAR` environment variable pointing to the official validator JAR.
+
+Pillow is required for store-safe image derivatives. EPUBCheck is required only for final distribution acceptance.
+
+## Publication gate
+
+Successful local generation and EPUBCheck validation do not authorize external publication. Store submission, pricing, account changes, ISBN decisions, or uploads to Amazon, Kobo, Google Play Books, Apple Books, or another distributor remain explicit publication actions and require separate user approval.
