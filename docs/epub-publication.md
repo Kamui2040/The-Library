@@ -19,6 +19,7 @@ The builder targets conservative reflowable EPUB 3.3 packaging with:
 
 - one deterministic non-ISBN UUID identifier per language edition;
 - the approved Volume 1 cover;
+- EPUB 3 cover-image and landmarks declarations, plus EPUB 2 cover metadata and a guide fallback for older reader libraries;
 - all ten approved interior illustrations in story order;
 - a visible Contents document in the spine after the title page;
 - separate illustration, chapter-title, and reflowable chapter-body documents in reading order;

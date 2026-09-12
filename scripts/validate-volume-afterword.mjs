@@ -123,6 +123,11 @@ assert(epubBuilder.includes('book.get("backMatter")'), "EPUB builder must consum
 assert(epubBuilder.includes('epub:type="afterword"'), "EPUB builder must expose semantic afterword back matter");
 assert(epubBuilder.includes("'<itemref idref=\"nav\"/>'"), "EPUB Contents must appear in reading order");
 assert(epubBuilder.includes('toc="ncx"'), "EPUB must expose the compatibility navigation fallback");
+assert(
+  epubBuilder.includes('<meta name="cover" content="cover-image"/>') &&
+    epubBuilder.includes('<reference type="cover" title="Cover" href="text/cover.xhtml"/>'),
+  "EPUB must expose cover metadata for EPUB 2 and EPUB 3 readers",
+);
 const chapterRef = epubBuilder.indexOf(
   'f\'<itemref idref="chapter-{cid}" properties="page-spread-left"/>\'',
 );

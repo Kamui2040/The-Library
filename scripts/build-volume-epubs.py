@@ -454,6 +454,7 @@ def package_xml(locale: str, book: dict, modified: datetime, images: list[tuple[
   <dc:creator>K2040</dc:creator>
   <dc:publisher>The Library</dc:publisher>
   <dc:language>{locale}</dc:language>
+  <meta name="cover" content="cover-image"/>
   <meta property="dcterms:modified">{modified.strftime("%Y-%m-%dT%H:%M:%SZ")}</meta>
   <meta property="rendition:layout">reflowable</meta>
   <meta property="rendition:orientation">auto</meta>
@@ -461,6 +462,7 @@ def package_xml(locale: str, book: dict, modified: datetime, images: list[tuple[
 </metadata>
 <manifest>{''.join(manifest)}</manifest>
 <spine toc="ncx" page-progression-direction="ltr">{''.join(spine)}</spine>
+<guide><reference type="cover" title="Cover" href="text/cover.xhtml"/></guide>
 </package>
 '''
 
@@ -508,6 +510,20 @@ def validate(path: Path, book: dict) -> None:
             item.get("id"): item.get("href")
             for item in package.findall("opf:manifest/opf:item", namespace)
         }
+        cover_item = package.find("opf:manifest/opf:item[@id='cover-image']", namespace)
+        if (
+            cover_item is None
+            or cover_item.get("href") != "images/cover.jpg"
+            or cover_item.get("media-type") != "image/jpeg"
+            or cover_item.get("properties") != "cover-image"
+        ):
+            raise ValueError("EPUB 3 cover image declaration is missing or invalid")
+        legacy_cover = package.find("opf:metadata/opf:meta[@name='cover']", namespace)
+        if legacy_cover is None or legacy_cover.get("content") != "cover-image":
+            raise ValueError("EPUB 2 cover image compatibility metadata is missing or invalid")
+        guide_cover = package.find("opf:guide/opf:reference[@type='cover']", namespace)
+        if guide_cover is None or guide_cover.get("href") != "text/cover.xhtml":
+            raise ValueError("EPUB 2 cover guide compatibility reference is missing or invalid")
         spine_items = package.findall("opf:spine/opf:itemref", namespace)
         spine_ids = [item.get("idref") for item in spine_items]
         if spine_ids[:3] != ["cover-page", "title-page", "nav"] or spine_ids[-1:] != ["afterword"]:
@@ -533,6 +549,15 @@ def validate(path: Path, book: dict) -> None:
             raise ValueError("EPUB must not split chapter openings into extra spine documents")
 
         navigation = ET.fromstring(archive.read("EPUB/text/nav.xhtml"))
+        landmark_cover = navigation.find(
+            ".//xhtml:nav[@epub:type='landmarks']/xhtml:ol/xhtml:li/xhtml:a[@epub:type='cover']",
+            {
+                **xhtml_namespace,
+                "epub": "http://www.idpf.org/2007/ops",
+            },
+        )
+        if landmark_cover is None or landmark_cover.get("href") != "cover.xhtml":
+            raise ValueError("EPUB 3 cover landmark is missing or invalid")
         toc_links = navigation.findall(
             ".//xhtml:nav[@id='toc']/xhtml:ol/xhtml:li/xhtml:a",
             xhtml_namespace,

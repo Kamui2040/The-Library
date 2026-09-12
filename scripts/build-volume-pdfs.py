@@ -431,7 +431,6 @@ def build_story(book: dict, edition: dict, locale: str, labels: dict[str, str], 
         PageBreak(),
         TitlePage(labels),
         PageBreak(),
-        Spacer(1, 19 * mm),
         Paragraph(escape(labels["contents"]), styles["contents_heading"]),
     ]
 
