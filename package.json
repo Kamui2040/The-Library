@@ -5,7 +5,7 @@
   "scripts": {
     "build:pdfs": "python3 scripts/build-volume-pdfs-release.py",
     "build:epubs": "python3 scripts/build-volume-epubs.py",
-    "build:epubs:release": "python3 scripts/build-volume-epubs.py --require-epubcheck",
+    "build:epubs:release": "python3 scripts/build-volume-epubs-release.py",
     "validate:content": "node scripts/validate-content.mjs",
     "validate:afterword": "node scripts/validate-volume-afterword.mjs",
     "validate:links": "node scripts/validate-lexicon-reader-links.mjs",
