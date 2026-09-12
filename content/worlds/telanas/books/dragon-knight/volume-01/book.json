@@ -135,6 +135,18 @@
       "aspectRatio": "2:3"
     }
   ],
+  "backMatter": [
+    {
+      "id": "afterword",
+      "type": "afterword",
+      "slug": "afterword",
+      "source": "afterword.json",
+      "labels": {
+        "en": "Afterword",
+        "de": "Nachwort"
+      }
+    }
+  ],
   "labels": {
     "en": {
       "world": "Telanas",

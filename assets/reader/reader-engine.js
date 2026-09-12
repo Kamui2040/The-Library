@@ -2,6 +2,8 @@
   "use strict";
 
   const supportedBlockTypes = new Set(["paragraph", "scene-break", "illustration"]);
+  const supportedBackMatterTypes = new Set(["afterword"]);
+  const supportedBackMatterBlockTypes = new Set(["paragraph", "link", "signature"]);
   const supportedIllustrationModes = new Set(["placeholder", "image"]);
   const supportedIllustrationPlacements = new Set(["flow", "full-page", "before-title"]);
 
@@ -13,7 +15,7 @@
     if (!condition) fail(message);
   };
 
-  const buildModel = (book, edition, locale) => {
+  const buildModel = (book, edition, locale, backMatterPayloads = []) => {
     assert(book && typeof book === "object", "Book manifest is missing");
     assert(edition && typeof edition === "object", "Reader edition is missing");
     assert(edition.world === book.world, "Reader edition world does not match book manifest");
@@ -53,6 +55,7 @@
     const anchors = new Map();
     const slugs = new Map();
     const chapters = [];
+    const backMatter = [];
 
     book.chapters.forEach((bookChapter, chapterIndex) => {
       const editionChapter = edition.chapters[chapterIndex];
@@ -61,13 +64,21 @@
 
       const chapter = {
         id: bookChapter.id,
+        type: "chapter",
+        kind: "story",
+        isStory: true,
         slug: bookChapter.slug,
         label: bookChapter.labels?.[locale] || bookChapter.labels?.en || bookChapter.id,
         blocks: []
       };
 
       assert(!anchors.has(chapter.id), `Duplicate reader anchor: ${chapter.id}`);
-      anchors.set(chapter.id, { chapterId: chapter.id, kind: "chapter", blockIndex: -1 });
+      anchors.set(chapter.id, {
+        sectionId: chapter.id,
+        chapterId: chapter.id,
+        kind: "chapter",
+        blockIndex: -1
+      });
       if (chapter.slug) slugs.set(chapter.slug, chapter.id);
 
       editionChapter.blocks.forEach((block, blockIndex) => {
@@ -99,6 +110,7 @@
           id: block.id,
           type: block.type,
           text: block.type === "paragraph" ? block.text : "",
+          sectionId: chapter.id,
           chapterId: chapter.id,
           keepWithNext: block.type === "scene-break",
           forceOwnPage: block.type === "illustration" && ["full-page", "before-title"].includes(block.placement)
@@ -114,10 +126,102 @@
           });
         }
         chapter.blocks.push(normalized);
-        anchors.set(block.id, { chapterId: chapter.id, kind: block.type, blockIndex });
+        anchors.set(block.id, {
+          sectionId: chapter.id,
+          chapterId: chapter.id,
+          kind: block.type,
+          blockIndex
+        });
       });
 
       chapters.push(chapter);
+    });
+
+    const backMatterDefinitions = book.backMatter ?? [];
+    assert(Array.isArray(backMatterDefinitions), "Book back matter must be an array");
+    assert(
+      backMatterPayloads.length === backMatterDefinitions.length,
+      "Loaded back matter does not match the book manifest",
+    );
+
+    backMatterDefinitions.forEach((definition, sectionIndex) => {
+      const payload = backMatterPayloads[sectionIndex];
+      assert(definition && typeof definition === "object", "Invalid back-matter entry in book manifest");
+      assert(typeof definition.id === "string" && definition.id, "Back-matter id is missing");
+      assert(supportedBackMatterTypes.has(definition.type), `Unsupported back-matter type: ${definition.type}`);
+      assert(typeof definition.source === "string" && definition.source, `Back-matter source is missing: ${definition.id}`);
+      assert(!anchors.has(definition.id), `Duplicate reader anchor: ${definition.id}`);
+      assert(payload && typeof payload === "object", `Back-matter payload is missing: ${definition.id}`);
+      assert(payload.world === book.world, `Back matter ${definition.id} world does not match book manifest`);
+      assert(payload.story === book.story, `Back matter ${definition.id} story does not match book manifest`);
+      assert(payload.book === book.id, `Back matter ${definition.id} book does not match book manifest`);
+      assert(payload.id === definition.id, `Back matter ${definition.id} id does not match its payload`);
+      assert(payload.type === definition.type, `Back matter ${definition.id} type does not match its payload`);
+      assert(payload.state === book.state, `Back matter ${definition.id} state does not match book manifest`);
+      assert(payload.contentMode === book.contentMode, `Back matter ${definition.id} content mode does not match book manifest`);
+
+      const localized = payload.locales?.[locale];
+      assert(localized && typeof localized === "object", `Back matter ${definition.id} is missing ${locale}`);
+      assert(Array.isArray(localized.blocks), `Back matter ${definition.id} blocks are missing for ${locale}`);
+
+      const section = {
+        id: definition.id,
+        type: definition.type,
+        kind: "back-matter",
+        isStory: false,
+        slug: definition.slug,
+        label: definition.labels?.[locale] || definition.labels?.en || definition.id,
+        blocks: []
+      };
+
+      anchors.set(section.id, {
+        sectionId: section.id,
+        chapterId: null,
+        kind: "back-matter",
+        blockIndex: -1
+      });
+      if (section.slug) {
+        assert(!slugs.has(section.slug), `Duplicate reader slug: ${section.slug}`);
+        slugs.set(section.slug, section.id);
+      }
+
+      localized.blocks.forEach((block, blockIndex) => {
+        assert(block && typeof block === "object", `Invalid block in back matter ${section.id}`);
+        assert(typeof block.id === "string" && block.id, `Block id is missing in back matter ${section.id}`);
+        assert(!anchors.has(block.id), `Duplicate reader anchor: ${block.id}`);
+        assert(
+          supportedBackMatterBlockTypes.has(block.type),
+          `Unsupported back-matter block type: ${block.type}`,
+        );
+
+        const normalized = {
+          id: block.id,
+          type: block.type,
+          sectionId: section.id,
+          chapterId: null,
+          keepWithNext: false,
+          forceOwnPage: false
+        };
+        if (["paragraph", "signature"].includes(block.type)) {
+          assert(typeof block.text === "string" && block.text.trim(), `Back-matter block ${block.id} text is missing`);
+          normalized.text = block.text;
+        } else {
+          assert(typeof block.label === "string" && block.label.trim(), `Back-matter link ${block.id} label is missing`);
+          assert(typeof block.url === "string" && /^https:\/\//.test(block.url), `Back-matter link ${block.id} URL is invalid`);
+          normalized.label = block.label;
+          normalized.url = block.url;
+        }
+
+        section.blocks.push(normalized);
+        anchors.set(block.id, {
+          sectionId: section.id,
+          chapterId: null,
+          kind: block.type,
+          blockIndex
+        });
+      });
+
+      backMatter.push(section);
     });
 
     return {
@@ -126,6 +230,8 @@
       book: book.id,
       locale,
       chapters,
+      backMatter,
+      sections: [...chapters, ...backMatter],
       anchors,
       slugs
     };
@@ -140,6 +246,11 @@
   const chapterForAnchor = (model, anchor) => {
     if (anchor === "contents") return null;
     return model.anchors.get(anchor)?.chapterId || null;
+  };
+
+  const sectionForAnchor = (model, anchor) => {
+    if (anchor === "contents") return null;
+    return model.anchors.get(anchor)?.sectionId || null;
   };
 
   const paginateBlocks = (blocks, fits) => {
@@ -188,6 +299,7 @@
     buildModel,
     resolveAnchor,
     chapterForAnchor,
+    sectionForAnchor,
     paginateBlocks
   };
 })();

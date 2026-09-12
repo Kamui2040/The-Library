@@ -212,6 +212,18 @@ anchor: dk-v01-ch01-p001
 illustration: dk-v01-prototype-full-page
 ```
 
+A book keeps story chapters and non-story back matter as separate first-class structures:
+
+```text
+book
+├── chapters
+│   └── story chapter
+└── backMatter
+    └── afterword
+```
+
+Back matter has stable section and block IDs for navigation, language switching, and bookmarks, but it is never treated as a story chapter. Entering or leaving back matter must not add a chapter to spoiler progress or change chapter-completion ordering.
+
 Chapter IDs remain stable across localized editions. A book may require either exact block alignment or chapter alignment. In chapter alignment, ordinary prose and scene-break IDs are locale-specific so a translation can use natural paragraph boundaries; declared spoiler milestones and illustration positions remain shared semantic points.
 
 A book may also declare a sparse ordered set of `spoilerMilestones`. Every declared milestone must resolve to a semantic anchor in every released locale edition for that book.
@@ -244,7 +256,7 @@ chapter title page → chapter text
 
 ## 4.4 Contents, modes, and appearance
 
-Each published book has one ordered structural manifest. That same structure generates both the integrated Contents page and the Reader-side table of contents.
+Each published book has one ordered structural manifest: story chapters followed by declared back matter. That same structure generates both the integrated Contents page and the Reader-side table of contents.
 
 Current layouts:
 

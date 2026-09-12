@@ -14,8 +14,9 @@
 
   if (!body || !toggle || !icon || !heading || !count || !empty || !list || !tocList || !positionLabel || !manifestReference) return;
 
-  const storageKey = "library-reader-bookmarks-v2";
-  const legacyStorageKey = "library-reader-bookmarks-v1";
+  const storageKey = "library-reader-bookmarks-v3";
+  const legacyStorageKey = "library-reader-bookmarks-v2";
+  const oldestStorageKey = "library-reader-bookmarks-v1";
   const copy = {
     en: {
       heading: "Bookmarks",
@@ -26,7 +27,8 @@
       remove: "Remove saved place",
       savedPlace: "Saved place",
       illustration: "Illustration",
-      chapterOpening: "Chapter opening"
+      chapterOpening: "Chapter opening",
+      sectionOpening: "Section opening"
     },
     de: {
       heading: "Lesezeichen",
@@ -37,7 +39,8 @@
       remove: "Gespeicherte Stelle entfernen",
       savedPlace: "Gespeicherte Stelle",
       illustration: "Illustration",
-      chapterOpening: "Kapitelanfang"
+      chapterOpening: "Kapitelanfang",
+      sectionOpening: "Abschnittsanfang"
     }
   };
 
@@ -47,7 +50,7 @@
   const language = () => document.documentElement.lang === "de" ? "de" : "en";
   const table = () => copy[language()];
 
-  const defaultState = () => ({ version: 2, books: {} });
+  const defaultState = () => ({ version: 3, books: {} });
 
   const normalizeEntries = (entries) => {
     if (!Array.isArray(entries)) return [];
@@ -55,17 +58,18 @@
     const normalized = [];
     for (const entry of entries) {
       if (!entry || typeof entry !== "object") continue;
-      if (typeof entry.anchor !== "string" || !entry.anchor || typeof entry.chapterId !== "string" || !entry.chapterId) continue;
+      const sectionId = typeof entry.sectionId === "string" ? entry.sectionId : entry.chapterId;
+      if (typeof entry.anchor !== "string" || !entry.anchor || typeof sectionId !== "string" || !sectionId) continue;
       if (seen.has(entry.anchor)) continue;
       seen.add(entry.anchor);
-      normalized.push({ anchor: entry.anchor, chapterId: entry.chapterId });
+      normalized.push({ anchor: entry.anchor, sectionId });
     }
     return normalized;
   };
 
   const normalizeState = (value) => {
     const state = defaultState();
-    if (value?.version !== 2 || !value.books || typeof value.books !== "object" || Array.isArray(value.books)) return state;
+    if (![2, 3].includes(value?.version) || !value.books || typeof value.books !== "object" || Array.isArray(value.books)) return state;
 
     for (const [key, localized] of Object.entries(value.books)) {
       if (!localized || typeof localized !== "object" || Array.isArray(localized)) continue;
@@ -90,12 +94,19 @@
   const readState = () => {
     try {
       const current = JSON.parse(localStorage.getItem(storageKey) || "null");
-      if (current?.version === 2) return normalizeState(current);
+      if (current?.version === 3) return normalizeState(current);
 
       const legacy = JSON.parse(localStorage.getItem(legacyStorageKey) || "null");
+      if (legacy?.version === 2) {
+        const state = normalizeState(legacy);
+        writeState(state);
+        return state;
+      }
+
+      const oldest = JSON.parse(localStorage.getItem(oldestStorageKey) || "null");
       const state = defaultState();
-      if (legacy?.version === 1 && legacy.books && typeof legacy.books === "object") {
-        for (const [key, entries] of Object.entries(legacy.books)) {
+      if (oldest?.version === 1 && oldest.books && typeof oldest.books === "object") {
+        for (const [key, entries] of Object.entries(oldest.books)) {
           const normalized = normalizeEntries(entries);
           if (normalized.length) state.books[key] = { [language()]: normalized };
         }
@@ -122,11 +133,11 @@
     }
   };
 
-  const currentChapterId = () => {
+  const currentSectionId = () => {
     const anchor = currentAnchor();
     const anchorNode = [...document.querySelectorAll("[data-reader-anchor]")]
       .find((node) => node.dataset.readerAnchor === anchor);
-    if (anchorNode?.dataset.chapterId) return anchorNode.dataset.chapterId;
+    if (anchorNode?.dataset.readerSectionId) return anchorNode.dataset.readerSectionId;
 
     const activeToc = [...tocList.querySelectorAll("[data-reader-target]")]
       .find((node) => node.classList.contains("is-active"));
@@ -134,15 +145,20 @@
     return target && target !== "contents" ? target : null;
   };
 
-  const chapterLabel = (chapterId) => {
+  const sectionLabel = (sectionId) => {
     const target = [...tocList.querySelectorAll("[data-reader-target]")]
-      .find((node) => node.dataset.readerTarget === chapterId);
-    return target?.textContent?.trim() || chapterId;
+      .find((node) => node.dataset.readerTarget === sectionId);
+    return target?.textContent?.trim() || sectionId;
   };
+
+  const isStorySection = (sectionId) => [...document.querySelectorAll("[data-reader-section-id]")]
+    .some((node) => node.dataset.readerSectionId === sectionId && node.dataset.readerSectionKind === "story");
 
   const bookmarkKind = (bookmark) => {
     const localCopy = table();
-    if (bookmark.anchor === bookmark.chapterId) return localCopy.chapterOpening;
+    if (bookmark.anchor === bookmark.sectionId) {
+      return isStorySection(bookmark.sectionId) ? localCopy.chapterOpening : localCopy.sectionOpening;
+    }
     if (/-i\d+$/i.test(bookmark.anchor)) return localCopy.illustration;
     return localCopy.savedPlace;
   };
@@ -174,13 +190,13 @@
   const toggleCurrentBookmark = () => {
     if (!ready) return;
     const anchor = currentAnchor();
-    const chapterId = currentChapterId();
-    if (!chapterId || anchor === "contents") return;
+    const sectionId = currentSectionId();
+    if (!sectionId || anchor === "contents") return;
 
     const bookmarks = currentBookmarks();
     const existing = bookmarks.findIndex((bookmark) => bookmark.anchor === anchor);
     if (existing >= 0) bookmarks.splice(existing, 1);
-    else bookmarks.push({ anchor, chapterId });
+    else bookmarks.push({ anchor, sectionId });
 
     persistBookmarks(bookmarks);
     render();
@@ -200,7 +216,7 @@
       jump.dataset.bookmarkAnchor = bookmark.anchor;
 
       const chapter = document.createElement("strong");
-      chapter.textContent = chapterLabel(bookmark.chapterId);
+      chapter.textContent = sectionLabel(bookmark.sectionId);
       const kind = document.createElement("span");
       kind.textContent = bookmarkKind(bookmark);
       jump.append(chapter, kind);
@@ -223,9 +239,9 @@
     const localCopy = table();
     const bookmarks = currentBookmarks();
     const anchor = currentAnchor();
-    const chapterId = currentChapterId();
+    const sectionId = currentSectionId();
     const bookmarked = bookmarks.some((bookmark) => bookmark.anchor === anchor);
-    const bookmarkable = ready && Boolean(chapterId) && anchor !== "contents";
+    const bookmarkable = ready && Boolean(sectionId) && anchor !== "contents";
 
     heading.textContent = localCopy.heading;
     empty.textContent = localCopy.empty;

@@ -53,6 +53,8 @@ Library
     │       ├── illustration asset registry
     │       ├── chapter
     │       │   └── semantic reader block
+    │       ├── back matter
+    │       │   └── localized semantic block
     │       └── localized edition
     ├── Lexicon
     │   └── entry
@@ -96,7 +98,7 @@ A public book manifest owns reader-visible structure such as:
 - one public edition-file reference per released locale;
 - a central registry of illustration assets used by the book.
 
-The reader-side table of contents and integrated book Contents page derive from the same ordered chapter list.
+The reader-side table of contents and integrated book Contents page derive from the same ordered structure: the story chapter list followed by the declared back matter.
 
 Illustration assets use stable IDs. A production `image` asset stores one relative path and an aspect ratio in the book manifest. The path must stay inside the book content directory and resolve to a regular non-symlink file. A neutral `placeholder` asset is allowed only for development/prototype content, must be marked `prototypeOnly`, and stores no image path. Rights and provenance for production illustration files remain a separate acceptance requirement.
 
@@ -148,6 +150,18 @@ The current prototype editions are explicitly `prototypeOnly` and contain neutra
 Rendered pages are created dynamically by the browser. The prototype paginates whole semantic blocks and repaginates when layout, language, viewport width, or typography changes. It does not currently split one paragraph across multiple rendered pages; a later renderer may become finer-grained without changing stable anchors.
 
 Reader position and bookmarks are stored by semantic identity rather than rendered page number.
+
+## 6.1 Back matter
+
+A book may declare non-story `backMatter` entries after its chapter list. Each entry has a stable ID, type, slug, localized labels, and a safe source path inside the book content directory. Its localized source uses stable blocks so every publication surface consumes the same content and order.
+
+Current back-matter block types are:
+
+- `paragraph` — localized text;
+- `link` — a visible label and HTTPS destination;
+- `signature` — localized closing signature text.
+
+Back matter participates natively in Reader pagination, page turns, Contents, navigation, language switching, and bookmarks. It remains outside the story chapter list, so it does not become a spoiler-progress chapter or change the meaning of Volume completion.
 
 Reader completion may advance the spoiler profile by stable world/story/book ID. The reader supports asking at the end, automatic updating, or fully manual progress. Completion is monotonic within a story: rereading an earlier volume must never lower a later completed volume.
 
@@ -319,6 +333,7 @@ The validators check, among other things:
 - manifest states use allowed values;
 - enabled locales are known to the Library/world;
 - every book locale has a registered reader-edition file;
+- declared back matter resolves to a safe publication-state-matched source with matching localized block identity/order;
 - reader-edition identity matches its book manifest;
 - localized editions contain the same ordered chapters and obey the declared `block` or `chapter` alignment contract;
 - in chapter alignment, ordinary body anchors are locale-specific while registered shared milestones remain in the same chapter;
@@ -338,6 +353,7 @@ The validators check, among other things:
 - Map marker IDs/order values are unique, coordinates are valid normalized positions, localized text is complete, reveal gates resolve, and reader links are valid;
 - prototype Timeline events and Map markers are explicitly marked `prototypeOnly`;
 - duplicate world/story/book/chapter/reader-anchor/Lexicon/link/relationship/Timeline/Map IDs are rejected.
+- back-matter IDs and block anchors do not collide with story chapters or reader-edition anchors.
 
 World Search adds no content store, so it relies on those validated manifests and applies the same visibility rules at runtime.
 

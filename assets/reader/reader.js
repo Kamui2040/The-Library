@@ -45,6 +45,7 @@
   let currentAnchor = "contents";
   let layoutPreference = "spread";
   const editionCache = new Map();
+  const backMatterCache = new Map();
 
   const copy = {
     en: {
@@ -74,6 +75,13 @@
   const language = () => document.documentElement.lang === "de" ? "de" : "en";
   const table = () => copy[language()];
   const nextFrame = () => new Promise((resolve) => requestAnimationFrame(resolve));
+  const waitForDocumentLayout = async () => {
+    if (document.readyState !== "complete") {
+      await new Promise((resolve) => window.addEventListener("load", resolve, { once: true }));
+    }
+    if (document.fonts?.ready) await document.fonts.ready;
+    await nextFrame();
+  };
 
   const bookLabels = () => {
     if (!book) return null;
@@ -85,18 +93,18 @@
     return labels ? `${labels.series} · ${labels.volume}` : "The Library";
   };
 
-  const chapterById = (chapterId) => model?.chapters.find((chapter) => chapter.id === chapterId) || null;
+  const sectionById = (sectionId) => model?.sections.find((section) => section.id === sectionId) || null;
 
   const captureLanguageTransfer = () => {
-    if (!model || currentAnchor === "contents") return { anchor: "contents", chapterId: null, ratio: 0 };
-    const chapterId = engine.chapterForAnchor(model, currentAnchor);
-    if (!chapterId) return { anchor: "contents", chapterId: null, ratio: 0 };
-    const chapter = chapterById(chapterId);
-    const blockIndex = chapter?.blocks.findIndex((block) => block.id === currentAnchor) ?? -1;
-    const denominator = Math.max(1, (chapter?.blocks.length || 1) - 1);
+    if (!model || currentAnchor === "contents") return { anchor: "contents", sectionId: null, ratio: 0 };
+    const sectionId = engine.sectionForAnchor(model, currentAnchor);
+    if (!sectionId) return { anchor: "contents", sectionId: null, ratio: 0 };
+    const section = sectionById(sectionId);
+    const blockIndex = section?.blocks.findIndex((block) => block.id === currentAnchor) ?? -1;
+    const denominator = Math.max(1, (section?.blocks.length || 1) - 1);
     return {
       anchor: currentAnchor,
-      chapterId,
+      sectionId,
       ratio: blockIndex >= 0 ? blockIndex / denominator : 0
     };
   };
@@ -105,20 +113,21 @@
     if (typeof restore === "string") return engine.resolveAnchor(model, restore);
     if (!restore || typeof restore !== "object") return "contents";
     if (typeof restore.anchor === "string" && model.anchors.has(restore.anchor)) return restore.anchor;
-    if (typeof restore.chapterId !== "string") return "contents";
+    const sectionId = typeof restore.sectionId === "string" ? restore.sectionId : restore.chapterId;
+    if (typeof sectionId !== "string") return "contents";
 
-    const chapter = chapterById(restore.chapterId);
-    if (!chapter) return "contents";
-    if (!chapter.blocks.length) return chapter.id;
+    const section = sectionById(sectionId);
+    if (!section) return "contents";
+    if (!section.blocks.length) return section.id;
     const ratio = Number.isFinite(restore.ratio) ? Math.max(0, Math.min(1, restore.ratio)) : 0;
-    const index = Math.round(ratio * Math.max(0, chapter.blocks.length - 1));
-    return chapter.blocks[index]?.id || chapter.id;
+    const index = Math.round(ratio * Math.max(0, section.blocks.length - 1));
+    return section.blocks[index]?.id || section.id;
   };
 
-  const chapterLabelForAnchor = (anchor) => {
+  const sectionLabelForAnchor = (anchor) => {
     if (!model || anchor === "contents") return bookLabels()?.contents || "Contents";
-    const chapterId = engine.chapterForAnchor(model, anchor);
-    return chapterById(chapterId)?.label || bookLabels()?.contents || "Contents";
+    const sectionId = engine.sectionForAnchor(model, anchor);
+    return sectionById(sectionId)?.label || bookLabels()?.contents || "Contents";
   };
 
   const positionKey = () => book ? `${book.world}/${book.story}/${book.id}` : null;
@@ -215,13 +224,13 @@
   const renderToc = () => {
     if (!book || !model) return;
     const labels = bookLabels();
-    const activeChapter = engine.chapterForAnchor(model, currentAnchor);
+    const activeSection = engine.sectionForAnchor(model, currentAnchor);
     tocHeading.textContent = labels?.contents || "Contents";
     tocList.replaceChildren();
 
     const entries = [
       { id: "contents", label: labels?.contents || "Contents" },
-      ...model.chapters.map((chapter) => ({ id: chapter.id, label: chapter.label }))
+      ...model.sections.map((section) => ({ id: section.id, label: section.label }))
     ];
 
     for (const entry of entries) {
@@ -229,16 +238,21 @@
       button.type = "button";
       button.dataset.readerTarget = entry.id;
       button.textContent = entry.label;
-      const active = entry.id === "contents" ? currentAnchor === "contents" : entry.id === activeChapter;
+      const active = entry.id === "contents" ? currentAnchor === "contents" : entry.id === activeSection;
       button.classList.toggle("is-active", active);
       tocList.append(button);
     }
   };
 
-  const createAnchorElement = (tagName, anchor, chapterId, className = "") => {
+  const createAnchorElement = (tagName, anchor, sectionId, className = "") => {
     const element = document.createElement(tagName);
     element.dataset.readerAnchor = anchor;
-    if (chapterId) element.dataset.chapterId = chapterId;
+    const section = sectionById(sectionId);
+    if (section) {
+      element.dataset.readerSectionId = section.id;
+      element.dataset.readerSectionKind = section.kind;
+      if (section.isStory) element.dataset.chapterId = section.id;
+    }
     if (className) element.className = className;
     return element;
   };
@@ -252,7 +266,7 @@
     const figure = createAnchorElement(
       "figure",
       block.id,
-      block.chapterId,
+      block.sectionId,
       `reader-illustration reader-illustration--${block.placement}`,
     );
     figure.style.setProperty("--reader-illustration-ratio", block.asset.aspectRatio.replace(":", " / "));
@@ -291,7 +305,7 @@
 
     if (block.type === "scene-break" || block.type === "section-separator") {
       const separator = block.id
-        ? createAnchorElement("div", block.id, block.chapterId, "reader-scene-break")
+        ? createAnchorElement("div", block.id, block.sectionId, "reader-scene-break")
         : document.createElement("div");
       separator.classList.add("reader-scene-break");
       separator.setAttribute("role", "separator");
@@ -302,12 +316,29 @@
       return separator;
     }
 
-    const paragraph = createAnchorElement("p", block.id, block.chapterId, "reader-prose");
+    if (block.type === "link") {
+      const paragraph = createAnchorElement(
+        "p",
+        block.id,
+        block.sectionId,
+        "reader-back-matter-link",
+      );
+      const link = document.createElement("a");
+      link.href = block.url;
+      link.textContent = block.label;
+      paragraph.append(link);
+      return paragraph;
+    }
+
+    const className = block.type === "signature" ? "reader-back-matter-signature" : (
+      block.chapterId ? "reader-prose" : "reader-back-matter-prose"
+    );
+    const paragraph = createAnchorElement("p", block.id, block.sectionId, className);
     paragraph.textContent = block.text;
     return paragraph;
   };
 
-  const makeContents = ({ compact = false, chapterIds = null, continued = false } = {}) => {
+  const makeContents = ({ compact = false, sectionIds = null, continued = false } = {}) => {
     const labels = bookLabels();
     const wrapper = createAnchorElement(
       "section",
@@ -315,9 +346,9 @@
       null,
       compact ? "reader-contents reader-contents--compact" : "reader-contents",
     );
-    const selectedChapters = Array.isArray(chapterIds)
-      ? model.chapters.filter((chapter) => chapterIds.includes(chapter.id))
-      : model.chapters;
+    const selectedSections = Array.isArray(sectionIds)
+      ? model.sections.filter((section) => sectionIds.includes(section.id))
+      : model.sections;
 
     if (!continued) {
       const heading = document.createElement("h1");
@@ -334,12 +365,12 @@
 
     const list = document.createElement("div");
     list.className = "contents-list";
-    for (const chapter of selectedChapters) {
+    for (const section of selectedSections) {
       const button = document.createElement("button");
       button.type = "button";
-      button.dataset.inlineTarget = chapter.id;
+      button.dataset.inlineTarget = section.id;
       const label = document.createElement("span");
-      label.textContent = chapter.label;
+      label.textContent = section.label;
       const arrow = document.createElement("span");
       arrow.setAttribute("aria-hidden", "true");
       arrow.textContent = "→";
@@ -351,14 +382,15 @@
     return wrapper;
   };
 
-  const makeChapterTitle = (chapter) => {
+  const makeSectionTitle = (section) => {
     const labels = bookLabels();
-    const wrapper = createAnchorElement("section", chapter.id, chapter.id, "reader-chapter-title");
+    const titleClass = section.isStory ? "reader-chapter-title" : "reader-back-matter-title";
+    const wrapper = createAnchorElement("section", section.id, section.id, titleClass);
     const eyebrow = document.createElement("p");
     eyebrow.className = "eyebrow";
     eyebrow.textContent = labels?.world || "Telanas";
     const heading = document.createElement("h1");
-    heading.textContent = chapter.label;
+    heading.textContent = section.label;
     const subheading = document.createElement("h2");
     subheading.textContent = currentTitle();
     wrapper.append(eyebrow, heading, subheading);
@@ -394,30 +426,33 @@
     return probe.scrollHeight <= probe.clientHeight + 1;
   };
 
-  const beforeTitleBlocks = (chapter) => chapter.blocks.filter(
+  const beforeTitleBlocks = (section) => section.blocks.filter(
     (block) => block.type === "illustration" && block.placement === "before-title",
   );
 
-  const chapterBodyBlocks = (chapter) => chapter.blocks.filter(
+  const sectionBodyBlocks = (section) => section.blocks.filter(
     (block) => !(block.type === "illustration" && block.placement === "before-title"),
   );
 
-  const syntheticSeparator = (chapterId) => ({
+  const syntheticSeparator = (sectionId) => ({
     id: null,
     type: "section-separator",
-    chapterId,
+    sectionId,
+    chapterId: sectionById(sectionId)?.isStory ? sectionId : null,
     keepWithNext: false,
     forceOwnPage: false
   });
 
-  const chapterSections = (chapter) => {
+  const pagedSections = (section) => {
+    if (!section.isStory) return [section.blocks];
+
     const sections = [];
     let current = [];
     const startSection = () => {
-      if (current.length === 0) current.push(syntheticSeparator(chapter.id));
+      if (current.length === 0) current.push(syntheticSeparator(section.id));
     };
 
-    for (const block of chapterBodyBlocks(chapter)) {
+    for (const block of sectionBodyBlocks(section)) {
       if (block.type === "scene-break") {
         if (current.some((item) => item.type !== "section-separator")) {
           current.push({ ...block, type: "section-separator", keepWithNext: false });
@@ -431,22 +466,22 @@
     }
 
     if (current.some((item) => item.type !== "section-separator")) {
-      if (current[current.length - 1]?.type !== "section-separator") current.push(syntheticSeparator(chapter.id));
+      if (current[current.length - 1]?.type !== "section-separator") current.push(syntheticSeparator(section.id));
       sections.push(current);
     }
     return sections;
   };
 
-  const contentsFits = (chapterIds, continued = false) => {
-    probe.replaceChildren(makeContents({ chapterIds, continued }));
+  const contentsFits = (sectionIds, continued = false) => {
+    probe.replaceChildren(makeContents({ sectionIds, continued }));
     return probe.scrollHeight <= probe.clientHeight + 1;
   };
 
   const buildContentsPages = () => {
-    const ids = model.chapters.map((chapter) => chapter.id);
+    const ids = model.sections.map((section) => section.id);
     if (contentsFits(ids, false)) {
       return [
-        { kind: "contents", anchor: "contents", chapterId: null, blocks: [], chapterIds: ids, continued: false },
+        { kind: "contents", anchor: "contents", sectionId: null, chapterId: null, blocks: [], sectionIds: ids, continued: false },
         { kind: "blank", anchor: "contents", chapterId: null, blocks: [] }
       ];
     }
@@ -464,8 +499,8 @@
       }
     }
     return [
-      { kind: "contents", anchor: "contents", chapterId: null, blocks: [], chapterIds: first, continued: false },
-      { kind: "contents", anchor: "contents", chapterId: null, blocks: [], chapterIds: second, continued: true }
+      { kind: "contents", anchor: "contents", sectionId: null, chapterId: null, blocks: [], sectionIds: first, continued: false },
+      { kind: "contents", anchor: "contents", sectionId: null, chapterId: null, blocks: [], sectionIds: second, continued: true }
     ];
   };
 
@@ -473,44 +508,71 @@
     prepareProbe();
     const built = [...buildContentsPages()];
 
-    for (const chapter of model.chapters) {
-      const illustrations = beforeTitleBlocks(chapter);
-      built.push({ kind: "chapter-title", anchor: chapter.id, chapterId: chapter.id, blocks: [] });
-      if (illustrations.length > 0) {
+    for (const section of model.sections) {
+      const illustrations = beforeTitleBlocks(section);
+      built.push({
+        kind: section.isStory ? "chapter-title" : "back-matter-title",
+        anchor: section.id,
+        sectionId: section.id,
+        chapterId: section.isStory ? section.id : null,
+        sectionKind: section.kind,
+        blocks: []
+      });
+      if (section.isStory && illustrations.length > 0) {
         built.push({
           kind: "body",
           anchor: illustrations[0].id,
-          chapterId: chapter.id,
+          sectionId: section.id,
+          chapterId: section.id,
+          sectionKind: section.kind,
           blocks: [illustrations[0]],
         });
-      } else {
-        built.push({ kind: "blank", anchor: chapter.id, chapterId: chapter.id, blocks: [] });
+      } else if (section.isStory) {
+        built.push({
+          kind: "blank",
+          anchor: section.id,
+          sectionId: section.id,
+          chapterId: section.id,
+          sectionKind: section.kind,
+          blocks: []
+        });
       }
 
       for (const extraIllustration of illustrations.slice(1)) {
         built.push({
           kind: "body",
           anchor: extraIllustration.id,
-          chapterId: chapter.id,
+          sectionId: section.id,
+          chapterId: section.isStory ? section.id : null,
+          sectionKind: section.kind,
           blocks: [extraIllustration],
         });
       }
 
-      for (const section of chapterSections(chapter)) {
-        const sectionPages = engine.paginateBlocks(section, blocksFitPage);
+      for (const group of pagedSections(section)) {
+        const sectionPages = engine.paginateBlocks(group, blocksFitPage);
         for (const blocks of sectionPages) {
           const firstAnchored = blocks.find((block) => block.id);
           built.push({
             kind: "body",
-            anchor: firstAnchored?.id || chapter.id,
-            chapterId: chapter.id,
+            anchor: firstAnchored?.id || section.id,
+            sectionId: section.id,
+            chapterId: section.isStory ? section.id : null,
+            sectionKind: section.kind,
             blocks,
           });
         }
       }
 
       if (built.length % 2 !== 0) {
-        built.push({ kind: "blank", anchor: chapter.id, chapterId: chapter.id, blocks: [] });
+        built.push({
+          kind: "blank",
+          anchor: section.id,
+          sectionId: section.id,
+          chapterId: section.isStory ? section.id : null,
+          sectionKind: section.kind,
+          blocks: []
+        });
       }
     }
 
@@ -523,11 +585,14 @@
     node.classList.remove(
       "contents-page",
       "chapter-title-page",
+      "back-matter-title-page",
       "body-page",
       "continuous-page",
       "illustration-page",
       "is-empty",
     );
+    delete node.dataset.readerSectionKind;
+    if (page?.sectionKind) node.dataset.readerSectionKind = page.sectionKind;
 
     if (!page) {
       node.classList.add("is-empty");
@@ -541,13 +606,13 @@
 
     if (page.kind === "contents") {
       node.classList.add("contents-page");
-      node.append(makeContents({ chapterIds: page.chapterIds, continued: page.continued }));
+      node.append(makeContents({ sectionIds: page.sectionIds, continued: page.continued }));
       return;
     }
 
-    if (page.kind === "chapter-title") {
-      node.classList.add("chapter-title-page");
-      node.append(makeChapterTitle(chapterById(page.chapterId)));
+    if (["chapter-title", "back-matter-title"].includes(page.kind)) {
+      node.classList.add(page.kind === "chapter-title" ? "chapter-title-page" : "back-matter-title-page");
+      node.append(makeSectionTitle(sectionById(page.sectionId)));
       return;
     }
 
@@ -576,9 +641,9 @@
     const total = pages.length;
     const start = currentPageIndex + 1;
     const end = Math.min(total, currentPageIndex + pageStep());
-    const chapter = chapterLabelForAnchor(currentAnchor);
+    const section = sectionLabelForAnchor(currentAnchor);
     const pageText = end > start ? table().pages(start, end, total) : table().page(start, total);
-    positionLabel.textContent = `${chapter} · ${pageText}`;
+    positionLabel.textContent = `${section} · ${pageText}`;
     previousButton.disabled = currentPageIndex <= 0;
     nextButton.disabled = currentPageIndex + pageStep() >= total;
   };
@@ -691,8 +756,16 @@
     continuousAnchorElements().find((node) => node.dataset.readerAnchor === anchor) || null
   );
 
+  const restoreContinuousAnchor = (target) => {
+    const root = document.documentElement;
+    const previousScrollBehavior = root.style.scrollBehavior;
+    root.style.scrollBehavior = "auto";
+    target.scrollIntoView({ block: "start", behavior: "auto" });
+    root.style.scrollBehavior = previousScrollBehavior;
+  };
+
   const updateContinuousStatus = () => {
-    positionLabel.textContent = chapterLabelForAnchor(currentAnchor);
+    positionLabel.textContent = sectionLabelForAnchor(currentAnchor);
     previousButton.disabled = true;
     nextButton.disabled = true;
   };
@@ -729,26 +802,41 @@
     rightPage.classList.add("is-empty");
 
     leftPage.append(makeContents({ compact: true }));
-    for (const chapter of model.chapters) {
+    let storyBoundaryAdded = false;
+    for (const sectionModel of model.sections) {
+      if (!sectionModel.isStory && !storyBoundaryAdded) {
+        const storyEnd = document.createElement("span");
+        storyEnd.dataset.readerProgressEnd = "";
+        storyEnd.className = "reader-progress-end-sentinel";
+        storyEnd.setAttribute("aria-hidden", "true");
+        leftPage.append(storyEnd);
+        storyBoundaryAdded = true;
+      }
+
       const section = document.createElement("section");
-      section.className = "reader-continuous-chapter";
+      section.className = sectionModel.isStory
+        ? "reader-continuous-chapter"
+        : "reader-continuous-back-matter";
       section.append(
-        makeChapterTitle(chapter),
-        ...beforeTitleBlocks(chapter).map(renderBlock),
-        ...chapterBodyBlocks(chapter).map(renderBlock),
+        makeSectionTitle(sectionModel),
+        ...beforeTitleBlocks(sectionModel).map(renderBlock),
+        ...sectionBodyBlocks(sectionModel).map(renderBlock),
       );
       leftPage.append(section);
     }
 
     updateCurrentAnchor(restoreAnchor, { updateHash: true, persist: true });
     updateContinuousStatus();
-    startScrollTracking();
 
-    requestAnimationFrame(() => {
+    void (async () => {
+      await waitForDocumentLayout();
       if (token !== renderRequestToken || layoutPreference !== "continuous") return;
       const target = findContinuousAnchor(currentAnchor);
-      if (target) target.scrollIntoView({ block: "start", behavior: "auto" });
-    });
+      if (target) restoreContinuousAnchor(target);
+      await nextFrame();
+      if (token !== renderRequestToken || layoutPreference !== "continuous") return;
+      startScrollTracking();
+    })();
   };
 
   const navigate = (requested, { updateHash = true, persist = true } = {}) => {
@@ -834,14 +922,35 @@
     return loaded;
   };
 
+  const backMatterUrl = (reference) => {
+    const manifestAbsolute = new URL(manifestUrl, window.location.href);
+    return new URL(reference, manifestAbsolute).href;
+  };
+
+  const loadBackMatter = async (locale) => {
+    if (backMatterCache.has(locale)) return backMatterCache.get(locale);
+    const definitions = book?.backMatter || [];
+    const loaded = await Promise.all(definitions.map(async (definition) => {
+      if (!definition?.source) throw new Error(`Back-matter source is missing: ${definition?.id || "unknown"}`);
+      const response = await fetch(backMatterUrl(definition.source), { cache: "no-store" });
+      if (!response.ok) throw new Error(`Back matter ${definition.id} HTTP ${response.status}`);
+      return response.json();
+    }));
+    backMatterCache.set(locale, loaded);
+    return loaded;
+  };
+
   const loadSelectedEdition = async (restoreAnchor) => {
     document.dispatchEvent(new Event("reader-page-turn-cancel"));
     const token = ++editionLoadToken;
     const locale = language();
-    const loadedEdition = await loadEdition(locale);
+    const [loadedEdition, loadedBackMatter] = await Promise.all([
+      loadEdition(locale),
+      loadBackMatter(locale),
+    ]);
     if (token !== editionLoadToken) return false;
 
-    model = engine.buildModel(book, loadedEdition, locale);
+    model = engine.buildModel(book, loadedEdition, locale, loadedBackMatter);
     titleLabel.textContent = currentTitle();
     currentAnchor = restoreAnchorForModel(restoreAnchor);
     renderToc();
