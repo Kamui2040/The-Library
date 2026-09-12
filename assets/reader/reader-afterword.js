@@ -17,6 +17,24 @@
     return payload?.locales?.[locale] || payload?.locales?.en || null;
   };
 
+  const ensureTocButton = () => {
+    const data = localized();
+    if (!data) return;
+
+    let tocButton = tocList.querySelector("[data-reader-afterword-target]");
+    if (!tocButton) {
+      tocButton = document.createElement("button");
+      tocButton.type = "button";
+      tocButton.dataset.readerAfterwordTarget = "";
+      tocButton.addEventListener("click", () => {
+        section.scrollIntoView({ behavior: "smooth", block: "start" });
+        history.replaceState(null, "", "#reader-afterword");
+      });
+      tocList.append(tocButton);
+    }
+    tocButton.textContent = data.heading;
+  };
+
   const render = () => {
     const data = localized();
     if (!data) return;
@@ -62,19 +80,7 @@
     }
 
     section.append(inner);
-
-    let tocButton = tocList.querySelector("[data-reader-afterword-target]");
-    if (!tocButton) {
-      tocButton = document.createElement("button");
-      tocButton.type = "button";
-      tocButton.dataset.readerAfterwordTarget = "";
-      tocButton.addEventListener("click", () => {
-        section.scrollIntoView({ behavior: "smooth", block: "start" });
-        history.replaceState(null, "", "#reader-afterword");
-      });
-      tocList.append(tocButton);
-    }
-    tocButton.textContent = data.heading;
+    ensureTocButton();
   };
 
   const load = async () => {
@@ -88,6 +94,7 @@
     render();
   };
 
+  new MutationObserver(() => ensureTocButton()).observe(tocList, { childList: true });
   window.addEventListener("library-language-change", render);
 
   load().catch(() => {
