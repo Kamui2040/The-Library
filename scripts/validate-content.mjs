@@ -7,6 +7,8 @@ const allowedStates = new Set(["development", "prototype", "approved", "publishe
 const allowedEditionAlignments = new Set(["block", "chapter"]);
 const allowedVisibilityModes = new Set(["always", "completed-chapter", "reached-anchor", "full-spoilers"]);
 const allowedReaderBlockTypes = new Set(["paragraph", "scene-break", "illustration"]);
+const allowedBackMatterTypes = new Set(["afterword"]);
+const allowedBackMatterBlockTypes = new Set(["paragraph", "link", "signature"]);
 const allowedIllustrationModes = new Set(["placeholder", "image"]);
 const allowedIllustrationPlacements = new Set(["flow", "full-page", "before-title"]);
 const safeId = /^[a-z0-9][a-z0-9-]*$/;
@@ -109,6 +111,7 @@ const worldIds = new Set();
 let worldCount = 0;
 let bookCount = 0;
 let chapterCount = 0;
+let backMatterCount = 0;
 let readerEditionCount = 0;
 let coverAssetCount = 0;
 let illustrationAssetCount = 0;
@@ -261,6 +264,97 @@ for (const worldRef of library.worlds) {
         }
       }
 
+      const backMatterDefinitions = book.backMatter ?? [];
+      assert(Array.isArray(backMatterDefinitions), `${bookPath} backMatter must be an array`);
+      const backMatterIds = new Set();
+      const backMatterSlugs = new Set();
+      const backMatterAnchorIds = new Set();
+
+      for (const definition of backMatterDefinitions) {
+        assert(definition && typeof definition === "object" && !Array.isArray(definition), `${bookPath} has invalid back matter`);
+        assertId(definition.id, `${bookPath} back-matter id`);
+        assertId(definition.slug, `${bookPath} back-matter slug`);
+        assert(!chapterIds.has(definition.id), `${bookPath} back-matter id collides with a chapter: ${definition.id}`);
+        assert(!chapterSlugs.has(definition.slug), `${bookPath} back-matter slug collides with a chapter: ${definition.slug}`);
+        assert(!backMatterIds.has(definition.id), `${bookPath} has duplicate back-matter id: ${definition.id}`);
+        assert(!backMatterSlugs.has(definition.slug), `${bookPath} has duplicate back-matter slug: ${definition.slug}`);
+        assert(allowedBackMatterTypes.has(definition.type), `${bookPath} back matter ${definition.id} has unsupported type: ${definition.type}`);
+        assertRelativeManifest(definition.source, `${bookPath} back matter ${definition.id} source`);
+        assert(definition.labels && typeof definition.labels === "object", `${bookPath} back matter ${definition.id} labels are missing`);
+        for (const locale of book.locales) {
+          assertLocalizedString(definition.labels[locale], `${bookPath} back matter ${definition.id} ${locale} label`);
+        }
+
+        const sourcePath = path.posix.join(bookDirectory, definition.source);
+        const source = await readJson(sourcePath);
+        let sourceStat;
+        try {
+          sourceStat = await lstat(path.join(root, sourcePath));
+        } catch (error) {
+          fail(`Cannot read back matter ${sourcePath}: ${error.message}`);
+        }
+        assert(!sourceStat.isSymbolicLink(), `${sourcePath} must not be a symbolic link`);
+        assert(sourceStat.isFile(), `${sourcePath} must be a regular file`);
+        assert(source.schemaVersion === 1, `${sourcePath} must use schemaVersion 1`);
+        assert(source.world === world.id, `${sourcePath} world id does not match ${world.id}`);
+        assert(source.story === story.id, `${sourcePath} story id does not match ${story.id}`);
+        assert(source.book === book.id, `${sourcePath} book id does not match ${book.id}`);
+        assert(source.id === definition.id, `${sourcePath} id does not match ${definition.id}`);
+        assert(source.type === definition.type, `${sourcePath} type does not match ${definition.type}`);
+        assert(source.state === book.state, `${sourcePath} state does not match book manifest`);
+        assert(source.contentMode === book.contentMode, `${sourcePath} contentMode does not match book manifest`);
+        assert(source.locales && typeof source.locales === "object" && !Array.isArray(source.locales), `${sourcePath} locales are missing`);
+
+        let baselineBackMatterStructure = null;
+        for (const locale of book.locales) {
+          const localized = source.locales[locale];
+          assert(localized && typeof localized === "object" && !Array.isArray(localized), `${sourcePath} is missing ${locale}`);
+          assert(Array.isArray(localized.blocks) && localized.blocks.length > 0, `${sourcePath} ${locale} blocks are missing`);
+          const localizedIds = new Set();
+          const structure = [];
+
+          for (const block of localized.blocks) {
+            assert(block && typeof block === "object" && !Array.isArray(block), `${sourcePath} has invalid ${locale} block`);
+            assertId(block.id, `${sourcePath} ${locale} block id`);
+            assert(!localizedIds.has(block.id), `${sourcePath} has duplicate ${locale} block id: ${block.id}`);
+            assert(allowedBackMatterBlockTypes.has(block.type), `${sourcePath} block ${block.id} has unsupported type: ${block.type}`);
+            localizedIds.add(block.id);
+            structure.push(`${block.id}:${block.type}`);
+
+            if (block.type === "link") {
+              assertLocalizedString(block.label, `${sourcePath} ${locale} link ${block.id} label`);
+              assertLocalizedString(block.url, `${sourcePath} ${locale} link ${block.id} URL`);
+              let parsed;
+              try {
+                parsed = new URL(block.url);
+              } catch {
+                fail(`${sourcePath} ${locale} link ${block.id} URL is invalid`);
+              }
+              assert(parsed.protocol === "https:", `${sourcePath} ${locale} link ${block.id} must use HTTPS`);
+            } else {
+              assertLocalizedString(block.text, `${sourcePath} ${locale} ${block.type} ${block.id} text`);
+            }
+          }
+
+          const signature = JSON.stringify(structure);
+          if (baselineBackMatterStructure === null) {
+            baselineBackMatterStructure = signature;
+            for (const id of localizedIds) {
+              assert(!chapterIds.has(id), `${sourcePath} block id collides with a chapter: ${id}`);
+              assert(!backMatterAnchorIds.has(id), `${sourcePath} block id collides with another reader anchor: ${id}`);
+              backMatterAnchorIds.add(id);
+            }
+          } else {
+            assert(signature === baselineBackMatterStructure, `${sourcePath} ${locale} structure does not match other locales`);
+          }
+        }
+
+        backMatterIds.add(definition.id);
+        backMatterSlugs.add(definition.slug);
+        backMatterAnchorIds.add(definition.id);
+        backMatterCount += 1;
+      }
+
       const spoilerMilestones = book.spoilerMilestones ?? [];
       assert(Array.isArray(spoilerMilestones), `${bookPath} spoilerMilestones must be an array`);
       const spoilerMilestoneIds = new Set();
@@ -299,7 +393,7 @@ for (const worldRef of library.worlds) {
           assert(edition.prototypeOnly === true, `${editionPath} prototype placeholder edition must be marked prototypeOnly`);
         }
 
-        const anchors = new Set(chapterIds);
+        const anchors = new Set([...chapterIds, ...backMatterAnchorIds]);
         const structure = [];
 
         for (let chapterIndex = 0; chapterIndex < book.chapters.length; chapterIndex += 1) {
@@ -483,7 +577,7 @@ for (const worldRef of library.worlds) {
 
 assert(worldIds.has(library.defaultWorld), `Default world does not exist: ${library.defaultWorld}`);
 console.log(
-  `PASS: validated ${worldCount} world(s), ${bookCount} book(s), ${chapterCount} chapter(s), ` +
+  `PASS: validated ${worldCount} world(s), ${bookCount} book(s), ${chapterCount} chapter(s), ${backMatterCount} back-matter section(s), ` +
   `${readerEditionCount} reader edition(s), ${coverAssetCount} cover asset(s), ${illustrationAssetCount} illustration asset(s), ` +
   `${illustrationBlockCount} illustration block(s), ${lexiconEntryCount} Lexicon entry/entries`,
 );

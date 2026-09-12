@@ -89,13 +89,21 @@ const revisionFor = async (relativePath) => createHash("sha256")
 const [
   telanasStylesheetRevision,
   lexiconStylesheetRevision,
+  readerContentStylesRevision,
+  readerEngineRevision,
   readerControllerRevision,
+  readerProgressRevision,
+  readerBookmarksRevision,
   pageTurnControllerRevision,
   pageTurnStylesRevision,
 ] = await Promise.all([
   revisionFor("assets/telanas/styles.css"),
   revisionFor("assets/lexicon/lexicon.css"),
+  revisionFor("assets/reader/reader-content.css"),
+  revisionFor("assets/reader/reader-engine.js"),
   revisionFor("assets/reader/reader.js"),
+  revisionFor("assets/reader/reader-progress.js"),
+  revisionFor("assets/reader/reader-bookmarks.js"),
   revisionFor("assets/reader/reader-page-turn.js"),
   revisionFor("assets/reader/reader-page-turn.css"),
 ]);
@@ -192,6 +200,14 @@ for (const locale of ["en", "de"]) {
   assert(readerHtml.includes('src="../../../../../assets/library-shell.js"'), `${readerPath} must use the production Library shell`);
   assertTelanasStylesheet(readerPath, readerHtml, "../../../../../assets/telanas/styles.css");
   assert(
+    readerHtml.includes(`href="../../../../../assets/reader/reader-content.css?v=${readerContentStylesRevision}"`),
+    `${readerPath} must use the current Reader content stylesheet revision`,
+  );
+  assert(
+    readerHtml.includes(`src="../../../../../assets/reader/reader-engine.js?v=${readerEngineRevision}"`),
+    `${readerPath} must use the current Reader model revision`,
+  );
+  assert(
     readerHtml.includes(`href="../../../../../assets/reader/reader-page-turn.css?v=${pageTurnStylesRevision}"`),
     `${readerPath} must use the current page-turn stylesheet revision`,
   );
@@ -202,6 +218,14 @@ for (const locale of ["en", "de"]) {
   assert(
     readerHtml.includes(`src="../../../../../assets/reader/reader.js?v=${readerControllerRevision}"`),
     `${readerPath} must use the current production Reader controller revision`,
+  );
+  assert(
+    readerHtml.includes(`src="../../../../../assets/reader/reader-progress.js?v=${readerProgressRevision}"`),
+    `${readerPath} must use the current Reader progress revision`,
+  );
+  assert(
+    readerHtml.includes(`src="../../../../../assets/reader/reader-bookmarks.js?v=${readerBookmarksRevision}"`),
+    `${readerPath} must use the current Reader bookmark revision`,
   );
   assert(readerHtml.includes('data-reader-book-manifest="../../../../../content/worlds/telanas/books/dragon-knight/volume-01/book.json"'), `${readerPath} must resolve the public book manifest from the canonical route`);
   assert(readerHtml.includes('data-reader-bookmark-toggle'), `${readerPath} must preserve semantic bookmarks`);

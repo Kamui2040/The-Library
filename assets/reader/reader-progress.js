@@ -271,12 +271,10 @@
 
     if (sentinel) {
       const rect = sentinel.getBoundingClientRect();
-      const next =
-        rect.top <= window.innerHeight &&
-        rect.bottom >= 0;
+      const reachedStoryEnd = rect.top <= window.innerHeight;
 
-      if (next !== continuousAtEnd) {
-        continuousAtEnd = next;
+      if (reachedStoryEnd && !continuousAtEnd) {
+        continuousAtEnd = true;
         scheduleEvaluate();
       }
     }
@@ -327,10 +325,10 @@
           (candidate) =>
             candidate.target === observedSentinel
         );
-        const next = Boolean(entry?.isIntersecting);
+        const reachedStoryEnd = Boolean(entry?.isIntersecting);
 
-        if (next === continuousAtEnd) return;
-        continuousAtEnd = next;
+        if (!reachedStoryEnd || continuousAtEnd) return;
+        continuousAtEnd = true;
         scheduleEvaluate();
       },
       {
@@ -341,6 +339,7 @@
     );
 
     sentinelObserver.observe(nextSentinel);
+    updateContinuousFallback();
   }
 
   function maintainContinuousSentinel() {
@@ -441,6 +440,13 @@
   }
 
   function pagedBoundaryIndex() {
+    const backMatterVisible = spread.querySelector(
+      ".book-page:not(.pagination-probe)[data-reader-section-kind='back-matter']"
+    );
+    if (backMatterVisible && (book?.chapters || []).length > 0) {
+      return book.chapters.length - 1;
+    }
+
     let furthest = -1;
 
     spread

@@ -43,22 +43,48 @@
   color: transparent;
 }
 
-.reader-chapter-title {
+.reader-chapter-title,
+.reader-back-matter-title {
   width: 100%;
 }
 
-.chapter-title-page {
+.chapter-title-page,
+.back-matter-title-page {
   display: grid;
   place-items: center;
   text-align: center;
 }
 
-.chapter-title-page .reader-chapter-title {
+.chapter-title-page .reader-chapter-title,
+.back-matter-title-page .reader-back-matter-title {
   max-width: 34rem;
 }
 
 .reader-prose {
   text-wrap: pretty;
+}
+
+.reader-back-matter-prose {
+  margin: 0 0 1.05rem;
+  text-wrap: pretty;
+}
+
+.reader-back-matter-link {
+  margin: .75rem 0 1.2rem;
+  text-align: center;
+}
+
+.reader-back-matter-link a {
+  color: var(--text);
+  font-weight: 700;
+  text-decoration-thickness: .08em;
+  text-underline-offset: .2em;
+}
+
+.reader-back-matter-signature {
+  margin: 2.25rem 0 0;
+  text-align: right;
+  font-style: italic;
 }
 
 .reader-scene-break {
@@ -107,6 +133,16 @@
 }
 
 .reader-continuous-chapter .reader-chapter-title {
+  margin-bottom: 3rem;
+}
+
+.reader-continuous-back-matter {
+  margin-top: 2rem;
+  padding-block: 4rem 2rem;
+  border-top: 1px solid var(--border-soft);
+}
+
+.reader-continuous-back-matter .reader-back-matter-title {
   margin-bottom: 3rem;
 }
 
@@ -267,6 +303,10 @@
   }
 
   .reader-continuous-chapter {
+    padding-block: 3rem 1.5rem;
+  }
+
+  .reader-continuous-back-matter {
     padding-block: 3rem 1.5rem;
   }
 }
