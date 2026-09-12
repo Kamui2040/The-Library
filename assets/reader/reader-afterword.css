@@ -2,6 +2,7 @@
   width: min(760px, calc(100% - 2rem));
   margin: 3rem auto 5rem;
   padding: 2.5rem clamp(1.25rem, 4vw, 3rem);
+  scroll-margin-top: calc(var(--reader-header-height, 58px) + 24px);
   border-top: 1px solid color-mix(in srgb, currentColor 24%, transparent);
   border-bottom: 1px solid color-mix(in srgb, currentColor 16%, transparent);
 }
