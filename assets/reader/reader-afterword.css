@@ -1,0 +1,54 @@
+.reader-afterword {
+  width: min(760px, calc(100% - 2rem));
+  margin: 3rem auto 5rem;
+  padding: 2.5rem clamp(1.25rem, 4vw, 3rem);
+  border-top: 1px solid color-mix(in srgb, currentColor 24%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, currentColor 16%, transparent);
+}
+
+.reader-afterword[hidden] {
+  display: none;
+}
+
+.reader-afterword-inner {
+  max-width: 44rem;
+  margin: 0 auto;
+}
+
+.reader-afterword h2 {
+  margin: 0 0 2rem;
+  text-align: center;
+  font: inherit;
+  font-size: clamp(1.6rem, 3vw, 2.15rem);
+  font-weight: 650;
+}
+
+.reader-afterword p {
+  margin: 0 0 1rem;
+  line-height: 1.75;
+}
+
+.reader-afterword-link {
+  text-align: center;
+  padding: 0.5rem 0 1rem;
+}
+
+.reader-afterword-link a {
+  font-weight: 700;
+  color: inherit;
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.18em;
+}
+
+.reader-afterword-signature {
+  margin-top: 2rem !important;
+  text-align: right;
+  font-style: italic;
+}
+
+@media (max-width: 700px) {
+  .reader-afterword {
+    margin-top: 2rem;
+    padding-inline: 1rem;
+  }
+}
