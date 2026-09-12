@@ -123,22 +123,26 @@ assert(epubBuilder.includes('book.get("backMatter")'), "EPUB builder must consum
 assert(epubBuilder.includes('epub:type="afterword"'), "EPUB builder must expose semantic afterword back matter");
 assert(epubBuilder.includes("'<itemref idref=\"nav\"/>'"), "EPUB Contents must appear in reading order");
 assert(epubBuilder.includes('toc="ncx"'), "EPUB must expose the compatibility navigation fallback");
-const chapterOpeningRef = epubBuilder.indexOf(
-  'f\'<itemref idref="opening-{cid}" properties="page-spread-left"/>\'',
+const chapterRef = epubBuilder.indexOf(
+  'f\'<itemref idref="chapter-{cid}" properties="page-spread-left"/>\'',
 );
-const chapterBodyRef = epubBuilder.indexOf('f\'<itemref idref="body-{cid}"/>\'', chapterOpeningRef);
 assert(
-  chapterOpeningRef >= 0 && chapterOpeningRef < chapterBodyRef,
-  "EPUB reading order must place each chapter-opening spread before its text",
+  chapterRef >= 0 && !epubBuilder.includes('idref="body-{cid}"'),
+  "EPUB reading order must expose exactly one localized spine section per chapter",
 );
 const openingTitle = epubBuilder.indexOf("'<section class=\"chapter-title-page\">'");
 const openingIllustration = epubBuilder.indexOf(
   "'<section class=\"illustration-page chapter-illustration\">'",
   openingTitle,
 );
+const chapterBody = epubBuilder.indexOf("out = ['<section class=\"chapter-body\">']", openingIllustration);
 assert(
-  openingTitle >= 0 && openingTitle < openingIllustration && epubCss.includes("break-before: page;"),
-  "EPUB chapter openings must place the title on the first page and illustration on the next page",
+  openingTitle >= 0 &&
+    openingTitle < openingIllustration &&
+    openingIllustration < chapterBody &&
+    epubCss.includes(".chapter-illustration,\n.chapter-body") &&
+    epubCss.includes("break-before: page;"),
+  "EPUB chapters must contain title, illustration, and prose in order with standard page breaks",
 );
 
 const packageJson = readJson("package.json");
