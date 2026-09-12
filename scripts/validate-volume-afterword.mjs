@@ -57,9 +57,12 @@ for (const [locale, expected] of Object.entries(expectations)) {
 }
 
 const readerAfterword = readText("assets/reader/reader-afterword.js");
+assert(readerAfterword.includes("bookStage.append(section)"), "Reader afterword must move into the book stage");
+assert(readerAfterword.includes("reader-afterword-page book-page body-page"), "Reader afterword must use book-page presentation");
+assert(readerAfterword.includes("data-reader-afterword-inline-target"), "Reader afterword must appear in the in-book Contents page");
 assert(readerAfterword.includes("websiteUrl"), "Reader afterword must render the localized website URL");
-assert(readerAfterword.includes("data-reader-afterword-target"), "Reader afterword must expose a TOC target");
-assert(readerAfterword.includes("MutationObserver"), "Reader afterword TOC target must survive reader TOC rerenders");
+assert(readerAfterword.includes("data-reader-afterword-target"), "Reader afterword must expose a sidebar TOC target");
+assert(readerAfterword.includes("MutationObserver"), "Reader afterword navigation must survive Reader rerenders");
 
 const pdfBuilder = readText("scripts/build-volume-pdfs-release.py");
 assert(pdfBuilder.includes("afterword.json"), "PDF release builder must consume shared afterword data");
@@ -68,6 +71,9 @@ assert(pdfBuilder.includes("TOCEntry"), "PDF release builder must include the af
 
 const epubBuilder = readText("scripts/build-volume-epubs.py");
 assert(epubBuilder.includes("afterword.json"), "EPUB builder must consume shared afterword data");
+assert(epubBuilder.includes("chapter-title-"), "EPUB builder must preserve dedicated chapter-title documents");
+assert(epubBuilder.includes('epub:type="afterword"'), "EPUB builder must expose semantic afterword back matter");
+assert(!epubBuilder.includes("explore.xhtml"), "EPUB must not duplicate the approved afterword with a separate Explore page");
 
 const packageJson = JSON.parse(readText("package.json"));
 assert(
