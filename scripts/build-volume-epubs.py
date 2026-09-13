@@ -452,7 +452,7 @@ def package_xml(locale: str, book: dict, modified: datetime, images: list[tuple[
   <dc:identifier id="pub-id">{identifier(locale)}</dc:identifier>
   <dc:title>{html.escape(title)}</dc:title>
   <dc:creator>K2040</dc:creator>
-  <dc:publisher>The Library</dc:publisher>
+  <dc:publisher>K2040</dc:publisher>
   <dc:language>{locale}</dc:language>
   <meta name="cover" content="cover-image"/>
   <meta property="dcterms:modified">{modified.strftime("%Y-%m-%dT%H:%M:%SZ")}</meta>
@@ -505,7 +505,14 @@ def validate(path: Path, book: dict) -> None:
         if required - names:
             raise ValueError(f"Missing EPUB files: {sorted(required - names)}")
         package = ET.fromstring(archive.read("EPUB/package.opf"))
-        namespace = {"opf": "http://www.idpf.org/2007/opf"}
+        namespace = {
+            "opf": "http://www.idpf.org/2007/opf",
+            "dc": "http://purl.org/dc/elements/1.1/",
+        }
+        creator = package.find("opf:metadata/dc:creator", namespace)
+        publisher = package.find("opf:metadata/dc:publisher", namespace)
+        if creator is None or creator.text != "K2040" or publisher is None or publisher.text != "K2040":
+            raise ValueError("EPUB creator and publisher metadata must identify K2040")
         manifest_items = {
             item.get("id"): item.get("href")
             for item in package.findall("opf:manifest/opf:item", namespace)
