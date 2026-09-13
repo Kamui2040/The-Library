@@ -64,18 +64,76 @@
 
   const mobileButton = document.querySelector("[data-mobile-menu]");
   const primaryNav = document.querySelector("[data-primary-nav]");
+
+  const setPrimaryNavOpen = (open) => {
+    if (!mobileButton || !primaryNav) return;
+    primaryNav.classList.toggle("is-open", open);
+    mobileButton.setAttribute("aria-expanded", String(open));
+  };
+
   if (mobileButton && primaryNav) {
     mobileButton.addEventListener("click", () => {
       const open = !primaryNav.classList.contains("is-open");
-      primaryNav.classList.toggle("is-open", open);
-      mobileButton.setAttribute("aria-expanded", String(open));
+      if (open) {
+        document.querySelectorAll("details.menu-popover[open]").forEach((details) => {
+          details.removeAttribute("open");
+        });
+      }
+      setPrimaryNavOpen(open);
+    });
+
+    primaryNav.addEventListener("click", (event) => {
+      if (event.target instanceof Element && event.target.closest("a")) {
+        setPrimaryNavOpen(false);
+      }
+    });
+
+    window.matchMedia("(max-width: 1199px)").addEventListener("change", (event) => {
+      if (!event.matches) setPrimaryNavOpen(false);
     });
   }
+
+  document.querySelectorAll("details.menu-popover").forEach((details) => {
+    details.addEventListener("toggle", () => {
+      if (!details.open) return;
+      document.querySelectorAll("details.menu-popover[open]").forEach((other) => {
+        if (other !== details) other.removeAttribute("open");
+      });
+      if (!primaryNav || !primaryNav.contains(details)) setPrimaryNavOpen(false);
+    });
+  });
 
   document.addEventListener("click", (event) => {
     document.querySelectorAll("details.menu-popover[open]").forEach((details) => {
       if (!details.contains(event.target)) details.removeAttribute("open");
     });
+
+    if (
+      primaryNav?.classList.contains("is-open") &&
+      !primaryNav.contains(event.target) &&
+      !mobileButton?.contains(event.target)
+    ) {
+      setPrimaryNavOpen(false);
+    }
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key !== "Escape") return;
+
+    const openMenus = [...document.querySelectorAll("details.menu-popover[open]")];
+    const openMenu = openMenus.at(-1);
+    if (openMenu) {
+      openMenu.removeAttribute("open");
+      openMenu.querySelector(":scope > summary")?.focus();
+      event.preventDefault();
+      return;
+    }
+
+    if (primaryNav?.classList.contains("is-open")) {
+      setPrimaryNavOpen(false);
+      mobileButton?.focus();
+      event.preventDefault();
+    }
   });
 
   setTheme(storageGet("library-theme") === "light" ? "light" : "dark");

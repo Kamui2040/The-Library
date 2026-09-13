@@ -99,6 +99,7 @@ const revisionFor = async (relativePath) => createHash("sha256")
 
 const [
   telanasStylesheetRevision,
+  libraryShellRevision,
   lexiconStylesheetRevision,
   readerContentStylesRevision,
   readerEngineRevision,
@@ -109,6 +110,7 @@ const [
   pageTurnStylesRevision,
 ] = await Promise.all([
   revisionFor("assets/telanas/styles.css"),
+  revisionFor("assets/library-shell.js"),
   revisionFor("assets/lexicon/lexicon.css"),
   revisionFor("assets/reader/reader-content.css"),
   revisionFor("assets/reader/reader-engine.js"),
@@ -123,6 +125,13 @@ const assertTelanasStylesheet = (filePath, html, relativeHref) => {
   assert(
     html.includes(`href="${relativeHref}?v=${telanasStylesheetRevision}"`),
     `${filePath} must use the current production Telanas stylesheet revision`,
+  );
+};
+
+const assertLibraryShell = (filePath, html, relativeSrc) => {
+  assert(
+    html.includes(`src="${relativeSrc}?v=${libraryShellRevision}"`),
+    `${filePath} must use the current production Library shell revision`,
   );
 };
 
@@ -187,7 +196,7 @@ for (const locale of ["en", "de"]) {
   assert(landingHtml.includes(`<html lang="${locale}" data-route-locale="${locale}"`), `${landingPath} must declare its route locale`);
   assert(landingHtml.includes('href="../../en/telanas/"'), `${landingPath} must expose the English equivalent route`);
   assert(landingHtml.includes('href="../../de/telanas/"'), `${landingPath} must expose the German equivalent route`);
-  assert(landingHtml.includes('src="../../assets/library-shell.js"'), `${landingPath} must use the production Library shell`);
+  assertLibraryShell(landingPath, landingHtml, "../../assets/library-shell.js");
   assert(landingHtml.includes('src="../../assets/spoiler-profile.js"'), `${landingPath} must use the production spoiler profile`);
   assert(landingHtml.includes('src="../../assets/spoiler-controls.js"'), `${landingPath} must use the production spoiler controls`);
   assertTelanasStylesheet(landingPath, landingHtml, "../../assets/telanas/styles.css");
@@ -210,7 +219,7 @@ for (const locale of ["en", "de"]) {
   assert(readerHtml.includes(`<html lang="${locale}" data-route-locale="${locale}"`), `${readerPath} must declare its route locale`);
   assert(readerHtml.includes('href="../../../../../en/telanas/read/dragon-knight/volume-01/"'), `${readerPath} must expose the English Reader route`);
   assert(readerHtml.includes('href="../../../../../de/telanas/read/dragon-knight/volume-01/"'), `${readerPath} must expose the German Reader route`);
-  assert(readerHtml.includes('src="../../../../../assets/library-shell.js"'), `${readerPath} must use the production Library shell`);
+  assertLibraryShell(readerPath, readerHtml, "../../../../../assets/library-shell.js");
   assertTelanasStylesheet(readerPath, readerHtml, "../../../../../assets/telanas/styles.css");
   assert(
     readerHtml.includes(`href="../../../../../assets/reader/reader-content.css?v=${readerContentStylesRevision}"`),
@@ -257,7 +266,7 @@ for (const locale of ["en", "de"]) {
     lexiconHtml.includes(`href="../../../assets/lexicon/lexicon.css?v=${lexiconStylesheetRevision}"`),
     `${lexiconPath} must use the current production Lexicon stylesheet revision`,
   );
-  assert(lexiconHtml.includes('src="../../../assets/library-shell.js"'), `${lexiconPath} must use the production Library shell`);
+  assertLibraryShell(lexiconPath, lexiconHtml, "../../../assets/library-shell.js");
   assert(lexiconHtml.includes('src="../../../assets/spoiler-profile.js"'), `${lexiconPath} must use the production spoiler profile`);
   assert(lexiconHtml.includes('src="../../../assets/spoiler-controls.js"'), `${lexiconPath} must use the production spoiler controls`);
   assert(lexiconHtml.includes('src="../../../assets/lexicon/lexicon.js"'), `${lexiconPath} must use the production Lexicon controller`);
@@ -279,6 +288,7 @@ for (const locale of ["en", "de"]) {
   assert(timelineHtml.includes('href="../../../de/telanas/timeline/"'), `${timelinePath} must expose the German Timeline equivalent`);
   assertTelanasStylesheet(timelinePath, timelineHtml, "../../../assets/telanas/styles.css");
   assertK2040EcosystemShell(timelinePath, timelineHtml);
+  assertLibraryShell(timelinePath, timelineHtml, "../../../assets/library-shell.js");
   assert(timelineHtml.includes('src="../../../assets/timeline/timeline.js"'), `${timelinePath} must use the retained Timeline controller`);
   assert(timelineHtml.includes('data-timeline-results'), `${timelinePath} must preserve the spoiler-filtered chronology`);
   assert(!timelineHtml.includes("prototype/telanas/map.html"), `${timelinePath} must not expose the Map`);
