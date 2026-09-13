@@ -5,8 +5,8 @@ import { fileURLToPath } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const sourceRepository = "Kamui2040/Telanas";
-const sourceCommit = "59e27b4d8f693da9140d47cace9db4ab6869d726";
-const expectedBranch = "release/telanas-volume-01";
+const sourceCommit = "bf7473a3b61f168738f1355a6e6f1fd57d3022a7";
+const defaultBranch = "main";
 const bookDirectory = "content/worlds/telanas/books/dragon-knight/volume-01";
 const illustrationsDirectory = path.join(root, bookDirectory, "illustrations");
 const coverPath = path.join(root, bookDirectory, "cover.png");
@@ -18,9 +18,9 @@ const git = (...args) => execFileSync("git", ["-C", root, ...args], { encoding: 
 const ghJson = (endpoint) => JSON.parse(execFileSync("gh", ["api", endpoint], { encoding: "utf8", maxBuffer: 16 * 1024 * 1024 }));
 
 const sourceFiles = {
-  "manuscript/en/band-01.md": "ad766b1d91489974343d8195cdd3a28d41ca33f0",
-  "manuscript/de/band-01.md": "1740cfc2efe254dbad06429ea3b163869af37bf4",
-  "docs/story/illustration-reference.md": "046b1349cbcd839475e09b6a2e06950332962117",
+  "manuscript/en/band-01.md": "2a0ef5ad2cba181800e153c0ed17dfd14736925f",
+  "manuscript/de/band-01.md": "ba8f4128e1fc6b29c11f1b82416784fac33a36cd",
+  "docs/story/illustration-reference.md": "7abda7b6c50f03116e09970c457e63cbf73cb921",
   "assets/covers/volume-01/cover.png": "b2ad8fe2bd63e2540223fd322e3aa9f36cb6adc1",
 };
 
@@ -344,7 +344,8 @@ const writeJson = async (relativePath, value) => {
 
 try {
   assert(git("remote", "get-url", "origin") === "https://github.com/Kamui2040/The-Library.git", "Wrong The-Library origin");
-  assert(git("rev-parse", "--abbrev-ref", "HEAD") === expectedBranch, `Run this importer on ${expectedBranch}`);
+  const currentBranch = git("rev-parse", "--abbrev-ref", "HEAD");
+  assert(currentBranch !== "HEAD" && currentBranch !== defaultBranch, "Run this importer on a focused non-default branch");
   assert(git("status", "--porcelain") === "", "The-Library checkout must be clean before import");
 
   const commit = ghJson(`repos/${sourceRepository}/git/commits/${sourceCommit}`);
