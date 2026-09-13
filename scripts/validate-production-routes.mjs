@@ -36,6 +36,7 @@ const epubRoutes = [
   "output/epub/the-dragon-knight-volume-01-home-en.epub",
   "output/epub/der-drachenritter-band-01-zuhause-de.epub"
 ];
+const luluUrl = "https://www.lulu.com/shop/k2040/the-dragon-knight-volume-1-home/ebook/product-7k56k76.html";
 
 const required = [
   "index.html",
@@ -207,6 +208,7 @@ for (const locale of ["en", "de"]) {
   assert(landingHtml.includes('href="../../output/pdf/der-drachenritter-band-01-zuhause-de.pdf" download'), `${landingPath} must expose the German PDF download`);
   assert(landingHtml.includes('href="../../output/epub/the-dragon-knight-volume-01-home-en.epub" download'), `${landingPath} must expose the English EPUB download`);
   assert(landingHtml.includes('href="../../output/epub/der-drachenritter-band-01-zuhause-de.epub" download'), `${landingPath} must expose the German EPUB download`);
+  assert(landingHtml.includes(`href="${luluUrl}"`), `${landingPath} must expose the Lulu availability update`);
   assert(landingHtml.includes('href="lexicon/"'), `${landingPath} must link to the canonical Lexicon`);
   assert(landingHtml.includes('lexicon/?category=characters'), `${landingPath} must preserve the Characters category entry point`);
   assert(landingHtml.includes('lexicon/?category=places'), `${landingPath} must preserve the Places category entry point`);
