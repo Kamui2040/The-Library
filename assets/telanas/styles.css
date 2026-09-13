@@ -940,7 +940,7 @@ html[data-theme="light"] .hero .button--ghost {
     top: 100%;
     right: 0;
     left: auto;
-    width: min(380px, calc(100vw - 28px));
+    width: min(380px, 100%);
     max-height: calc(100vh - var(--header-height) - 16px);
     max-height: calc(100dvh - var(--header-height) - 16px);
     display: none;
