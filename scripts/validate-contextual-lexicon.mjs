@@ -5,6 +5,7 @@ import { fileURLToPath } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const safeId = /^[a-z0-9][a-z0-9-]*$/;
+const contextualRepeatReasons = new Set(["scene-gap", "newly-unlocked-detail"]);
 
 const fail = (message) => { throw new Error(message); };
 const assert = (condition, message) => { if (!condition) fail(message); };
@@ -44,6 +45,7 @@ const lexiconEntries = new Map((lexicon.entries || []).map((entry) => [entry.id,
 const editions = new Map();
 const anchorsByLocale = new Map();
 const paragraphByLocale = new Map();
+const chapterByAnchorByLocale = new Map();
 
 for (const locale of book.locales || []) {
   const editionPath = path.posix.join(bookDirectory, book.editions?.[locale] || "");
@@ -52,15 +54,19 @@ for (const locale of book.locales || []) {
 
   const anchors = new Set(["contents"]);
   const paragraphs = new Map();
+  const chapterByAnchor = new Map();
   for (const chapter of edition.chapters || []) {
     anchors.add(chapter.id);
+    chapterByAnchor.set(chapter.id, chapter.id);
     for (const block of chapter.blocks || []) {
       anchors.add(block.id);
+      chapterByAnchor.set(block.id, chapter.id);
       if (block.type === "paragraph") paragraphs.set(block.id, block.text);
     }
   }
   anchorsByLocale.set(locale, anchors);
   paragraphByLocale.set(locale, paragraphs);
+  chapterByAnchorByLocale.set(locale, chapterByAnchor);
 }
 
 const milestones = book.spoilerMilestones || [];
@@ -87,10 +93,13 @@ const findOccurrence = (source, needle, occurrence) => {
 };
 
 let referenceCount = 0;
+const cadenceSignatureByLocale = new Map();
 for (const locale of book.locales || []) {
   const references = contextual.references[locale];
   assert(Array.isArray(references), `${contextualPath} ${locale} references must be an array`);
   const rangesByAnchor = new Map();
+  const referencesByChapterEntry = new Map();
+  const cadenceSignature = [];
 
   for (const reference of references) {
     assert(reference && typeof reference === "object" && !Array.isArray(reference), `${contextualPath} ${locale} has invalid reference`);
@@ -104,6 +113,23 @@ for (const locale of book.locales || []) {
     assert(typeof reference.text === "string" && reference.text.length > 0, `${contextualPath} ${locale}/${reference.anchor} reference text is missing`);
     assert(Number.isInteger(reference.occurrence) && reference.occurrence > 0, `${contextualPath} ${locale}/${reference.anchor} occurrence must be a positive integer`);
 
+    const chapter = chapterByAnchorByLocale.get(locale)?.get(reference.anchor);
+    assertId(chapter, `${contextualPath} ${locale}/${reference.anchor} owning chapter`);
+    const cadenceKey = `${chapter}:${reference.entry}`;
+    const priorReferences = referencesByChapterEntry.get(cadenceKey) || 0;
+    if (priorReferences === 0) {
+      assert(
+        reference.repeatReason === undefined,
+        `${contextualPath} ${locale}/${reference.anchor} first ${reference.entry} link in ${chapter} must not declare repeatReason`,
+      );
+    } else {
+      assert(
+        contextualRepeatReasons.has(reference.repeatReason),
+        `${contextualPath} ${locale}/${reference.anchor} repeats ${reference.entry} in ${chapter}; repeated links must declare repeatReason as scene-gap or newly-unlocked-detail`,
+      );
+    }
+    referencesByChapterEntry.set(cadenceKey, priorReferences + 1);
+
     const start = findOccurrence(paragraph, reference.text, reference.occurrence);
     assert(start >= 0, `${contextualPath} ${locale}/${reference.anchor} cannot find occurrence ${reference.occurrence} of ${JSON.stringify(reference.text)}`);
     const range = { start, end: start + reference.text.length };
@@ -114,8 +140,26 @@ for (const locale of book.locales || []) {
     );
     existing.push(range);
     rangesByAnchor.set(reference.anchor, existing);
+    cadenceSignature.push({
+      chapter,
+      anchor: reference.anchor,
+      entry: reference.entry,
+      occurrence: reference.occurrence,
+      repeatReason: reference.repeatReason || null,
+    });
     referenceCount += 1;
   }
+
+  cadenceSignatureByLocale.set(locale, cadenceSignature);
+}
+
+const baselineLocale = book.locales?.[0];
+const baselineCadence = JSON.stringify(cadenceSignatureByLocale.get(baselineLocale) || []);
+for (const locale of (book.locales || []).slice(1)) {
+  assert(
+    JSON.stringify(cadenceSignatureByLocale.get(locale) || []) === baselineCadence,
+    `${contextualPath} contextual link cadence/order must match across locales; ${locale} differs from ${baselineLocale}`,
+  );
 }
 
 if (book.state === "prototype") {
@@ -314,5 +358,5 @@ for (const locale of ["en", "de"]) {
 
 console.log(
   `PASS: validated ${milestones.length} semantic spoiler milestone(s) and ` +
-  `${referenceCount} contextual Reader Lexicon reference(s)`,
+  `${referenceCount} contextual Reader Lexicon reference(s) with curated per-chapter cadence`,
 );
