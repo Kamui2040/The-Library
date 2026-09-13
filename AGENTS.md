@@ -28,6 +28,9 @@
 - Reader navigation, bookmarks, spoiler references, and cross-links use stable semantic IDs rather than rendered page numbers.
 - The integrated book contents page and reader-side table of contents must derive from the same ordered structure.
 - Contextual Reader Lexicon references must use explicit semantic annotations tied to stable Reader anchors and localized source text. Do not automatically link arbitrary matching words or names.
+- Contextual Reader Lexicon links are curated rather than exhaustive. By default, link only the first meaningful mention of a given eligible Lexicon entry in a chapter and leave later mentions plain.
+- A second link to the same Lexicon entry in the same chapter is allowed only after a substantial scene gap or when newly unlocked Lexicon detail makes rediscovery useful. Repeated links must declare `repeatReason` as `scene-gap` or `newly-unlocked-detail` in the contextual annotation data.
+- Do not add a contextual link merely because text matches a Lexicon title, and do not hint at entries that are not yet spoiler-eligible.
 - Paged chapters open with the chapter title on the left and that chapter's illustration on the facing right page when one exists; otherwise the facing page remains blank.
 - Paged Reader spreads keep stable geometry for a given viewport. Content pagination adapts to the page, not the page size to the content.
 - Reader scene breaks are structural section boundaries in paged mode: each prose section starts on a new page and is visually bounded by the standard separator.
