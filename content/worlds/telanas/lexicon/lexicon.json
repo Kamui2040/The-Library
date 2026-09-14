@@ -398,7 +398,7 @@
           }
         }
       ],
-      "appearanceOrder": 8
+      "appearanceOrder": 9
     },
     {
       "id": "alden",
@@ -544,7 +544,7 @@
           }
         }
       ],
-      "appearanceOrder": 10
+      "appearanceOrder": 11
     },
     {
       "id": "nessa",
@@ -604,7 +604,7 @@
           }
         }
       ],
-      "appearanceOrder": 29
+      "appearanceOrder": 41
     },
     {
       "id": "eryn",
@@ -766,7 +766,7 @@
           }
         }
       ],
-      "appearanceOrder": 13
+      "appearanceOrder": 16
     },
     {
       "id": "corvin",
@@ -779,11 +779,13 @@
       "labels": {
         "en": {
           "title": "Corvin",
-          "summary": "An experienced soldier and a familiar visitor to Alden's forge."
+          "summary": "An experienced soldier and a familiar visitor to Alden's forge.",
+          "fullName": "Corvin Hale"
         },
         "de": {
           "title": "Corvin",
-          "summary": "Ein erfahrener Soldat und ein vertrauter Besucher in Aldens Schmiede."
+          "summary": "Ein erfahrener Soldat und ein vertrauter Besucher in Aldens Schmiede.",
+          "fullName": "Corvin Hale"
         }
       },
       "fragments": [
@@ -892,7 +894,7 @@
           ]
         }
       ],
-      "appearanceOrder": 11
+      "appearanceOrder": 13
     },
     {
       "id": "bram",
@@ -1046,7 +1048,7 @@
           ]
         }
       ],
-      "appearanceOrder": 23
+      "appearanceOrder": 32
     },
     {
       "id": "eryn-disappearance",
@@ -1134,7 +1136,8 @@
           }
         }
       ],
-      "appearanceOrder": 36
+      "appearanceOrder": 56,
+      "chronologyOrder": 12
     },
     {
       "id": "calists-village",
@@ -1142,16 +1145,20 @@
         "places"
       ],
       "visibility": {
-        "mode": "always"
+        "mode": "reached-anchor",
+        "story": "dragon-knight",
+        "book": "volume-01",
+        "chapter": "dk-v01-ch01",
+        "anchor": "dk-v01-ch01-calist"
       },
       "labels": {
         "en": {
-          "title": "Calist's village",
-          "summary": "A small roadside village whose people rely on farming, craft, hunting, and mutual aid."
+          "title": "Elwendun",
+          "summary": "Calist's home: a small roadside village whose people rely on farming, craft, hunting, and mutual aid."
         },
         "de": {
-          "title": "Calists Dorf",
-          "summary": "Ein kleines Dorf an der Straße, dessen Bewohner von Landwirtschaft, Handwerk, Jagd und gegenseitiger Hilfe leben."
+          "title": "Elwendun",
+          "summary": "Calists Heimat: ein kleines Dorf an der Straße, dessen Bewohner von Landwirtschaft, Handwerk, Jagd und gegenseitiger Hilfe leben."
         }
       },
       "fragments": [
@@ -1205,9 +1212,31 @@
             "en": "Road toward the border fort",
             "de": "Straße zum Grenzfort"
           }
+        },
+        {
+          "id": "river-elwen",
+          "target": "elwen-river",
+          "labels": {
+            "en": "Beside the Elwen",
+            "de": "Am Elwen"
+          }
+        },
+        {
+          "id": "region-breynach",
+          "target": "breynach",
+          "visibility": {
+            "mode": "completed-chapter",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch03"
+          },
+          "labels": {
+            "en": "In Breynach",
+            "de": "In Breynach"
+          }
         }
       ],
-      "appearanceOrder": 6
+      "appearanceOrder": 5
     },
     {
       "id": "aldens-smithy",
@@ -1306,7 +1335,7 @@
           }
         }
       ],
-      "appearanceOrder": 9
+      "appearanceOrder": 10
     },
     {
       "id": "old-woods",
@@ -1314,16 +1343,20 @@
         "places"
       ],
       "visibility": {
-        "mode": "always"
+        "mode": "reached-anchor",
+        "story": "dragon-knight",
+        "book": "volume-01",
+        "chapter": "dk-v01-ch01",
+        "anchor": "dk-v01-ch01-calist"
       },
       "labels": {
         "en": {
-          "title": "The Old Woods",
-          "summary": "The forest beyond the village fields, used by local hunters in search of game."
+          "title": "Old Forest",
+          "summary": "The old forest north of Elwendun, usually called the old woods by locals and used by village hunters in search of game."
         },
         "de": {
-          "title": "Der alte Wald",
-          "summary": "Der Wald jenseits der Dorffelder, in dem die örtlichen Jäger nach Wild suchen."
+          "title": "Der Alte Wald",
+          "summary": "Der alte Wald nördlich von Elwendun, den die Einheimischen meist einfach den alten Wald nennen und den die Jäger des Dorfes zur Jagd nutzen."
         }
       },
       "fragments": [
@@ -1389,7 +1422,7 @@
           }
         }
       ],
-      "appearanceOrder": 7
+      "appearanceOrder": 8
     },
     {
       "id": "border-fort",
@@ -1397,16 +1430,20 @@
         "places"
       ],
       "visibility": {
-        "mode": "always"
+        "mode": "reached-anchor",
+        "story": "dragon-knight",
+        "book": "volume-01",
+        "chapter": "dk-v01-ch01",
+        "anchor": "dk-v01-ch01-calist"
       },
       "labels": {
         "en": {
-          "title": "The border fort",
-          "summary": "A small fort near the road and river that watches the border and supports patrols through the surrounding region."
+          "title": "Dunbreyn",
+          "summary": "A small permanent fort near the Breyn crossing that watches the western frontier and supports patrols through the surrounding region."
         },
         "de": {
-          "title": "Das Grenzfort",
-          "summary": "Ein kleines Fort nahe der Straße und am Fluss, das die Grenze überwacht und Patrouillen in der umliegenden Region unterstützt."
+          "title": "Dunbreyn",
+          "summary": "Ein kleines dauerhaftes Fort nahe dem Übergang über den Breyn, das die Westgrenze überwacht und Patrouillen in der umliegenden Region unterstützt."
         }
       },
       "fragments": [
@@ -1496,9 +1533,31 @@
             "en": "Road connection",
             "de": "Straßenverbindung"
           }
+        },
+        {
+          "id": "river-breyn",
+          "target": "breyn-river",
+          "labels": {
+            "en": "Near the Breyn",
+            "de": "Nahe dem Breyn"
+          }
+        },
+        {
+          "id": "region-breynach",
+          "target": "breynach",
+          "visibility": {
+            "mode": "completed-chapter",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch03"
+          },
+          "labels": {
+            "en": "In Breynach",
+            "de": "In Breynach"
+          }
         }
       ],
-      "appearanceOrder": 5
+      "appearanceOrder": 12
     },
     {
       "id": "south-road-town",
@@ -1506,16 +1565,19 @@
         "places"
       ],
       "visibility": {
-        "mode": "always"
+        "mode": "completed-chapter",
+        "story": "dragon-knight",
+        "book": "volume-01",
+        "chapter": "dk-v01-ch02"
       },
       "labels": {
         "en": {
-          "title": "The town",
-          "summary": "A larger market town farther inland, with shops, workshops, inns, and regular trade."
+          "title": "Caerbreyn",
+          "summary": "A regional market town farther inland, with shops, workshops, inns, regular trade, and military administration."
         },
         "de": {
-          "title": "Die Stadt",
-          "summary": "Eine größere Marktstadt weiter im Landesinneren mit Läden, Werkstätten, Gasthäusern und regelmäßigem Handel."
+          "title": "Caerbreyn",
+          "summary": "Eine regionale Marktstadt weiter im Landesinneren mit Läden, Werkstätten, Gasthäusern, regelmäßigem Handel und militärischer Verwaltung."
         }
       },
       "fragments": [
@@ -1576,8 +1638,8 @@
           "id": "road-to-village",
           "target": "calists-village",
           "labels": {
-            "en": "Road to Calist's village",
-            "de": "Straße zu Calists Dorf"
+            "en": "Road to Elwendun",
+            "de": "Straße nach Elwendun"
           }
         },
         {
@@ -1586,6 +1648,20 @@
           "labels": {
             "en": "Fine-metalwork workshop",
             "de": "Feinmetallwerkstatt"
+          }
+        },
+        {
+          "id": "region-breynach",
+          "target": "breynach",
+          "visibility": {
+            "mode": "completed-chapter",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch03"
+          },
+          "labels": {
+            "en": "Regional centre of Breynach",
+            "de": "Regionalzentrum Breynachs"
           }
         }
       ],
@@ -1696,7 +1772,7 @@
           }
         }
       ],
-      "appearanceOrder": 24
+      "appearanceOrder": 34
     },
     {
       "id": "twin-dragons",
@@ -1782,16 +1858,19 @@
         "peoples"
       ],
       "visibility": {
-        "mode": "always"
+        "mode": "completed-chapter",
+        "story": "dragon-knight",
+        "book": "volume-01",
+        "chapter": "dk-v01-ch01"
       },
       "labels": {
         "en": {
           "title": "Goblins",
-          "summary": "A sapient humanoid people described as dangerous but not eager to fight without reason. They usually avoid humans, yet may steal traps, food, tools or livestock when they can."
+          "summary": "A sapient humanoid people known on the western frontier."
         },
         "de": {
           "title": "Goblins",
-          "summary": "Ein vernunftbegabtes humanoides Volk, das als gefährlich gilt, aber nicht ohne Grund den Kampf sucht. Meist meiden Goblins Menschen, können jedoch Fallen, Nahrung, Werkzeuge oder Vieh stehlen, wenn sich die Gelegenheit bietet."
+          "summary": "Ein vernunftbegabtes humanoides Volk, das an der westlichen Grenze bekannt ist."
         }
       },
       "fragments": [
@@ -1805,8 +1884,8 @@
             "anchor": "dk-v01-ch05-goblins"
           },
           "text": {
-            "en": "Calist sees at least two near a torch in the woods. One carries a spear; another carries something like a sack or rolled hide. They withdraw after the hunters make themselves known.",
-            "de": "Calist sieht mindestens zwei bei einer Fackel im Wald. Einer trägt einen Speer; der andere etwas wie einen Sack oder eine zusammengerollte Haut. Sie ziehen sich zurück, nachdem die Jäger sich zu erkennen geben."
+            "en": "Calist sees at least two frontier goblins near a torch in the woods. They are small and lean, with long arms, large pointed ears and olive-ochre skin; firelight briefly catches a broad nose, wide mouth and small sharp teeth. One carries a spear and the other a sack or rolled hide. Their patched cloth, hide and leather are specific to this encounter, not a universal goblin style.",
+            "de": "Calist sieht im Wald mindestens zwei Goblins der Grenzregion bei einer Fackel. Sie sind klein und schlank, mit langen Armen, großen spitzen Ohren und oliv- bis ockerfarbener Haut; im Feuerschein sind kurz eine breite Nase, ein weiter Mund und kleine scharfe Zähne zu erkennen. Einer trägt einen Speer, der andere einen Sack oder eine zusammengerollte Haut. Die geflickte Kleidung aus Stoff, Haut und Leder gehört zu dieser Begegnung und ist kein allgemeiner Goblinstil."
           },
           "readerLinks": [
             {
@@ -1882,9 +1961,27 @@
             "en": "Calist first directly encounters goblins in the Old Woods while travelling with the hunters.",
             "de": "Calist begegnet Goblins zum ersten Mal direkt in den Alten Wäldern, als er mit den Jägern unterwegs ist."
           }
+        },
+        {
+          "id": "goblins-general-appearance",
+          "visibility": {
+            "mode": "reached-anchor",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch05",
+            "anchor": "dk-v01-ch05-goblins"
+          },
+          "labels": {
+            "en": "General appearance",
+            "de": "Allgemeines Erscheinungsbild"
+          },
+          "text": {
+            "en": "Adult goblins are commonly around three to four feet tall and generally lean and wiry. Long arms, large pointed ears, broad noses, wide mouths, and small pronounced teeth are common. Skin commonly ranges through olive, ochre, yellow-green, and other muted earth tones. Individuals and regional populations can vary.",
+            "de": "Erwachsene Goblins sind meist etwa drei bis vier Fuß groß und in der Regel schlank und drahtig. Lange Arme, große spitze Ohren, breite Nasen, weite Münder und kleine deutlich sichtbare Zähne sind verbreitet. Die Haut reicht häufig von Oliv- und Ockertönen bis zu Gelbgrün und anderen gedämpften Erdfarben. Einzelne Goblins und regionale Gruppen können deutlich variieren."
+          }
         }
       ],
-      "appearanceOrder": 12
+      "appearanceOrder": 15
     },
     {
       "id": "leaf-arrow-pendant",
@@ -2013,7 +2110,7 @@
           }
         }
       ],
-      "appearanceOrder": 30
+      "appearanceOrder": 48
     },
     {
       "id": "alden-chainmail",
@@ -2101,7 +2198,7 @@
           }
         }
       ],
-      "appearanceOrder": 20
+      "appearanceOrder": 23
     },
     {
       "id": "alden-sword",
@@ -2171,7 +2268,7 @@
           }
         }
       ],
-      "appearanceOrder": 39
+      "appearanceOrder": 60
     },
     {
       "id": "first-shard-formation",
@@ -2234,7 +2331,8 @@
           }
         }
       ],
-      "appearanceOrder": 3
+      "appearanceOrder": 3,
+      "chronologyOrder": 0
     },
     {
       "id": "town-market-fight",
@@ -2346,7 +2444,8 @@
           }
         }
       ],
-      "appearanceOrder": 28
+      "appearanceOrder": 35,
+      "chronologyOrder": 4
     },
     {
       "id": "border-tension",
@@ -2363,12 +2462,12 @@
       },
       "labels": {
         "en": {
-          "title": "Rising border tension",
-          "summary": "Reports of raids and crossings at the far border begin to suggest that a larger conflict may be forming."
+          "title": "Caelren–Morcant border tension",
+          "summary": "Reports of raids and crossings between Caelren and Morcant begin to suggest that another larger conflict may be forming."
         },
         "de": {
-          "title": "Wachsende Spannungen an der Grenze",
-          "summary": "Berichte über Überfälle und Grenzübertritte deuten zunehmend darauf hin, dass ein größerer Konflikt entstehen könnte."
+          "title": "Grenzspannungen zwischen Caelren und Morcant",
+          "summary": "Berichte über Überfälle und Grenzübertritte zwischen Caelren und Morcant deuten darauf hin, dass sich erneut ein größerer Konflikt entwickelt."
         }
       },
       "fragments": [
@@ -2432,8 +2531,8 @@
             "chapter": "dk-v01-ch08"
           },
           "text": {
-            "en": "As the eastern conflict demands more soldiers, fewer remain near Calist's village. Patrols pass less often and the fort has less manpower to answer local threats.",
-            "de": "Als der Konflikt im Osten immer mehr Soldaten bindet, bleiben weniger in der Nähe von Calists Dorf. Patrouillen kommen seltener vorbei und dem Fort fehlen Männer für örtliche Gefahren."
+            "en": "By the later chapters the renewed conflict is openly called the war with Morcant. It draws soldiers east, leaving fewer around Dunbreyn and fewer patrols available for local threats.",
+            "de": "In den späteren Kapiteln wird der erneute Konflikt offen als Krieg mit Morcant bezeichnet. Er bindet Soldaten im Osten, sodass bei Dunbreyn weniger Männer und weniger Patrouillen für örtliche Gefahren verfügbar sind."
           },
           "readerLinks": [
             {
@@ -2465,9 +2564,26 @@
             "en": "Local military presence",
             "de": "Örtliche Militärpräsenz"
           }
+        },
+        {
+          "id": "caelren-side",
+          "target": "caelren",
+          "labels": {
+            "en": "Caelren",
+            "de": "Caelren"
+          }
+        },
+        {
+          "id": "morcant-side",
+          "target": "morcant",
+          "labels": {
+            "en": "Morcant",
+            "de": "Morcant"
+          }
         }
       ],
-      "appearanceOrder": 26
+      "appearanceOrder": 27,
+      "chronologyOrder": 5
     },
     {
       "id": "hardening-winters",
@@ -2483,11 +2599,11 @@
       },
       "labels": {
         "en": {
-          "title": "The hardening winters",
+          "title": "The Long Winter and hard years",
           "summary": "Several difficult seasons bring a long winter, smaller harvests, irregular trade and game farther from the village."
         },
         "de": {
-          "title": "Die härteren Winter",
+          "title": "Der lange Winter und die schweren Jahre",
           "summary": "Mehrere schwierige Jahreszeiten bringen einen langen Winter, kleinere Ernten, unregelmäßigen Handel und Wild, das weiter vom Dorf entfernt ist."
         }
       },
@@ -2636,7 +2752,8 @@
           }
         }
       ],
-      "appearanceOrder": 34
+      "appearanceOrder": 50,
+      "chronologyOrder": 9
     },
     {
       "id": "nessas-death",
@@ -2731,7 +2848,8 @@
           }
         }
       ],
-      "appearanceOrder": 35
+      "appearanceOrder": 52,
+      "chronologyOrder": 10
     },
     {
       "id": "hunting-party-ambush",
@@ -2853,7 +2971,8 @@
           }
         }
       ],
-      "appearanceOrder": 37
+      "appearanceOrder": 55,
+      "chronologyOrder": 11
     },
     {
       "id": "calist-enlistment",
@@ -2964,7 +3083,8 @@
           }
         }
       ],
-      "appearanceOrder": 38
+      "appearanceOrder": 59,
+      "chronologyOrder": 13
     },
     {
       "id": "tarin",
@@ -3048,7 +3168,7 @@
           }
         }
       ],
-      "appearanceOrder": 14
+      "appearanceOrder": 17
     },
     {
       "id": "joric",
@@ -3141,7 +3261,7 @@
           }
         }
       ],
-      "appearanceOrder": 15
+      "appearanceOrder": 18
     },
     {
       "id": "nalia",
@@ -3259,7 +3379,7 @@
           }
         }
       ],
-      "appearanceOrder": 16
+      "appearanceOrder": 19
     },
     {
       "id": "mara",
@@ -3403,7 +3523,7 @@
           }
         }
       ],
-      "appearanceOrder": 18
+      "appearanceOrder": 20
     },
     {
       "id": "garran",
@@ -3513,7 +3633,7 @@
           }
         }
       ],
-      "appearanceOrder": 17
+      "appearanceOrder": 21
     },
     {
       "id": "tessa",
@@ -3526,11 +3646,13 @@
       "labels": {
         "en": {
           "title": "Tessa",
-          "summary": "A village clothworker whose goods and supplies form part of the regular trade with town."
+          "summary": "A village clothworker whose goods and supplies form part of the regular trade with town.",
+          "fullName": "Tessa Venn"
         },
         "de": {
           "title": "Tessa",
-          "summary": "Eine Textilarbeiterin aus dem Dorf, deren Waren und Materialien Teil des regelmäßigen Handels mit der Stadt sind."
+          "summary": "Eine Textilarbeiterin aus dem Dorf, deren Waren und Materialien Teil des regelmäßigen Handels mit der Stadt sind.",
+          "fullName": "Tessa Venn"
         }
       },
       "fragments": [
@@ -3622,7 +3744,7 @@
           }
         }
       ],
-      "appearanceOrder": 19
+      "appearanceOrder": 22
     },
     {
       "id": "harlan",
@@ -3635,11 +3757,13 @@
       "labels": {
         "en": {
           "title": "Harlan",
-          "summary": "An experienced village hunter and tracker who is one of the people Eryn learns from."
+          "summary": "An experienced village hunter and tracker who is one of the people Eryn learns from.",
+          "fullName": "Harlan Rook"
         },
         "de": {
           "title": "Harlan",
-          "summary": "Ein erfahrener Jäger und Fährtenleser des Dorfes, von dem Eryn unter anderem lernt."
+          "summary": "Ein erfahrener Jäger und Fährtenleser des Dorfes, von dem Eryn unter anderem lernt.",
+          "fullName": "Harlan Rook"
         }
       },
       "fragments": [
@@ -3740,7 +3864,7 @@
           }
         }
       ],
-      "appearanceOrder": 31
+      "appearanceOrder": 42
     },
     {
       "id": "bren",
@@ -3753,11 +3877,13 @@
       "labels": {
         "en": {
           "title": "Bren",
-          "summary": "A village hunter who works with Harlan, Eryn and the other hunters beyond the fields."
+          "summary": "A village hunter who works with Harlan, Eryn and the other hunters beyond the fields.",
+          "fullName": "Bren Moss"
         },
         "de": {
           "title": "Bren",
-          "summary": "Ein Jäger des Dorfes, der mit Harlan, Eryn und den anderen Jägern jenseits der Felder arbeitet."
+          "summary": "Ein Jäger des Dorfes, der mit Harlan, Eryn und den anderen Jägern jenseits der Felder arbeitet.",
+          "fullName": "Bren Moss"
         }
       },
       "fragments": [
@@ -3850,7 +3976,7 @@
           }
         }
       ],
-      "appearanceOrder": 32
+      "appearanceOrder": 43
     },
     {
       "id": "shard",
@@ -4081,7 +4207,7 @@
           }
         }
       ],
-      "appearanceOrder": 21
+      "appearanceOrder": 24
     },
     {
       "id": "humans",
@@ -4102,7 +4228,7 @@
         }
       },
       "fragments": [],
-      "appearanceOrder": 33
+      "appearanceOrder": 14
     },
     {
       "id": "dwarves",
@@ -4110,16 +4236,20 @@
         "peoples"
       ],
       "visibility": {
-        "mode": "always"
+        "mode": "reached-anchor",
+        "story": "dragon-knight",
+        "book": "volume-01",
+        "chapter": "dk-v01-ch03",
+        "anchor": "dk-v01-ch03-bram"
       },
       "labels": {
         "en": {
           "title": "Dwarves",
-          "summary": "A sapient humanoid people."
+          "summary": "A sapient humanoid people whose adults are commonly shorter than humans, with compact, broad, densely built frames and strong hands."
         },
         "de": {
           "title": "Zwerge",
-          "summary": "Ein vernunftbegabtes humanoides Volk."
+          "summary": "Ein vernunftbegabtes humanoides Volk, dessen Erwachsene meist kleiner als Menschen sind und kompakte, breite, kräftig gebaute Körper sowie starke Hände haben."
         }
       },
       "sections": [
@@ -4140,10 +4270,28 @@
             "en": "Calist first meets a dwarf when he encounters Bram Ordek at a metalwork stall in the town market.",
             "de": "Calist begegnet zum ersten Mal einem Zwerg, als er Bram Ordek an einem Metallwarenstand auf dem Stadtmarkt trifft."
           }
+        },
+        {
+          "id": "dwarves-general-appearance",
+          "visibility": {
+            "mode": "reached-anchor",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch03",
+            "anchor": "dk-v01-ch03-bram"
+          },
+          "labels": {
+            "en": "General appearance",
+            "de": "Allgemeines Erscheinungsbild"
+          },
+          "text": {
+            "en": "Dwarven adults are commonly around four to five feet tall, with compact, broad and densely built frames, substantial musculature and strong hands. Hair, complexion, facial hair and grooming vary by individual and culture. Bram Ordek's broad shoulders, large hands and braided beard are one individual example rather than a universal template.",
+            "de": "Erwachsene Zwerge sind meist etwa vier bis fünf Fuß groß und besitzen kompakte, breite, dicht gebaute Körper, ausgeprägte Muskulatur und starke Hände. Haare, Hautfarbe, Gesichtsbehaarung und Pflege unterscheiden sich je nach Person und Kultur. Bram Ordeks breite Schultern, große Hände und geflochtener Bart sind ein individuelles Beispiel und kein allgemeingültiges Muster."
+          }
         }
       ],
       "fragments": [],
-      "appearanceOrder": 27
+      "appearanceOrder": 33
     },
     {
       "id": "orcs",
@@ -4151,16 +4299,19 @@
         "peoples"
       ],
       "visibility": {
-        "mode": "always"
+        "mode": "completed-chapter",
+        "story": "dragon-knight",
+        "book": "volume-01",
+        "chapter": "dk-v01-ch03"
       },
       "labels": {
         "en": {
           "title": "Orcs",
-          "summary": "A sapient humanoid people."
+          "summary": "A sapient humanoid people already using parts of the western frontier before Caelren's westward settlement."
         },
         "de": {
           "title": "Orks",
-          "summary": "Ein vernunftbegabtes humanoides Volk."
+          "summary": "Ein vernunftbegabtes humanoides Volk, das Teile der westlichen Grenzregion bereits vor Caelrens Ausbreitung nach Westen nutzte."
         }
       },
       "sections": [
@@ -4180,10 +4331,1317 @@
             "en": "During the Long Winter, tracks confirm that orcs have been moving near the northern path.",
             "de": "Während des langen Winters bestätigen Spuren, dass Orks nahe dem nördlichen Pfad unterwegs waren."
           }
+        },
+        {
+          "id": "orcs-general-appearance",
+          "visibility": {
+            "mode": "completed-chapter",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch07"
+          },
+          "labels": {
+            "en": "General appearance",
+            "de": "Allgemeines Erscheinungsbild"
+          },
+          "text": {
+            "en": "Orcs are commonly around six to seven feet tall and considerably broader than humans. Heavy brows and jaws, pronounced lower canines or tusks, and large hands and feet are common. Skin commonly ranges through grey, grey-green, and other muted earth tones. Band 1 contains no direct orc sighting; Calist learns this appearance from Corvin's experience.",
+            "de": "Orks sind häufig etwa sechs bis sieben Fuß groß und deutlich breiter gebaut als Menschen. Kräftige Brauen und Kiefer, ausgeprägte untere Eckzähne oder Hauer sowie große Hände und Füße sind verbreitet. Die Haut reicht häufig von Grau über Graugrün bis zu anderen gedämpften Erdtönen. In Band 1 wird kein Ork direkt gezeigt; Calist erfährt diese Beschreibung aus Corvins Erfahrung."
+          }
         }
       ],
+      "fragments": [
+        {
+          "id": "orcs-corvin-description",
+          "visibility": {
+            "mode": "completed-chapter",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch07"
+          },
+          "text": {
+            "en": "After large tracks are found near the northern path, Corvin tells Calist that the orcs he has met were usually taller and broader than most men, with heavy jaws, lower tusks, grey or greenish skin, and large hands and feet.",
+            "de": "Nachdem große Spuren nahe dem nördlichen Pfad gefunden werden, erklärt Corvin Calist, dass die Orks, denen er begegnet ist, meist größer und breiter als die meisten Menschen waren, mit kräftigen Kiefern, unteren Hauern, grauer oder grünlicher Haut sowie großen Händen und Füßen."
+          }
+        }
+      ],
+      "appearanceOrder": 51
+    },
+    {
+      "id": "elwen-river",
+      "categories": [
+        "places"
+      ],
+      "visibility": {
+        "mode": "reached-anchor",
+        "story": "dragon-knight",
+        "book": "volume-01",
+        "chapter": "dk-v01-ch01",
+        "anchor": "dk-v01-ch01-calist"
+      },
+      "labels": {
+        "en": {
+          "title": "Elwen",
+          "summary": "The smaller river that passes Elwendun and runs south toward the Breyn."
+        },
+        "de": {
+          "title": "Elwen",
+          "summary": "Der kleinere Fluss, der an Elwendun vorbeifließt und nach Süden zum Breyn führt."
+        }
+      },
       "fragments": [],
-      "appearanceOrder": 22
+      "relationships": [
+        {
+          "id": "passes-elwendun",
+          "target": "calists-village",
+          "labels": {
+            "en": "Passes Elwendun",
+            "de": "Fließt an Elwendun vorbei"
+          }
+        },
+        {
+          "id": "flows-to-breyn",
+          "target": "breyn-river",
+          "labels": {
+            "en": "Flows toward the Breyn",
+            "de": "Fließt zum Breyn"
+          }
+        }
+      ],
+      "appearanceOrder": 6
+    },
+    {
+      "id": "breyn-river",
+      "categories": [
+        "places"
+      ],
+      "visibility": {
+        "mode": "reached-anchor",
+        "story": "dragon-knight",
+        "book": "volume-01",
+        "chapter": "dk-v01-ch01",
+        "anchor": "dk-v01-ch01-calist"
+      },
+      "labels": {
+        "en": {
+          "title": "Breyn",
+          "summary": "The larger frontier river west of Elwendun, crossed by the main stone bridge near Dunbreyn."
+        },
+        "de": {
+          "title": "Breyn",
+          "summary": "Der größere Grenzfluss westlich von Elwendun, den die Hauptstraße nahe Dunbreyn über eine Steinbrücke überquert."
+        }
+      },
+      "fragments": [],
+      "relationships": [
+        {
+          "id": "near-dunbreyn",
+          "target": "border-fort",
+          "labels": {
+            "en": "Near Dunbreyn",
+            "de": "Nahe Dunbreyn"
+          }
+        },
+        {
+          "id": "receives-elwen",
+          "target": "elwen-river",
+          "labels": {
+            "en": "Connected to the Elwen",
+            "de": "Mit dem Elwen verbunden"
+          }
+        }
+      ],
+      "appearanceOrder": 7
+    },
+    {
+      "id": "breynach",
+      "categories": [
+        "places"
+      ],
+      "visibility": {
+        "mode": "completed-chapter",
+        "story": "dragon-knight",
+        "book": "volume-01",
+        "chapter": "dk-v01-ch03"
+      },
+      "labels": {
+        "en": {
+          "title": "Breynach",
+          "summary": "The western frontier region of Caelren containing Elwendun, Caerbreyn, Dunbreyn, nearby farms, villages, and roads."
+        },
+        "de": {
+          "title": "Breynach",
+          "summary": "Die westliche Grenzregion Caelrens mit Elwendun, Caerbreyn, Dunbreyn sowie umliegenden Höfen, Dörfern und Straßen."
+        }
+      },
+      "fragments": [
+        {
+          "id": "breynach-westward-growth",
+          "visibility": {
+            "mode": "completed-chapter",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch03"
+          },
+          "text": {
+            "en": "During the long Caelren–Morcant succession conflict, settlement in Breynach expanded westward: farms first, then roads, then forts, into country already used by orc and goblin tribes.",
+            "de": "Während des langjährigen Nachfolgestreits zwischen Caelren und Morcant dehnte sich die Besiedlung Breynachs nach Westen aus: zuerst Höfe, dann Straßen und schließlich Forts – in Gebiete, die bereits von Ork- und Goblinstämmen genutzt wurden."
+          }
+        }
+      ],
+      "relationships": [
+        {
+          "id": "part-of-caelren",
+          "target": "caelren",
+          "labels": {
+            "en": "Region of Caelren",
+            "de": "Region Caelrens"
+          }
+        },
+        {
+          "id": "contains-elwendun",
+          "target": "calists-village",
+          "labels": {
+            "en": "Contains Elwendun",
+            "de": "Umfasst Elwendun"
+          }
+        },
+        {
+          "id": "contains-caerbreyn",
+          "target": "south-road-town",
+          "labels": {
+            "en": "Contains Caerbreyn",
+            "de": "Umfasst Caerbreyn"
+          }
+        },
+        {
+          "id": "contains-dunbreyn",
+          "target": "border-fort",
+          "labels": {
+            "en": "Contains Dunbreyn",
+            "de": "Umfasst Dunbreyn"
+          }
+        }
+      ],
+      "appearanceOrder": 39
+    },
+    {
+      "id": "caelren",
+      "categories": [
+        "places",
+        "factions"
+      ],
+      "visibility": {
+        "mode": "completed-chapter",
+        "story": "dragon-knight",
+        "book": "volume-01",
+        "chapter": "dk-v01-ch03"
+      },
+      "labels": {
+        "en": {
+          "title": "Caelren",
+          "summary": "Calist's home kingdom, one of the two successor kingdoms that still claim the crown of old Dunareth."
+        },
+        "de": {
+          "title": "Caelren",
+          "summary": "Calists Heimatkönigreich und eines der beiden Nachfolgereiche, die weiterhin Anspruch auf die Krone des alten Dunareth erheben."
+        }
+      },
+      "fragments": [
+        {
+          "id": "caelren-western-frontier",
+          "visibility": {
+            "mode": "completed-chapter",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch03"
+          },
+          "text": {
+            "en": "Caelren's western frontier includes Breynach. Its current major human conflict is with Morcant to the east.",
+            "de": "Caelrens Westgrenze umfasst Breynach. Sein derzeit größter menschlicher Konflikt besteht mit Morcant im Osten."
+          }
+        }
+      ],
+      "relationships": [
+        {
+          "id": "rival-morcant",
+          "target": "morcant",
+          "labels": {
+            "en": "Rival successor kingdom",
+            "de": "Rivalisierendes Nachfolgereich"
+          }
+        },
+        {
+          "id": "successor-dunareth",
+          "target": "dunareth",
+          "labels": {
+            "en": "Successor to Dunareth",
+            "de": "Nachfolger Dunareths"
+          }
+        },
+        {
+          "id": "contains-breynach",
+          "target": "breynach",
+          "labels": {
+            "en": "Contains Breynach",
+            "de": "Umfasst Breynach"
+          }
+        }
+      ],
+      "appearanceOrder": 36
+    },
+    {
+      "id": "morcant",
+      "categories": [
+        "places",
+        "factions"
+      ],
+      "visibility": {
+        "mode": "reached-anchor",
+        "story": "dragon-knight",
+        "book": "volume-01",
+        "chapter": "dk-v01-ch03",
+        "anchor": "dk-v01-ch03-border-warning"
+      },
+      "labels": {
+        "en": {
+          "title": "Morcant",
+          "summary": "An eastern human kingdom whose renewed attacks raise concern in Caerbreyn."
+        },
+        "de": {
+          "title": "Morcant",
+          "summary": "Ein östliches Menschenkönigreich, dessen erneute Angriffe in Caerbreyn Besorgnis auslösen."
+        }
+      },
+      "fragments": [
+        {
+          "id": "morcant-renewed-conflict",
+          "visibility": {
+            "mode": "reached-anchor",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch03",
+            "anchor": "dk-v01-ch03-border-warning"
+          },
+          "text": {
+            "en": "During Calist's youth, reports of renewed crossings and raids from Morcant begin to grow into another major conflict.",
+            "de": "Während Calists Jugend verdichten sich Berichte über neue Grenzübertritte und Überfälle aus Morcant zu einem weiteren größeren Konflikt."
+          },
+          "readerLinks": [
+            {
+              "id": "morcant-renewed-conflict-reader",
+              "story": "dragon-knight",
+              "book": "volume-01",
+              "anchor": "dk-v01-ch03-border-warning",
+              "labels": {
+                "en": "Open the related passage",
+                "de": "Zugehörige Stelle öffnen"
+              }
+            }
+          ]
+        },
+        {
+          "id": "morcant-dunareth-claim",
+          "visibility": {
+            "mode": "completed-chapter",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch03"
+          },
+          "text": {
+            "en": "Morcant is one of the two successor kingdoms formed after Dunareth's disputed succession. Its crown still claims to be the rightful continuation of the old kingdom.",
+            "de": "Morcant ist eines der beiden Nachfolgereiche, die aus Dunareths umstrittener Erbfolge hervorgingen. Seine Krone beansprucht weiterhin, die rechtmäßige Fortsetzung des alten Königreichs zu sein."
+          }
+        }
+      ],
+      "relationships": [
+        {
+          "id": "rival-caelren",
+          "target": "caelren",
+          "labels": {
+            "en": "Rival successor kingdom",
+            "de": "Rivalisierendes Nachfolgereich"
+          }
+        },
+        {
+          "id": "successor-dunareth",
+          "target": "dunareth",
+          "labels": {
+            "en": "Successor to Dunareth",
+            "de": "Nachfolger Dunareths"
+          }
+        }
+      ],
+      "appearanceOrder": 28
+    },
+    {
+      "id": "dunareth",
+      "categories": [
+        "places",
+        "history"
+      ],
+      "visibility": {
+        "mode": "completed-chapter",
+        "story": "dragon-knight",
+        "book": "volume-01",
+        "chapter": "dk-v01-ch03"
+      },
+      "labels": {
+        "en": {
+          "title": "Dunareth",
+          "summary": "The former united human kingdom that preceded Caelren and Morcant."
+        },
+        "de": {
+          "title": "Dunareth",
+          "summary": "Das ehemalige vereinte Menschenkönigreich, aus dem Caelren und Morcant hervorgingen."
+        }
+      },
+      "fragments": [
+        {
+          "id": "dunareth-succession",
+          "visibility": {
+            "mode": "completed-chapter",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch03"
+          },
+          "text": {
+            "en": "After Dunareth's last uncontested king died without a clear direct heir, competing collateral claims fractured the kingdom. Roughly three and a half centuries later, both successor crowns still claim to be its rightful continuation.",
+            "de": "Nachdem Dunareths letzter unangefochtener König ohne eindeutigen direkten Erben starb, zerbrach das Reich an konkurrierenden Ansprüchen aus Nebenlinien. Rund dreieinhalb Jahrhunderte später beanspruchen beide Nachfolgekronen weiterhin, die rechtmäßige Fortsetzung Dunareths zu sein."
+          }
+        }
+      ],
+      "relationships": [
+        {
+          "id": "successor-caelren",
+          "target": "caelren",
+          "labels": {
+            "en": "Successor: Caelren",
+            "de": "Nachfolger: Caelren"
+          }
+        },
+        {
+          "id": "successor-morcant",
+          "target": "morcant",
+          "labels": {
+            "en": "Successor: Morcant",
+            "de": "Nachfolger: Morcant"
+          }
+        }
+      ],
+      "appearanceOrder": 37
+    },
+    {
+      "id": "dunareth-division",
+      "categories": [
+        "history",
+        "events"
+      ],
+      "visibility": {
+        "mode": "completed-chapter",
+        "story": "dragon-knight",
+        "book": "volume-01",
+        "chapter": "dk-v01-ch03"
+      },
+      "labels": {
+        "en": {
+          "title": "Division of Dunareth",
+          "summary": "About three and a half centuries before Calist's childhood, a disputed succession split Dunareth into Caelren and Morcant."
+        },
+        "de": {
+          "title": "Teilung Dunareths",
+          "summary": "Etwa dreieinhalb Jahrhunderte vor Calists Kindheit spaltete ein umstrittener Erbfolgestreit Dunareth in Caelren und Morcant."
+        }
+      },
+      "fragments": [
+        {
+          "id": "dunareth-division-recurring-wars",
+          "visibility": {
+            "mode": "completed-chapter",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch03"
+          },
+          "text": {
+            "en": "The conflict was never one continuous war. Treaties, dynastic marriages, exhausted armies and long pauses repeatedly interrupted it, but neither crown abandoned its claim. Alden and Corvin were sent east during one earlier renewal of the same dispute.",
+            "de": "Der Konflikt war nie ein einziger ununterbrochener Krieg. Verträge, dynastische Ehen, erschöpfte Armeen und lange Pausen unterbrachen ihn immer wieder, doch keine Krone gab ihren Anspruch auf. Alden und Corvin wurden während einer früheren Phase desselben Streits nach Osten geschickt."
+          }
+        }
+      ],
+      "relationships": [
+        {
+          "id": "former-kingdom",
+          "target": "dunareth",
+          "labels": {
+            "en": "Former kingdom",
+            "de": "Ehemaliges Königreich"
+          }
+        },
+        {
+          "id": "created-caelren",
+          "target": "caelren",
+          "labels": {
+            "en": "Created Caelren",
+            "de": "Führte zu Caelren"
+          }
+        },
+        {
+          "id": "created-morcant",
+          "target": "morcant",
+          "labels": {
+            "en": "Created Morcant",
+            "de": "Führte zu Morcant"
+          }
+        }
+      ],
+      "appearanceOrder": 38,
+      "chronologyOrder": 100
+    },
+    {
+      "id": "breynach-westward-settlement",
+      "categories": [
+        "history"
+      ],
+      "visibility": {
+        "mode": "completed-chapter",
+        "story": "dragon-knight",
+        "book": "volume-01",
+        "chapter": "dk-v01-ch03"
+      },
+      "labels": {
+        "en": {
+          "title": "Westward settlement of Breynach",
+          "summary": "Over generations, Caelren's settlement pushed west through Breynach into land already used by orc and goblin peoples."
+        },
+        "de": {
+          "title": "Westliche Besiedlung Breynachs",
+          "summary": "Über Generationen dehnte sich Caelrens Besiedlung westwärts durch Breynach in Gebiete aus, die bereits von Orks und Goblins genutzt wurden."
+        }
+      },
+      "fragments": [
+        {
+          "id": "breynach-settlement-conflict",
+          "visibility": {
+            "mode": "completed-chapter",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch03"
+          },
+          "text": {
+            "en": "The first-volume account is deliberately not a simple story of one side attacking the other. Farms, roads and forts expanded west; trade and separation existed alongside raids, reprisals, displacement and inherited grievances.",
+            "de": "Die Darstellung in Band 1 ist bewusst keine einfache Geschichte, in der nur eine Seite die andere angreift. Höfe, Straßen und Forts breiteten sich nach Westen aus; neben Handel und gegenseitigem Ausweichen entstanden Überfälle, Vergeltung, Vertreibung und über Generationen vererbte Feindschaften."
+          }
+        }
+      ],
+      "relationships": [
+        {
+          "id": "region",
+          "target": "breynach",
+          "labels": {
+            "en": "Region",
+            "de": "Region"
+          }
+        },
+        {
+          "id": "settling-kingdom",
+          "target": "caelren",
+          "labels": {
+            "en": "Settling kingdom",
+            "de": "Siedelndes Königreich"
+          }
+        },
+        {
+          "id": "goblin-peoples",
+          "target": "goblins",
+          "labels": {
+            "en": "Existing frontier people",
+            "de": "Bereits ansässiges Grenzvolk"
+          }
+        },
+        {
+          "id": "orc-peoples",
+          "target": "orcs",
+          "labels": {
+            "en": "Existing frontier people",
+            "de": "Bereits ansässiges Grenzvolk"
+          }
+        }
+      ],
+      "appearanceOrder": 40
+    },
+    {
+      "id": "edrin",
+      "categories": [
+        "characters"
+      ],
+      "visibility": {
+        "mode": "completed-chapter",
+        "story": "dragon-knight",
+        "book": "volume-01",
+        "chapter": "dk-v01-ch04"
+      },
+      "labels": {
+        "en": {
+          "title": "Edrin",
+          "summary": "An experienced village hunter and scout who works regularly with Harlan, Bren, and Eryn.",
+          "fullName": "Edrin Cole"
+        },
+        "de": {
+          "title": "Edrin",
+          "summary": "Ein erfahrener Jäger und Späher des Dorfes, der regelmäßig mit Harlan, Bren und Eryn arbeitet.",
+          "fullName": "Edrin Cole"
+        }
+      },
+      "fragments": [
+        {
+          "id": "edrin-goblin-warning-shot",
+          "visibility": {
+            "mode": "reached-anchor",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch05",
+            "anchor": "dk-v01-ch05-goblins"
+          },
+          "text": {
+            "en": "During Calist's first direct goblin encounter, Edrin fires an arrow into the ground as a warning while Harlan keeps the group from escalating the encounter.",
+            "de": "Bei Calists erster direkter Begegnung mit Goblins schießt Edrin einen Pfeil als Warnung in den Boden, während Harlan verhindert, dass die Gruppe die Situation weiter eskaliert."
+          },
+          "readerLinks": [
+            {
+              "id": "edrin-goblin-warning-shot-reader",
+              "story": "dragon-knight",
+              "book": "volume-01",
+              "anchor": "dk-v01-ch05-goblins",
+              "labels": {
+                "en": "Open the related passage",
+                "de": "Zugehörige Stelle öffnen"
+              }
+            }
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "id": "hunter-harlan",
+          "target": "harlan",
+          "labels": {
+            "en": "Fellow hunter",
+            "de": "Jägerkollege"
+          }
+        },
+        {
+          "id": "hunter-bren",
+          "target": "bren",
+          "labels": {
+            "en": "Fellow hunter",
+            "de": "Jägerkollege"
+          }
+        },
+        {
+          "id": "hunter-eryn",
+          "target": "eryn",
+          "labels": {
+            "en": "Fellow hunter",
+            "de": "Jägerkollegin"
+          }
+        }
+      ],
+      "appearanceOrder": 44
+    },
+    {
+      "id": "merek",
+      "categories": [
+        "characters"
+      ],
+      "visibility": {
+        "mode": "completed-chapter",
+        "story": "dragon-knight",
+        "book": "volume-01",
+        "chapter": "dk-v01-ch03"
+      },
+      "labels": {
+        "en": {
+          "title": "Merek",
+          "summary": "A soldier known to Calist through Corvin and repeated visits along the road and fort connection.",
+          "fullName": "Merek Dain"
+        },
+        "de": {
+          "title": "Merek",
+          "summary": "Ein Soldat, den Calist durch Corvin und wiederholte Besuche über die Straßen- und Fortverbindung kennt.",
+          "fullName": "Merek Dain"
+        }
+      },
+      "fragments": [],
+      "relationships": [
+        {
+          "id": "serves-with-corvin",
+          "target": "corvin",
+          "labels": {
+            "en": "Serves with Corvin",
+            "de": "Dient mit Corvin"
+          }
+        }
+      ],
+      "appearanceOrder": 29
+    },
+    {
+      "id": "oren",
+      "categories": [
+        "characters"
+      ],
+      "visibility": {
+        "mode": "completed-chapter",
+        "story": "dragon-knight",
+        "book": "volume-01",
+        "chapter": "dk-v01-ch03"
+      },
+      "labels": {
+        "en": {
+          "title": "Oren",
+          "summary": "A soldier known to Calist through Corvin; he is remembered in Elwendun for bringing apples to the village children.",
+          "fullName": "Oren Voss"
+        },
+        "de": {
+          "title": "Oren",
+          "summary": "Ein Soldat, den Calist durch Corvin kennt; in Elwendun erinnert man sich an ihn unter anderem dafür, dass er den Dorfkindern Äpfel mitbringt.",
+          "fullName": "Oren Voss"
+        }
+      },
+      "fragments": [],
+      "relationships": [
+        {
+          "id": "serves-with-corvin",
+          "target": "corvin",
+          "labels": {
+            "en": "Serves with Corvin",
+            "de": "Dient mit Corvin"
+          }
+        }
+      ],
+      "appearanceOrder": 30
+    },
+    {
+      "id": "heddan",
+      "categories": [
+        "characters"
+      ],
+      "visibility": {
+        "mode": "reached-anchor",
+        "story": "dragon-knight",
+        "book": "volume-01",
+        "chapter": "dk-v01-ch03",
+        "anchor": "dk-v01-ch03-border-warning"
+      },
+      "labels": {
+        "en": {
+          "title": "Heddan",
+          "summary": "A Caerbreyn metal supplier who trades regularly with Alden and first passes on serious reports of renewed Morcant attacks.",
+          "fullName": "Heddan Rell"
+        },
+        "de": {
+          "title": "Heddan",
+          "summary": "Ein Metallhändler in Caerbreyn, der regelmäßig mit Alden handelt und erstmals ernsthafte Berichte über neue Angriffe aus Morcant weitergibt.",
+          "fullName": "Heddan Rell"
+        }
+      },
+      "fragments": [],
+      "relationships": [
+        {
+          "id": "works-in-caerbreyn",
+          "target": "south-road-town",
+          "labels": {
+            "en": "Works in Caerbreyn",
+            "de": "Arbeitet in Caerbreyn"
+          }
+        },
+        {
+          "id": "trades-with-alden",
+          "target": "alden",
+          "labels": {
+            "en": "Trades with Alden",
+            "de": "Handelt mit Alden"
+          }
+        }
+      ],
+      "appearanceOrder": 26
+    },
+    {
+      "id": "mira",
+      "categories": [
+        "characters"
+      ],
+      "visibility": {
+        "mode": "completed-chapter",
+        "story": "dragon-knight",
+        "book": "volume-01",
+        "chapter": "dk-v01-ch03"
+      },
+      "labels": {
+        "en": {
+          "title": "Mira",
+          "summary": "A baker on the west side of Caerbreyn's market square and a trusted town contact for people from Elwendun.",
+          "fullName": "Mira Pell"
+        },
+        "de": {
+          "title": "Mira",
+          "summary": "Eine Bäckerin an der Westseite des Marktplatzes von Caerbreyn und eine vertraute Ansprechpartnerin für Menschen aus Elwendun.",
+          "fullName": "Mira Pell"
+        }
+      },
+      "fragments": [],
+      "relationships": [
+        {
+          "id": "works-in-caerbreyn",
+          "target": "south-road-town",
+          "labels": {
+            "en": "Works in Caerbreyn",
+            "de": "Arbeitet in Caerbreyn"
+          }
+        }
+      ],
+      "appearanceOrder": 31
+    },
+    {
+      "id": "renn",
+      "categories": [
+        "characters"
+      ],
+      "visibility": {
+        "mode": "reached-anchor",
+        "story": "dragon-knight",
+        "book": "volume-01",
+        "chapter": "dk-v01-ch08",
+        "anchor": "dk-v01-ch08-hunters-depart"
+      },
+      "labels": {
+        "en": {
+          "title": "Renn",
+          "summary": "A younger village hunter with several proper hunts behind him, though he still relies on Harlan's judgment."
+        },
+        "de": {
+          "title": "Renn",
+          "summary": "Ein jüngerer Jäger des Dorfes, der bereits an mehreren richtigen Jagden teilgenommen hat, sich aber noch stark auf Harlans Urteil verlässt."
+        }
+      },
+      "fragments": [
+        {
+          "id": "renn-ambush-injury",
+          "visibility": {
+            "mode": "reached-anchor",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch08",
+            "anchor": "dk-v01-ch08-ambush-return"
+          },
+          "text": {
+            "en": "Renn is badly injured during the ambush and cannot walk normally, forcing Kell and the others to help carry him during the retreat.",
+            "de": "Renn wird beim Hinterhalt schwer verletzt und kann nicht mehr normal gehen, sodass Kell und die anderen ihn beim Rückzug stützen und tragen müssen."
+          },
+          "readerLinks": [
+            {
+              "id": "renn-ambush-injury-reader",
+              "story": "dragon-knight",
+              "book": "volume-01",
+              "anchor": "dk-v01-ch08-ambush-return",
+              "labels": {
+                "en": "Open the related passage",
+                "de": "Zugehörige Stelle öffnen"
+              }
+            }
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "id": "hunter-harlan",
+          "target": "harlan",
+          "labels": {
+            "en": "Hunts under Harlan",
+            "de": "Jagt unter Harlan"
+          }
+        }
+      ],
+      "appearanceOrder": 53
+    },
+    {
+      "id": "kell",
+      "categories": [
+        "characters"
+      ],
+      "visibility": {
+        "mode": "reached-anchor",
+        "story": "dragon-knight",
+        "book": "volume-01",
+        "chapter": "dk-v01-ch08",
+        "anchor": "dk-v01-ch08-hunters-depart"
+      },
+      "labels": {
+        "en": {
+          "title": "Kell",
+          "summary": "A young village hunter who has little experience with serious fighting when he joins an extended hunting party."
+        },
+        "de": {
+          "title": "Kell",
+          "summary": "Ein junger Jäger des Dorfes, der noch kaum Erfahrung mit ernsthaften Kämpfen hat, als er sich einer längeren Jagdgruppe anschließt."
+        }
+      },
+      "fragments": [
+        {
+          "id": "kell-ambush-retreat",
+          "visibility": {
+            "mode": "reached-anchor",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch08",
+            "anchor": "dk-v01-ch08-ambush-return"
+          },
+          "text": {
+            "en": "During the ambush retreat, Kell supports and partly carries the injured Renn while Harlan is wounded in the arm.",
+            "de": "Beim Rückzug nach dem Hinterhalt stützt und trägt Kell den verletzten Renn teilweise, während Harlan am Arm verwundet ist."
+          },
+          "readerLinks": [
+            {
+              "id": "kell-ambush-retreat-reader",
+              "story": "dragon-knight",
+              "book": "volume-01",
+              "anchor": "dk-v01-ch08-ambush-return",
+              "labels": {
+                "en": "Open the related passage",
+                "de": "Zugehörige Stelle öffnen"
+              }
+            }
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "id": "hunter-harlan",
+          "target": "harlan",
+          "labels": {
+            "en": "Hunts under Harlan",
+            "de": "Jagt unter Harlan"
+          }
+        }
+      ],
+      "appearanceOrder": 54
+    },
+    {
+      "id": "calist-road-foundation",
+      "categories": [
+        "events"
+      ],
+      "visibility": {
+        "mode": "completed-chapter",
+        "story": "dragon-knight",
+        "book": "volume-01",
+        "chapter": "dk-v01-ch01"
+      },
+      "labels": {
+        "en": {
+          "title": "Calist's road-and-fort childhood",
+          "summary": "Growing up beside the road between Elwendun and Dunbreyn, Calist becomes fascinated by the wider world described by visiting soldiers."
+        },
+        "de": {
+          "title": "Calists Kindheit an Straße und Fort",
+          "summary": "Calist wächst an der Straße zwischen Elwendun und Dunbreyn auf und entwickelt durch die Geschichten durchreisender Soldaten eine Faszination für die weitere Welt."
+        }
+      },
+      "fragments": [
+        {
+          "id": "calist-road-foundation-corvin",
+          "visibility": {
+            "mode": "completed-chapter",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch01"
+          },
+          "text": {
+            "en": "Corvin indulges Calist's curiosity with an informal lesson in stance and balance using a broom rather than a sword.",
+            "de": "Corvin geht auf Calists Neugier ein und zeigt ihm mit einem Besen statt eines Schwertes informell Haltung und Gleichgewicht."
+          },
+          "readerLinks": [
+            {
+              "id": "calist-road-foundation-corvin-reader",
+              "story": "dragon-knight",
+              "book": "volume-01",
+              "anchor": "dk-v01-ch01-corvin",
+              "labels": {
+                "en": "Open the related passage",
+                "de": "Zugehörige Stelle öffnen"
+              }
+            }
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "id": "calist",
+          "target": "calist",
+          "labels": {
+            "en": "Calist",
+            "de": "Calist"
+          }
+        },
+        {
+          "id": "corvin",
+          "target": "corvin",
+          "labels": {
+            "en": "Corvin",
+            "de": "Corvin"
+          }
+        },
+        {
+          "id": "elwendun",
+          "target": "calists-village",
+          "labels": {
+            "en": "Elwendun",
+            "de": "Elwendun"
+          }
+        },
+        {
+          "id": "dunbreyn",
+          "target": "border-fort",
+          "labels": {
+            "en": "Dunbreyn",
+            "de": "Dunbreyn"
+          }
+        }
+      ],
+      "appearanceOrder": 57,
+      "chronologyOrder": 1
+    },
+    {
+      "id": "old-woods-pull",
+      "categories": [
+        "events"
+      ],
+      "visibility": {
+        "mode": "reached-anchor",
+        "story": "dragon-knight",
+        "book": "volume-01",
+        "chapter": "dk-v01-ch02",
+        "anchor": "dk-v01-ch02-old-woods-pull"
+      },
+      "labels": {
+        "en": {
+          "title": "Calist's pull toward the Old Forest",
+          "summary": "At age ten, Calist experiences a quiet, unexplained pull into the foggy Old Forest; it is not a voice, vision, command, or conscious thought."
+        },
+        "de": {
+          "title": "Calists Zug zum Alten Wald",
+          "summary": "Mit zehn Jahren spürt Calist im nebligen Alten Wald einen stillen, unerklärlichen Zug; es ist weder eine Stimme noch eine Vision, ein Befehl oder ein bewusster Gedanke."
+        }
+      },
+      "fragments": [],
+      "relationships": [
+        {
+          "id": "calist",
+          "target": "calist",
+          "labels": {
+            "en": "Calist",
+            "de": "Calist"
+          }
+        },
+        {
+          "id": "forest",
+          "target": "old-woods",
+          "labels": {
+            "en": "Old Forest",
+            "de": "Alter Wald"
+          }
+        }
+      ],
+      "sections": [
+        {
+          "id": "old-woods-pull-experience",
+          "visibility": {
+            "mode": "reached-anchor",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch02",
+            "anchor": "dk-v01-ch02-old-woods-pull"
+          },
+          "labels": {
+            "en": "What Calist experiences",
+            "de": "Was Calist erlebt"
+          },
+          "text": {
+            "en": "The pull feels familiar and directional without giving Calist an explanation. The true cause remains unrevealed in Volume 1 and is not exposed by the Lexicon.",
+            "de": "Der Zug fühlt sich vertraut und richtungsweisend an, ohne Calist eine Erklärung zu geben. Die wahre Ursache wird in Band 1 nicht enthüllt und bleibt auch im Lexikon verborgen."
+          }
+        }
+      ],
+      "appearanceOrder": 58,
+      "chronologyOrder": 2
+    },
+    {
+      "id": "first-caerbreyn-journey",
+      "categories": [
+        "events"
+      ],
+      "visibility": {
+        "mode": "reached-anchor",
+        "story": "dragon-knight",
+        "book": "volume-01",
+        "chapter": "dk-v01-ch03",
+        "anchor": "dk-v01-ch03-town-arrival"
+      },
+      "labels": {
+        "en": {
+          "title": "First journey to Caerbreyn",
+          "summary": "Around age fourteen, Calist travels beyond Elwendun to Caerbreyn for the first time, experiences the regional market town directly, and meets Bram Ordek."
+        },
+        "de": {
+          "title": "Erste Reise nach Caerbreyn",
+          "summary": "Mit etwa vierzehn Jahren reist Calist erstmals über Elwendun hinaus nach Caerbreyn, erlebt die regionale Marktstadt selbst und begegnet Bram Ordek."
+        }
+      },
+      "fragments": [],
+      "relationships": [
+        {
+          "id": "calist",
+          "target": "calist",
+          "labels": {
+            "en": "Calist",
+            "de": "Calist"
+          }
+        },
+        {
+          "id": "caerbreyn",
+          "target": "south-road-town",
+          "labels": {
+            "en": "Caerbreyn",
+            "de": "Caerbreyn"
+          }
+        },
+        {
+          "id": "bram",
+          "target": "bram",
+          "labels": {
+            "en": "Bram Ordek",
+            "de": "Bram Ordek"
+          }
+        }
+      ],
+      "appearanceOrder": 46,
+      "chronologyOrder": 3
+    },
+    {
+      "id": "useful-hands-transition",
+      "categories": [
+        "events"
+      ],
+      "visibility": {
+        "mode": "reached-anchor",
+        "story": "dragon-knight",
+        "book": "volume-01",
+        "chapter": "dk-v01-ch04",
+        "anchor": "dk-v01-ch04-first-independent-work"
+      },
+      "labels": {
+        "en": {
+          "title": "Growing village responsibility",
+          "summary": "Calist and the other youths increasingly move from helping adults to doing useful work that the village can rely on."
+        },
+        "de": {
+          "title": "Wachsende Verantwortung im Dorf",
+          "summary": "Calist und die anderen Jugendlichen wechseln zunehmend vom bloßen Helfen zu nützlicher Arbeit, auf die sich das Dorf verlassen kann."
+        }
+      },
+      "fragments": [],
+      "relationships": [
+        {
+          "id": "calist",
+          "target": "calist",
+          "labels": {
+            "en": "Calist",
+            "de": "Calist"
+          }
+        },
+        {
+          "id": "village",
+          "target": "calists-village",
+          "labels": {
+            "en": "Elwendun",
+            "de": "Elwendun"
+          }
+        }
+      ],
+      "appearanceOrder": 45,
+      "chronologyOrder": 6
+    },
+    {
+      "id": "first-overnight-hunt",
+      "categories": [
+        "events"
+      ],
+      "visibility": {
+        "mode": "reached-anchor",
+        "story": "dragon-knight",
+        "book": "volume-01",
+        "chapter": "dk-v01-ch05",
+        "anchor": "dk-v01-ch05-camp"
+      },
+      "labels": {
+        "en": {
+          "title": "Calist's first overnight hunt",
+          "summary": "Around age fifteen, Calist joins Harlan, Bren, Edrin, and Eryn on his first serious overnight hunting trip."
+        },
+        "de": {
+          "title": "Calists erste Jagd mit Übernachtung",
+          "summary": "Mit etwa fünfzehn Jahren begleitet Calist Harlan, Bren, Edrin und Eryn auf seinen ersten ernsthaften mehrtägigen Jagdausflug."
+        }
+      },
+      "fragments": [
+        {
+          "id": "first-overnight-hunt-goblins",
+          "visibility": {
+            "mode": "reached-anchor",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch05",
+            "anchor": "dk-v01-ch05-goblins"
+          },
+          "text": {
+            "en": "After wandering away from camp, Calist directly encounters goblins for the first time. The hunters reveal themselves, avoid a needless pursuit, and return to camp.",
+            "de": "Nachdem Calist sich vom Lager entfernt hat, begegnet er zum ersten Mal direkt Goblins. Die Jäger geben sich zu erkennen, vermeiden eine unnötige Verfolgung und kehren zum Lager zurück."
+          },
+          "readerLinks": [
+            {
+              "id": "first-overnight-hunt-goblins-reader",
+              "story": "dragon-knight",
+              "book": "volume-01",
+              "anchor": "dk-v01-ch05-goblins",
+              "labels": {
+                "en": "Open the related passage",
+                "de": "Zugehörige Stelle öffnen"
+              }
+            }
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "id": "calist",
+          "target": "calist",
+          "labels": {
+            "en": "Calist",
+            "de": "Calist"
+          }
+        },
+        {
+          "id": "harlan",
+          "target": "harlan",
+          "labels": {
+            "en": "Harlan",
+            "de": "Harlan"
+          }
+        },
+        {
+          "id": "bren",
+          "target": "bren",
+          "labels": {
+            "en": "Bren",
+            "de": "Bren"
+          }
+        },
+        {
+          "id": "edrin",
+          "target": "edrin",
+          "labels": {
+            "en": "Edrin",
+            "de": "Edrin"
+          }
+        },
+        {
+          "id": "eryn",
+          "target": "eryn",
+          "labels": {
+            "en": "Eryn",
+            "de": "Eryn"
+          }
+        }
+      ],
+      "appearanceOrder": 47,
+      "chronologyOrder": 7
+    },
+    {
+      "id": "bram-apprenticeship",
+      "categories": [
+        "events"
+      ],
+      "visibility": {
+        "mode": "reached-anchor",
+        "story": "dragon-knight",
+        "book": "volume-01",
+        "chapter": "dk-v01-ch06",
+        "anchor": "dk-v01-ch06-apprentice-moves"
+      },
+      "labels": {
+        "en": {
+          "title": "Calist's apprenticeship with Bram",
+          "summary": "Calist's repeated interest and fine-metal practice develop into a formal apprenticeship under Bram Ordek in Caerbreyn."
+        },
+        "de": {
+          "title": "Calists Lehre bei Bram",
+          "summary": "Aus Calists wiederholtem Interesse und seiner Übung in Feinmetallarbeit wird eine formelle Lehre bei Bram Ordek in Caerbreyn."
+        }
+      },
+      "fragments": [
+        {
+          "id": "bram-apprenticeship-interrupted",
+          "visibility": {
+            "mode": "completed-chapter",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch07"
+          },
+          "text": {
+            "en": "The Long Winter and Alden's serious illness interrupt the apprenticeship and bring Calist back to Elwendun, where the village needs his hands.",
+            "de": "Der lange Winter und Aldens schwere Krankheit unterbrechen die Lehre und bringen Calist zurück nach Elwendun, wo das Dorf seine Hände braucht."
+          },
+          "readerLinks": [
+            {
+              "id": "bram-apprenticeship-interrupted-reader",
+              "story": "dragon-knight",
+              "book": "volume-01",
+              "anchor": "dk-v01-ch07-alden-illness",
+              "labels": {
+                "en": "Open the related passage",
+                "de": "Zugehörige Stelle öffnen"
+              }
+            }
+          ]
+        }
+      ],
+      "relationships": [
+        {
+          "id": "calist",
+          "target": "calist",
+          "labels": {
+            "en": "Apprentice",
+            "de": "Lehrling"
+          }
+        },
+        {
+          "id": "bram",
+          "target": "bram",
+          "labels": {
+            "en": "Master",
+            "de": "Meister"
+          }
+        },
+        {
+          "id": "workshop",
+          "target": "brams-workshop",
+          "labels": {
+            "en": "Workshop",
+            "de": "Werkstatt"
+          }
+        }
+      ],
+      "appearanceOrder": 49,
+      "chronologyOrder": 8
     }
   ]
 }
