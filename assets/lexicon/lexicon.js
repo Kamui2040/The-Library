@@ -41,6 +41,13 @@
       readMore: "Read more",
       close: "Close",
       fullName: "Full name",
+      generalDescription: "General description",
+      overview: "Overview",
+      bookEntries: "Book entries",
+      bookEntry: "Book entry",
+      volumeLabel: "Volume",
+      chapterLabel: "Chapter",
+      prologueLabel: "Prologue",
       sortLabel: "Sort entries",
       sortAppearance: "Appearance",
       sortAlphabetical: "Alphabetical",
@@ -70,6 +77,13 @@
       readMore: "Mehr lesen",
       close: "Schließen",
       fullName: "Vollständiger Name",
+      generalDescription: "Allgemeine Beschreibung",
+      overview: "Überblick",
+      bookEntries: "Bucheinträge",
+      bookEntry: "Bucheintrag",
+      volumeLabel: "Band",
+      chapterLabel: "Kapitel",
+      prologueLabel: "Prolog",
       sortLabel: "Einträge sortieren",
       sortAppearance: "Auftreten",
       sortAlphabetical: "Alphabetisch",
@@ -174,6 +188,24 @@
     };
   };
 
+  const fragmentSourceLabel = (visibility, lang) => {
+    const chapterId = visibility?.chapter;
+    const table = ui[lang];
+    if (typeof chapterId !== "string") return table.bookEntry;
+
+    const chapterMatch = /-v(\d+)-ch(\d+)$/.exec(chapterId);
+    if (chapterMatch) {
+      return `${table.volumeLabel} ${Number(chapterMatch[1])} · ${table.chapterLabel} ${Number(chapterMatch[2])}`;
+    }
+
+    const prologueMatch = /-v(\d+)-prologue$/.exec(chapterId);
+    if (prologueMatch) {
+      return `${table.volumeLabel} ${Number(prologueMatch[1])} · ${table.prologueLabel}`;
+    }
+
+    return table.bookEntry;
+  };
+
   const localizedRelationship = (relationship, profile, lang) => {
     if (!visibilityAllowed(relationship?.visibility || { mode: "always" }, profile)) return null;
     const target = rawEntry(relationship?.target);
@@ -199,6 +231,13 @@
     const labels = entry.labels?.[lang];
     if (!labels) return null;
 
+    let summary = labels.summary;
+    for (const update of entry.summaryUpdates || []) {
+      if (!visibilityAllowed(update.visibility, profile)) continue;
+      const text = update.text?.[lang];
+      if (typeof text === "string" && text.trim()) summary = text;
+    }
+
     const sections = (entry.sections || [])
       .filter((section) => visibilityAllowed(section.visibility, profile))
       .map((section) => {
@@ -218,6 +257,7 @@
         return {
           id: fragment.id,
           text,
+          sourceLabel: fragmentSourceLabel(fragment.visibility, lang),
           readerLinks: (fragment.readerLinks || [])
             .map((link) => localizedReaderLink(link, lang))
             .filter(Boolean)
@@ -235,12 +275,12 @@
       prototypeOnly: entry.prototypeOnly === true,
       title: labels.title,
       fullName: typeof labels.fullName === "string" ? labels.fullName : "",
-      summary: labels.summary,
+      summary,
       sections,
       fragments,
       relationships,
       appearanceOrder: Number.isFinite(entry.appearanceOrder) ? entry.appearanceOrder : Number.MAX_SAFE_INTEGER,
-      chronologyOrder: Number.isFinite(entry.chronologyOrder) ? entry.chronologyOrder : (Number.isFinite(entry.appearanceOrder) ? entry.appearanceOrder : Number.MAX_SAFE_INTEGER)
+      chronologyOrder: Number.isFinite(entry.chronologyOrder) ? entry.chronologyOrder : Number.MAX_SAFE_INTEGER
     };
   };
 
@@ -268,7 +308,7 @@
       entry.fullName,
       entry.summary,
       ...entry.sections.flatMap((section) => [section.title, section.text]),
-      ...entry.fragments.map((fragment) => fragment.text),
+      ...entry.fragments.flatMap((fragment) => [fragment.sourceLabel, fragment.text]),
       ...entry.relationships.flatMap((relationship) => [relationship.label, relationship.targetTitle])
     ]
       .join(" ")
@@ -358,9 +398,13 @@
     section.className = "lexicon-fragment";
     section.dataset.lexiconFragment = fragment.id;
 
+    const source = document.createElement("h4");
+    source.className = "lexicon-fragment-source";
+    source.textContent = fragment.sourceLabel;
+
     const paragraph = document.createElement("p");
     paragraph.textContent = fragment.text;
-    section.append(paragraph);
+    section.append(source, paragraph);
 
     if (fragment.readerLinks.length > 0) {
       const links = document.createElement("div");
@@ -438,30 +482,37 @@
       detailPanel.append(fullName);
     }
 
+    const sections = document.createElement("div");
+    sections.className = "lexicon-detail-sections";
+
+    const summarySection = document.createElement("section");
+    const summaryHeading = document.createElement("h3");
+    summaryHeading.textContent = entry.categories.some((category) => category === "events" || category === "history")
+      ? ui[language()].overview
+      : ui[language()].generalDescription;
     const summary = document.createElement("p");
     summary.className = "lexicon-detail-summary";
     summary.textContent = entry.summary;
-    detailPanel.append(summary);
+    summarySection.append(summaryHeading, summary);
+    sections.append(summarySection);
 
-    if (entry.sections.length > 0) {
-      const sections = document.createElement("div");
-      sections.className = "lexicon-detail-sections";
-      for (const item of entry.sections) {
-        const section = document.createElement("section");
-        const heading = document.createElement("h3");
-        heading.textContent = item.title;
-        const paragraph = document.createElement("p");
-        paragraph.textContent = item.text;
-        section.append(heading, paragraph);
-        sections.append(section);
-      }
-      detailPanel.append(sections);
+    for (const item of entry.sections) {
+      const section = document.createElement("section");
+      const heading = document.createElement("h3");
+      heading.textContent = item.title;
+      const paragraph = document.createElement("p");
+      paragraph.textContent = item.text;
+      section.append(heading, paragraph);
+      sections.append(section);
     }
+    detailPanel.append(sections);
 
     if (entry.fragments.length > 0) {
       const fragments = document.createElement("div");
       fragments.className = "lexicon-detail-fragments";
-      fragments.append(...entry.fragments.map(renderFragment));
+      const heading = document.createElement("h3");
+      heading.textContent = ui[language()].bookEntries;
+      fragments.append(heading, ...entry.fragments.map(renderFragment));
       detailPanel.append(fragments);
     }
 
@@ -510,8 +561,13 @@
 
   const compareEntries = (left, right) => {
     if (sortMode === "alphabetical") return left.title.localeCompare(right.title, language());
-    const key = sortMode === "chronological" ? "chronologyOrder" : "appearanceOrder";
-    return (left[key] - right[key]) || left.title.localeCompare(right.title, language());
+    if (sortMode === "chronological") {
+      return (left.chronologyOrder - right.chronologyOrder)
+        || (left.appearanceOrder - right.appearanceOrder)
+        || left.title.localeCompare(right.title, language());
+    }
+    return (left.appearanceOrder - right.appearanceOrder)
+      || left.title.localeCompare(right.title, language());
   };
 
   const openRequestedDetail = (eligible) => {

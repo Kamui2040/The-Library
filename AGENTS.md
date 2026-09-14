@@ -48,6 +48,11 @@
 - Browse cards stay compact: a familiar title, a short spoiler-safe overview, and a clear way to open the detailed entry.
 - Detailed Lexicon views are curated reference profiles, not mention-by-mention story manifests. Prefer durable descriptive knowledge, identity, traits, roles, relationships, and only genuinely significant story connections.
 - General Lexicon descriptions are world-facing and encyclopedic rather than framed through the protagonist's viewpoint. Character-specific encounters or observations belong in spoiler-aware detail sections when relevant.
+- Detailed Lexicon entries follow a reference-profile order: a neutral general description first; durable reference sections such as appearance, geography, role, physical description, culture, or political context where the released source supports them; spoiler-gated book entries after that; relationships last.
+- Do not force a reference section when released material has not established it. Missing knowledge stays absent rather than being inferred, padded, or filled from private unreleased canon.
+- When a compact browse-card summary needs to become more informative after a later reveal, use spoiler-gated `summaryUpdates` instead of exposing the later fact in the base summary.
+- Book-entry details remain distinct from durable reference knowledge. The UI identifies their source volume/chapter, while durable facts belong in named reference sections.
+- Published `events` and `history` entries must define explicit `chronologyOrder`; do not rely on appearance-order fallback for chronological browsing.
 - The dedicated Lexicon and contextual Reader card use the same curated entry fields and spoiler gates.
 - Reader passage links are exceptional. Keep them for defining revelations or major events where returning to the source passage is genuinely useful, not for every minor fact.
 - Default Lexicon ordering follows first appearance. Readers may switch to localized alphabetical or in-world chronological ordering; entries without a distinct chronology fall back deterministically to appearance order.
