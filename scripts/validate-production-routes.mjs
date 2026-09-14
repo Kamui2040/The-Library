@@ -102,6 +102,7 @@ const [
   telanasStylesheetRevision,
   libraryShellRevision,
   lexiconStylesheetRevision,
+  lexiconControllerRevision,
   readerContentStylesRevision,
   readerEngineRevision,
   readerControllerRevision,
@@ -113,6 +114,7 @@ const [
   revisionFor("assets/telanas/styles.css"),
   revisionFor("assets/library-shell.js"),
   revisionFor("assets/lexicon/lexicon.css"),
+  revisionFor("assets/lexicon/lexicon.js"),
   revisionFor("assets/reader/reader-content.css"),
   revisionFor("assets/reader/reader-engine.js"),
   revisionFor("assets/reader/reader.js"),
@@ -271,7 +273,10 @@ for (const locale of ["en", "de"]) {
   assertLibraryShell(lexiconPath, lexiconHtml, "../../../assets/library-shell.js");
   assert(lexiconHtml.includes('src="../../../assets/spoiler-profile.js"'), `${lexiconPath} must use the production spoiler profile`);
   assert(lexiconHtml.includes('src="../../../assets/spoiler-controls.js"'), `${lexiconPath} must use the production spoiler controls`);
-  assert(lexiconHtml.includes('src="../../../assets/lexicon/lexicon.js"'), `${lexiconPath} must use the production Lexicon controller`);
+  assert(
+    lexiconHtml.includes(`src="../../../assets/lexicon/lexicon.js?v=${lexiconControllerRevision}"`),
+    `${lexiconPath} must use the current production Lexicon controller revision`,
+  );
   assert(lexiconHtml.includes('data-world-manifest="../../../content/worlds/telanas/world.json"'), `${lexiconPath} must resolve the public world manifest`);
   assert(lexiconHtml.includes('data-lexicon-manifest="../../../content/worlds/telanas/lexicon/lexicon.json"'), `${lexiconPath} must resolve the public Lexicon manifest`);
   assert(lexiconHtml.includes('data-reader-base="../read/"'), `${lexiconPath} must declare the canonical Reader route base`);

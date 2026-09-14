@@ -398,7 +398,23 @@
           }
         }
       ],
-      "appearanceOrder": 9
+      "appearanceOrder": 9,
+      "summaryUpdates": [
+        {
+          "id": "calist-enlistment-summary",
+          "visibility": {
+            "mode": "reached-anchor",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch09",
+            "anchor": "dk-v01-ch09-enlist-decision"
+          },
+          "text": {
+            "en": "A skilled young smith and fine-metalworker from Elwendun who chooses to enter military service after years of growing pressure on his home.",
+            "de": "Ein junger, erfahrener Schmied und Feinmetallarbeiter aus Elwendun, der sich nach Jahren wachsenden Drucks auf seine Heimat für den Militärdienst entscheidet."
+          }
+        }
+      ]
     },
     {
       "id": "alden",
@@ -544,7 +560,27 @@
           }
         }
       ],
-      "appearanceOrder": 11
+      "appearanceOrder": 11,
+      "sections": [
+        {
+          "id": "alden-appearance",
+          "visibility": {
+            "mode": "reached-anchor",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch01",
+            "anchor": "dk-v01-ch01-alden"
+          },
+          "labels": {
+            "en": "Appearance",
+            "de": "Erscheinungsbild"
+          },
+          "text": {
+            "en": "Alden has brown hair and hazel eyes. Years at the forge have left his forearms marked by sparks and hard work.",
+            "de": "Alden hat braunes Haar und haselbraune Augen. Jahre an der Schmiede haben seine Unterarme mit Spuren von Funken und harter Arbeit gezeichnet."
+          }
+        }
+      ]
     },
     {
       "id": "nessa",
@@ -604,7 +640,23 @@
           }
         }
       ],
-      "appearanceOrder": 41
+      "appearanceOrder": 41,
+      "summaryUpdates": [
+        {
+          "id": "nessa-deceased-summary",
+          "visibility": {
+            "mode": "reached-anchor",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch08",
+            "anchor": "dk-v01-ch08-nessa-dies"
+          },
+          "text": {
+            "en": "Eryn's grandmother and Elwendun's eldest resident, remembered after her death for the practical knowledge and help she carried through village life.",
+            "de": "Eryns Großmutter und die älteste Bewohnerin Elwenduns, an die man sich nach ihrem Tod wegen ihres praktischen Wissens und ihrer Hilfe im Dorfleben erinnert."
+          }
+        }
+      ]
     },
     {
       "id": "eryn",
@@ -766,7 +818,42 @@
           }
         }
       ],
-      "appearanceOrder": 16
+      "appearanceOrder": 16,
+      "summaryUpdates": [
+        {
+          "id": "eryn-missing-summary",
+          "visibility": {
+            "mode": "reached-anchor",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch08",
+            "anchor": "dk-v01-ch08-ambush-return"
+          },
+          "text": {
+            "en": "A hunter from Elwendun and Calist's close childhood friend, missing after turning back during the hunting-party ambush; her fate remains unconfirmed.",
+            "de": "Eine Jägerin aus Elwendun und Calists enge Kindheitsfreundin, die nach ihrer Umkehr während des Hinterhalts auf die Jagdgruppe vermisst wird; ihr Schicksal bleibt unbestätigt."
+          }
+        }
+      ],
+      "sections": [
+        {
+          "id": "eryn-appearance",
+          "visibility": {
+            "mode": "completed-chapter",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch01"
+          },
+          "labels": {
+            "en": "Appearance",
+            "de": "Erscheinungsbild"
+          },
+          "text": {
+            "en": "Eryn has black hair.",
+            "de": "Eryn hat schwarzes Haar."
+          }
+        }
+      ]
     },
     {
       "id": "corvin",
@@ -894,7 +981,27 @@
           ]
         }
       ],
-      "appearanceOrder": 13
+      "appearanceOrder": 13,
+      "sections": [
+        {
+          "id": "corvin-appearance",
+          "visibility": {
+            "mode": "reached-anchor",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch01",
+            "anchor": "dk-v01-ch01-corvin"
+          },
+          "labels": {
+            "en": "Appearance",
+            "de": "Erscheinungsbild"
+          },
+          "text": {
+            "en": "Corvin is older than most of the soldiers who accompany him, with grey at his temples and lines gathering around his eyes when he smiles.",
+            "de": "Corvin ist älter als die meisten Soldaten, die ihn begleiten. An seinen Schläfen zeigt sich Grau, und beim Lächeln sammeln sich Linien um seine Augen."
+          }
+        }
+      ]
     },
     {
       "id": "bram",
@@ -907,12 +1014,12 @@
       "labels": {
         "en": {
           "title": "Bram",
-          "summary": "A dwarven fine-metalworker near the town market whose precise chains, clasps, and pendants catch Calist's attention.",
+          "summary": "A dwarven fine-metalworker in Caerbreyn who specializes in precise chains, clasps, pendants, and other small metalwork.",
           "fullName": "Bram Ordek"
         },
         "de": {
           "title": "Bram",
-          "summary": "Ein zwergischer Feinmetallarbeiter nahe dem Stadtmarkt, dessen präzise Ketten, Verschlüsse und Anhänger Calists Aufmerksamkeit wecken.",
+          "summary": "Ein zwergischer Feinmetallarbeiter in Caerbreyn, der sich auf präzise Ketten, Verschlüsse, Anhänger und andere kleine Metallarbeiten spezialisiert.",
           "fullName": "Bram Ordek"
         }
       },
@@ -1048,7 +1155,27 @@
           ]
         }
       ],
-      "appearanceOrder": 32
+      "appearanceOrder": 32,
+      "sections": [
+        {
+          "id": "bram-appearance",
+          "visibility": {
+            "mode": "reached-anchor",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch03",
+            "anchor": "dk-v01-ch03-bram"
+          },
+          "labels": {
+            "en": "Appearance",
+            "de": "Erscheinungsbild"
+          },
+          "text": {
+            "en": "Bram is short compared with a human adult but broad through the shoulders, with large strong hands. He keeps his beard in two thick braids while working.",
+            "de": "Bram ist im Vergleich zu einem erwachsenen Menschen klein, aber breit in den Schultern und hat große, kräftige Hände. Bei der Arbeit trägt er seinen Bart in zwei dicken Zöpfen."
+          }
+        }
+      ]
     },
     {
       "id": "eryn-disappearance",
@@ -1137,7 +1264,7 @@
         }
       ],
       "appearanceOrder": 56,
-      "chronologyOrder": 12
+      "chronologyOrder": 1091
     },
     {
       "id": "calists-village",
@@ -1154,40 +1281,14 @@
       "labels": {
         "en": {
           "title": "Elwendun",
-          "summary": "Calist's home: a small roadside village whose people rely on farming, craft, hunting, and mutual aid."
+          "summary": "A small roadside village beside the Elwen, built around the road and well and sustained by farming, craft, hunting, and mutual aid."
         },
         "de": {
           "title": "Elwendun",
-          "summary": "Calists Heimat: ein kleines Dorf an der Straße, dessen Bewohner von Landwirtschaft, Handwerk, Jagd und gegenseitiger Hilfe leben."
+          "summary": "Ein kleines Dorf am Elwen, das sich um Straße und Brunnen erstreckt und von Landwirtschaft, Handwerk, Jagd und gegenseitiger Hilfe getragen wird."
         }
       },
-      "fragments": [
-        {
-          "id": "calists-village-layout",
-          "visibility": {
-            "mode": "completed-chapter",
-            "story": "dragon-knight",
-            "book": "volume-01",
-            "chapter": "dk-v01-ch01"
-          },
-          "text": {
-            "en": "The village is built closely around the road and well, with homes, sheds, barns, gardens and animal pens. Fields stretch toward low hills, while the Old Woods stand beyond the far side of the village.",
-            "de": "Das Dorf liegt dicht rund um Straße und Brunnen. Zwischen Häusern, Schuppen und Scheunen befinden sich Gärten und Tiergehege. Felder reichen bis zu niedrigen Hügeln, während auf der anderen Seite der alte Wald liegt."
-          },
-          "readerLinks": [
-            {
-              "id": "calists-village-layout-reader",
-              "story": "dragon-knight",
-              "book": "volume-01",
-              "anchor": "dk-v01-ch01",
-              "labels": {
-                "en": "Open the related passage",
-                "de": "Zugehörige Stelle öffnen"
-              }
-            }
-          ]
-        }
-      ],
+      "fragments": [],
       "relationships": [
         {
           "id": "local-smithy",
@@ -1236,7 +1337,26 @@
           }
         }
       ],
-      "appearanceOrder": 5
+      "appearanceOrder": 5,
+      "sections": [
+        {
+          "id": "elwendun-layout",
+          "visibility": {
+            "mode": "completed-chapter",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch01"
+          },
+          "labels": {
+            "en": "Layout and surroundings",
+            "de": "Aufbau und Umgebung"
+          },
+          "text": {
+            "en": "The village is built closely around the road and well, with homes, sheds, barns, gardens and animal pens. Fields stretch toward low hills, while the Old Woods stand beyond the far side of the village.",
+            "de": "Das Dorf liegt dicht rund um Straße und Brunnen. Zwischen Häusern, Schuppen und Scheunen befinden sich Gärten und Tiergehege. Felder reichen bis zu niedrigen Hügeln, während auf der anderen Seite der alte Wald liegt."
+          }
+        }
+      ]
     },
     {
       "id": "aldens-smithy",
@@ -1249,39 +1369,14 @@
       "labels": {
         "en": {
           "title": "Alden's smithy",
-          "summary": "The village smithy operated by Alden Griffith."
+          "summary": "Elwendun's working smithy, operated by Alden Griffith and centered on practical metalwork and repairs."
         },
         "de": {
           "title": "Aldens Schmiede",
-          "summary": "Die Dorfschmiede von Alden Griffith."
+          "summary": "Die Schmiede von Elwendun, geführt von Alden Griffith und auf praktische Metallarbeiten und Reparaturen ausgerichtet."
         }
       },
       "fragments": [
-        {
-          "id": "aldens-smithy-practical-work",
-          "visibility": {
-            "mode": "completed-chapter",
-            "story": "dragon-knight",
-            "book": "volume-01",
-            "chapter": "dk-v01-ch01"
-          },
-          "text": {
-            "en": "Most work here is practical: horseshoes, wagon fittings, knives, hinges, tools and other things the village needs repaired and kept useful.",
-            "de": "Die meiste Arbeit hier ist praktisch: Hufeisen, Wagenbeschläge, Messer, Scharniere, Werkzeuge und andere Dinge, die im Dorf repariert und brauchbar gehalten werden müssen."
-          },
-          "readerLinks": [
-            {
-              "id": "aldens-smithy-practical-work-reader",
-              "story": "dragon-knight",
-              "book": "volume-01",
-              "anchor": "dk-v01-ch01",
-              "labels": {
-                "en": "Open the related passage",
-                "de": "Zugehörige Stelle öffnen"
-              }
-            }
-          ]
-        },
         {
           "id": "aldens-smithy-soldier-visits",
           "visibility": {
@@ -1335,7 +1430,26 @@
           }
         }
       ],
-      "appearanceOrder": 10
+      "appearanceOrder": 10,
+      "sections": [
+        {
+          "id": "aldens-smithy-work",
+          "visibility": {
+            "mode": "completed-chapter",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch01"
+          },
+          "labels": {
+            "en": "Purpose and work",
+            "de": "Aufgabe und Arbeit"
+          },
+          "text": {
+            "en": "Most work here is practical: horseshoes, wagon fittings, knives, hinges, tools and other things the village needs repaired and kept useful.",
+            "de": "Die meiste Arbeit hier ist praktisch: Hufeisen, Wagenbeschläge, Messer, Scharniere, Werkzeuge und andere Dinge, die im Dorf repariert und brauchbar gehalten werden müssen."
+          }
+        }
+      ]
     },
     {
       "id": "old-woods",
@@ -1360,31 +1474,6 @@
         }
       },
       "fragments": [
-        {
-          "id": "old-woods-paths",
-          "visibility": {
-            "mode": "completed-chapter",
-            "story": "dragon-knight",
-            "book": "volume-01",
-            "chapter": "dk-v01-ch02"
-          },
-          "text": {
-            "en": "Old hunting paths run beneath the dark canopy. Some areas become steep or too overgrown for children to wander safely, while fog and dense trees quickly soften the sounds of the village.",
-            "de": "Alte Jagdpfade führen unter dem dunklen Blätterdach hindurch. Manche Bereiche werden steil oder zu dicht bewachsen, und zwischen Nebel und Bäumen verklingen die Geräusche des Dorfes schnell."
-          },
-          "readerLinks": [
-            {
-              "id": "old-woods-paths-reader",
-              "story": "dragon-knight",
-              "book": "volume-01",
-              "anchor": "dk-v01-ch02",
-              "labels": {
-                "en": "Open the related passage",
-                "de": "Zugehörige Stelle öffnen"
-              }
-            }
-          ]
-        },
         {
           "id": "old-woods-pull",
           "visibility": {
@@ -1422,7 +1511,26 @@
           }
         }
       ],
-      "appearanceOrder": 8
+      "appearanceOrder": 8,
+      "sections": [
+        {
+          "id": "old-forest-terrain",
+          "visibility": {
+            "mode": "completed-chapter",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch02"
+          },
+          "labels": {
+            "en": "Terrain and use",
+            "de": "Gelände und Nutzung"
+          },
+          "text": {
+            "en": "Old hunting paths run beneath the dark canopy. Some areas become steep or too overgrown for children to wander safely, while fog and dense trees quickly soften the sounds of the village.",
+            "de": "Alte Jagdpfade führen unter dem dunklen Blätterdach hindurch. Manche Bereiche werden steil oder zu dicht bewachsen, und zwischen Nebel und Bäumen verklingen die Geräusche des Dorfes schnell."
+          }
+        }
+      ]
     },
     {
       "id": "border-fort",
@@ -1447,31 +1555,6 @@
         }
       },
       "fragments": [
-        {
-          "id": "border-fort-road",
-          "visibility": {
-            "mode": "completed-chapter",
-            "story": "dragon-knight",
-            "book": "volume-01",
-            "chapter": "dk-v01-ch01"
-          },
-          "text": {
-            "en": "The road links the fort and nearby settlements with the interior. Merchants, supply wagons, soldiers and messengers travel it regularly.",
-            "de": "Die Straße verbindet das Fort und die umliegenden Siedlungen mit dem Landesinneren. Händler, Versorgungswagen, Soldaten und Boten nutzen sie regelmäßig."
-          },
-          "readerLinks": [
-            {
-              "id": "border-fort-road-reader",
-              "story": "dragon-knight",
-              "book": "volume-01",
-              "anchor": "dk-v01-ch01",
-              "labels": {
-                "en": "Open the related passage",
-                "de": "Zugehörige Stelle öffnen"
-              }
-            }
-          ]
-        },
         {
           "id": "border-fort-search-help",
           "visibility": {
@@ -1557,7 +1640,26 @@
           }
         }
       ],
-      "appearanceOrder": 12
+      "appearanceOrder": 12,
+      "sections": [
+        {
+          "id": "dunbreyn-role",
+          "visibility": {
+            "mode": "completed-chapter",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch01"
+          },
+          "labels": {
+            "en": "Role and connections",
+            "de": "Aufgabe und Verbindungen"
+          },
+          "text": {
+            "en": "The road links the fort and nearby settlements with the interior. Merchants, supply wagons, soldiers and messengers travel it regularly.",
+            "de": "Die Straße verbindet das Fort und die umliegenden Siedlungen mit dem Landesinneren. Händler, Versorgungswagen, Soldaten und Boten nutzen sie regelmäßig."
+          }
+        }
+      ]
     },
     {
       "id": "south-road-town",
@@ -1606,31 +1708,6 @@
               }
             }
           ]
-        },
-        {
-          "id": "south-road-town-market",
-          "visibility": {
-            "mode": "completed-chapter",
-            "story": "dragon-knight",
-            "book": "volume-01",
-            "chapter": "dk-v01-ch03"
-          },
-          "text": {
-            "en": "The market area includes an iron yard, workshops, stalls beneath awnings and shops around the square.",
-            "de": "Zum Marktbereich gehören ein Eisenlager, Werkstätten, Stände unter Stoffdächern und Läden rund um den Platz."
-          },
-          "readerLinks": [
-            {
-              "id": "south-road-town-market-reader",
-              "story": "dragon-knight",
-              "book": "volume-01",
-              "anchor": "dk-v01-ch03-town-arrival",
-              "labels": {
-                "en": "Open the related passage",
-                "de": "Zugehörige Stelle öffnen"
-              }
-            }
-          ]
         }
       ],
       "relationships": [
@@ -1665,7 +1742,26 @@
           }
         }
       ],
-      "appearanceOrder": 25
+      "appearanceOrder": 25,
+      "sections": [
+        {
+          "id": "caerbreyn-market",
+          "visibility": {
+            "mode": "completed-chapter",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch03"
+          },
+          "labels": {
+            "en": "Market and trade",
+            "de": "Markt und Handel"
+          },
+          "text": {
+            "en": "The market area includes an iron yard, workshops, stalls beneath awnings and shops around the square.",
+            "de": "Zum Marktbereich gehören ein Eisenlager, Werkstätten, Stände unter Stoffdächern und Läden rund um den Platz."
+          }
+        }
+      ]
     },
     {
       "id": "brams-workshop",
@@ -1678,11 +1774,11 @@
       "labels": {
         "en": {
           "title": "Bram's workshop",
-          "summary": "A fine-metalwork workshop operated by Bram Ordek in the market town."
+          "summary": "Bram Ordek's fine-metalwork workshop in Caerbreyn, focused on precise small metalwork and commissioned pieces."
         },
         "de": {
           "title": "Brams Werkstatt",
-          "summary": "Eine Feinmetallwerkstatt von Bram Ordek in der Marktstadt."
+          "summary": "Bram Ordeks Feinmetallwerkstatt in Caerbreyn, ausgerichtet auf präzise kleine Metallarbeiten und Auftragsstücke."
         }
       },
       "fragments": [
@@ -1798,32 +1894,6 @@
       },
       "fragments": [
         {
-          "id": "twin-dragons-appearance",
-          "visibility": {
-            "mode": "reached-anchor",
-            "story": "dragon-knight",
-            "book": "volume-01",
-            "chapter": "dk-v01-prologue",
-            "anchor": "dk-v01-p-twins-hatch"
-          },
-          "text": {
-            "en": "One brother is pearlescent white, with rose, silver, blue and gold moving through his light. The other is dark and iridescent, his black scales shifting through violet, green, blue and stranger colors.",
-            "de": "Ein Bruder ist perlweiß, mit Rosa, Silber, Blau und Gold in seinem Licht. Der andere ist dunkel und schillernd; seine schwarzen Schuppen wechseln zwischen Violett, Grün, Blau und fremdartigeren Farben."
-          },
-          "readerLinks": [
-            {
-              "id": "twin-dragons-appearance-reader",
-              "story": "dragon-knight",
-              "book": "volume-01",
-              "anchor": "dk-v01-p-twins-hatch",
-              "labels": {
-                "en": "Open the related passage",
-                "de": "Zugehörige Stelle öffnen"
-              }
-            }
-          ]
-        },
-        {
           "id": "twin-dragons-first-shard",
           "visibility": {
             "mode": "reached-anchor",
@@ -1850,7 +1920,27 @@
           ]
         }
       ],
-      "appearanceOrder": 2
+      "appearanceOrder": 2,
+      "sections": [
+        {
+          "id": "twin-dragons-appearance",
+          "visibility": {
+            "mode": "reached-anchor",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-prologue",
+            "anchor": "dk-v01-p-twins-hatch"
+          },
+          "labels": {
+            "en": "Appearance",
+            "de": "Erscheinungsbild"
+          },
+          "text": {
+            "en": "One brother is pearlescent white, with rose, silver, blue and gold moving through his light. The other is dark and iridescent, his black scales shifting through violet, green, blue and stranger colors.",
+            "de": "Ein Bruder ist perlweiß, mit Rosa, Silber, Blau und Gold in seinem Licht. Der andere ist dunkel und schillernd; seine schwarzen Schuppen wechseln zwischen Violett, Grün, Blau und fremdartigeren Farben."
+          }
+        }
+      ]
     },
     {
       "id": "goblins",
@@ -1884,8 +1974,8 @@
             "anchor": "dk-v01-ch05-goblins"
           },
           "text": {
-            "en": "Calist sees at least two frontier goblins near a torch in the woods. They are small and lean, with long arms, large pointed ears and olive-ochre skin; firelight briefly catches a broad nose, wide mouth and small sharp teeth. One carries a spear and the other a sack or rolled hide. Their patched cloth, hide and leather are specific to this encounter, not a universal goblin style.",
-            "de": "Calist sieht im Wald mindestens zwei Goblins der Grenzregion bei einer Fackel. Sie sind klein und schlank, mit langen Armen, großen spitzen Ohren und oliv- bis ockerfarbener Haut; im Feuerschein sind kurz eine breite Nase, ein weiter Mund und kleine scharfe Zähne zu erkennen. Einer trägt einen Speer, der andere einen Sack oder eine zusammengerollte Haut. Die geflickte Kleidung aus Stoff, Haut und Leder gehört zu dieser Begegnung und ist kein allgemeiner Goblinstil."
+            "en": "The two frontier goblins Calist sees carry practical, heavily used gear: one has a spear, the other a sack or rolled hide, and both wear patched combinations of cloth, hide, and leather. They withdraw when the hunters make themselves known rather than pursuing a fight.",
+            "de": "Die beiden Goblins der Grenzregion, die Calist sieht, tragen praktische, stark gebrauchte Ausrüstung: Einer hat einen Speer, der andere einen Sack oder eine zusammengerollte Haut, und beide tragen geflickte Kombinationen aus Stoff, Haut und Leder. Als die Jäger sich zu erkennen geben, ziehen sie sich zurück, statt den Kampf zu suchen."
           },
           "readerLinks": [
             {
@@ -1945,24 +2035,6 @@
       ],
       "sections": [
         {
-          "id": "first-direct-encounter",
-          "visibility": {
-            "mode": "reached-anchor",
-            "story": "dragon-knight",
-            "book": "volume-01",
-            "chapter": "dk-v01-ch05",
-            "anchor": "dk-v01-ch05-goblins"
-          },
-          "labels": {
-            "en": "First encountered",
-            "de": "Erste Begegnung"
-          },
-          "text": {
-            "en": "Calist first directly encounters goblins in the Old Woods while travelling with the hunters.",
-            "de": "Calist begegnet Goblins zum ersten Mal direkt in den Alten Wäldern, als er mit den Jägern unterwegs ist."
-          }
-        },
-        {
           "id": "goblins-general-appearance",
           "visibility": {
             "mode": "reached-anchor",
@@ -1979,9 +2051,60 @@
             "en": "Adult goblins are commonly around three to four feet tall and generally lean and wiry. Long arms, large pointed ears, broad noses, wide mouths, and small pronounced teeth are common. Skin commonly ranges through olive, ochre, yellow-green, and other muted earth tones. Individuals and regional populations can vary.",
             "de": "Erwachsene Goblins sind meist etwa drei bis vier Fuß groß und in der Regel schlank und drahtig. Lange Arme, große spitze Ohren, breite Nasen, weite Münder und kleine deutlich sichtbare Zähne sind verbreitet. Die Haut reicht häufig von Oliv- und Ockertönen bis zu Gelbgrün und anderen gedämpften Erdfarben. Einzelne Goblins und regionale Gruppen können deutlich variieren."
           }
+        },
+        {
+          "id": "first-direct-encounter",
+          "visibility": {
+            "mode": "reached-anchor",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch05",
+            "anchor": "dk-v01-ch05-goblins"
+          },
+          "labels": {
+            "en": "First encountered",
+            "de": "Erste Begegnung"
+          },
+          "text": {
+            "en": "Calist first directly encounters goblins in the Old Forest while travelling with the hunters.",
+            "de": "Calist begegnet Goblins zum ersten Mal direkt im Alten Wald, als er mit den Jägern unterwegs ist."
+          }
+        },
+        {
+          "id": "goblins-frontier-history",
+          "visibility": {
+            "mode": "completed-chapter",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch03"
+          },
+          "labels": {
+            "en": "Frontier history",
+            "de": "Geschichte an der Grenze"
+          },
+          "text": {
+            "en": "Goblin tribes were already using parts of the western frontier before Caelren's settlement spread farther west. Over generations, trade and mutual avoidance existed alongside theft, raids, reprisals, displacement, and inherited grievances.",
+            "de": "Goblinstämme nutzten bereits Teile der westlichen Grenzregion, bevor sich Caelrens Besiedlung weiter nach Westen ausdehnte. Über Generationen bestanden Handel und gegenseitiges Ausweichen neben Diebstahl, Überfällen, Vergeltung, Vertreibung und weitergegebenen Feindschaften."
+          }
         }
       ],
-      "appearanceOrder": 15
+      "appearanceOrder": 15,
+      "summaryUpdates": [
+        {
+          "id": "goblins-appearance-summary",
+          "visibility": {
+            "mode": "reached-anchor",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch05",
+            "anchor": "dk-v01-ch05-goblins"
+          },
+          "text": {
+            "en": "A sapient humanoid people commonly small and wiry, with long arms, large pointed ears, broad noses, wide mouths, and muted earth-toned skin.",
+            "de": "Ein vernunftbegabtes humanoides Volk, meist klein und drahtig, mit langen Armen, großen spitzen Ohren, breiten Nasen, weiten Mündern und gedämpften erdigen Hauttönen."
+          }
+        }
+      ]
     },
     {
       "id": "leaf-arrow-pendant",
@@ -2127,40 +2250,14 @@
       "labels": {
         "en": {
           "title": "Alden's chainmail",
-          "summary": "A plain shirt of chainmail from Alden's wartime life, kept wrapped in a wooden chest and carefully maintained."
+          "summary": "A plain shirt of chainmail from Alden Griffith's military service, carefully maintained after the war."
         },
         "de": {
           "title": "Aldens Kettenhemd",
-          "summary": "Ein schlichtes Kettenhemd aus Aldens Zeit im Krieg, das in einer Holztruhe aufbewahrt und sorgfältig instand gehalten wird."
+          "summary": "Ein schlichtes Kettenhemd aus Alden Griffiths Militärdienst, das nach dem Krieg sorgfältig instand gehalten wird."
         }
       },
       "fragments": [
-        {
-          "id": "alden-chainmail-maintenance",
-          "visibility": {
-            "mode": "reached-anchor",
-            "story": "dragon-knight",
-            "book": "volume-01",
-            "chapter": "dk-v01-ch01",
-            "anchor": "dk-v01-ch01-alden-war-gear"
-          },
-          "text": {
-            "en": "Alden does not wear the mail in everyday life. He takes it out to inspect it, replacing weak rings, cleaning rust and oiling the leather before returning it to the chest.",
-            "de": "Alden trägt das Kettenhemd nicht im Alltag. Er nimmt es heraus, um schwache Ringe zu ersetzen, Rost zu entfernen und das Leder zu ölen, bevor es wieder in die Truhe kommt."
-          },
-          "readerLinks": [
-            {
-              "id": "alden-chainmail-maintenance-reader",
-              "story": "dragon-knight",
-              "book": "volume-01",
-              "anchor": "dk-v01-ch01-alden-war-gear",
-              "labels": {
-                "en": "Open the related passage",
-                "de": "Zugehörige Stelle öffnen"
-              }
-            }
-          ]
-        },
         {
           "id": "alden-chainmail-calist",
           "visibility": {
@@ -2198,7 +2295,27 @@
           }
         }
       ],
-      "appearanceOrder": 23
+      "appearanceOrder": 23,
+      "sections": [
+        {
+          "id": "alden-chainmail-description",
+          "visibility": {
+            "mode": "reached-anchor",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch01",
+            "anchor": "dk-v01-ch01-alden-war-gear"
+          },
+          "labels": {
+            "en": "Description and maintenance",
+            "de": "Beschreibung und Pflege"
+          },
+          "text": {
+            "en": "Alden does not wear the mail in everyday life. He takes it out to inspect it, replacing weak rings, cleaning rust and oiling the leather before returning it to the chest.",
+            "de": "Alden trägt das Kettenhemd nicht im Alltag. Er nimmt es heraus, um schwache Ringe zu ersetzen, Rost zu entfernen und das Leder zu ölen, bevor es wieder in die Truhe kommt."
+          }
+        }
+      ]
     },
     {
       "id": "alden-sword",
@@ -2215,41 +2332,14 @@
       "labels": {
         "en": {
           "title": "Alden's sword",
-          "summary": "The plain sword Alden carried when he was ordered to war, later placed in Calist's hands as Calist prepares to enlist."
+          "summary": "A plain wartime sword formerly carried by Alden Griffith."
         },
         "de": {
           "title": "Aldens Schwert",
-          "summary": "Das schlichte Schwert, das Alden trug, als er in den Krieg geschickt wurde, und das später in Calists Hände gelangt, als dieser sich auf den Militärdienst vorbereitet."
+          "summary": "Ein schlichtes Kriegsschwert, das früher von Alden Griffith getragen wurde."
         }
       },
-      "fragments": [
-        {
-          "id": "alden-sword-plain",
-          "visibility": {
-            "mode": "reached-anchor",
-            "story": "dragon-knight",
-            "book": "volume-01",
-            "chapter": "dk-v01-ch09",
-            "anchor": "dk-v01-ch09-chainmail-sword"
-          },
-          "text": {
-            "en": "The sword has a plain scabbard and plain grip. What makes it different to Calist is not its quality, but that it is the weapon his father carried to war.",
-            "de": "Das Schwert hat eine schlichte Scheide und einen schlichten Griff. Für Calist ist nicht seine Qualität das Besondere, sondern dass sein Vater es im Krieg getragen hat."
-          },
-          "readerLinks": [
-            {
-              "id": "alden-sword-plain-reader",
-              "story": "dragon-knight",
-              "book": "volume-01",
-              "anchor": "dk-v01-ch09-chainmail-sword",
-              "labels": {
-                "en": "Open the related passage",
-                "de": "Zugehörige Stelle öffnen"
-              }
-            }
-          ]
-        }
-      ],
+      "fragments": [],
       "relationships": [
         {
           "id": "carried-by",
@@ -2265,10 +2355,37 @@
           "labels": {
             "en": "Given to",
             "de": "Übergeben an"
+          },
+          "visibility": {
+            "mode": "reached-anchor",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch09",
+            "anchor": "dk-v01-ch09-chainmail-sword"
           }
         }
       ],
-      "appearanceOrder": 60
+      "appearanceOrder": 60,
+      "sections": [
+        {
+          "id": "alden-sword-description",
+          "visibility": {
+            "mode": "reached-anchor",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch09",
+            "anchor": "dk-v01-ch09-chainmail-sword"
+          },
+          "labels": {
+            "en": "Description",
+            "de": "Beschreibung"
+          },
+          "text": {
+            "en": "The sword has a plain scabbard and plain grip. What makes it different to Calist is not its quality, but that it is the weapon his father carried to war.",
+            "de": "Das Schwert hat eine schlichte Scheide und einen schlichten Griff. Für Calist ist nicht seine Qualität das Besondere, sondern dass sein Vater es im Krieg getragen hat."
+          }
+        }
+      ]
     },
     {
       "id": "first-shard-formation",
@@ -2445,7 +2562,7 @@
         }
       ],
       "appearanceOrder": 35,
-      "chronologyOrder": 4
+      "chronologyOrder": 1030
     },
     {
       "id": "border-tension",
@@ -2583,7 +2700,7 @@
         }
       ],
       "appearanceOrder": 27,
-      "chronologyOrder": 5
+      "chronologyOrder": 1025
     },
     {
       "id": "hardening-winters",
@@ -2753,7 +2870,7 @@
         }
       ],
       "appearanceOrder": 50,
-      "chronologyOrder": 9
+      "chronologyOrder": 1070
     },
     {
       "id": "nessas-death",
@@ -2849,7 +2966,7 @@
         }
       ],
       "appearanceOrder": 52,
-      "chronologyOrder": 10
+      "chronologyOrder": 1080
     },
     {
       "id": "hunting-party-ambush",
@@ -2972,7 +3089,7 @@
         }
       ],
       "appearanceOrder": 55,
-      "chronologyOrder": 11
+      "chronologyOrder": 1090
     },
     {
       "id": "calist-enlistment",
@@ -3084,7 +3201,7 @@
         }
       ],
       "appearanceOrder": 59,
-      "chronologyOrder": 13
+      "chronologyOrder": 1100
     },
     {
       "id": "tarin",
@@ -3168,7 +3285,26 @@
           }
         }
       ],
-      "appearanceOrder": 17
+      "appearanceOrder": 17,
+      "sections": [
+        {
+          "id": "tarin-appearance",
+          "visibility": {
+            "mode": "completed-chapter",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch01"
+          },
+          "labels": {
+            "en": "Appearance",
+            "de": "Erscheinungsbild"
+          },
+          "text": {
+            "en": "Tarin has dirty-blond hair.",
+            "de": "Tarin hat dunkelblondes Haar."
+          }
+        }
+      ]
     },
     {
       "id": "joric",
@@ -3261,7 +3397,26 @@
           }
         }
       ],
-      "appearanceOrder": 18
+      "appearanceOrder": 18,
+      "sections": [
+        {
+          "id": "joric-appearance",
+          "visibility": {
+            "mode": "completed-chapter",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch01"
+          },
+          "labels": {
+            "en": "Appearance",
+            "de": "Erscheinungsbild"
+          },
+          "text": {
+            "en": "Joric has bright blond hair.",
+            "de": "Joric hat hellblondes Haar."
+          }
+        }
+      ]
     },
     {
       "id": "nalia",
@@ -3379,7 +3534,26 @@
           }
         }
       ],
-      "appearanceOrder": 19
+      "appearanceOrder": 19,
+      "sections": [
+        {
+          "id": "nalia-appearance",
+          "visibility": {
+            "mode": "completed-chapter",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch04"
+          },
+          "labels": {
+            "en": "Appearance",
+            "de": "Erscheinungsbild"
+          },
+          "text": {
+            "en": "Nalia has red hair and green eyes.",
+            "de": "Nalia hat rotes Haar und grüne Augen."
+          }
+        }
+      ]
     },
     {
       "id": "mara",
@@ -3523,7 +3697,26 @@
           }
         }
       ],
-      "appearanceOrder": 20
+      "appearanceOrder": 20,
+      "sections": [
+        {
+          "id": "mara-appearance",
+          "visibility": {
+            "mode": "completed-chapter",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch02"
+          },
+          "labels": {
+            "en": "Appearance",
+            "de": "Erscheinungsbild"
+          },
+          "text": {
+            "en": "Mara has black hair and dark eyes.",
+            "de": "Mara hat schwarzes Haar und dunkle Augen."
+          }
+        }
+      ]
     },
     {
       "id": "garran",
@@ -3976,7 +4169,23 @@
           }
         }
       ],
-      "appearanceOrder": 43
+      "appearanceOrder": 43,
+      "summaryUpdates": [
+        {
+          "id": "bren-missing-summary",
+          "visibility": {
+            "mode": "reached-anchor",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch08",
+            "anchor": "dk-v01-ch08-ambush-return"
+          },
+          "text": {
+            "en": "An experienced Elwendun hunter who stays behind during the hunting-party ambush and is not recovered afterward.",
+            "de": "Ein erfahrener Jäger aus Elwendun, der beim Hinterhalt auf die Jagdgruppe zurückbleibt und danach nicht gefunden wird."
+          }
+        }
+      ]
     },
     {
       "id": "shard",
@@ -4095,108 +4304,7 @@
           "summary": "Die alltägliche Praxis des Dorfes, Arbeit, praktisches Wissen und Verantwortung zwischen Haushalten zu teilen."
         }
       },
-      "fragments": [
-        {
-          "id": "village-mutual-aid-learning",
-          "visibility": {
-            "mode": "completed-chapter",
-            "story": "dragon-knight",
-            "book": "volume-01",
-            "chapter": "dk-v01-ch02"
-          },
-          "text": {
-            "en": "Children learn from whichever adults around them know something useful. Calist learns not only from Alden, but also from Tessa, Garran, farmers and others.",
-            "de": "Kinder lernen von den Erwachsenen um sie herum, die etwas Nützliches wissen. Calist lernt nicht nur von Alden, sondern auch von Tessa, Garran, Bauern und anderen."
-          },
-          "readerLinks": [
-            {
-              "id": "village-mutual-aid-learning-reader",
-              "story": "dragon-knight",
-              "book": "volume-01",
-              "anchor": "dk-v01-ch01",
-              "labels": {
-                "en": "Open the related passage",
-                "de": "Zugehörige Stelle öffnen"
-              }
-            }
-          ]
-        },
-        {
-          "id": "village-mutual-aid-work-moves",
-          "visibility": {
-            "mode": "completed-chapter",
-            "story": "dragon-knight",
-            "book": "volume-01",
-            "chapter": "dk-v01-ch02"
-          },
-          "text": {
-            "en": "When someone cannot do their normal work, duties shift without a formal meeting: repairs, care, fields and animals are simply taken up by other hands.",
-            "de": "Wenn jemand seine gewöhnliche Arbeit nicht erledigen kann, wandern die Aufgaben ohne formelle Versammlung weiter: Reparaturen, Versorgung, Felder und Tiere werden einfach von anderen Händen übernommen."
-          },
-          "readerLinks": [
-            {
-              "id": "village-mutual-aid-work-moves-reader",
-              "story": "dragon-knight",
-              "book": "volume-01",
-              "anchor": "dk-v01-ch02",
-              "labels": {
-                "en": "Open the related passage",
-                "de": "Zugehörige Stelle öffnen"
-              }
-            }
-          ]
-        },
-        {
-          "id": "village-mutual-aid-exchange",
-          "visibility": {
-            "mode": "completed-chapter",
-            "story": "dragon-knight",
-            "book": "volume-01",
-            "chapter": "dk-v01-ch02"
-          },
-          "text": {
-            "en": "Help and goods often move without exact accounting. Food, treatment and labor are returned through ordinary reciprocity rather than every favor being priced.",
-            "de": "Hilfe und Güter wechseln oft ohne genaue Abrechnung den Besitzer. Essen, Behandlung und Arbeit werden durch alltägliche Gegenseitigkeit erwidert, statt jede Hilfe mit einem Preis zu versehen."
-          },
-          "readerLinks": [
-            {
-              "id": "village-mutual-aid-exchange-reader",
-              "story": "dragon-knight",
-              "book": "volume-01",
-              "anchor": "dk-v01-ch02",
-              "labels": {
-                "en": "Open the related passage",
-                "de": "Zugehörige Stelle öffnen"
-              }
-            }
-          ]
-        },
-        {
-          "id": "village-mutual-aid-shared-knowledge",
-          "visibility": {
-            "mode": "completed-chapter",
-            "story": "dragon-knight",
-            "book": "volume-01",
-            "chapter": "dk-v01-ch04"
-          },
-          "text": {
-            "en": "Nessa puts the principle plainly: one skilled person is useful, but knowledge held by only one person is dangerous. The village deliberately spreads practical skills so illness, injury or absence does not stop essential work.",
-            "de": "Nessa formuliert das Prinzip deutlich: Eine Person, die etwas kann, ist nützlich; wenn nur eine Person es kann, ist das gefährlich. Das Dorf verteilt praktisches Wissen bewusst weiter, damit Krankheit, Verletzung oder Abwesenheit notwendige Arbeit nicht zum Stillstand bringt."
-          },
-          "readerLinks": [
-            {
-              "id": "village-mutual-aid-shared-knowledge-reader",
-              "story": "dragon-knight",
-              "book": "volume-01",
-              "anchor": "dk-v01-ch04",
-              "labels": {
-                "en": "Open the related passage",
-                "de": "Zugehörige Stelle öffnen"
-              }
-            }
-          ]
-        }
-      ],
+      "fragments": [],
       "relationships": [
         {
           "id": "practiced-in",
@@ -4207,7 +4315,77 @@
           }
         }
       ],
-      "appearanceOrder": 24
+      "appearanceOrder": 24,
+      "sections": [
+        {
+          "id": "village-mutual-aid-learning",
+          "visibility": {
+            "mode": "completed-chapter",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch02"
+          },
+          "labels": {
+            "en": "Learning across households",
+            "de": "Lernen zwischen Haushalten"
+          },
+          "text": {
+            "en": "Children learn from whichever adults around them know something useful. Calist learns not only from Alden, but also from Tessa, Garran, farmers and others.",
+            "de": "Kinder lernen von den Erwachsenen um sie herum, die etwas Nützliches wissen. Calist lernt nicht nur von Alden, sondern auch von Tessa, Garran, Bauern und anderen."
+          }
+        },
+        {
+          "id": "village-mutual-aid-work-moves",
+          "visibility": {
+            "mode": "completed-chapter",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch02"
+          },
+          "labels": {
+            "en": "Work moves where needed",
+            "de": "Arbeit wandert dorthin, wo sie gebraucht wird"
+          },
+          "text": {
+            "en": "When someone cannot do their normal work, duties shift without a formal meeting: repairs, care, fields and animals are simply taken up by other hands.",
+            "de": "Wenn jemand seine gewöhnliche Arbeit nicht erledigen kann, wandern die Aufgaben ohne formelle Versammlung weiter: Reparaturen, Versorgung, Felder und Tiere werden einfach von anderen Händen übernommen."
+          }
+        },
+        {
+          "id": "village-mutual-aid-exchange",
+          "visibility": {
+            "mode": "completed-chapter",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch02"
+          },
+          "labels": {
+            "en": "Exchange and reciprocity",
+            "de": "Austausch und Gegenseitigkeit"
+          },
+          "text": {
+            "en": "Help and goods often move without exact accounting. Food, treatment and labor are returned through ordinary reciprocity rather than every favor being priced.",
+            "de": "Hilfe und Güter wechseln oft ohne genaue Abrechnung den Besitzer. Essen, Behandlung und Arbeit werden durch alltägliche Gegenseitigkeit erwidert, statt jede Hilfe mit einem Preis zu versehen."
+          }
+        },
+        {
+          "id": "village-mutual-aid-shared-knowledge",
+          "visibility": {
+            "mode": "completed-chapter",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch04"
+          },
+          "labels": {
+            "en": "Shared practical knowledge",
+            "de": "Geteiltes praktisches Wissen"
+          },
+          "text": {
+            "en": "Nessa puts the principle plainly: one skilled person is useful, but knowledge held by only one person is dangerous. The village deliberately spreads practical skills so illness, injury or absence does not stop essential work.",
+            "de": "Nessa formuliert das Prinzip deutlich: Eine Person, die etwas kann, ist nützlich; wenn nur eine Person es kann, ist das gefährlich. Das Dorf verteilt praktisches Wissen bewusst weiter, damit Krankheit, Verletzung oder Abwesenheit notwendige Arbeit nicht zum Stillstand bringt."
+          }
+        }
+      ]
     },
     {
       "id": "humans",
@@ -4254,6 +4432,24 @@
       },
       "sections": [
         {
+          "id": "dwarves-general-appearance",
+          "visibility": {
+            "mode": "reached-anchor",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch03",
+            "anchor": "dk-v01-ch03-bram"
+          },
+          "labels": {
+            "en": "General appearance",
+            "de": "Allgemeines Erscheinungsbild"
+          },
+          "text": {
+            "en": "Dwarven adults are commonly around four to five feet tall, with compact, broad and densely built frames, substantial musculature, and strong hands. Hair, complexion, facial hair, and grooming vary by individual and culture. Bram Ordek's broad shoulders, large hands, and braided beard are one individual example rather than a universal template.",
+            "de": "Erwachsene Zwerge sind meist etwa vier bis fünf Fuß groß und besitzen kompakte, breite, dicht gebaute Körper, ausgeprägte Muskulatur und starke Hände. Haare, Hautfarbe, Gesichtsbehaarung und Pflege unterscheiden sich je nach Person und Kultur. Bram Ordeks breite Schultern, große Hände und geflochtener Bart sind ein individuelles Beispiel und kein allgemeingültiges Muster."
+          }
+        },
+        {
           "id": "first-encounter",
           "visibility": {
             "mode": "reached-anchor",
@@ -4269,24 +4465,6 @@
           "text": {
             "en": "Calist first meets a dwarf when he encounters Bram Ordek at a metalwork stall in the town market.",
             "de": "Calist begegnet zum ersten Mal einem Zwerg, als er Bram Ordek an einem Metallwarenstand auf dem Stadtmarkt trifft."
-          }
-        },
-        {
-          "id": "dwarves-general-appearance",
-          "visibility": {
-            "mode": "reached-anchor",
-            "story": "dragon-knight",
-            "book": "volume-01",
-            "chapter": "dk-v01-ch03",
-            "anchor": "dk-v01-ch03-bram"
-          },
-          "labels": {
-            "en": "General appearance",
-            "de": "Allgemeines Erscheinungsbild"
-          },
-          "text": {
-            "en": "Dwarven adults are commonly around four to five feet tall, with compact, broad and densely built frames, substantial musculature and strong hands. Hair, complexion, facial hair and grooming vary by individual and culture. Bram Ordek's broad shoulders, large hands and braided beard are one individual example rather than a universal template.",
-            "de": "Erwachsene Zwerge sind meist etwa vier bis fünf Fuß groß und besitzen kompakte, breite, dicht gebaute Körper, ausgeprägte Muskulatur und starke Hände. Haare, Hautfarbe, Gesichtsbehaarung und Pflege unterscheiden sich je nach Person und Kultur. Bram Ordeks breite Schultern, große Hände und geflochtener Bart sind ein individuelles Beispiel und kein allgemeingültiges Muster."
           }
         }
       ],
@@ -4316,23 +4494,6 @@
       },
       "sections": [
         {
-          "id": "presence-near-village",
-          "visibility": {
-            "mode": "completed-chapter",
-            "story": "dragon-knight",
-            "book": "volume-01",
-            "chapter": "dk-v01-ch07"
-          },
-          "labels": {
-            "en": "Presence near the village",
-            "de": "Präsenz nahe dem Dorf"
-          },
-          "text": {
-            "en": "During the Long Winter, tracks confirm that orcs have been moving near the northern path.",
-            "de": "Während des langen Winters bestätigen Spuren, dass Orks nahe dem nördlichen Pfad unterwegs waren."
-          }
-        },
-        {
           "id": "orcs-general-appearance",
           "visibility": {
             "mode": "completed-chapter",
@@ -4345,8 +4506,42 @@
             "de": "Allgemeines Erscheinungsbild"
           },
           "text": {
-            "en": "Orcs are commonly around six to seven feet tall and considerably broader than humans. Heavy brows and jaws, pronounced lower canines or tusks, and large hands and feet are common. Skin commonly ranges through grey, grey-green, and other muted earth tones. Band 1 contains no direct orc sighting; Calist learns this appearance from Corvin's experience.",
-            "de": "Orks sind häufig etwa sechs bis sieben Fuß groß und deutlich breiter gebaut als Menschen. Kräftige Brauen und Kiefer, ausgeprägte untere Eckzähne oder Hauer sowie große Hände und Füße sind verbreitet. Die Haut reicht häufig von Grau über Graugrün bis zu anderen gedämpften Erdtönen. In Band 1 wird kein Ork direkt gezeigt; Calist erfährt diese Beschreibung aus Corvins Erfahrung."
+            "en": "Orcs are commonly around six to seven feet tall and considerably broader than humans. Heavy brows and jaws, pronounced lower canines or tusks, and large hands and feet are common. Skin commonly ranges through grey, grey-green, and other muted earth tones. Individuals and regional populations can vary.",
+            "de": "Orks sind häufig etwa sechs bis sieben Fuß groß und deutlich breiter gebaut als Menschen. Kräftige Brauen und Kiefer, ausgeprägte untere Eckzähne oder Hauer sowie große Hände und Füße sind verbreitet. Die Haut reicht häufig von Grau über Graugrün bis zu anderen gedämpften Erdtönen. Einzelne Orks und regionale Gruppen können deutlich variieren."
+          }
+        },
+        {
+          "id": "orcs-frontier-history",
+          "visibility": {
+            "mode": "completed-chapter",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch03"
+          },
+          "labels": {
+            "en": "Frontier history",
+            "de": "Geschichte an der Grenze"
+          },
+          "text": {
+            "en": "Orc peoples were already using parts of the western frontier before Caelren's settlement expanded into the region. Modern hostility grew through generations of expansion, raids, reprisals, displacement, and inherited grievances rather than from a single beginning.",
+            "de": "Orkvölker nutzten bereits Teile der westlichen Grenzregion, bevor sich Caelrens Besiedlung in das Gebiet ausdehnte. Die heutige Feindschaft entstand über Generationen aus Ausbreitung, Überfällen, Vergeltung, Vertreibung und weitergegebenen Konflikten statt aus einem einzigen Anfang."
+          }
+        },
+        {
+          "id": "presence-near-village",
+          "visibility": {
+            "mode": "completed-chapter",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch07"
+          },
+          "labels": {
+            "en": "First evidence near Elwendun",
+            "de": "Erste Spuren nahe Elwendun"
+          },
+          "text": {
+            "en": "During the Long Winter, tracks confirm that orcs have been moving near the northern path.",
+            "de": "Während des langen Winters bestätigen Spuren, dass Orks nahe dem nördlichen Pfad unterwegs waren."
           }
         }
       ],
@@ -4365,7 +4560,22 @@
           }
         }
       ],
-      "appearanceOrder": 51
+      "appearanceOrder": 51,
+      "summaryUpdates": [
+        {
+          "id": "orcs-appearance-summary",
+          "visibility": {
+            "mode": "completed-chapter",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch07"
+          },
+          "text": {
+            "en": "A sapient humanoid people commonly taller and broader than humans, with heavy jaws, lower tusks, large hands and feet, and grey-to-greenish skin tones.",
+            "de": "Ein vernunftbegabtes humanoides Volk, meist größer und breiter als Menschen, mit kräftigen Kiefern, unteren Hauern, großen Händen und Füßen sowie grauen bis grünlichen Hauttönen."
+          }
+        }
+      ]
     },
     {
       "id": "elwen-river",
@@ -4474,21 +4684,7 @@
           "summary": "Die westliche Grenzregion Caelrens mit Elwendun, Caerbreyn, Dunbreyn sowie umliegenden Höfen, Dörfern und Straßen."
         }
       },
-      "fragments": [
-        {
-          "id": "breynach-westward-growth",
-          "visibility": {
-            "mode": "completed-chapter",
-            "story": "dragon-knight",
-            "book": "volume-01",
-            "chapter": "dk-v01-ch03"
-          },
-          "text": {
-            "en": "During the long Caelren–Morcant succession conflict, settlement in Breynach expanded westward: farms first, then roads, then forts, into country already used by orc and goblin tribes.",
-            "de": "Während des langjährigen Nachfolgestreits zwischen Caelren und Morcant dehnte sich die Besiedlung Breynachs nach Westen aus: zuerst Höfe, dann Straßen und schließlich Forts – in Gebiete, die bereits von Ork- und Goblinstämmen genutzt wurden."
-          }
-        }
-      ],
+      "fragments": [],
       "relationships": [
         {
           "id": "part-of-caelren",
@@ -4523,7 +4719,26 @@
           }
         }
       ],
-      "appearanceOrder": 39
+      "appearanceOrder": 39,
+      "sections": [
+        {
+          "id": "breynach-development",
+          "visibility": {
+            "mode": "completed-chapter",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch03"
+          },
+          "labels": {
+            "en": "Historical development",
+            "de": "Historische Entwicklung"
+          },
+          "text": {
+            "en": "During the long Caelren–Morcant succession conflict, settlement in Breynach expanded westward: farms first, then roads, then forts, into country already used by orc and goblin tribes.",
+            "de": "Während des langjährigen Nachfolgestreits zwischen Caelren und Morcant dehnte sich die Besiedlung Breynachs nach Westen aus: zuerst Höfe, dann Straßen und schließlich Forts – in Gebiete, die bereits von Ork- und Goblinstämmen genutzt wurden."
+          }
+        }
+      ]
     },
     {
       "id": "caelren",
@@ -4540,28 +4755,14 @@
       "labels": {
         "en": {
           "title": "Caelren",
-          "summary": "Calist's home kingdom, one of the two successor kingdoms that still claim the crown of old Dunareth."
+          "summary": "A human successor kingdom of Dunareth whose western frontier includes Breynach."
         },
         "de": {
           "title": "Caelren",
-          "summary": "Calists Heimatkönigreich und eines der beiden Nachfolgereiche, die weiterhin Anspruch auf die Krone des alten Dunareth erheben."
+          "summary": "Ein menschliches Nachfolgekönigreich Dunareths, dessen westliche Grenzregion Breynach umfasst."
         }
       },
-      "fragments": [
-        {
-          "id": "caelren-western-frontier",
-          "visibility": {
-            "mode": "completed-chapter",
-            "story": "dragon-knight",
-            "book": "volume-01",
-            "chapter": "dk-v01-ch03"
-          },
-          "text": {
-            "en": "Caelren's western frontier includes Breynach. Its current major human conflict is with Morcant to the east.",
-            "de": "Caelrens Westgrenze umfasst Breynach. Sein derzeit größter menschlicher Konflikt besteht mit Morcant im Osten."
-          }
-        }
-      ],
+      "fragments": [],
       "relationships": [
         {
           "id": "rival-morcant",
@@ -4588,7 +4789,26 @@
           }
         }
       ],
-      "appearanceOrder": 36
+      "appearanceOrder": 36,
+      "sections": [
+        {
+          "id": "caelren-territory",
+          "visibility": {
+            "mode": "completed-chapter",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch03"
+          },
+          "labels": {
+            "en": "Territory and conflict",
+            "de": "Gebiet und Konflikt"
+          },
+          "text": {
+            "en": "Caelren's western frontier includes Breynach. Its current major human conflict is with Morcant to the east.",
+            "de": "Caelrens Westgrenze umfasst Breynach. Sein derzeit größter menschlicher Konflikt besteht mit Morcant im Osten."
+          }
+        }
+      ]
     },
     {
       "id": "morcant",
@@ -4606,11 +4826,11 @@
       "labels": {
         "en": {
           "title": "Morcant",
-          "summary": "An eastern human kingdom whose renewed attacks raise concern in Caerbreyn."
+          "summary": "An eastern human kingdom beyond the far border."
         },
         "de": {
           "title": "Morcant",
-          "summary": "Ein östliches Menschenkönigreich, dessen erneute Angriffe in Caerbreyn Besorgnis auslösen."
+          "summary": "Ein östliches Menschenkönigreich jenseits der fernen Grenze."
         }
       },
       "fragments": [
@@ -4639,19 +4859,6 @@
               }
             }
           ]
-        },
-        {
-          "id": "morcant-dunareth-claim",
-          "visibility": {
-            "mode": "completed-chapter",
-            "story": "dragon-knight",
-            "book": "volume-01",
-            "chapter": "dk-v01-ch03"
-          },
-          "text": {
-            "en": "Morcant is one of the two successor kingdoms formed after Dunareth's disputed succession. Its crown still claims to be the rightful continuation of the old kingdom.",
-            "de": "Morcant ist eines der beiden Nachfolgereiche, die aus Dunareths umstrittener Erbfolge hervorgingen. Seine Krone beansprucht weiterhin, die rechtmäßige Fortsetzung des alten Königreichs zu sein."
-          }
         }
       ],
       "relationships": [
@@ -4672,7 +4879,41 @@
           }
         }
       ],
-      "appearanceOrder": 28
+      "appearanceOrder": 28,
+      "summaryUpdates": [
+        {
+          "id": "morcant-successor-summary",
+          "visibility": {
+            "mode": "completed-chapter",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch03"
+          },
+          "text": {
+            "en": "An eastern human successor kingdom of Dunareth and Caelren's rival claimant to the old crown.",
+            "de": "Ein östliches menschliches Nachfolgekönigreich Dunareths und Caelrens rivalisierender Anspruchsteller auf die alte Krone."
+          }
+        }
+      ],
+      "sections": [
+        {
+          "id": "morcant-political-history",
+          "visibility": {
+            "mode": "completed-chapter",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch03"
+          },
+          "labels": {
+            "en": "Political history",
+            "de": "Politische Geschichte"
+          },
+          "text": {
+            "en": "Morcant is one of the two successor kingdoms formed after Dunareth's disputed succession. Its crown still claims to be the rightful continuation of the old kingdom.",
+            "de": "Morcant ist eines der beiden Nachfolgereiche, die aus Dunareths umstrittener Erbfolge hervorgingen. Seine Krone beansprucht weiterhin, die rechtmäßige Fortsetzung des alten Königreichs zu sein."
+          }
+        }
+      ]
     },
     {
       "id": "dunareth",
@@ -4696,21 +4937,7 @@
           "summary": "Das ehemalige vereinte Menschenkönigreich, aus dem Caelren und Morcant hervorgingen."
         }
       },
-      "fragments": [
-        {
-          "id": "dunareth-succession",
-          "visibility": {
-            "mode": "completed-chapter",
-            "story": "dragon-knight",
-            "book": "volume-01",
-            "chapter": "dk-v01-ch03"
-          },
-          "text": {
-            "en": "After Dunareth's last uncontested king died without a clear direct heir, competing collateral claims fractured the kingdom. Roughly three and a half centuries later, both successor crowns still claim to be its rightful continuation.",
-            "de": "Nachdem Dunareths letzter unangefochtener König ohne eindeutigen direkten Erben starb, zerbrach das Reich an konkurrierenden Ansprüchen aus Nebenlinien. Rund dreieinhalb Jahrhunderte später beanspruchen beide Nachfolgekronen weiterhin, die rechtmäßige Fortsetzung Dunareths zu sein."
-          }
-        }
-      ],
+      "fragments": [],
       "relationships": [
         {
           "id": "successor-caelren",
@@ -4729,7 +4956,27 @@
           }
         }
       ],
-      "appearanceOrder": 37
+      "appearanceOrder": 37,
+      "sections": [
+        {
+          "id": "dunareth-succession",
+          "visibility": {
+            "mode": "completed-chapter",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch03"
+          },
+          "labels": {
+            "en": "Succession crisis",
+            "de": "Erbfolgekrise"
+          },
+          "text": {
+            "en": "After Dunareth's last uncontested king died without a clear direct heir, competing collateral claims fractured the kingdom. Roughly three and a half centuries later, both successor crowns still claim to be its rightful continuation.",
+            "de": "Nachdem Dunareths letzter unangefochtener König ohne eindeutigen direkten Erben starb, zerbrach das Reich an konkurrierenden Ansprüchen aus Nebenlinien. Rund dreieinhalb Jahrhunderte später beanspruchen beide Nachfolgekronen weiterhin, die rechtmäßige Fortsetzung Dunareths zu sein."
+          }
+        }
+      ],
+      "chronologyOrder": 100
     },
     {
       "id": "dunareth-division",
@@ -4795,7 +5042,7 @@
         }
       ],
       "appearanceOrder": 38,
-      "chronologyOrder": 100
+      "chronologyOrder": 110
     },
     {
       "id": "breynach-westward-settlement",
@@ -4867,7 +5114,8 @@
           }
         }
       ],
-      "appearanceOrder": 40
+      "appearanceOrder": 40,
+      "chronologyOrder": 120
     },
     {
       "id": "edrin",
@@ -4998,12 +5246,12 @@
       "labels": {
         "en": {
           "title": "Oren",
-          "summary": "A soldier known to Calist through Corvin; he is remembered in Elwendun for bringing apples to the village children.",
+          "summary": "A soldier serving with Corvin and familiar in Elwendun through repeated visits along the road and fort connection.",
           "fullName": "Oren Voss"
         },
         "de": {
           "title": "Oren",
-          "summary": "Ein Soldat, den Calist durch Corvin kennt; in Elwendun erinnert man sich an ihn unter anderem dafür, dass er den Dorfkindern Äpfel mitbringt.",
+          "summary": "Ein Soldat, der mit Corvin dient und in Elwendun durch wiederholte Besuche über die Straßen- und Fortverbindung bekannt ist.",
           "fullName": "Oren Voss"
         }
       },
@@ -5035,16 +5283,43 @@
       "labels": {
         "en": {
           "title": "Heddan",
-          "summary": "A Caerbreyn metal supplier who trades regularly with Alden and first passes on serious reports of renewed Morcant attacks.",
+          "summary": "A metal supplier in Caerbreyn who trades regularly with Alden and other customers from the surrounding region.",
           "fullName": "Heddan Rell"
         },
         "de": {
           "title": "Heddan",
-          "summary": "Ein Metallhändler in Caerbreyn, der regelmäßig mit Alden handelt und erstmals ernsthafte Berichte über neue Angriffe aus Morcant weitergibt.",
+          "summary": "Ein Metallhändler in Caerbreyn, der regelmäßig mit Alden und anderen Kunden aus der umliegenden Region handelt.",
           "fullName": "Heddan Rell"
         }
       },
-      "fragments": [],
+      "fragments": [
+        {
+          "id": "heddan-border-reports",
+          "visibility": {
+            "mode": "reached-anchor",
+            "story": "dragon-knight",
+            "book": "volume-01",
+            "chapter": "dk-v01-ch03",
+            "anchor": "dk-v01-ch03-border-warning"
+          },
+          "text": {
+            "en": "Heddan tells Alden and Garran that traders are reporting renewed crossings, attacks on farms, and trouble at small posts near Morcant.",
+            "de": "Heddan erzählt Alden und Garran, dass Händler von neuen Grenzübertritten, Angriffen auf Höfe und Problemen an kleinen Posten nahe Morcant berichten."
+          },
+          "readerLinks": [
+            {
+              "id": "heddan-border-reports-reader",
+              "story": "dragon-knight",
+              "book": "volume-01",
+              "anchor": "dk-v01-ch03-border-warning",
+              "labels": {
+                "en": "Open the related passage",
+                "de": "Zugehörige Stelle öffnen"
+              }
+            }
+          ]
+        }
+      ],
       "relationships": [
         {
           "id": "works-in-caerbreyn",
@@ -5308,7 +5583,7 @@
         }
       ],
       "appearanceOrder": 57,
-      "chronologyOrder": 1
+      "chronologyOrder": 1000
     },
     {
       "id": "old-woods-pull",
@@ -5372,7 +5647,7 @@
         }
       ],
       "appearanceOrder": 58,
-      "chronologyOrder": 2
+      "chronologyOrder": 1010
     },
     {
       "id": "first-caerbreyn-journey",
@@ -5424,7 +5699,7 @@
         }
       ],
       "appearanceOrder": 46,
-      "chronologyOrder": 3
+      "chronologyOrder": 1020
     },
     {
       "id": "useful-hands-transition",
@@ -5468,7 +5743,7 @@
         }
       ],
       "appearanceOrder": 45,
-      "chronologyOrder": 6
+      "chronologyOrder": 1040
     },
     {
       "id": "first-overnight-hunt",
@@ -5563,7 +5838,7 @@
         }
       ],
       "appearanceOrder": 47,
-      "chronologyOrder": 7
+      "chronologyOrder": 1050
     },
     {
       "id": "bram-apprenticeship",
@@ -5641,7 +5916,7 @@
         }
       ],
       "appearanceOrder": 49,
-      "chronologyOrder": 8
+      "chronologyOrder": 1060
     }
   ]
 }

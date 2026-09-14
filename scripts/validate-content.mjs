@@ -536,6 +536,23 @@ for (const worldRef of library.worlds) {
       if (entry.chronologyOrder !== undefined) {
         assert(Number.isInteger(entry.chronologyOrder) && entry.chronologyOrder >= 0, `Lexicon entry ${entry.id} chronologyOrder must be a non-negative integer`);
       }
+      if (lexicon.state === "published" && entry.categories.some((category) => category === "events" || category === "history")) {
+        assert(Number.isInteger(entry.chronologyOrder) && entry.chronologyOrder >= 0, `Published Event/History entry ${entry.id} must define chronologyOrder`);
+      }
+
+      const summaryUpdates = entry.summaryUpdates ?? [];
+      assert(Array.isArray(summaryUpdates), `Lexicon entry ${entry.id} summaryUpdates must be an array`);
+      const summaryUpdateIds = new Set();
+      for (const update of summaryUpdates) {
+        assertId(update.id, `Lexicon summary update id in ${entry.id}`);
+        assert(!summaryUpdateIds.has(update.id), `Duplicate Lexicon summary update id in ${entry.id}: ${update.id}`);
+        summaryUpdateIds.add(update.id);
+        validateVisibility(update.visibility, `Lexicon summary update ${entry.id}/${update.id}`, storyBooks);
+        assert(update.text && typeof update.text === "object", `Lexicon summary update ${entry.id}/${update.id} text is missing`);
+        for (const locale of lexicon.locales) {
+          assertLocalizedString(update.text[locale], `Lexicon summary update ${entry.id}/${update.id} ${locale} text`);
+        }
+      }
 
       const sections = entry.sections ?? [];
       assert(Array.isArray(sections), `Lexicon entry ${entry.id} sections must be an array`);
