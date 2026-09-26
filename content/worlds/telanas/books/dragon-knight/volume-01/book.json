@@ -59,14 +59,14 @@
   ],
   "source": {
     "repository": "Kamui2040/Telanas",
-    "commit": "bf7473a3b61f168738f1355a6e6f1fd57d3022a7",
+    "commit": "37d4e649b272b234c64700f7b550d44e3c3282d8",
     "manuscripts": {
       "en": "manuscript/en/band-01.md",
       "de": "manuscript/de/band-01.md"
     },
     "manuscriptBlobs": {
       "en": "2a0ef5ad2cba181800e153c0ed17dfd14736925f",
-      "de": "ba8f4128e1fc6b29c11f1b82416784fac33a36cd"
+      "de": "981742d3971522ddc8b54c36ee9db0445a377cb0"
     },
     "cover": "assets/covers/volume-01/cover.png",
     "coverBlob": "b2ad8fe2bd63e2540223fd322e3aa9f36cb6adc1",
