@@ -5,7 +5,7 @@ import { fileURLToPath } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const sourceRepository = "Kamui2040/Telanas";
-const sourceCommit = "bf7473a3b61f168738f1355a6e6f1fd57d3022a7";
+const sourceCommit = "37d4e649b272b234c64700f7b550d44e3c3282d8";
 const defaultBranch = "main";
 const bookDirectory = "content/worlds/telanas/books/dragon-knight/volume-01";
 const illustrationsDirectory = path.join(root, bookDirectory, "illustrations");
@@ -19,7 +19,7 @@ const ghJson = (endpoint) => JSON.parse(execFileSync("gh", ["api", endpoint], { 
 
 const sourceFiles = {
   "manuscript/en/band-01.md": "2a0ef5ad2cba181800e153c0ed17dfd14736925f",
-  "manuscript/de/band-01.md": "ba8f4128e1fc6b29c11f1b82416784fac33a36cd",
+  "manuscript/de/band-01.md": "981742d3971522ddc8b54c36ee9db0445a377cb0",
   "docs/story/illustration-reference.md": "7abda7b6c50f03116e09970c457e63cbf73cb921",
   "assets/covers/volume-01/cover.png": "b2ad8fe2bd63e2540223fd322e3aa9f36cb6adc1",
 };
